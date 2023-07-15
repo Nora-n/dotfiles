@@ -1,0 +1,297 @@
+# Variables
+set $mod Mod3
+set $mud Mod1
+
+set $base00 #101218
+set $base01 #1f222d
+set $base02 #3b4256
+set $base03 #7780a1
+set $base04 #C0C5CE
+set $base05 #d1d4e0
+set $base06 #C9CCDB
+set $base07 #ffffff
+set $base08 #ee829f
+set $base09 #f99170
+set $base0A #ffefcc
+set $base0B #a5ffe1
+set $base0C #97e0ff
+set $base0D #97bbf7
+set $base0E #c0b7f9
+set $base0F #fcc09e
+
+# Windows conf
+new_float pixel 1
+new_window pixel 1
+hide_edge_borders both
+gaps inner 10
+gaps outer 0
+smart_gaps on
+
+#                       border  background text    indicator
+client.focused          $base01 $base01    $base07 $base0D
+client.focused_inactive $base02 $base02    $base03 $base0D
+client.unfocused        $base02 $base02    $base03 $base0D
+client.urgent           $base02 $base0D    $base00 $base0D
+
+# Font for window titles. Will also be used by the bar unless a different font
+# is used in the bar {} block below.
+font pango:MesloLGS NF 8
+
+# This font is widely installed, provides lots of unicode glyphs, right-to-left
+# text rendering and scalability on retina/hidpi displays (thanks to pango).
+#font pango:DejaVu Sans Mono 8
+
+# Use pactl to adjust volume in PulseAudio.
+set $refresh_i3status killall -SIGUSR1 i3status
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% && $refresh_i3status
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10% && $refresh_i3status
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
+bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
+
+# Backlight
+bindsym XF86MonBrightnessDown exec light -U 10
+bindsym XF86MonBrightnessUp exec light -A 10
+
+# Displays
+# bindsym XF86Display exec --no-startup-id i3run --title disp -- arandr --title disp
+bindsym $mod+Shift+F7 exec --no-startup-id i3run --title arandr --rename -- arandr
+for_window [class="Arandr"] floating enable
+
+# Qalculate-gtk
+# bindsym XF86Tools exec --no-startup-id i3run --title qalc -- qalculate-gtk --title qalc
+bindsym $mod+F9 exec --no-startup-id i3run --title qalc -- qalculate-gtk --title qalc
+for_window [class="Qalculate-gtk"] floating enable
+
+bindsym Print exec --no-startup-id shutter -s -C
+bindsym Shift+Print exec --no-startup-id shutter -w -C
+for_window [class="Shutter"] floating enable
+
+# Use Mouse+$mod to drag floating windows to their wanted position
+floating_modifier $mod
+
+# start a terminal
+bindsym $mod+Return exec --no-startup-id i3-sensible-terminal
+bindsym $mud+Return exec --no-startup-id i3-sensible-terminal
+
+# kill focused window
+bindsym $mod+q kill
+
+# start rofi
+bindsym $mod+d exec --no-startup-id ~/.config/rofi/launchers/type-3/launcher.sh
+bindsym $mod+Delete exec --no-startup-id ~/.config/rofi/powermenu/type-2/powermenu.sh
+
+# start gitkraken, exerciceexplorer
+bindsym $mod+b exec --no-startup-id gitkraken
+bindsym $mod+Shift+b exec --no-startup-id java -jar exerciceExplorer.jar
+
+# change focus
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
+
+# move focused window
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+l move right
+
+# split in horizontal orientation
+bindsym $mod+g split h
+
+# split in vertical orientation
+bindsym $mod+v split v
+
+# enter fullscreen mode for the focused container
+bindsym $mod+f fullscreen toggle
+
+# change container layout (stacked, tabbed, toggle split)
+bindsym $mod+s layout stacking
+bindsym $mod+z layout tabbed
+bindsym $mod+e layout toggle split
+
+# toggle tiling / floating
+bindsym $mod+space floating toggle
+
+# change focus between tiling / floating windows
+# bindsym $mod+space focus mode_toggle
+
+bindsym $mod+Shift+p move scratchpad
+bindsym $mod+p scratchpad show
+
+bindsym $mod+n exec --no-startup-id i3-sensible-terminal -e ranger
+
+bindsym $mod+Shift+t mark "term", move scratchpad
+bindsym $mod+t [con_mark="term"] scratchpad show
+# for_window [instance="dropdown"] floating enable
+# for_window [instance="dropdown"] resize set 625 400
+# for_window [instance="dropdown"] move position center
+# for_window [instance="dropdown"] move scratchpad
+# exec_always --no-startup-id $TERMINAL -instance dropdown
+# bindsym $mod+t [instance="dropdown"] scratchpad show; move position center
+bindsym $mod+Shift+y mark "yout", move scratchpad
+bindsym $mod+y [con_mark="yout"] scratchpad show
+bindsym $mod+Shift+u mark "comms", move scratchpad
+bindsym $mod+u [con_mark="comms"] scratchpad show
+bindsym $mod+Shift+i mark "float", move scratchpad
+bindsym $mod+i [con_mark="float"] scratchpad show
+
+# focus the parent container
+bindsym $mod+x focus parent
+# focus the child container
+bindsym $mod+c focus child
+# move back and forth quick
+bindsym $mod+Tab workspace back_and_forth
+
+# Define names for default workspaces for which we configure key bindings later on.
+# We use variables to avoid repeating the names in multiple places.
+set $ws1 ""
+set $ws2 ""
+set $ws3 ""
+set $ws4 ""
+set $ws5 "󰈦"
+set $ws6 "󰿎"
+set $ws7 "󰼭"
+set $ws8 ""
+set $ws9 "󱦹"
+set $ws10 ""
+
+# switch to workspace
+bindsym $mod+1 workspace $ws1
+bindsym $mod+2 workspace $ws2
+bindsym $mod+3 workspace $ws3
+bindsym $mod+4 workspace $ws4
+bindsym $mod+5 workspace $ws5
+bindsym $mod+6 workspace $ws6
+bindsym $mod+7 workspace $ws7
+bindsym $mod+8 workspace $ws8
+bindsym $mod+9 workspace $ws9
+bindsym $mod+0 workspace $ws10
+
+# move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace $ws1
+bindsym $mod+Shift+2 move container to workspace $ws2
+bindsym $mod+Shift+3 move container to workspace $ws3
+bindsym $mod+Shift+4 move container to workspace $ws4
+bindsym $mod+Shift+5 move container to workspace $ws5
+bindsym $mod+Shift+6 move container to workspace $ws6
+bindsym $mod+Shift+7 move container to workspace $ws7
+bindsym $mod+Shift+8 move container to workspace $ws8
+bindsym $mod+Shift+9 move container to workspace $ws9
+bindsym $mod+Shift+0 move container to workspace $ws10
+
+# Multiple monitors
+workspace $ws1 output eDP-1
+workspace $ws2 output HDMI-1
+workspace $ws3 output eDP-1
+workspace $ws4 output HDMI-1
+workspace $ws5 output eDP-1
+workspace $ws6 output HDMI-1
+workspace $ws7 output HDMI-1
+workspace $ws8 output eDP-1
+workspace $ws9 output HDMI-1
+workspace $ws10 output eDP-1
+
+for_window [title="htop"] move to workspace $ws1
+assign [class="thunderbird"] $ws2
+for_window [class="kitty" title="ranger"] move to workspace $ws3
+# for_window [class="kitty" title="nvim"] move to workspace $ws7
+assign [class="firefox"] $ws4
+assign [class="Zathura"] $ws5
+assign [class="mpv"] $ws6
+assign [class="stremio"] $ws6
+for_window [class="pentablet"] floating enable
+assign [class="Xournalpp"] $ws9
+
+# reload the configuration file
+bindsym $mod+Shift+c reload
+# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym $mod+Shift+r restart
+# exit i3 (logs you out of your X session)
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
+
+# resize window (you can also use the mouse for that)
+mode "resize" {
+        # These bindings trigger as soon as you enter the resize mode
+
+        # Pressing left will shrink the window’s width.
+        # Pressing right will grow the window’s width.
+        # Pressing up will shrink the window’s height.
+        # Pressing down will grow the window’s height.
+        bindsym h resize shrink width 50 px or 10 ppt
+        bindsym j resize grow height 50 px or 10 ppt
+        bindsym k resize shrink height 50 px or 10 ppt
+        bindsym l resize grow width 50 px or 10 ppt
+
+        # back to normal: Enter or Escape or $mod+r
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+        # bindsym $mod+r mode "default"
+}
+
+bindsym $mod+r mode "resize"
+bindsym $mod+F7 exec --no-startup-id picom -b
+bindsym $mod+Ctrl+F7 exec --no-startup-id killall picom
+
+# exec --no-startup-id dex --autostart --environment i3
+# exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+exec_always --no-startup-id dunst
+bindsym $mod+End exec --no-startup-id feh --bg-fill /home/nora/Pictures/wallpaper/arch_nebula.jpg
+exec_always --no-startup-id feh --bg-fill /home/nora/Pictures/wallpaper/arch_nebula.jpg
+exec --no-startup-id autorandr htop
+exec --no-startup-id xidlehook --not-when-fullscreen --not-when-audio --timer 360 "betterlockscreen -l dim" ''
+bindsym $mod+F10 exec --no-startup-id xidlehook --not-when-fullscreen --not-when-audio --timer 360 "betterlockscreen -l dim" ''
+bindsym $mod+F11 exec --no-startup-id xidlehook --not-when-fullscreen --not-when-audio --timer 36000 "betterlockscreen -l dim" ''exec --no-startup-id firefox
+exec --no-startup-id thunderbird
+exec --no-startup-id i3-sensible-terminal
+exec --no-startup-id i3-sensible-terminal -e ranger
+exec --no-startup-id i3-sensible-terminal -e htop
+exec --no-startup-id picom -b
+exec --no-startup-id setxkbmap -layout fr oss
+exec_always --no-startup-id xmodmap ~/.Xmodmap_full
+bindsym $mud+Insert exec --no-startup-id xmodmap ~/.Xmodmap_full
+exec --no-startup-id nm-applet
+exec --no-startup-id udiskie
+exec --no-startup-id blueman-applet
+
+
+bindsym $mod+Home exec --no-startup-id \
+	synclient TapButton1=1 & \
+	synclient TapButton2=3 & \
+	synclient TapButton3=2 & \
+	synclient CircularScrolling=1 & \
+	synclient CircScrollTrigger=0 & \
+	synclient CircScrollDelta=0.15 & \
+	synclient VertEdgeScroll=0 & \
+	synclient HorizEdgeScroll=0 & \
+	synclient VertTwoFingerScroll=1 & \
+	synclient HorizTwoFingerScroll=1 & \
+	synclient VertScrollDelta=111 & \
+	synclient HorizScrollDelta=111 & \
+	synclient MinSpeed=0.5 & \
+	synclient MaxSpeed=3 & \
+	synclient AccelFactor=0.15 & \
+	synclient TopEdge=1500 & \
+	synclient LeftEdge=1500 & \
+
+bar {
+    position top
+    mode dock
+    tray_output primary
+    tray_padding 4
+    font pango:MesloLGS NF 12
+    separator_symbol " "
+    strip_workspace_numbers yes
+    status_command i3blocks
+    colors {
+      background #2e3440
+      statusline #d8dee9
+      separator #8FBCBB
+
+      focused_workspace  #2e3440 #2e3440 #81A1C1
+      active_workspace   #2e3440 #2e3440 #8FBCBB
+      inactive_workspace #2e3440 #2e3440 #4c566a
+      urgent_workspace   #2e3440 #2e3440 #BF616A
+      binding_mode       #2e3440 #2e3440 #BF616A
+    }
+}

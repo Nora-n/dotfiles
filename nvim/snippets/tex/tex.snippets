@@ -1,0 +1,1369 @@
+snippet alone
+    \documentclass{standalone}
+    \usepackage{mintikz}
+    
+    \begin{document}
+    ${1}
+    \end{document}
+
+snippet empheq
+    \begin{empheq}${1:[box=\\\fbox]}{${2:align*}}
+        ${3}
+    \end{empheq}${0}
+
+snippet neq
+    \color{${1:ForestGreen}}(${2:1})${0}
+
+snippet Neq
+    \textcolor{${1:ForestGreen}}{${2}}${0}
+
+snippet threeparttable
+alias   tpt
+    \begin{table}[${1:ht}]
+        \centering
+        \begin{threeparttable}
+            \caption[${2:SHORTHAND}]{${3:CAPTION}}
+            \label{tab:${4}}
+            \begin{tabular}{${5}}
+                ${6}
+            \end{tabular}
+            \begin{tablenotes}[${7:flushleft}]
+            \item \textbf{\hspace{-3.2pt}Notes.} ${8}
+            \end{tablenotes}
+        \end{threeparttable}
+    \end{table}
+
+# ========== ENVIRONMENT ==========
+
+snippet     sout
+    \sout{${1}}${0}
+
+snippet     rpt
+    \textcolor{red}{(${1:0.5})}${0}
+
+snippet     Rpt
+    \textcolor{red}{/${1:1}}${0}
+
+snippet     gpt
+    \textcolor{ForestGreen}{/${1:5}}${0}
+
+snippet     opto
+    \opto{${1:\\\Lc_1}}{${2:O_1}}${0}
+
+snippet     topto
+    \begin{tikzpicture}[]
+        \node[] (${1:AB}) at (0,0) {$\obar{$1}$};
+        \node[] (${2:A_1B_1}) at (2,0) {$\obar{$2}$};
+        \node[] (${3:A'B'}) at (4,0) {$\obar{$3}$};
+        \draw[->] ($1) -- ($2)
+            node [midway, above] {$${4:\\\Lc${5\}}$}
+            node [midway, below] {$${6:O${7\}}$};
+        \draw[->] ($2) -- ($3)
+            node [midway, above] {$${8:\\\Lc${9\}}$}
+            node [midway, below] {$${10:O${11\}}$};
+        \node[below=0.3, Purple!70] ($1b) at ($1) {${12:$-\infty$}};
+        \node[below=0.3, brandeisblue] ($2b) at ($2) {${13:$A_1 = F'_v$}};
+        \node[below=0.3, ForestGreen] ($2bb) at ($2b) {${14:$A_1 = R$}};
+        \node[below=0.3, orange!70] ($3b) at ($3) {${15:$A' = E$}};
+        \draw[->, Purple!70] ($1b) to[bend right] ($2b.west);
+        \draw[->, orange!70] ($3b) to[bend left] ($2bb.east);
+    \end{tikzpicture}${0}
+
+snippet ortho
+    ($(${1:POINT})!${2:-1}!90:(${3:ENDPOINT})$)${0}
+
+snippet     includepdf
+alias       pdf
+    \includepdf[pages={${1:-}}]{${2}}${0}
+
+snippet     includegraphics
+    \includegraphics[${1:width=${2\}\\\linewidth}]{${3}}${0}
+
+snippet     lower
+    \tcblower
+
+snippet     vsubtitle
+    \tcbsubtitle[before skip=\baselineskip,
+                 colback=green!50!black,
+                 colframe=green!50!black]{${1:Unités}}${0}
+
+snippet     gsubtitle
+    \tcbsubtitle[before skip=\baselineskip, colback=gray!50!black, colframe =
+    gray!50!black]{${1:TITLE}}${0}
+
+snippet     rsubtitle
+    \tcbsubtitle[before skip=\baselineskip, colback=red!60!black, colframe =
+    red!50!black]{${1:TITLE}}${0}
+
+snippet     endnote
+    ${1}\endnote{\textcolor{black}{$1} : ${2}}${0}
+
+snippet     footnote
+    \footnote{${1:TEXT}}${0}
+
+snippet     gather
+    \begin{gather${1:*}}
+        ${2}
+    \end{gather$1}${0}
+
+snippet     NCrema
+    \begin{NCrema}[${1:width=${2\}\\\linewidth}]{${3:TITLE}}
+        ${4}
+    \end{NCrema}${0}
+
+snippet     NCcexe
+    \begin{NCcexe}[${1:width=${2\}\\\linewidth}]{${3:TITLE}}
+        ${4}
+    \end{NCcexe}${0}
+
+snippet     NCodgr
+    \begin{NCodgr}[${1:width=${2\}\\\linewidth}]{${3:TITLE}}
+        ${4}
+    \end{NCodgr}${0}
+
+snippet     NCexem
+    \begin{NCexem}[${1:width=${2\}\\\linewidth}]{${3:TITLE}}
+        ${4}
+    \end{NCexem}${0}
+
+snippet     NCrapp
+    \begin{NCrapp}[${1:width=${2\}\\\linewidth}]{${3:TITLE}}
+        ${4}
+    \end{NCrapp}${0}
+
+snippet     NCimpo
+    \begin{NCimpo}[${1:width=${2\}\\\linewidth}]{${3:TITLE}}
+        ${4}
+    \end{NCimpo}${0}
+
+snippet     NCnota
+    \begin{NCnota}[${1:width=${2\}\\\linewidth}]{${3:TITLE}}
+        ${4}
+    \end{NCnota}${0}
+
+snippet     NCdefi
+    \begin{NCdefi}[${1:width=${2\}\\\linewidth}]{${3:TITLE}}
+        ${4}
+    \end{NCdefi}${0}
+
+snippet     NCimpl
+    \begin{NCimpl}[${1:width=${2\}\\\linewidth}]{${3:TITLE}}
+        ${4}
+    \end{NCimpl}${0}
+
+snippet     NCinte
+    \begin{NCinte}[${1:width=${2\}\\\linewidth}]{${3:TITLE}}
+        ${4}
+    \end{NCinte}${0}
+
+snippet     NCdemo
+    \begin{NCdemo}[${1:width=${2\}\\\linewidth}]{${3:TITLE}}
+        ${4}
+    \end{NCdemo}${0}
+
+snippet     NCcoro
+    \begin{NCcoro}[${1:width=${2\}\\\linewidth}]{${3:TITLE}}
+        ${4}
+    \end{NCcoro}${0}
+
+snippet     NCprop
+    \begin{NCprop}[${1:width=${2\}\\\linewidth}]{${3:TITLE}}
+        ${4}
+    \end{NCprop}${0}
+
+snippet     NCtheo
+    \begin{NCtheo}[${1:width=${2\}\\\linewidth}]{${3:TITLE}}
+        ${4}
+    \end{NCtheo}${0}
+
+snippet     NCloi
+    \begin{NCloi}[${1:width=${2\}\\\linewidth}]{${3:TITLE}}
+        ${4}
+    \end{NCloi}${0}
+
+snippet     NCror
+    \begin{NCror}[${1:width=${2\}\\\linewidth}]{${3:TITLE}}
+        ${4}
+    \end{NCror}${0}
+
+snippet     ror
+    \begin{ror}[${1:label=${2\}}]{${3:TITLE}}
+        ${4}
+    \end{ror}${0}
+
+snippet     loi
+    \begin{loi}[${1:label=${2\}}]{${3:TITLE}}
+        ${4}
+    \end{loi}${0}
+
+snippet     theo
+    \begin{Theo}[${1:label=${2\}}]{${3:TITLE}}
+        ${4}
+    \end{Theo}${0}
+
+snippet     prop
+    \begin{prop}[${1:label=${2\}}]{${3:TITLE}}
+        ${4}
+    \end{prop}${0}
+
+snippet     coro
+    \begin{coro}[${1:label=${2\}}]{${3:TITLE}}
+        ${4}
+    \end{coro}${0}
+
+snippet     demo
+    \begin{demo}[${1:label=${2\}}]{${3:TITLE}}
+        ${4}
+    \end{demo}${0}
+
+snippet     interp
+    \begin{inte}[${1:label=${2\}}]{${3:TITLE}}
+        ${4}
+    \end{inte}${0}
+
+snippet     impl
+    \begin{impl}[${1:label=${2\}}]{${3:TITLE}}
+        ${4}
+    \end{impl}${0}
+
+snippet     defi
+    \begin{defi}[${1:label=${2\}}]{${3:TITLE}}
+        ${4}
+    \end{defi}${0}
+
+snippet     nota
+    \begin{nota}[${1:label=${2\}}]{${3:TITLE}}
+        ${4}
+    \end{nota}${0}
+
+snippet     impo
+    \begin{impo}[${1:label=${2\}}]{${3:TITLE}}
+        ${4}
+    \end{impo}${0}
+
+snippet     rapp
+    \begin{rapp}[${1:label=${2\}}]{${3:TITLE}}
+        ${4}
+    \end{rapp}${0}
+
+snippet     rema
+    \begin{rema}[${1:label=${2\}}]{${3:TITLE}}
+        ${4}
+    \end{rema}${0}
+
+snippet     exem
+    \begin{exem}[${1:label=${2\}}]{${3:TITLE}}
+        ${4}
+    \end{exem}${0}
+
+snippet     cexe
+    \begin{cexe}[${1:label=${2\}}]{${3:TITLE}}
+        ${4}
+    \end{cexe}${0}
+
+snippet     odgr
+    \begin{odgr}[${1:label=${2\}}]{${3:TITLE}}
+        ${4}
+    \end{odgr}${0}
+
+snippet     cita
+    \begin{center}
+        \color{${1:black}}\fbox{\parbox{.5\linewidth}{\centering \vspace*{12pt}
+        «~${2:TEXT}~»\\
+        \flushright ${3:AUTHOR}}}
+    \end{center}
+    ${0}
+
+snippet instruc
+    \begin{instruc}{${1}}
+        ${2}
+    \end{instruc}
+
+snippet finger
+    \begin{${1:TITLE}}{${2:CONTENT}}${0}
+
+snippet trans
+    \begin{instruc}[trans]{Transition}
+        ${1}
+    \end{instruc}
+
+snippet raster
+alias tcbraster
+    \begin{tcbraster}${1:[raster columns=${2:2\}, raster equal height=rows]}
+        ${3}
+    \end{tcbraster}${0}
+
+snippet blankest
+    \begin{tcolorbox}[blankest, raster multicolumn=${1:2}${2:, space to=\\\myspace}]
+        \begin{tcbraster}[raster columns=${3}]
+            ${4}
+        \end{tcbraster}
+    \end{tcolorbox}${0}
+
+snippet addheight
+    add to natural height=${1:\\\myspace}${0}
+
+snippet tcblow
+    \tcblower
+
+snippet tcbsub
+    \tcbsubtitle[before skip=\baselineskip,
+                 colback=${1:green}!50!black,
+                 colframe=$1!50!black]{${2:title}}
+    ${0}
+
+snippet     sec
+abbr        appsec
+options     head
+    \appsec{${1:SECTITLE}}{${2:SECLABEL}}${3}
+
+snippet     ssec
+abbr        appssec
+options     head
+    \appssec{${1:SSECTITLE}}{${2:SSECLABEL}}${3}
+
+snippet     sssec
+abbr        appsssec
+options     head
+    \appsssec{${1:SSSECTITLE}}{${2:SSSECLABEL}}${3}
+
+snippet tabularx
+alias   \begin{tabularx} \tabularx
+    \begin{tabularx}{\linewidth}{|Y*{${1:NB-1}}{|Y}|}\hline
+		${2:TARGET}
+	\end{tabularx}${0}
+
+snippet     @
+    @{$${1}$}${0}
+
+snippet tabav
+    \begin{center}
+        \renewcommand{\arraystretch}{1.3}
+        %\def\mystrut{\rule[-.5em]{0ex}{1.5em}}
+        \centering
+        \begin{tabularx}{${1:}\linewidth}{|${2:!{\\\mystrut\}}p{${3:2}cm}||
+            Y @{$${4:+}$} Y @{$${5:\\\rightarrow}$} Y @{$${6:+}$} Y ${7} |}\hline
+            Équation     &
+            $\ce{${9}} $ &
+            $\ce{${10}}$ &
+            $\ce{${11}}$ &
+            $\ce{${12}}$
+        \end{tabularx}
+        \par\vspace{-\lineskip}%
+        %\def\mystrut{\rule[-1em]{0ex}{2.5em}}
+        \begin{tabularx}{$1\linewidth}{|$2p{$3cm}|| *${13:4}{Y|}}\hline
+            État initial &
+            $${14} $&
+            $${15} $&
+            $${16} $&
+            $${17} $\\\
+            \hline
+        \end{tabularx}
+    \end{center}${0}
+
+snippet multicolumn
+alias   mcol
+    \multicolumn{${1:NB}}{${2:TYPE}}{${3:TEXT}}${0}
+
+snippet multirow
+alias   mrow
+    \multirow{${1:NB}}{${2:*}}${3:[${4:OFFSET\}]}{${5:TEXT}}${0}
+
+snippet toprule
+    \toprule 
+
+snippet midrule
+    \midrule
+
+snippet bottomrule
+    \bottomrule
+
+snippet cmidrule
+    \cmidrule(${1:lr}){${2:1}-${3:2}}${0}
+
+snippet figure
+alias   \begin{figure} \figure
+	\begin{figure}[${1}]
+		\centering
+		\includegraphics[${2:width=${3\}\\\linewidth}]{${4}}
+        \captionsetup{justification=centering}
+		\caption{${5}}
+		\label{${6}}
+	\end{figure}${0}
+
+snippet tcbfigure
+	\begin{center}
+		\includegraphics[${1:width=${2\}\\\linewidth}]{${3}}
+		\captionof{figure}{${4}}
+		\label{${5}}
+	\end{center}${0}
+
+snippet minifigure
+    \begin{minipage}[${1:t}]{${2:0.25}\linewidth}
+        \begin{center}
+		    \includegraphics[${3:width=${4\}\\\linewidth}]{${5}}
+	    \end{center}
+	\end{minipage}${0}
+
+snippet subfigure
+alias   \subfigure
+    \begin{figure}[${1}]
+        \centering
+        \begin{subfigure}[${2}]{${3}.\linewidth}
+            \centering
+		    \includegraphics[${4:width=${5\}\\\linewidth}]{${6}}
+            \captionsetup{justification=centering}
+		    \caption{${7}}
+		    \label{${8}}
+        \end{subfigure}
+        \captionsetup{justification=centering}
+		\caption{${9}}
+		\label{${10}}
+    \end{figure}${0}
+
+snippet     wrapfigure
+alias       \begin{wrapfigure} \wrapfigure
+    \begin{wrapfigure}[${1:LINES}]{${2:R}}{${3:WIDTH}\linewidth}
+    \vspace*{${4:-${5\}pt}}
+        \centering
+            \includegraphics[${6:width=${7\}\\\linewidth}]{${8:PATH}}
+        \captionsetup{justification=centering}
+        \caption{${9:CAPTION}}
+        \label{fig:${10:LABEL}}
+    \end{wrapfigure}${0}
+
+# ========== SECTION ==========
+
+# ========== MATH ==========
+
+snippet     mathrm
+alias       \mathrm
+    \mathrm{${1}}${0}
+
+snippet     noindent
+    \noindent 
+
+snippet     displaystyle
+    \displaystyle 
+
+snippet     rsun
+    \Rsun
+
+snippet     tsun
+    \Tsun
+
+snippet     odot
+    \odot
+
+snippet     lsun
+    \Lsun
+
+snippet     sum
+    \sum_{${1:i=0}}^{${2:+\infty}}${0}
+
+snippet     prod
+    \prod_{${1:i=0}}^{${2:+\infty}}${0}
+
+snippet     nul
+    \underbrace{\cancel{${1}}}_{${2}}${0}
+
+snippet     bnul
+    \underbrace{\bcancel{${1}}}_{${2}}${0}
+
+snippet     cancel
+    \cancel{${1}}{${2}}${0}
+
+snippet     bcancel
+    \bcancel{${1}}{${2}}${0}
+
+snippet     Cancel
+    \bcancel{\cancel{${1}}{${2}}}${0}
+
+snippet     underbrace
+    \underbrace{${1}}_{${2}}${0}
+
+snippet     underbracket
+alias       bracket
+    \underbracket{${1}}_{${2}}${0}
+
+snippet     norm
+    \norm{${1}}${0}
+
+snippet     dag
+    \dag{${1}}${0}
+
+snippet     psh
+    \psh{${1}}{${2}}${0}
+
+snippet     abs
+    \abs{${1}}${0}
+
+snippet     moy
+    \moy{${1}}${0}
+
+snippet     tilde
+    \wildetilde{${1}}${0}
+
+snippet     hat
+    \widehat{${1}}${0}
+
+snippet     vect
+    \vv{\mathrm{${1}}}${0}
+
+snippet     vec
+    \vv{${1}}${0}
+
+snippet     noyau
+    \prescript{${1:UP}}{${2:DOWN}}{\mathrm{${3:ELEMENT}}}${0}
+
+snippet     oover
+    \overline{\overline{${1}}}${0}
+
+snippet     Ul
+alias       \Ul
+    \underline{${1}}${0}
+
+snippet     uul
+alias       \uuline
+    \underline{\underline{${1}}}${0}
+
+snippet     tendf
+    \underset{${1}\rightarrow+\infty}{\rightarrow}${0}
+
+snippet     tendo
+    \underset{${1}\rightarrow+0}{\rightarrow}${0}
+
+snippet     tendp
+    \underset{${1}\rightarrow+O^+}{\rightarrow}${0}
+
+snippet     tendm
+    \underset{${1}\rightarrow+0^-}{\rightarrow}${0}
+
+snippet     pdv
+    \pdv${1:[${2\}]}{${3}}{${4}}${0}
+
+snippet     dv
+    \dv${1:[${2\}]}{${3}}{${4}}${0}
+
+snippet     Pdv
+    \left. \pdv{${1}}{${2}} \right|_{${3}}${0}
+
+snippet     sq
+    \sqrt{${1}}${0}
+
+snippet     sqf
+    \sqrt{\frac{${1}}{${2}}}${0}
+
+snippet     St
+    _\mathrm{${1}}${0}
+
+snippet     Ot
+    ^\mathrm{${1}}${0}
+
+snippet     req
+    R_{\rm eq,${1}}${0}
+
+snippet     eq
+    _{\rm eq}${0}
+
+snippet     Vb
+    \left(\begin{array}{c}
+        ${1}\\\
+        ${2}\\\
+    \end{array}\right)
+    ${0}
+
+snippet     Vbt
+    \left( ${1} \quad ${2} \right)${0}
+
+snippet     Vc
+    \left(\begin{array}{c}
+        ${1}\\\
+        ${2}\\\
+        ${3}\\\
+    \end{array}\right)
+    ${0}
+
+snippet     vC
+    \left(\begin{array}{c}
+        \displaystyle ${1}\\\
+        \displaystyle ${2}\\\
+        \displaystyle ${3}\\\
+    \end{array}\right)
+    ${0}
+
+snippet     Vn
+    \left(\begin{array}{c}
+        ${1}\\\
+        ${2}\\\
+        ${3}\\\
+        ${4}\\\
+    \end{array}\right)
+    ${0}
+
+snippet     matb
+    \left(\begin{array}{c c}
+        ${1} & ${2}\\\
+        ${3} & ${4}\\\
+    \end{array}\right)
+    ${0}
+
+snippet     diagb
+    \left(\begin{array}{c c}
+        ${1} & 0\\\
+        0 & ${2}\\\
+    \end{array}\right)
+    ${0}
+
+snippet     matc
+    \left(\begin{array}{c c c}
+        ${1} & ${2} & ${3}\\\
+        ${4} & ${5} & ${6}\\\
+        ${7} & ${8} & ${9}\\\
+    \end{array}\right)
+    ${0}
+
+snippet     diagc
+    \left(\begin{array}{c c c}
+        ${1} & 0 & 0\\\
+        0 & ${2} & 0\\\
+        0 & 0 & ${3}\\\
+    \end{array}\right)
+    ${0}
+
+snippet     matd
+    \left(\begin{array}{c c c c}
+                ${1} & ${2} & ${3} & ${4}\\\
+                ${5} & ${6} & ${7} & ${8}\\\
+                ${9} & ${10} & ${11} & ${12}\\\
+                ${13} & ${14} & ${15} & ${16}\\\
+    \end{array}\right)}
+    ${0}
+
+snippet     diagd
+    \left(\begin{array}{c c c c}
+        ${1} & 0 & 0 & 0\\\
+        0 & ${2} & 0 & 0\\\
+        0 & 0 & ${3} & 0\\\
+        0 & 0 & 0 & ${4}\\\
+    \end{array}\right)
+    ${0}
+
+snippet     deff
+    \left.\begin{array}{rcl}
+        ${1} : ${2} & \rightarrow & ${3}\\\
+        ${4} & \mapsto & ${5}\\\
+    \end{array}\right.
+    ${0}
+
+snippet     textcolor
+    \textcolor{${1}}{${2}}${0}
+
+snippet     qmath
+    \qMath{${1:avec}}${0}
+
+snippet     qqmath
+    \qqMath{${1:avec}}${0}
+
+snippet     appnum
+    \left\{
+        \begin{array}{rcl}
+        ${1:var1} & = & ${2:value1}\\\
+        ${3:var2} & = & ${4:value2}
+        \end{array}
+    \right.${0}
+
+snippet     syst
+    \left\{
+        \begin{aligned}
+        ${1:var1} &= ${2:value1}\\\
+        ${3:var2} &= ${4:value2}
+        \end{aligned}
+    \right.${0}
+
+snippet     boxed
+    \boxed{${1}}${0}
+
+snippet     _
+    _{${1}}${0}
+
+snippet     plus
+alias       \plus
+    \plus{${1}}$0
+
+snippet     moin
+alias       \moin
+    \moin{${1}}$0
+
+snippet     int
+alias        \int
+    \int_{${1}}^{${2}} ${0}
+
+snippet \frac
+alias   frac \frac{
+	\frac{${1}}{${2}}${0}
+
+snippet \left
+alias   left
+abbr	\left \right
+	\left${1:(} ${3:#:body} \right${2:)}${0}
+
+snippet     \LF
+alias       LF \LF{
+    \left( \frac{${1:UP}}{${2:DOWN}} \right)${0}
+
+snippet     \LR
+alias       LR \LR{
+    \left( ${1:TARGET} \right)${0}
+
+snippet     \SI
+alias       SI \SI{
+    \SI{${1:VALUE}}{${2:UNITS}}${0}
+
+snippet     num
+    \num{${1}}${0}
+
+# ========== TikZ ==========
+
+snippet     circuitikz
+alias       circuit
+    \begin{circuitikz}${1:[scale=${2\}]}
+        \draw
+        (0,0) ${3}
+    ;
+    \end{circuitikz}${0}
+
+snippet     Vv
+    to[V, name=${1:E}, V^>=$E_${2}$${3:, i^>=$i_${4\}$}, !vi]
+    (${7},${8})${0}
+
+snippet     Ii
+    to[I, name=${1:I}, I=$I${2:_${3\}}$, !vi]
+    (${4},${5})${0}
+
+snippet     Rr
+    to[R, name=${1:R}${2:, i>^=$i_${3\}$}${4:, v^<=$U_${5\}$}, !vi]
+    (${7},${8})${0}
+
+snippet     Cc
+    to[C${1:,l^=$C${2\}$}, name=${3:C}${4:, i>^=$i_${5\}$}${6:, v^<=$u_${7\}$}, !vi]
+    (${8},${9})${0}
+
+snippet     Ll
+    to[L${1:,l^=$L_${2\}$}, name=${3:L}${4:, i>^=$i_${5\}$}${6:, v^<=$u_${7\}$}, !vi]
+    (${8},${9})${0}
+
+snippet     short
+    to[short, name=${1:S}, i>^=$${2}$]
+    (${3},${4})${0}
+
+snippet     shift
+    ([shift={(${1},${2})}]${3}.${4:center})${0}
+
+snippet     iarr
+alias       iarronly
+    \iarronly{${1:R}}${0}
+
+snippet     varr
+alias       varronly
+    \varronly{${1:R}}${0}
+
+snippet     pt
+    (${1},${2})${0}
+
+snippet     bullet
+    node {${1:\\\color{${2:ForestGreen\}\}}$\bullet$}${0}
+
+snippet     midway
+    node[${1:midway${2\}}] {${3}}${0}
+
+snippet     equiv
+    \node[right=${1:1}em] (${2:E}) at (${3}) {$\equiv$};
+    \draw[shift={($($2)+(2em,0)$)}]
+    ${0}
+    ;
+
+snippet     Ldm
+    \node[${1:Orchid}] (LM${2:1}) at (${3},${4}) {$2};
+    \circledarrow{$1}{(LM$2)}{${5:0.5}}${0}
+
+snippet     Ldmcw
+    \node[${1:Orchid}] (LM${2:1}) at (${3},${4}) {$2};
+    \circledarrowcw{$1}{(LM$2)}{${5:0.5}}${0}
+
+snippet     Req
+    (0,0) node {$\bullet$} node [left] {A}
+    to[R, name=Req]
+    (2,0) node {$\bullet$} node [right] {B};
+    \node[] at (Req.center) {$R_{\rm eq}$};
+
+snippet tikzpicture
+alias   \begin{tikzpicture}
+	\begin{tikzpicture}[${1}]
+		${2:TARGET}
+	\end{tikzpicture}
+
+snippet axis
+    \begin{axis}[
+        xmin=${1}, xmax=${2},
+        ymin=${3}, ymax=${4},
+        xlabel=${5}, ylabel=${6},
+        axis lines=${7:left},
+        clip=false]
+        ${0}
+    \end{axis}
+
+snippet addplot
+    \addplot[
+        domain=${1}:${2},
+        smooth,
+        ${3:black}]
+        {${4:EQUATION}};
+    ${5:\\\addlegendentry{${6\}\}}${0}
+
+snippet foreach
+    \foreach ${1:\\\n} in {${2:${3:1\}, ...,${4:1\}}}{
+        ${5}
+    ;}
+
+snippet path
+alias   \path
+	\path[${1}] ${2};${0}
+
+snippet draw
+alias   \draw
+	\draw[${1}] ${2};${0}
+
+snippet fill
+alias   \fill
+	\fill[${1}] ${2};${0}
+
+snippet filldraw
+alias   \filldraw
+	\filldraw[${1}] ${2};${0}
+
+snippet shade
+alias   \shade
+	\shade[${1}] ${2};${0}
+
+snippet coordinate
+    coordinate (${1:name})${0}
+
+snippet \coordinate
+	\coordinate (${2:name}) at (${3},${4});${0}
+
+snippet node
+    node [${1:position}] ${2:(${3:name\}) }{${4:$A$}}${0}
+
+snippet \node
+	\node[${1}] ${2:(${3:name\}) }at (${4},${5}) {${6}};${0}
+
+snippet axoptique
+alias   \axoptique
+    % Axe optique
+    \draw[thin, ->](-${1:3},0)--($1,0)node[below]{A.O.};
+    ${0}
+
+snippet grid
+    % grid
+    \draw[lightgray!10, ultra thin, help lines]
+        (${1:-4},${2:-3}) grid
+        (${3:4},${4:3});
+    \draw[lightgray!10, ultra thin, help lines, dotted, step=.5cm]
+        ($1,$2) grid
+        ($3,$4);
+
+snippet algsens
+    % Sens de comptage
+    \node[] (${1:Cp}) at (${2},${3}) {$\oplus$};
+    \draw[<->] ($1.north west) |- ($1.south east);
+    ${0}
+
+snippet angsens
+    % Sens de comptage
+    \node[] (${1:Cp}) at (${2},${3}) {$\oplus$};
+    \circledarrow{${4:black}}{($1)}{${5:0.3}}${0}
+
+snippet oeil
+    \oeil[shift={(${1},${2})}, rotate=${3:180}];${0}
+
+snippet lensconv
+alias   \lensconv
+    % Lentille ${1}
+    \coordinate (O$1) at (${2:0},0);
+    \def \f${3:a}{${4:2}}
+    \def \lsiz{${5:2}}
+    \coordinate (F$1) at ($(O$1)+(-\f$3,0)$);
+    \coordinate (F$1p) at ($(O$1)+(\f$3,0)$);
+
+    \foreach \x/\z in {O$1/\f$3}{
+        \node[] at (\x) {$\times$};
+        \node[below right] at (\x) {$O_$1$};
+        \node[] at ([shift={(\z,0)}]\x) {$\times$};
+        \node[below] at ([shift={(\z,0)}]\x) {$F'_$1$};
+        \node[] at ([shift={(-\z,0)}]\x) {$\times$};
+        \node[below] at ([shift={(-\z,0)}]\x) {$F_$1$};
+    }
+
+    \draw[shift={(O$1)}, thick, <->, >=latex, name path=L$1]
+        (0,-\lsiz) coordinate (L$1b) --
+        (0,\lsiz) coordinate (L$1t)
+        node[above]{$\Lc_{$1}$};
+    ${0}
+
+snippet lensdiv
+alias   \lensdiv
+    % Lentille ${1}
+    \coordinate (O$1) at (${2:0},0);
+    \def \f${3:a}{-${4:2}}
+    \def \lsiz{${5:2}}
+    \coordinate (F$1) at ($(O$1)+(-\f$3,0)$);
+    \coordinate (F$1p) at ($(O$1)+(\f$3,0)$);
+
+    \foreach \x/\z in {O$1/\f$3}{
+        \node[] at (\x) {$\times$};
+        \node[below right] at (\x) {$O_$1$};
+        \node[] at ([shift={(\z,0)}]\x) {$\times$};
+        \node[below] at ([shift={(\z,0)}]\x) {$F'_$1$};
+        \node[] at ([shift={(-\z,0)}]\x) {$\times$};
+        \node[below] at ([shift={(-\z,0)}]\x) {$F_$1$};
+    }
+
+    \draw[shift={(O$1)}, thick, >-<, >=latex, name path=L$1]
+        (0,-\lsiz) coordinate (L$1b) --
+        (0,\lsiz) coordinate (L$1t)
+        node[above]{$\Lc_{$1}$};
+    ${0}
+
+snippet planfoc
+    % Plan focal
+    \def\pfsiz{3}
+    \draw[shift={(F${1})}, dashed,
+        gray!70, name path=PF$1] ($(F$1)+(0,-\pfsiz/2)$)
+        --++ (0,\pfsiz) node[above right] {$\F$1$};
+    \path[name intersections={of=${2:B} and PF$1, by=$2F$1}];
+    \draw[] ($2F$1) node {+};
+
+snippet ecran
+    % Écran
+    \def\ecsiz{${1:3}}
+    \coordinate (${2:E}) at (${3},${4:0})
+        node[${5:below left}] at ($2) {$2}
+        node at ($2) {$\times$};
+    \draw[thin]
+        ([shift={(0,-\ecsiz/2)}]$2)
+        --++ (0,\ecsiz);
+    ${0}
+
+snippet intvert
+    % Intersection avec verticale
+    \def\vertsiz{${1:5}}
+    \path[name path=V${2}] (${3},-\vertsiz/2)
+        --++ (0,\vertsiz);
+    ${0}
+
+snippet ints
+    % Define intersection
+    \path[name intersections={of=${1} and ${2}, by=${3}}];
+    ${0}
+
+snippet angle
+    % Angle
+    \draw (${1}) to[bend ${2:left}] node[midway, $2]{$${3}$} (${4});${0}
+
+snippet pic
+    % Draw angles
+    \pic[angle radius=${1:1cm}, angle eccentricity=${2:1.3},
+            draw, ${3:->, }${4:brandeisblue${5:\\}},
+            "$${6:\\\alpha}$" alias=${7:alpha}]
+        {angle=${8}--${9}--${10}};
+    ${0}
+
+snippet rpic
+    % Draw right angle
+    \pic[angle radius=${1:0.2}cm, angle eccentricity=${2:1.3}, draw]
+        {right angle=${3}--${4}--${5}};
+
+snippet perp
+    % Perpendicular
+    \draw[${1:->, -latex, color=${2:red!40}}] (${3:start})
+    -- ($($3)!${4:length}!90:(${5:endline})$);
+
+snippet obj
+    % Objet
+    \def \pos{${1:-2}}
+    \def \siz{${2:1}}
+    \coordinate (${3:A}) at ($(O${4})+(\pos,0)$);
+    \coordinate (${5:B}) at ($($3)+(0,\siz)$);
+    \draw[->, ${6:Purple!70}] ($3) 
+        node[below] {$3}
+        -- ($5)
+        node[above left] {$5};
+    ${0}
+
+snippet len
+    \len{(${1:COORD})}{(${2:COORD})}{${3:NAME}}${0}
+
+snippet rayAFconv
+    % Rayons pour objet avant foyer d'une lentille convergente
+    % Lengths
+    \len{(${1:A})}{(O${2})}{\posi}
+    \len{($1)}{(${3:B})}{\size}
+    \len{(O$2)}{(F$2)}{\foc}
+    % Rayon 1
+    \draw[${4:brandeisblue}, simple] ($3) -- (O$2);
+    \def\mut{2}
+    \draw[${5:orange!70}, simple, name path=OBp] (O$2)
+        --++ ($\mut*(O$2)-\mut*($3)$);
+    % Rayon 2
+    \draw[$4, double] ($3) --++ (\posi,0) coordinate (I);
+    \def \mut{2}
+    \draw[$5, double, name path=IBp] (I)
+        --++ ($\mut*(F$2p)-\mut*(I)$);
+    \def \intsiz{\size*\foc/(\posi-\foc)}
+    % Rayon 3
+    \draw[$4, triple] ($3) -- (F$2)
+        --++ (\foc,-{\intsiz}) coordinate (E);
+    \def \mut{2}
+    \draw[$5, triple, name path=EBp] (E) --++ (\mut*\foc,0);
+    % Image
+    \path[name intersections={of=OBp and IBp, by=${6:B1}}];
+    \coordinate (${7:A1}) at ($($6)+(0,{\intsiz})$);
+    \draw[->, ${8:Red!70}] ($7) 
+        node[above] {$7}
+        -- ($6)
+        node[below right] {$6};
+    ${0}
+
+snippet rayAFdiv
+    % Rayons pour objet avant foyer image d'une lentille divergente
+    % Lengths
+    \len{(${1:A})}{(O${2})}{\posi}
+    \len{($1)}{(${3:B})}{\size}
+    \len{(O$2)}{(F$2)}{\foc}
+    % Rayon 1
+    \draw[${4:brandeisblue}, simple, name path=OBp] ($3) -- (O$2);
+    \def \mut{1.2}
+    \draw[${5:orange!70}, simple] (O$2) --++ ($\mut*(O$2)-\mut*($3)$);
+    % Rayon 2
+    \draw[$4, double] ($3) --++ (\posi,0) coordinate (I);
+    \def \mut{2}
+    \draw[$5, double] (I)
+        --++ ($-\mut*(F$2p)+\mut*(I)$);
+    \draw[$5, doublerev,
+        dashed, name path=IBp] (I)
+        --++ ($\mut*(F$2p)-\mut*(I)$);
+    % Rayon 3
+    \path[name path=tripleB] ($3) -- (F$2);
+    \path[name intersections={of=L$2 and tripleB, by=E}];
+    \draw[$4, triple] ($3) -- (E);
+    \def \mut{2}
+    \draw[$4, triple, dashed] (E) --++ ($\mut*(F$2)-\mut*(E)$);
+    \draw[$5, triple] (E) --++ (\mut*\foc,0);
+    \draw[$5, triplerev,
+        dashed, name path=EBp] (E) --++ (-\mut*\foc,0);
+    % Image
+    \path[name intersections={of=OBp and IBp, by=${6:B1}}];
+    \len{(O$2)}{(E)}{\intsiz}
+    \coordinate (${7:A1}) at ($($6)+(0,-{\intsiz})$);
+    \draw[->, ${8:Red!70}] ($7) 
+        node[below] {$7}
+        -- ($6)
+        node[above right] {$6};
+    ${0}
+
+snippet rayBFconv
+    % Rayons pour objet sur le foyer d'une lentille convergente
+    % Lengths
+    \len{(${1:A})}{(O${2})}{\posi}
+    \len{($1)}{(${3:B})}{\size}
+    \len{(O$2)}{(F$2)}{\foc}
+    % Rayon 1
+    \draw[${4:brandeisblue}, simple] ($3) -- (O$2);
+    \def \mut{1.8}
+    \draw[${5:orange!70}, simple, name path=OBp] (O$2) --++ ($\mut*($3)-\mut*(O$2)$);
+    % Rayon 2
+    \draw[$4, double] ($3) --++ (\posi,0) coordinate (I);
+    \def \mut{2}
+    \draw[$5, double, name path=IBp] (I) --++ ($\mut*(F$2p)-\mut*(I)$);
+    ${0}
+
+snippet rayBFdiv
+    % Rayons pour objet virtuel entre O et F d'une lentille divergente
+    % Lengths
+    \len{(${1:A})}{(O${2})}{\posi}
+    \len{($1)}{(${3:B})}{\size}
+    \len{(O$2)}{(F$2)}{\foc}
+    % Rayon 1
+    \draw[${4:brandeisblue}, simple] (\$2*(O$2)-($3)$) -- (O$2);
+    \def \mut{1.8}
+    \draw[${5:orange!70}, simple, name path=OBp] (O$2) --++ ($\mut*($3)-\mut*(O$2)$);
+    % Rayon 2
+    \def \mut{3}
+    \draw[$4, double] ($($3)-(\mut*\posi,0)$)
+        --++ (\mut*\posi-\posi,0) coordinate (I);
+    \draw[$4, dashed, double] (I) --++ (2*\posi,0);
+    \def \mut{1.2}
+    \draw[$5, doublerev, dashed] (I)
+        --++ ($\mut*(F$2p)-\mut*(I)$);
+    \draw[$5, double, name path=IBp] (I)
+        --++ ($-\mut*(F$2p)+\mut*(I)$);
+    % Rayon 3
+    \path[name path=tripleB] (F$2) --++ (\$3*($3)-3*(F$2)$);
+    \path[name intersections={of=L$2 and tripleB, by=E}];
+    \def \mut{1.5}
+    \draw[$4, triplerev] (E) --++ ($\mut*($3)-\mut*(F$2)$);
+    \draw[$4, dashed, triple] (E) --++ ($\mut*(F$2)-\mut*(E)$);
+    \draw[$5, triple, name path=EBp] (E) --++ (\mut*\foc,0);
+    % Image
+    \path[name intersections={of=OBp and IBp, by=${6:B1}}];
+    \len{(O$2)}{(E)}{\intsiz}
+    \coordinate (${7:A1}) at ($($6)+(0,-{\intsiz})$);
+    \draw[->, ${8:Red!70}] ($7) 
+        node[below] {$7}
+        -- ($6)
+        node[below right] {$6};
+    ${0}
+
+snippet rayCFconv
+    % Rayons pour objet entre le foyer et le centre d'une lentille convergente
+    % Lengths
+    \len{(${1:A})}{(O${2})}{\posi}
+    \len{($1)}{(${3:B})}{\size}
+    \len{(O$2)}{(F$2)}{\foc}
+    % Rayon 1
+    \draw[${4:brandeisblue}, simple] ($3) -- (O$2);
+    \draw[${5:orange!70}, simple] (O$2) --++ ($(O$2)-($3)$);
+    \def \mut{2}
+    \draw[$5, simplerev,
+        dashed, name path=OBp] ($3) --++ ($\mut*($3)-\mut*(O$2)$);
+    % Rayon 2
+    \draw[$4, double] ($3) --++ (\posi,0) coordinate (I);
+    \def \mut{2}
+    \draw[$5, double] (I) --++ ($\mut*(F$2p)-\mut*(I)$);
+    \draw[$5, doublerev,
+        dashed, name path=IBp] (I) --++ ($-\mut*(F$2p)+\mut*(I)$);
+    % Rayon 3
+    \def \intsiz{\size*\foc/(\posi-\foc)}
+    \draw[$4, triple] ($3) -- (F$2)
+        --++ (\foc,-{\intsiz}) coordinate (E);
+    \def \mut{2}
+    \draw[$5, triple] (E) --++ (\mut*\foc,0);
+    \draw[$5, triplerev,
+        dashed, name path=EBp] (E) --++ (-\mut*\foc,0);
+    % Image
+    \path[name intersections={of=OBp and IBp, by=${6:B1}}];
+    \coordinate (${7:A1}) at ($($6)+(0,{\intsiz})$);
+    \draw[->, ${8:Red!70}] ($7) 
+        node[below] {$7}
+        -- ($6)
+        node[below right] {$6};
+    ${0}
+
+snippet rayCFdiv
+    % Rayons pour objet virtuel sur F d'une lentille divergente
+    % Lengths
+    \len{(${1:A})}{(O${2})}{\posi}
+    \len{($1)}{(${3:B})}{\size}
+    \len{(O$2)}{(F$2)}{\foc}
+    % Rayon 1
+    \draw[${4:brandeisblue}, simple] (\$2*(O$2)-($3)$) -- (O$2);
+    \def \mut{1.8}
+    \draw[${5:orange!70}, simple, name path=OBp] (O$2) --++ ($\mut*($3)-\mut*(O$2)$);
+    % Rayon 2
+    \def \mut{3}
+    \draw[$4, double] ($($3)-(\mut*\posi,0)$)
+        --++ (\mut*\posi-\posi,0) coordinate (I);
+    \draw[$4, dashed, double] (I) --++ (2*\posi,0);
+    \def \mut{1.2}
+    \draw[$5, doublerev, dashed] (I)
+        --++ ($\mut*(F$2p)-\mut*(I)$);
+    \draw[$5, double, name path=IBp] (I)
+        --++ ($-\mut*(F$2p)+\mut*(I)$);
+    ${0}
+
+snippet rayDFconv
+    % Rayons pour objet virtuel d'une lentille convergente
+    % Lengths
+    \len{(${1:A})}{(O${2})}{\posi}
+    \len{($1)}{(${3:B})}{\size}
+    \len{(O$2)}{(F$2)}{\foc}
+    % Rayon 1
+    \draw[${4:brandeisblue}, simple] (\$2*(O$2)-($3)$) -- (O$2);
+    \def \mut{1.8}
+    \draw[${5:orange!70}, simple, name path=OBp] (O$2) --++ ($\mut*($3)-\mut*(O$2)$);
+    % Rayon 2
+    \def \mut{2}
+    \draw[$4, double] ($($3)-(\mut*\posi,0)$)
+        --++ (\mut*\posi-\posi,0) coordinate (I);
+    \draw[$4, dashed, double] (I) --++ (2*\posi,0);
+    \def \mut{2}
+    \draw[$5, double, name path=IBp] (I) --++ ($\mut*(F$2p)-\mut*(I)$);
+    % Rayon 3
+    \def \intsiz{\size*\foc/(\posi+\foc)}
+    \draw[$4, triple] (F$2) --++ (\foc,{\intsiz}) coordinate (E);
+    \def \mut{1.5}
+    \draw[$4, dashed, triple] (E) -- ($3) --++ ($\mut*($3)-\mut*(E)$);
+    \draw[$5, triple, name path=EBp] (E) --++ (1.5*\posi,0);
+    % Image
+    \path[name intersections={of=OBp and IBp, by=${6:B1}}];
+    \coordinate (${7:A1}) at ($($6)+(0,-{\intsiz})$);
+    \draw[->, ${8:Red!70}] ($7) 
+        node[below] {$7}
+        -- ($6)
+        node[below right] {$6};
+    ${0}
+
+snippet rayDFdiv
+    % Rayons pour objet virtuel après F d'une lentille divergente
+    % Lengths
+    \len{(${1:A})}{(O${2})}{\posi}
+    \len{($1)}{(${3:B})}{\size}
+    \len{(O$2)}{(F$2)}{\foc}
+    % Rayon 1
+    \draw[${4:brandeisblue}, simple, name path=OBp] (\$2*(O$2)-1.2*($3)$) -- (O$2);
+    \def \mut{1.8}
+    \draw[${5:orange!70}, simple] (O$2) --++ ($\mut*($3)-\mut*(O$2)$);
+    % Rayon 2
+    \def \mut{2.2}
+    \draw[$4, double] ($($3)-(\mut*\posi,0)$)
+        --++ (\mut*\posi-\posi,0) coordinate (I);
+    \draw[$4, dashed, double] (I) --++ (2*\posi,0);
+    \def \mut{2.2}
+    \draw[$5, doublerev, dashed, name path=IBp] (I)
+        --++ ($\mut*(F$2p)-\mut*(I)$);
+    \def \mut{1.2}
+    \draw[$5, double] (I)
+        --++ ($-\mut*(F$2p)+\mut*(I)$);
+    % Rayon 3
+    \path[name path=tripleB] ($3) --++ (\$3*(F$2)-3*($3)$);
+    \path[name intersections={of=L$2 and tripleB, by=E}];
+    \def \mut{1.5}
+    \draw[$4, triplerev] (E) --++ ($\mut*(F$2)-\mut*($3)$);
+    \def \mut{2.2}
+    \draw[$4, dashed, triple] (E) --++ ($\mut*(F$2)-\mut*(E)$);
+    \draw[$5, triple] (E) --++ (\mut*\foc,0);
+    \draw[$5, triplerev,
+        dashed, name path=EBp] (E) --++ (-\mut*\foc,0);
+    % Image
+    \path[name intersections={of=OBp and IBp, by=${6:B1}}];
+    \len{(O$2)}{(E)}{\intsiz}
+    \coordinate (${7:A1}) at ($($6)+(0,{\intsiz})$);
+    \draw[->, ${8:Red!70}] ($7) 
+        node[above] {$7}
+        -- ($6)
+        node[below] {$6};
+    ${0}
+
+snippet mirror
+    % Miroir
+    \node[mirror${1:, rotate=${2:45\}},
+    name path=Mpath]
+    (${3:name}) at (${4:0},${5:0}) {};
+    \node[${6:below}] at ($3.${7:south}) {${8:M}};
+    ${0}
+
+snippet point
+    % Point
+    \coordinate (${1:A}) at (${2:0},${3:0});
+    \node[${4:above}, ${5:Purple!70}] at ($1) {${6:$1}};
+    \node[$5] at ($1) {$\times$};
+    ${0}
+
+snippet projection
+    % Projection
+    \coordinate (${1:H}) at ($(${2:M}.north)!(${3:A})!($2.south)$);
+    \node[${4:above right}, gray!70] at ($1) {${5:$1}};
+    \node[gray!70] at ($1) {$\times$};
+    \draw[dashed, gray!70] ($3) -- ($1);
+
+snippet axesym
+    % Projection
+    \coordinate (${1:H}) at ($(${2:M}.north)!(${3:A})!($2.south)$);
+    \node[${4:above right}, gray!70] at ($1) {${5:$1}};
+    \node[gray!70] at ($1) {$\times$};
+    \draw[dashed, gray!70] ($3) -- ($1) --++ ($($1)-($3)$) coordinate (${6:$3p});
+    % Symétrique
+    \node[${7:below}, ${8:Red!70}] at ($6) {${9:A$'$}};
+    \node[$8] at ($6) {$\times$};
+    ${0}
+
+snippet dioptre
+    % Dioptre
+    \def\na{${1:1.0}}
+    \def\nb{${2:1.33}}
+    \node[screen,
+        object height=${3:2}cm${4:, rotate=${5:-90\}},
+        name path=Dpath${6}] (dioptre$6) at (${7:0},${8:0}) {};
+    \node[${9:right}] at (dioptre$6.${10:south}) {dioptre};
+    % Milieu n1
+    \node[${11: above left}] at (dioptre$6.$10) {$n_\mathrm{${12:air}}$};
+    % Milieu n2
+    \def\dh{${15:2}}
+    \coordinate (D1) at ($(dioptre$6.north)!\dh cm!-90:(dioptre$6.south)$);
+    \fill[${16:brandeisblue!30}]
+        (dioptre$6.south) -- (dioptre$6.north) --
+        (D1) -- (D1-|dioptre.south) -- cycle;
+    \node[${13: below left}] at (dioptre$6.$10) {$n_\mathrm{${14:eau}}$};
+    ${0}
+
+snippet convex
+    % Miroir ${1}
+    \def \rad{${2:3}}
+    \def \msiz{${3:2}}
+    \node[convex mirror, spherical mirror angle=from_radius(\rad cm),
+        object height=\msiz cm, rotate=${4:0},
+        draw mirror focus={${5:black}},
+        draw mirror center={${6:black}},
+        name path=Mpath] (M$1) at (${7:0}, ${8:0});
+    \node[${9:below left}] (S$1) at (M$1.arc center) {${10:S}};
+    \node[${11:below}] (${12:F}) at (M$1.focus) {${13:F}};
+    \node[${14:below}] (${15:C}) at (M$1.mirror center) {${16:C}};
+    \node[${17:below}] at (M$1.south) {${18:M}};
+    ${0}
+
+snippet concave
+    % Miroir ${1}
+    \def \rad{${2:3}}
+    \def \msiz{${3:2}}
+    \node[concave mirror, spherical mirror angle=from_radius(\rad cm),
+        object height=\msiz cm, rotate=${4:0},
+        draw mirror focus={${5:black}},
+        draw mirror center={${6:black}}] (M$1) at (${7:0}, ${8:0});
+    \node[${9:below left}] (S$1) at (M$1.arc center) {${10:S}};
+    \node[${11:below}] (${12:F}) at (M$1.focus) {${13:F}};
+    \node[${14:below}] (${15:C}) at (M$1.mirror center) {${16:C}};
+    \node[${17:below}] at (M$1.south) {${18:M}};
+    ${0}
+
+snippet grandeurs
+    % Grandeurs
+    \node[${1:below}] (${2:O}g) at ($2) {};
+    \node[$1] (${3:Fp}g) at ($3) {};
+    \draw[|<->|, ${4:ForestGreen}] ($2g) --
+        node[${5:below}, ${6:midway}, sloped]
+        {\\${7:scriptsize} $${8}\SI{${9}}{${10}}$} ($3g);
+    ${0}
+
+# ========== OTHERS ==========
+snippet usepackage
+	\usepackage${1:[${2\}]}{${3}}
+
+snippet     subsection
+    \subsection{${1}}
+    ${0}
+
+snippet ref
+alias   \ref
+	\ref{${1}}${0}
+
+snippet label
+alias   \label
+	\label{${1}}${0}
+
+snippet smallbreak
+alias   \smallbreak
+	\smallbreak
+
+snippet bigbreak
+	\bigbreak

@@ -1,0 +1,144 @@
+let SessionLoad = 1
+let s:so_save = &g:so | let s:siso_save = &g:siso | setg so=0 siso=0 | setl so=-1 siso=-1
+let v:this_session=expand("<sfile>:p")
+silent only
+silent tabonly
+cd ~/.config/nvim/snippets/latex
+if expand('%') == '' && !&modified && line('$') <= 1 && getline(1) == ''
+  let s:wipebuf = bufnr('%')
+endif
+let s:shortmess_save = &shortmess
+if &shortmess =~ 'A'
+  set shortmess=aoOA
+else
+  set shortmess=aoO
+endif
+badd +715 ~/.config/nvim/snippets/tex/tex.lua
+badd +522 ~/texmf/tex/latex/local/cours-preambule.sty
+badd +13 ~/texmf/tex/latex/local/custikz.sty
+badd +15 ~/.config/nvim/lua/config/keymaps.lua
+badd +28 ~/.config/nvim/snippets/tex/tex.snippets
+badd +324 ~/.config/nvim/snippets/latex/latex.json
+argglobal
+%argdel
+$argadd ~/.config/nvim/snippets/tex/tex.lua
+tabnew +setlocal\ bufhidden=wipe
+tabrewind
+edit ~/.config/nvim/snippets/tex/tex.lua
+let s:save_splitbelow = &splitbelow
+let s:save_splitright = &splitright
+set splitbelow splitright
+wincmd _ | wincmd |
+vsplit
+1wincmd h
+wincmd w
+wincmd _ | wincmd |
+split
+1wincmd k
+wincmd w
+let &splitbelow = s:save_splitbelow
+let &splitright = s:save_splitright
+wincmd t
+let s:save_winminheight = &winminheight
+let s:save_winminwidth = &winminwidth
+set winminheight=0
+set winheight=1
+set winminwidth=0
+set winwidth=1
+wincmd =
+argglobal
+balt ~/.config/nvim/snippets/tex/tex.snippets
+let s:l = 860 - ((8 * winheight(0) + 23) / 46)
+if s:l < 1 | let s:l = 1 | endif
+keepjumps exe s:l
+normal! zt
+keepjumps 860
+normal! 07|
+wincmd w
+argglobal
+if bufexists(fnamemodify("~/.config/nvim/snippets/tex/tex.snippets", ":p")) | buffer ~/.config/nvim/snippets/tex/tex.snippets | else | edit ~/.config/nvim/snippets/tex/tex.snippets | endif
+if &buftype ==# 'terminal'
+  silent file ~/.config/nvim/snippets/tex/tex.snippets
+endif
+balt ~/.config/nvim/lua/config/keymaps.lua
+let s:l = 15 - ((14 * winheight(0) + 11) / 23)
+if s:l < 1 | let s:l = 1 | endif
+keepjumps exe s:l
+normal! zt
+keepjumps 15
+normal! 024|
+wincmd w
+argglobal
+if bufexists(fnamemodify("~/.config/nvim/snippets/latex/latex.json", ":p")) | buffer ~/.config/nvim/snippets/latex/latex.json | else | edit ~/.config/nvim/snippets/latex/latex.json | endif
+if &buftype ==# 'terminal'
+  silent file ~/.config/nvim/snippets/latex/latex.json
+endif
+balt ~/.config/nvim/snippets/tex/tex.snippets
+let s:l = 324 - ((8 * winheight(0) + 11) / 22)
+if s:l < 1 | let s:l = 1 | endif
+keepjumps exe s:l
+normal! zt
+keepjumps 324
+normal! 024|
+wincmd w
+3wincmd w
+wincmd =
+tabnext
+edit ~/texmf/tex/latex/local/cours-preambule.sty
+let s:save_splitbelow = &splitbelow
+let s:save_splitright = &splitright
+set splitbelow splitright
+wincmd _ | wincmd |
+vsplit
+1wincmd h
+wincmd w
+let &splitbelow = s:save_splitbelow
+let &splitright = s:save_splitright
+wincmd t
+let s:save_winminheight = &winminheight
+let s:save_winminwidth = &winminwidth
+set winminheight=0
+set winheight=1
+set winminwidth=0
+set winwidth=1
+wincmd =
+argglobal
+let s:l = 522 - ((23 * winheight(0) + 22) / 45)
+if s:l < 1 | let s:l = 1 | endif
+keepjumps exe s:l
+normal! zt
+keepjumps 522
+normal! 0
+wincmd w
+argglobal
+if bufexists(fnamemodify("~/texmf/tex/latex/local/custikz.sty", ":p")) | buffer ~/texmf/tex/latex/local/custikz.sty | else | edit ~/texmf/tex/latex/local/custikz.sty | endif
+if &buftype ==# 'terminal'
+  silent file ~/texmf/tex/latex/local/custikz.sty
+endif
+balt ~/texmf/tex/latex/local/cours-preambule.sty
+let s:l = 13 - ((12 * winheight(0) + 22) / 45)
+if s:l < 1 | let s:l = 1 | endif
+keepjumps exe s:l
+normal! zt
+keepjumps 13
+normal! 0
+wincmd w
+wincmd =
+tabnext 1
+if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0 && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
+  silent exe 'bwipe ' . s:wipebuf
+endif
+unlet! s:wipebuf
+set winheight=1 winwidth=20
+let &shortmess = s:shortmess_save
+let &winminheight = s:save_winminheight
+let &winminwidth = s:save_winminwidth
+let s:sx = expand("<sfile>:p:r")."x.vim"
+if filereadable(s:sx)
+  exe "source " . fnameescape(s:sx)
+endif
+let &g:so = s:so_save | let &g:siso = s:siso_save
+set hlsearch
+doautoall SessionLoadPost
+unlet SessionLoad
+" vim: set ft=vim :
