@@ -53,8 +53,8 @@ bindsym XF86MonBrightnessDown exec light -U 10
 bindsym XF86MonBrightnessUp exec light -A 10
 
 # Displays
-# bindsym XF86Display exec --no-startup-id i3run --title disp -- arandr --title disp
-bindsym $mod+Shift+F7 exec --no-startup-id i3run --title arandr --rename -- arandr
+bindsym XF86Display exec --no-startup-id i3run --title arandr --rename -- arandr
+bindsym $mod+F7 exec --no-startup-id i3run --title arandr --rename -- arandr
 for_window [class="Arandr"] floating enable
 
 # Qalculate-gtk
@@ -62,9 +62,18 @@ for_window [class="Arandr"] floating enable
 bindsym $mod+F9 exec --no-startup-id i3run --title qalc -- qalculate-gtk --title qalc
 for_window [class="Qalculate-gtk"] floating enable
 
-bindsym Print exec --no-startup-id shutter -s -C
-bindsym Shift+Print exec --no-startup-id shutter -w -C
-for_window [class="Shutter"] floating enable
+## Screenshots
+# bindsym Print exec --no-startup-id shutter -s -C
+# bindsym Shift+Print exec --no-startup-id shutter -w -C
+# for_window [class="Shutter"] floating enable
+bindsym Print exec --no-startup-id maim "/home/nora/Pictures/screens/$(date +'%y-%m-%d_%T').png"
+bindsym $mod+Print exec --no-startup-id maim --window $(xdotool getactivewindow) "/home/nora/Pictures/screens/$(date +'%y-%m-%d_%T').png"
+bindsym Shift+Print exec --no-startup-id maim --select "/home/nora/Pictures/screens/$(date +'%y-%m-%d_%T').png"
+
+## Clipboard Screenshots
+bindsym Ctrl+Print exec --no-startup-id maim | xclip -selection clipboard -t image/png
+bindsym Ctrl+$mod+Print exec --no-startup-id maim --window $(xdotool getactivewindow) | xclip -selection clipboard -t image/png
+bindsym Ctrl+Shift+Print exec --no-startup-id maim --select | xclip -selection clipboard -t image/png
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -135,6 +144,8 @@ bindsym $mod+Shift+u mark "comms", move scratchpad
 bindsym $mod+u [con_mark="comms"] scratchpad show
 bindsym $mod+Shift+i mark "float", move scratchpad
 bindsym $mod+i [con_mark="float"] scratchpad show
+bindsym $mod+Shift+o mark "other", move scratchpad
+bindsym $mod+o [con_mark="other"] scratchpad show
 
 # focus the parent container
 bindsym $mod+x focus parent
@@ -234,7 +245,7 @@ mode "resize" {
 }
 
 bindsym $mod+r mode "resize"
-bindsym $mod+F7 exec --no-startup-id picom -b
+bindsym $mod+Shift+F7 exec --no-startup-id picom -b
 bindsym $mod+Ctrl+F7 exec --no-startup-id killall picom
 
 # exec --no-startup-id dex --autostart --environment i3
@@ -245,7 +256,8 @@ exec_always --no-startup-id feh --bg-fill /home/nora/Pictures/wallpaper/arch_neb
 exec --no-startup-id autorandr htop
 exec --no-startup-id xidlehook --not-when-fullscreen --not-when-audio --timer 360 "betterlockscreen -l dim" ''
 bindsym $mod+F10 exec --no-startup-id xidlehook --not-when-fullscreen --not-when-audio --timer 360 "betterlockscreen -l dim" ''
-bindsym $mod+F11 exec --no-startup-id xidlehook --not-when-fullscreen --not-when-audio --timer 36000 "betterlockscreen -l dim" ''exec --no-startup-id firefox
+bindsym $mod+F11 exec --no-startup-id xidlehook --not-when-fullscreen --not-when-audio --timer 36000 "betterlockscreen -l dim" ''
+exec --no-startup-id firefox
 exec --no-startup-id thunderbird
 exec --no-startup-id i3-sensible-terminal
 exec --no-startup-id i3-sensible-terminal -e ranger
@@ -277,6 +289,9 @@ bindsym $mod+Home exec --no-startup-id \
 	synclient AccelFactor=0.15 & \
 	synclient TopEdge=1500 & \
 	synclient LeftEdge=1500 & \
+  xinput set-prop "TPPS/2 Elan TrackPoint" "libinput Accel Profile Enabled" 0 1 0 & \
+  xinput set-prop "TPPS/2 Elan TrackPoint" "libinput Accel Speed" 1 & \
+  xinput set-prop "TPPS/2 Elan TrackPoint" "libinput Scrolling Pixel Distance" 50 & \
 
 bar {
     position top
