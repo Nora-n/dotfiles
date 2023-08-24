@@ -47,7 +47,12 @@ bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT
 bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10% && $refresh_i3status
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
 bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
-
+bindsym $mod+F1 exec --no-startup-id playerctl --player=mpv play-pause
+bindsym $mod+F2 exec --no-startup-id playerctl --player=mpv previous
+bindsym $mod+F3 exec --no-startup-id playerctl --player=mpv next
+bindsym $mod+Shift+F1 exec --no-startup-id playerctl --player=firefox play-pause
+bindsym $mod+Shift+F2 exec --no-startup-id playerctl --player=firefox previous
+bindsym $mod+Shift+F3 exec --no-startup-id playerctl --player=firefox next
 # Backlight
 bindsym XF86MonBrightnessDown exec light -U 10
 bindsym XF86MonBrightnessUp exec light -A 10
@@ -178,6 +183,17 @@ bindsym $mod+7 workspace $ws7
 bindsym $mod+8 workspace $ws8
 bindsym $mod+9 workspace $ws9
 bindsym $mod+0 workspace $ws10
+# switch to workspace
+bindsym $mud+1 workspace $ws1
+bindsym $mud+2 workspace $ws2
+bindsym $mud+3 workspace $ws3
+bindsym $mud+4 workspace $ws4
+bindsym $mud+5 workspace $ws5
+bindsym $mud+6 workspace $ws6
+bindsym $mud+7 workspace $ws7
+bindsym $mud+8 workspace $ws8
+bindsym $mud+9 workspace $ws9
+bindsym $mud+0 workspace $ws10
 
 # move focused container to workspace
 bindsym $mod+Shift+1 move container to workspace $ws1
@@ -194,8 +210,8 @@ bindsym $mod+Shift+0 move container to workspace $ws10
 # Name monitors for ease of use
 set $laptop "eDP-1"
 set $htop "HDMI-1"
-set $lvert "DVI-I-2-1"
-set $main "DVI-I-2-2"
+set $lvert "DVI-I-3-2"
+set $main "DVI-I-2-1"
 
 # Multiple monitors
 workspace $ws1 output $laptop
@@ -219,6 +235,8 @@ assign [class="mpv"] $ws6
 assign [class="stremio"] $ws6
 for_window [class="pentablet"] floating enable
 assign [class="Xournalpp"] $ws9
+for_window [class="tikzit"] floating enable
+assign [class="tikzit"] $ws9
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
@@ -257,9 +275,19 @@ bindsym $mod+Ctrl+F7 exec --no-startup-id killall picom
 # exec --no-startup-id dex --autostart --environment i3
 # exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 exec_always --no-startup-id dunst
-bindsym $mod+End exec --no-startup-id feh --bg-fill /home/nora/Pictures/wallpaper/arch_nebula.jpg
-exec_always --no-startup-id feh --bg-fill /home/nora/Pictures/wallpaper/arch_nebula.jpg
-exec --no-startup-id autorandr htop
+bindsym $mud+F1 exec --no-startup-id feh --bg-fill $(shuf -n 1 -e /home/nora/Pictures/wallpapers/arch/main/*) $(shuf -n 1 -e /home/nora/Pictures/wallpapers/arch/laptop/*) $(shuf -n 1 -e /home/nora/Pictures/wallpapers/arch/vert/*)
+bindsym $mud+Shift+F1 exec --no-startup-id shuf -e -n1 /home/nora/Pictures/wallpapers/arch/main/* | xargs feh --bg-fill
+bindsym $mud+F2 exec --no-startup-id feh --bg-fill $(shuf -n 1 -e /home/nora/Pictures/wallpapers/city/main/*) $(shuf -n 1 -e /home/nora/Pictures/wallpapers/city/laptop/*) $(shuf -n 1 -e /home/nora/Pictures/wallpapers/city/vert/*)
+bindsym $mud+Shift+F2 exec --no-startup-id shuf -e -n1 /home/nora/Pictures/wallpapers/city/main/* | xargs feh --bg-fill
+bindsym $mud+F3 exec --no-startup-id feh --bg-fill $(shuf -n 1 -e /home/nora/Pictures/wallpapers/forest/main/*) $(shuf -n 1 -e /home/nora/Pictures/wallpapers/forest/laptop/*) $(shuf -n 1 -e /home/nora/Pictures/wallpapers/forest/vert/*)
+bindsym $mud+Shift+F3 exec --no-startup-id shuf -e -n1 /home/nora/Pictures/wallpapers/forest/main/* | xargs feh --bg-fill
+bindsym $mud+F4 exec --no-startup-id feh --bg-fill $(shuf -n 1 -e /home/nora/Pictures/wallpapers/galaxy/main/*) $(shuf -n 1 -e /home/nora/Pictures/wallpapers/galaxy/laptop/*) $(shuf -n 1 -e /home/nora/Pictures/wallpapers/galaxy/vert/*)
+bindsym $mud+Shift+F4 exec --no-startup-id shuf -e -n1 /home/nora/Pictures/wallpapers/galaxy/main/* | xargs feh --bg-fill
+bindsym $mud+F5 exec --no-startup-id feh --bg-fill $(shuf -n 1 -e /home/nora/Pictures/wallpapers/op/main/*) $(shuf -n 1 -e /home/nora/Pictures/wallpapers/op/laptop/*) $(shuf -n 1 -e /home/nora/Pictures/wallpapers/op/vert/*)
+bindsym $mud+F6 exec --no-startup-id feh --bg-fill /home/nora/Pictures/wallpapers/arch_nebula.jpg
+exec_always --no-startup-id feh --bg-fill /home/nora/Pictures/wallpapers/arch_nebula.jpg
+exec --no-startup-id xbindkeys
+exec --no-startup-id autorandr -l full
 exec --no-startup-id xidlehook --not-when-fullscreen --not-when-audio --timer 360 "betterlockscreen -l dim" ''
 bindsym $mod+F10 exec --no-startup-id xidlehook --not-when-fullscreen --not-when-audio --timer 360 "betterlockscreen -l dim" ''
 bindsym $mod+F11 exec --no-startup-id xidlehook --not-when-fullscreen --not-when-audio --timer 36000 "betterlockscreen -l dim" ''
@@ -275,7 +303,6 @@ bindsym $mud+Insert exec --no-startup-id xmodmap ~/.Xmodmap_full
 exec --no-startup-id nm-applet
 exec --no-startup-id udiskie
 exec --no-startup-id blueman-applet
-
 
 bindsym $mod+Home exec --no-startup-id \
 	synclient TapButton1=1 & \

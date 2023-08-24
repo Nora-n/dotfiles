@@ -31,3 +31,13 @@ systemd/
 user-dirs.dirs
 user-dirs.locale
 yay/
+obs-studio/
+texmf/tex/latex/circuitikz_outdated
+texmf/tex/latex/local/mol2chemfig
+texmf/tex/latex/local/twemojis
+texmf/tex/latex/local/was
+texmf/tex/latex/local/lettre*
+texmf/tex/latex/local/nora_sign.png
+texmf/tex/latex/local/pothier.png
+texmf/tlpkg
+texmf/web2c

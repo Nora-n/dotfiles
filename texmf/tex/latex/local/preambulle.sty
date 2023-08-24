@@ -1,0 +1,440 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{preambulle}
+
+\RequirePackage[utf8x]{inputenc}
+\RequirePackage[T1]{fontenc}
+\RequirePackage[french]{babel}
+\frenchbsetup{StandardLists=true}
+
+% For landscape documents
+\RequirePackage{pdflscape} 
+% Define borders
+\RequirePackage[top=2cm, bottom=2cm, left=1.5cm, right=1.5cm]{geometry}
+% To locally change margins
+\RequirePackage{changepage}
+
+%%% En-tête et pied de page
+\RequirePackage{fancyhdr}
+\pagestyle{fancy}
+\fancyfoot{}                           % Empty footer
+\fancyhead[RE]{\nouppercase\leftmark}  % Top (head) right (R) even (E): chapter
+\fancyhead[LE]{\thepage}               % Top left even: page
+\fancyhead[LO]{\nouppercase\rightmark} % Top (head) left (L) odd (O): section
+\fancyhead[RO]{\thepage}               % Top right even: page
+% Space before ruler
+% \setlength{\headheight}{28pt}
+% Make sure empty pages between chapters don't have a ruler
+\RequirePackage{emptypage}
+
+% For \cancel and \bcancel functions
+\RequirePackage{cancel}
+% Lots of useful shorthands
+\RequirePackage{physics}
+% Custom shorhand
+\newcommand{\obar}[1]{\mkern 1.5mu\overline{\mkern-1.5mu#1\mkern-1.5mu}\mkern 1.5mu}
+\newcommand{\opto}[2]{\ensuremath\underset{#2}{\overset{#1}{\longrightarrow}}}
+% Pour \Aboxed dans un environnement align
+\RequirePackage{mathtools}
+% Pour empheq, qui pourrait remplacer à la fois équations et align
+\RequirePackage{empheq}
+% Pour \endnote
+\RequirePackage{endnotes}
+% Custom shorthand
+\newcommand{\ed}[2]{#1\endnote{\textcolor{black}{#1}~: #2}}
+
+% Pour écrire côte à côte dans les tcolorboxes et les tables
+\RequirePackage{multicol}
+\setlength\columnseprule{.4pt}
+
+% Figures
+\RequirePackage{graphicx}%[pdftex]{graphicx}
+% Include figures from external directory for clean folder usage
+\graphicspath{{./figures/}{../figures/}}
+% Figures next to text
+\RequirePackage{wrapfig}
+\RequirePackage{caption}
+\RequirePackage{subcaption}
+\RequirePackage[rightcaption]{sidecap}
+\sidecaptionvpos{figure}{c}
+% Useful to center wide tables or figures
+\makeatletter
+\newcommand*{\centerfloat}{%
+  \parindent \z@
+  \leftskip \z@ \@plus 1fil \@minus \textwidth
+  \rightskip\leftskip
+  \parfillskip \z@skip}
+\makeatother
+
+% Colors
+\RequirePackage[svgnames, dvipsnames, table]{xcolor}
+% Définition des couleurs
+\definecolor{dgreen}{rgb}{.1, .6, .1}
+\definecolor{brandeisblue}{rgb}{0.0, 0.44, 1.0}
+\definecolor{capri}{rgb}{0.0, 0.75, 1.0}
+\definecolor{caribbeangreen}{rgb}{0.0, 0.8, 0.6}
+\definecolor{linkcolor}{rgb}{0, 0, 0.6}
+\definecolor{orchid}{rgb}{0.9372, 0.7529, 0.8824}
+\definecolor{cornflowerblue}{rgb}{0.3921, 0.5843, 0.9294}
+\definecolor{limegreen}{rgb}{0.2, 0.8, 0.2}
+\definecolor{orange}{rgb}{1.0, 0.5, 0.0}
+\definecolor{firebrick}{rgb}{0.7, 0.13, 0.13}
+
+% Pour les plots
+\RequirePackage{pgfplots, pgfplotstable}
+\pgfplotsset{compat=newest}
+\usepgfplotslibrary{statistics}
+
+% Better justified text and much more
+\RequirePackage{microtype}
+
+% Pour des flèches entre les lignes d'un align: need more recent LaTeX...
+% \RequirePackage{witharrows}
+% Math symbols
+\RequirePackage{amsmath, amssymb}
+% for some commands like \degree, \celsius, \micro in both text and maths mode
+\RequirePackage{gensymb}
+
+% For chapters, section & co
+\RequirePackage[compact]{titlesec}
+% Custom chapter style
+\makeatletter
+\titleformat{\chapter}[frame]
+  {\normalfont}{\filright\enspace \@chapapp~\thechapter\enspace}
+  {8pt}{\LARGE\bfseries\filcenter}
+\titlespacing*{\chapter}
+  {0pt}{0pt}{20pt}
+\makeatother
+% Nice epigraph, citation at beginning of chapters
+\RequirePackage{epigraph}
+% For local TOC compatible with titlesec
+% \RequirePackage{titletoc}
+% Pour local TOC au début des chapitres; incompatible avec titlesec mais marche
+\RequirePackage{minitoc}
+\renewcommand{\mtctitle}{Sommaire}
+
+% Définition du format des \sections
+% \titleformat{\chapter}{\color{MediumBlue}\bfseries\Huge}{\Roman{chapter}}{.5em}{}{}
+\titleformat{\section}{\color{blue}\bfseries\Large}{\Roman{section} -}{.5em}{}{}
+\titleformat{\subsection}{\color{brandeisblue}\bfseries\Large}{\Roman{section} -
+\arabic{subsection}.}{.5em}{}{}
+\titleformat{\subsubsection}{\color{capri}\bfseries\Large}{\Roman{section} -
+\arabic{subsection}. \alph{subsubsection}}{.5em}{}{}
+\titleformat{\paragraph}{\color{cyan}\bfseries\Large}{}{.5em}{}{}
+
+% Profondeur des sections dans la table of contents
+\setcounter{tocdepth}{1}
+\setcounter{secnumdepth}{4}
+
+% Sections fantômes dans la table of contents
+\makeatletter
+\newcommand{\appsec}[2]{%
+  \phantomsection
+  \refstepcounter{section}%
+  \section*{#1}%
+  \addtocounter{section}{-1}%
+  \def\@currentlabelname{App: #1}%
+  \def\@currentlabel{\thesection}%
+  \label{#2}%
+  \addcontentsline{toc}{section}{#1}%
+}
+\newcommand{\appssec}[2]{%
+  \refstepcounter{subsection}%
+  \subsection*{#1}%
+  \addtocounter{subsection}{-1}%
+  \def\@currentlabelname{App: #1}%
+  \def\@currentlabel{\thesubsection}%
+  \label{#2}%
+  \addcontentsline{toc}{subsection}{#1}
+}
+\newcommand{\appsssec}[2]{%
+  \refstepcounter{subsubsection}%
+  \subsubsection*{#1}%
+  \addtocounter{subsubsection}{-1}%
+  \def\@currentlabelname{App: #1}%
+  \def\@currentlabel{\thesubsubsection}%
+  \label{#2}%
+  \addcontentsline{toc}{subsubsection}{#1}
+}
+\makeatother
+
+\makeatletter
+\newcommand*{\toccontents}{\@starttoc{toc}}
+\def\enoteheading{\section*{\notesname
+  \@mkboth{\MakeUppercase{\notesname}}{\MakeUppercase{\notesname}}}%
+  \mbox{}\par\vskip-2.3\baselineskip\noindent\rule{.5\textwidth}{0.4pt}
+  \par\vskip\baselineskip}
+\makeatother
+
+% Resume enumerate
+\RequirePackage{enumitem}
+% Définition des puces des listes
+\setlist[enumerate,1]{label = \arabic*)}
+\setlist[enumerate,2]{label = \alph*-}
+\setlist[enumerate,3]{label = \roman*.}
+\setlist[itemize, 1]{label = --}
+\setlist[itemize, 2]{label = *}
+
+% Pretty tables
+\RequirePackage{booktabs}
+% Other tables
+\RequirePackage{tabularx}
+\newcolumntype{Y}{>{\centering\arraybackslash}X}
+\renewcommand\tabularxcolumn[1]{m{#1}}
+% Emojis
+\RequirePackage{twemojis}
+
+% Pretty units
+\RequirePackage{siunitx}
+\sisetup{%
+  detect-all,
+  free-standing-units,          % create standalone commands
+  locale=FR,
+  inter-unit-product={\,},      % character between units
+  separate-uncertainty,         % x ± dx
+  retain-explicit-plus,         % p.ex. +45°
+  angle-symbol-over-decimal,    % p.ex. 0.''11
+}
+% Defin more units
+\def\Lsun{\ensuremath{L_{\odot}}}
+\def\Rsun{\ensuremath{R_{\odot}}}
+\def\Tsun{\ensuremath{T_{\odot}}}
+\def\Msun{\ensuremath{M_{\odot}}}
+\def\Rearth{\ensuremath{R_{\oplus}}}
+\def\Mearth{\ensuremath{M_{\oplus}}}
+\def\Tearth{\ensuremath{T_{\oplus}}}
+\DeclareSIUnit\pc{pc}           % parsec
+\DeclareSIUnit\as{as}           % arcsec
+\DeclareSIUnit\mag{mag}         % mag
+
+% hyperref with clickable links, backreferences in bibliography and more
+\RequirePackage[pdftex,
+    % pdftitle={Correction de TD -- UE PG, partie optique},
+    % pdfauthor={Nora NICOLAS},
+    % pdfsubject={Travaux dirigés de Licence 1},
+    % pdfkeywords={optique, optique g\'eom\'etrique, snell, descartes, miroir,
+    % lentille, lentille mince, microscope, t\'elescope, r\'efraction,
+    % diffraction},
+    linktoc=all,            % Titre et page
+    backref=page,           % Add link to go back to section
+    colorlinks=true,        % false: boxed links; true: colored links
+    linkcolor=linkcolor,    % color of internal links
+    citecolor=linkcolor,    % color of links to bibliography
+    urlcolor=linkcolor,     % color of external links
+    pdfencoding=auto,       % http://tex.stackexchange.com/questions/119079
+    psdextra=true,          % for '$' in title
+    pdfstartview=FitV,      % open fitting view as default
+    hyperindex=true,
+    hyperfigures=false]{hyperref}
+
+% Add an upward arrow next to backref
+\renewcommand\backrefxxx[3]{%
+  \hyperlink{page.#1}{$\uparrow$~Page #1}%
+}
+
+% Math in section names
+\RequirePackage{bookmark} % http://tex.stackexchange.com/questions/119079
+
+% To write code identifying the language
+\RequirePackage{listings}
+% Custom code writing
+\lstdefinestyle{customc}{
+  belowcaptionskip=1\baselineskip,
+  breaklines=true,
+  frame=L,
+  xleftmargin=\parindent,
+  language=C,
+  showstringspaces=false,
+  basicstyle=\footnotesize\ttfamily,
+  keywordstyle=\bfseries\color{green!40!black},
+  commentstyle=\color{purple!40!black},
+  identifierstyle=\color{blue},
+  stringstyle=\color{orange},
+}
+
+% Environnements de mises en valeur
+\RequirePackage[many]{tcolorbox}
+\tcbuselibrary{skins, raster}
+
+\newtcolorbox[auto counter, number within=section]{loi}[2][]{%
+enhanced, colback=red!10, colframe=red!80!black, valign=center,
+fonttitle=\bfseries,
+title=Loi~\thetcbcounter~: #2, #1}
+
+\newtcolorbox[auto counter, number within=section]{NCloi}[2][]{%
+enhanced, colback=red!10, colframe=red!80!black, valign=center,
+fonttitle=\bfseries,
+title=#2, #1}
+
+\newtcolorbox[auto counter, number within=section]{Theo}[2][]{%
+enhanced, colback=red!10, colframe=red!70!black, valign=center,
+fonttitle=\bfseries,
+title=Théorème~\thetcbcounter~: #2, #1}
+    
+\newtcolorbox[auto counter, number within=section]{NCtheo}[2][]{%
+enhanced, colback=red!10, colframe=red!70!black, valign=center,
+fonttitle=\bfseries,
+title=#2, #1}
+
+\newtcolorbox[auto counter, number within=section]{prop}[2][]{%
+enhanced, colback=red!10, colframe=red!60!black, valign=center,
+fonttitle=\bfseries,
+title=Propriété~\thetcbcounter~: #2, #1}
+
+\newtcolorbox[auto counter, number within=section]{NCprop}[2][]{%
+enhanced, colback=red!10, colframe=red!60!black, valign=center,
+fonttitle=\bfseries,
+title=#2, #1}
+
+\newtcolorbox[auto counter, number within=section]{coro}[2][]{%
+enhanced, colback=VioletRed!10, colframe=VioletRed!60!black, valign=center,
+fonttitle=\bfseries,
+title=Corollaire~\thetcbcounter~: #2, #1}
+
+\newtcolorbox[auto counter, number within=section]{NCcoro}[2][]{%
+enhanced, colback=VioletRed!10, colframe=VioletRed!60!black, valign=center,
+fonttitle=\bfseries,
+title=#2, #1}
+
+\newtcolorbox[auto counter, number within=section]{demo}[2][]{%
+enhanced, colback=blue!10, colframe=blue!60!black, valign=center,
+fonttitle=\bfseries,
+title=Démonstration~\thetcbcounter~: #2, #1}
+
+\newtcolorbox[auto counter, number within=section]{NCdemo}[2][]{%
+enhanced, colback=blue!10, colframe=blue!60!black, valign=center,
+fonttitle=\bfseries,
+title=#2, #1}
+
+\newtcolorbox[auto counter, number within=section]{inte}[2][]{%
+enhanced, colback=RoyalBlue!10, colframe=RoyalBlue!50!black, valign=center,
+fonttitle=\bfseries,
+title=Interprétation~\thetcbcounter~: #2, #1}
+
+\newtcolorbox[auto counter, number within=section]{NCinte}[2][]{%
+enhanced, colback=RoyalBlue!10, colframe=RoyalBlue!50!black, valign=center,
+fonttitle=\bfseries,
+title=#2, #1}
+
+\newtcolorbox[auto counter, number within=section]{impl}[2][]{%
+enhanced, colback=DodgerBlue!10, colframe=DodgerBlue!50!black, valign=center,
+fonttitle=\bfseries,
+title=Implication~\thetcbcounter~: #2, #1}
+
+\newtcolorbox[auto counter, number within=section]{NCimpl}[2][]{%
+enhanced, colback=DodgerBlue!10, colframe=DodgerBlue!50!black, valign=center,
+fonttitle=\bfseries,
+title=#2, #1}
+
+\newtcolorbox[auto counter, number within=section]{defi}[2][]{%
+enhanced, colback=green!10, colframe=green!60!black, valign=center,
+fonttitle=\bfseries,
+title=Définition~\thetcbcounter~: #2, #1}
+
+\newtcolorbox[auto counter, number within=section]{NCdefi}[2][]{%
+enhanced, colback=green!10, colframe=green!60!black, valign=center,
+fonttitle=\bfseries,
+title=#2, #1}
+
+\newtcolorbox[auto counter, number within=section]{nota}[2][]{%
+enhanced, colback=green!10, colframe=green!50!black, valign=center,
+fonttitle=\bfseries,
+title=Notation~\thetcbcounter~: #2, #1}
+
+\newtcolorbox[auto counter, number within=section]{NCnota}[2][]{%
+enhanced, colback=green!10, colframe=green!50!black, valign=center,
+fonttitle=\bfseries,
+title=#2, #1}
+
+\newtcolorbox[auto counter, number within=section]{impo}[2][]{%
+enhanced, colback=BlueViolet!10, colframe=BlueViolet!50!black, valign=center,
+fonttitle=\bfseries,
+title=Important~\thetcbcounter~: #2, #1}
+
+\newtcolorbox[auto counter, number within=section]{NCimpo}[2][]{%
+enhanced, colback=BlueViolet!10, colframe=BlueViolet!50!black, valign=center,
+fonttitle=\bfseries,
+title=#2, #1}
+
+\newtcolorbox[auto counter, number within=section]{ror}[2][]{%
+enhanced, colback=orange!10, colframe=orange!50!black, valign=center,
+fonttitle=\bfseries,
+title=Important~\thetcbcounter~: #2, #1}
+
+\newtcolorbox[auto counter, number within=section]{NCror}[2][]{%
+enhanced, colback=orange!10, colframe=orange!80!black, valign=center,
+fonttitle=\bfseries,
+title=#2, #1}
+
+\newtcolorbox[auto counter, number within=section]{rapp}[2][]{%
+enhanced, colback=BlueViolet!10, colframe=BlueViolet!60!black, valign=center,
+fonttitle=\bfseries,
+title=Rappel~\thetcbcounter~: #2, #1}
+
+\newtcolorbox[auto counter, number within=section]{NCrapp}[2][]{%
+enhanced, colback=BlueViolet!10, colframe=BlueViolet!60!black, valign=center,
+fonttitle=\bfseries,
+title=#2, #1}
+
+\newtcolorbox[auto counter, number within=section]{exem}[2][]{%
+enhanced, colback=lightgray!10, colframe=lightgray!50!black, valign=center,
+fonttitle=\bfseries,
+title=Exemple~\thetcbcounter~: #2, #1}
+
+\newtcolorbox[auto counter, number within=section]{NCexem}[2][]{%
+enhanced, colback=lightgray!10, colframe=lightgray!50!black, valign=center,
+fonttitle=\bfseries,
+title=#2, #1}
+
+\newtcolorbox[auto counter, number within=section]{odgr}[2][]{%
+enhanced, colback=lightgray!10, colframe=lightgray!55!black, valign=center,
+fonttitle=\bfseries,
+title=Ordre de grandeur~\thetcbcounter~: #2, #1}
+
+\newtcolorbox[auto counter, number within=section]{NCodgr}[2][]{%
+enhanced, colback=lightgray!10, colframe=lightgray!55!black, valign=center,
+fonttitle=\bfseries,
+title=#2, #1}
+
+\newtcolorbox[auto counter, number within=section]{cexe}[2][]{%
+enhanced, colback=gray!10, colframe=gray!50!black, valign=center,
+fonttitle=\bfseries,
+title=Contre-exemple~\thetcbcounter~: #2, #1}
+
+\newtcolorbox[auto counter, number within=section]{NCcexe}[2][]{%
+enhanced, colback=gray!10, colframe=gray!50!black, valign=center,
+fonttitle=\bfseries,
+title=#2, #1}
+
+\newtcolorbox[auto counter, number within=section]{rema}[2][]{%
+enhanced, colback=darkgray!10, colframe=darkgray!50!black, valign=center,
+fonttitle=\bfseries,
+title=Remarque~\thetcbcounter~: #2, #1}
+
+\newtcolorbox[auto counter, number within=section]{NCrema}[2][]{%
+enhanced, colback=darkgray!10, colframe=darkgray!50!black, valign=center,
+fonttitle=\bfseries,
+title=#2, #1}
+
+%Journal abbreviations
+\newcommand*{\apj}{The Astrophysical Journal}
+\newcommand*{\apjl}{The Astrophysical Journal, Letters}
+\newcommand*{\apjs}{The Astrophysical Journal, Supplement}
+\newcommand*{\aj}{The Astronomical Journal}
+\newcommand*{\jcp}{The Journal of Chemical Physics}
+\newcommand*{\mnras}{Monthly Notices of the Royal Astronomical Society}
+\newcommand*{\aap}{Astronomy and Astrophysics}
+\newcommand*{\aaps}{Astronomy \& Astrophysics, Supplement}
+\newcommand*{\apss}{Astrophysics \& Space Science}
+\newcommand*{\pasp}{Publications of the Astronomical Society of the Pacific}
+\newcommand*{\na}{New Astronomy}
+\newcommand*{\prd}{Physical Review D: Particles, Fields, Gravitation and Cosmology}
+\newcommand*{\araa}{Annual Review of Astronomy \& Astrophysics}
+\newcommand*{\prl}{Physical Review Letters}
+\newcommand*{\jrasc}{Journal of the Royal Astronomical Society of Canada}
+\newcommand*{\nat}{Nature}
+\newcommand*{\aapr}{Astronomy and Astrophysics Reviews}
+\newcommand*{\pasa}{Publications of the Astronomical Society of Australia}
+\newcommand*{\physrep}{Physics Reports}
+
+%%% Fin du package
+\endinput

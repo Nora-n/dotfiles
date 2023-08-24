@@ -1,0 +1,68 @@
+\ProvidesPackage{mintikz}
+\RequirePackage[T1]{fontenc}
+\RequirePackage[french]{babel}
+\RequirePackage{fix-cm}
+\RequirePackage{amssymb}
+
+\RequirePackage[svgnames, dvipsnames, table]{xcolor}
+% Définition des couleurs
+\definecolor{dgreen}{rgb}{.1,.6,.1}
+\definecolor{brandeisblue}{rgb}{0.0, 0.44, 1.0}
+\definecolor{capri}{rgb}{0.0, 0.75, 1.0}
+\definecolor{caribbeangreen}{rgb}{0.0, 0.8, 0.6}
+\definecolor{linkcolor}{rgb}{0,0,0.6}
+\definecolor{orchid}{rgb}{0.9372, 0.7529, 0.8824}
+\definecolor{cornflowerblue}{rgb}{0.3921, 0.5843, 0.9294}
+\definecolor{limegreen}{rgb}{0.2, 0.8, 0.2}
+\definecolor{orange}{rgb}{1.0, 0.5, 0.0}
+\definecolor{firebrick}{rgb}{0.7, 0.13, 0.13}
+
+\RequirePackage{siunitx}
+\sisetup{%
+  detect-all,
+  free-standing-units,          % create standalone commands
+  locale=FR,
+  inter-unit-product={\,},      % character between units
+  separate-uncertainty,         % x ± dx
+  retain-explicit-plus,         % p.ex. +45°
+  angle-symbol-over-decimal,    % p.ex. 0.''11
+}
+\def\Lsun{\ensuremath{L_{\odot}}}
+\def\Rsun{\ensuremath{R_{\odot}}}
+\def\Tsun{\ensuremath{T_{\odot}}}
+\def\Msun{\ensuremath{M_{\odot}}}
+\def\Rearth{\ensuremath{R_{\oplus}}}
+\def\Mearth{\ensuremath{M_{\oplus}}}
+\def\Tearth{\ensuremath{T_{\oplus}}}
+\DeclareSIUnit\pc{pc}           % parsec
+\DeclareSIUnit\as{as}           % arcsec
+\DeclareSIUnit\mag{mag}         % mag
+
+% Custom shorthand
+\newcommand{\obar}[1]{\mkern 1.5mu\overline{\mkern-1.5mu#1\mkern-1.5mu}\mkern 1.5mu}
+\newcommand{\opto}[2]{\ensuremath\underset{#2}{\overset{#1}{\longrightarrow}}}
+% For \degres somehow
+\RequirePackage{textcomp}
+% Emojis
+\RequirePackage{twemojis}
+% For better vectors
+\RequirePackage{esvect}
+
+% TiKz
+\RequirePackage{custikz}
+
+% Pour les plots
+\RequirePackage{pgfplots, pgfplotstable}
+\pgfplotsset{compat=newest}
+\usepgfplotslibrary{statistics}
+
+% For some shorthand
+\RequirePackage{physics}
+% Useful tools
+\RequirePackage{etoolbox} %ifthen
+
+% Local def for ease of use
+\RequirePackage{locdef}
+
+%%% Fin du package
+\endinput

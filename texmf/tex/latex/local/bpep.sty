@@ -1,0 +1,391 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{bpep}
+
+% Packages spécifiques
+\RequirePackage{xstring}
+\RequirePackage{ifthen}
+\RequirePackage[version=3]{mhchem} %Pour faire des équations chimiques
+\RequirePackage{chemfig}
+
+\RequirePackage{atveryend}
+\RequirePackage{placeins}
+\RequirePackage{stackrel}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%   variables utiles   %%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% compteur d'exercices
+\newcounter{exoIndex}
+\setcounter{exoIndex}{0}
+
+% compteur pour les questions
+% resume ne fonctionne pas lorsqu'un enumerate se trouve dans un environnement (par exemple minipage)
+\newcounter{qrIndex} % compteur pour les questions
+\newcounter{qrIndexSaved}
+\newcommand{\save}{\setcounter{qrIndexSaved}{\theqrIndex}}
+\newcommand{\retrieve}{\setcounter{qrIndex}{\theqrIndexSaved}}
+\newcommand{\resetQ}{\setcounter{qrIndex}{1}}
+
+% corrigé bonus (activé par défaut)
+\newtoggle{corrigeEtendu} % permet de n'afficher qu'une partie (l'essentiel) du corrigé
+\toggletrue{corrigeEtendu}
+
+% affichage du corrigé
+\newtoggle{corrige}   % affichage du corrigé si vrai
+\togglefalse{corrige} 
+
+% affichage du corrigé
+\newtoggle{bareme}   % affichage du corrigé avec barème
+\togglefalse{bareme} 
+
+% affichage de la commande enonce
+\newtoggle{enonce}   % affichage de l'énoncé en dehors de l'environnement \QR si vrai
+\toggletrue{enonce} 
+
+% affichage du sujet
+\newtoggle{sujet}   % affichage du sujet (énoncé des questions) si vrai
+\toggletrue{sujet}
+
+% choix de la version (original par defaut)
+\newcommand{\version}{original} % la valeur par defaut ; permet de gerer plusieurs version d'un même fichier tex
+
+% gestion des astuces
+\newtoggle{astuces}
+\togglefalse{astuces} % astuces cachées par défaut
+\newtoggle{astucesPresentes}
+\togglefalse{astucesPresentes} % vrai dès que le fichier contient au moins une astuce
+
+%%%%%%%%%%%%%%%%%
+%%%% Astuces %%%%
+%%%%%%%%%%%%%%%%%
+
+\newsavebox{\hints}
+\setbox\hints=\vbox{}
+
+%\newcommand{\hint}[1]{\hintFF{\rotatebox{180}{#1}}}
+\newcommand{\astuce}[1]{
+
+\iftoggle{astuces}{
+	\global\toggletrue{astucesPresentes}
+	\hintFF{#1}
+}{
+}
+}
+
+\AtEndDocument{
+	\iftoggle{astucesPresentes}{
+		\mbox{} \par \textbf{Astuces : } \\	
+		\unvbox\hints
+	}{}
+}
+
+\newcommand{\hintFF}[1]% #1 = paragraph
+{\global\setbox\hints=\vbox{\unvbox\hints\strut  E\theexoIndex~Q{\the\numexpr\value{qrIndex}-1} :    #1 \strut}}
+
+
+\AtVeryEndDocument{
+\label{page:last}
+}
+
+%%%%%%%%%%%%%%%%%
+%%%% Figures %%%%
+%%%%%%%%%%%%%%%%%
+
+% utile pour les figures qui ne doivent pas être redimensionnées
+\newcommand{\figRaw}[2][]{ % possibilité d'ajouter des arguments optionnels dans includeGraphics en plus
+    \begin{center}
+        \includegraphics[#1]{images/#2}
+            \end{center}
+}
+
+
+\newcommand{\fig}[3][]{ % possibilité d'ajouter des arguments optionnels en plus
+    \begin{center}
+    	        \includegraphics[width=#2\linewidth, #1]{images/#3}
+            \end{center}
+}
+
+% figure avec caption
+
+\newcommand{\figCap}[4][]{
+    \begin{center}
+    	        \includegraphics[width=#2\linewidth, #1]{images/#3}
+            \end{center}
+    \vspace{-4mm}
+    \captionof{figure}{#4}
+    \bigskip
+}
+
+\newcommand{\figCapRaw}[3][]{
+    \begin{center}
+            \includegraphics[#1]{images/#2}
+            \end{center}
+    \vspace{-4mm}
+    \captionof{figure}{#3}
+    \bigskip
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% double colonne %%%%
+%%%%%%%%%%%%%%%%%%%%%%%%
+
+%importation de figures avec extension pdf_tex
+
+%figure simple sans caption sans modification de la taille
+% l'argument est le nom_du_fichier.pdf_tex  
+%ne pas oublier l'extension pdf_tex
+\newcommand{\figsvg}[1]{
+    \begin{center}
+            \subimport{images/}{#1}
+            \end{center}
+}
+
+% figure avec caption
+
+\newcommand{\figsvgCap}[2]{
+    \begin{center}
+            \subimport{images/}{#1}
+            \end{center}
+    \vspace{-4mm}
+    \captionof{figure}{#2}
+    \bigskip
+}
+
+%%%%%%%%%%%%%%%%%
+%%%% Figures %%%%
+%%%%%%%%%%%%%%%%%
+
+% deprecated -> à ne plus utiliser !
+\newenvironment{tcols}[4]{
+        \begin{minipage}[t]{#1 \linewidth}        		
+            \vspace{0cm}
+            #3
+        \end{minipage}%
+        \hfill
+        \begin{minipage}[t]{ #2 \linewidth}
+            \vspace{0cm}
+            #4
+        \end{minipage}
+} 
+
+
+
+% picins semble plus adapté pour des figures (car retire les zones blanches si j'ai bien compris !)
+
+\newcommand{\figWrapped}[2]{ % #1 : largeur du bloc de droite  ; #2 nom du fichier
+	\setlength{\intextsep}{-4pt}%
+	\setlength{\columnsep}{4pt}%
+	\begin{wrapfigure}{r}[20pt]{#1\linewidth}
+		\hfill
+				\includegraphics[width=0.95\linewidth]{images/#2}
+				\vspace{-2mm}
+	\end{wrapfigure}
+}
+
+\newcommand{\figCapWrapped}[3]{ % #1 : largeur du bloc de droite  ; #2 nom du fichier
+	\begin{wrapfigure}{r}[20pt]{#1\linewidth}
+		\hfill
+  		\figCap{0.85}{#2}{#3}
+  		\vspace{-6mm}
+	\end{wrapfigure}
+}
+
+
+
+
+% titre exercice
+\newcommand{\titreExercice}[1]{
+\stepcounter{exoIndex} 
+\section{#1} 
+}
+
+
+
+
+\newcommand{\eq}[2][equation*]{
+\begin{#1}
+	#2
+\end{#1}
+}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% fonction dépendant de l'état corrigé ou sujet :  %%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\BeforeBeginEnvironment{document}{
+	%\long\def\local{Q -1 : }
+	% cette macro permet d'afficher un element que s'il est résent dans la version choisie par l'utilisateur
+	\newcommand{\showAccordingToVersion}[2][]{
+		\exploregroups
+		\ifthenelse{\equal{#1}{}}{ 
+			% sans argument opt, la question est toujours affichée
+			#2	
+		}{
+			% si argument opt, on traite au cas par cas
+			\IfSubStr{#1 }{\version}{
+				% si la liste des tags de version contient la valeur de \version			
+				#2
+			}{
+				% sinon, on affiche rien !			
+			}
+		}
+	}
+	
+	
+	
+
+
+	% titre partie
+	\newcommand{\partie}[2][]{
+		\showAccordingToVersion[#1]{
+			\section{#2}
+		}
+	}
+	
+	% titre sous partie
+	\newcommand{\sousPartie}[2][]{
+		\showAccordingToVersion[#1]{
+			\subsection{#2}
+		}
+	}
+	
+	% Texte de l'énoncé en dehors d'une question 
+	\newcommand{\enonce}[2][]{
+		\iftoggle{enonce}{
+			\showAccordingToVersion[#1]{
+				#2
+			}
+		}{}
+	}
+
+	% bloc de questions (pas d'imbrication pour le moment). L'argument optionnel sera affiché en préambule de la liste de questions	
+
+    \newenvironment{blocQR}[1][]{
+
+    		 \save
+	     \begin{enumerate}[start=\theqrIndexSaved]
+	     \resetQ 
+	     \item  
+
+	    }{
+	     
+		 \end{enumerate}    			
+		 \retrieve
+		 \stepcounter{qrIndex}
+		
+    }
+    
+    % ajout d'une question
+	\newcommandtwoopt{\QR}[4][][]{ % cette fonction gère l'affichage suivant la version. La modifier est considéré comme dangereux.	
+		\showAccordingToVersion[#1]{
+		
+			\begin{enumerate}[start=\theqrIndex]
+
+				 \stepcounter{qrIndex}
+				\item %\qrIndex
+					\iftoggle{sujet}{
+				     	\addQq{#3}
+					}{}
+					
+					\iftoggle{corrige}{
+						\addQr{#4}
+					}{}
+					
+					\iftoggle{bareme}{
+						\addQb{#2}{#4}
+					}{}					
+
+			\end{enumerate}
+			
+		}
+    }        
+
+
+
+        \newcommand{\addQq}[1]{ % la question à afficher en mode corrigé : peut être modifié
+		   \iftoggle{corrige}{		
+    		   	#1 % affichage de la question en mode corrigé
+	        }{
+			    #1 % affichage hors mode corrigé
+    		}
+        }        
+
+
+		\newcommand{\addQr}[1]{ % la réponse à afficher en mode corrigé : peut être modifié
+        		\mbox{}\\	\textbf{Réponse : } \mbox{} \\
+	        #1
+			% \begin{center}
+        	% 		\rule[1ex]{.5\linewidth}{.5pt} % ajout d'un trait horizontal à la fin de la réponse
+	        % \end{center} 
+    		%     \mbox{} 
+        	% 	\vspace{-6mm}
+	        % \mbox{} \par 
+        }  
+        
+        \newcommand{\addQb}[2]{
+        		\noindent
+        		\begin{minipage}{0.9\linewidth}
+        		#2   
+        		\end{minipage}\hfill\vrule\hfill
+        		\begin{minipage}{0.08\linewidth}
+        		\centering
+        		#1 pt(s)  
+        		\end{minipage}
+        		\hrule
+	}      
+        
+     %%% commande utile pour ajouter une ou plusieurs parties facultatives au corrigé d'une quesition
+	\newcommand{\corrigeBonus}[1]{
+			\iftoggle{corrigeEtendu}{
+				\mbox{} \\ \textbf{Pour aller plus loin : } \mbox{} \\	        			
+	        			#1
+	        	}{
+					        	
+	        	}
+	}
+
+	%deprecated
+	\newcommand{\switch}[2]{
+	    \iftoggle{corrige}{ 	
+			#2
+		}{
+			#1
+		}
+	   % \iftoggle{bareme}{ 	 % je commente car cet ajout casse l'utilisation de la commande switch. Il faut mieux le coder !
+		%		#2
+		%}{
+		%	#1
+		%}
+	}
+
+	\newcommand{\sujetUniquement}[1]{
+		% apparait	si sujet == vrai et corrigé == faux
+		\iftoggle{sujet}{
+			\iftoggle{corrige}{}{
+				#1		
+			}
+		}{}
+	}
+	
+	\newcommand{\siCorrige}[1]{
+		% apparait corrigé == vrai
+			\iftoggle{corrige}{
+				#1			
+			}{}
+	}
+
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\newcommand{\moyenne}[1]{\left\langle #1\right\rangle}
+\let\oldvec\vec
+\renewcommand{\vec}{\vv}
+\newcommand{\vect}{\vec}
+

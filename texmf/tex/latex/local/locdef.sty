@@ -1,0 +1,257 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{locdef}
+
+% Local def for ease of use
+\def\DS{\displaystyle}
+\def\Sc{\mathcal{S}}
+\def\Cc{\mathcal{C}}
+\def\Ac{\mathcal{A}}
+\def\Bc{\mathcal{B}}
+\def\Dc{\mathcal{D}}
+\def\Ec{\mathcal{E}}
+\def\Rc{\mathcal{R}}
+\def\Nc{\mathcal{N}}
+\def\Pc{\mathcal{P}}
+\def\Mc{\mathcal{M}}
+\def\Lc{\mathcal{L}}
+\def\Hc{\mathcal{H}}
+\def\Dc{\mathcal{D}}
+\def\Fc{\mathcal{F}}
+\def\VC{\mathcal{V}}
+\def\Pc{\mathcal{P}}
+\def\Gc{\mathcal{G}}
+\def\Sr{\mathrm{S}}
+\def\Ter{\mathrm{T}}
+\def\exr{\mathrm{e}}
+\def\Ir{\mathrm{i}}
+\def\jj{\mathrm{j}}
+\def\jw{\jj\w}
+\def\jwt{\jj\wt}
+\def\jlw{\jj L\w}
+\def\jcw{\jj C\w}
+\def\Aring{\mathring{\mathrm{A}}}
+\def\Ar{\mathrm{A}}
+\def\Br{\mathrm{B}}
+\def\Mr{\mathrm{M}}
+\def\Or{\mathrm{O}}
+\def\Gr{\mathrm{G}}
+\def\Hr{\mathrm{H}}
+\def\Er{\mathrm{E}}
+\def\Ll{\mathrm{L}} \def\Llr{\Ll^2(\Rb)}
+\def\arg{\mathrm{arg}}
+\def\Nb{\mathbb{N}}
+\def\Zb{\mathbb{Z}}
+\def\Qb{\mathbb{Q}}
+\def\Db{\mathbb{D}}
+\def\Rb{\mathbb{R}}
+\def\Cb{\mathbb{C}}
+\def\ep{\varepsilon}
+\def\epo{\ep_0}
+\def\muo{\mu_0}
+\def\a{\alpha}
+\def\dt{\dd t}
+\def\Dt{\D t}
+\def\ap{\dot{a}}
+\def\app{\ddot{a}}
+\def\bb{\beta}
+\def\w{\omega}\def\Om{\Omega} \def\Of{\vv{\Om}}
+\def\wt{\w t} \def\wp{\dot{\w}}
+\def\mv{\mu\v}
+\def\de{\delta}
+\def\D{\Delta}
+\def\g{\gamma}\def\G{\Gamma}
+\def\tt{\theta}\def\T{\Theta} \def\tp{\dot{\tt}} \def\tpp{\ddot{\tt}}
+\def\f{\varphi}\def\F{\phi} \def\fp{\dot{\f}}
+\def\ps{\psi}\def\P{\Psi} \def\psp{\dot{\p}}
+\def\lb{\lambda}\def\L{\Lambda}
+\def\kk{\kappa}
+\def\s{\sigma}
+\def\S{\Sigma}
+\def\eau{_\mathrm{eau}}
+\def\air{_\mathrm{air}}
+\def\eq{\rm eq}
+\def\ext{\rm ext}
+\def\rint{\rm int}
+\def\dB{\rm dB}
+\def\tot{\rm tot}
+\def\rf{\vv{r}} \def\rp{\dot{r}} \def\rpp{\ddot{r}} \def\rfa{\rf_{1}} \def\rfb{\rf_{2}}
+\def\xf{\vv{x}} \def\xp{\dot{x}} \def\xpp{\ddot{x}}
+\def\yp{\dot{y}} \def\ypp{\ddot{y}}
+\def\zp{\dot{z}} \def\zpp{\ddot{z}}
+\def\vp{\dot{v}}
+\def\xm{x^{\mu}} \def\xma{x^{\mu_1}} \def\xmr{x^{\mu_r}} \def\xv{x^{\v}} \def\dmr{_{\mu_1\ldots\mu_r}}
+\def\pf{\vv{p}} \def\pp{\dot{p}} \def\pfa{\pf_{1}} \def\pfb{\pf_{2}}
+\def\Rf{\vv{R}}
+\def\Nf{\vv{N}}
+\def\Tf{\vv{T}}
+\def\Pf{\vv{P}}
+\def\Mcf{\vv{\Mc}}
+\def\Lcf{\vv{\Lc}}
+\def\af{\vv{a}}
+\def\bf{\vv{b}}
+\def\cf{\vv{c}}
+\def\If{\vv{i}}
+\def\gf{\vv{g}}
+% \def\uf{\vv{u}}
+\def\Hu{\ul{H}}
+\def\Uu{\ul{U}}
+\def\Iu{\ul{I}}
+\def\uu{\ul{u}}
+\def\su{\ul{s}}
+\def\eu{\ul{e}}
+\def\iu{\ul{i}}
+\def\Zu{\ul{Z}}
+\def\zu{\ul{z}}
+\def\Yu{\ul{Y}}
+\def\Xu{\ul{X}}
+\def\Vu{\ul{V}}
+
+\def\gaz{_{\rm(g)}}
+\def\sol{_{\rm(s)}}
+\def\liq{_{\rm(l)}}
+\def\aqu{_{\rm(aq)}}
+\newcommand{\plus}[1]{^{#1 +}}
+\newcommand{\moin}[1]{^{#1 -}}
+\def\ua{\uparrow}
+\def\da{\downarrow}
+\def\fa{\phantom{\ua}}
+\newcommand\cfig[1]{\chemfig{#1}}
+\newcommand\hlew[1]{\lewis{#1.,H}}
+\newcommand\clew[0]{\lewis{0.2.4.6.,C}}
+\newcommand\nlew[1]{%
+	\IfEqCase{#1}{%
+		{0}{\lewis{02.4.6.,N}}
+			{2}{\lewis{0.24.6.,N}}
+			{4}{\lewis{0.2.46.,N}}
+			{6}{\lewis{0.2.4.6,N}}
+	}
+}
+\newcommand\odlew[1]{
+	\IfEqCase{#1}{
+		{0}{\lewis{0:35,O}}
+			{2}{\lewis{2:57,O}}
+			{4}{\lewis{14:7,O}}
+			{6}{\lewis{136:,O}}
+	}
+}
+\newcommand\cllew[1]{
+	\IfEqCase{#1}{
+		{0}{\lewis{0.246,Cl}}
+			{2}{\lewis{02.46,Cl}}
+			{4}{\lewis{024.6,Cl}}
+			{6}{\lewis{0246.,Cl}}
+	}
+}
+
+\newcommand{\ex}{\,\vv{e_x}}
+\newcommand{\ey}{\,\vv{e_y}}
+\newcommand{\ez}{\,\vv{e_z}}
+\newcommand{\er}{\,\vv{e_r}}
+\newcommand{\et}{\,\vv{e_{\tt}}}
+\newcommand{\ef}{\,\vv{e_{\phi}}}
+
+\newcommand{\ux}{\,\vv{u_x}}
+\newcommand{\uy}{\,\vv{u_y}}
+\newcommand{\uz}{\,\vv{u_z}}
+\newcommand{\ur}{\,\vv{u_r}}
+\newcommand{\ut}{\,\vv{u_{\tt}}}
+\newcommand{\uf}{\,\vv{u_{\f}}}
+
+\def\yf{\vv{y}}
+\def\wf{\vv{\w}}
+\def\muf{\vv{\mu}}
+\def\Rg{\!_{/\Rc}}
+\def\vf{\vv{v}}
+\def\Vf{\vv{V}}
+\def\vfo{\vv{v_0}}
+\def\vfa{\vv{v_1}}
+\def\vfb{\vv{v_2}}
+\def\vfg{\vv{v_G}}
+\def\kf{\vv{k}}
+\def\Kf{\vv{K}}
+\def\jf{\vv{j}}
+\def\jm{\vv{j_m}}
+\def\Ff{\vv{F}}
+\def\Ef{\vv{E}}
+\def\Af{\vv{A}}
+\def\OM{\vv{\rm OM}}
+\def\OG{\vv{\rm OG}}
+\def\Bf{\vv{B}}
+\def\Hf{\vv{H}}
+\def\Mf{\vv{M}}
+\def\mf{\vv{m}}
+\def\of{\vv{0}}
+\def\pif{\vv{\pi}} \def\Pif{\vv{\Pi}}
+% \DeclareDocumentCommand\vnabla{}{\vv{\rm grad}}
+\newcommand{\gd}{\vv{\rm grad}\,}
+\def\nab{\nabla}
+\def\nabf{\vv{\nab}}
+\def\ABr{{\rm AB}}
+\def\AB{\vv{\ABr}}
+\def\OMr{\mathrm{OM}}
+\def\SMr{\mathrm{SM}}
+\def\SaMr{\mathrm{S_1M}}
+\def\SbMr{\mathrm{S_2M}}
+\def\OA{\obar{OA}}
+\def\OAp{\obar{OA'}}
+\def\OF{\obar{OF'}}
+\def\ABb{\obar{AB}}
+\def\ABp{\obar{A'B'}}
+\def\ABa{\obar{A_1B_1}}
+\def\bp{$'$}
+\def\SC{\obar{SC}}
+\def\SA{\obar{SA}}
+\def\SAp{\obar{SA'}}
+\def\SF{\obar{SF}}
+\def\SFp{\obar{SF'}}
+\def\nf{\vv{n}}
+\def\ff{\vv{f}}
+\def\lf{\vv{l}}
+%\def\ef{\vv{e}}
+\def\gf{\vv{g}}
+\def\qf{\vv{q}}
+\def\Tf{\vv{T}}
+\def\Gf{\Vect{G}}
+\def\Lfo{\vv{L_O}}
+\def\Lfg{\vv{L_G}}
+\def\cte{\text{cte}}
+\def\vcte{\vv{\cte}}
+\def\h{\hbar}
+\def\parr{/\!\!/}
+\def\AN{\mathrm{A.N.~:}\quad}
+
+\newcommand{\qMath}[1]{\quad\text{ #1 }\quad}
+\newcommand{\qet}{\qMath{et}}
+\newcommand{\qav}{\qMath{avec}}
+\newcommand{\qso}{\qMath{soit}}
+\newcommand{\qou}{\qMath{ou}}
+\newcommand{\qdc}{\qMath{donc}}
+\newcommand{\qcr}{\qMath{car}}
+
+\newcommand{\qqMath}[1]{\qquad\text{ #1 }\qquad}
+\newcommand{\qqet}{\qqMath{et}}
+\newcommand{\qqav}{\qqMath{avec}}
+\newcommand{\qqso}{\qqMath{soit}}
+\newcommand{\qqou}{\qqMath{ou}}
+\newcommand{\qqdc}{\qqMath{donc}}
+\newcommand{\qqcr}{\qqMath{car}}
+
+\newcommand{\ind}[1]{_{\text{#1}}}   % indice textuel en mode math
+
+\newcommand{\pH}{\mathrm{pH}}
+
+\newcommand{\pa}[1]{\left( #1 \right)}
+\newcommand{\pac}[1]{\left[ #1 \right]}
+\newcommand{\paa}[1]{\left\{ #1 \right\}}
+
+% For complexes
+\newcommand{\ul}[1]{\underline{#1}}
+
+\def\ra{\rightarrow}
+\def\Ra{\Rightarrow}
+\def\LRa{\Longrightarrow}
+\def\lra{\leftrightarrow}
+\def\Lra{\Leftrightarrow}
+
+%%% Fin du package
+\endinput
