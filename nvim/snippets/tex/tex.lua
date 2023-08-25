@@ -10,6 +10,7 @@ local d = ls.dynamic_node
 local c = ls.choice_node
 -- local fmt = require("luasnip.extras.fmt").fmt
 local fmta = require("luasnip.extras.fmt").fmta
+local fmt = require("luasnip.extras.fmt").fmt
 local rep = require("luasnip.extras").rep
 local line_begin = require("luasnip.extras.expand_conditions").line_begin
 
@@ -71,7 +72,7 @@ return {
       <>
     ]],
       {
-        c(1, { t(""), sn(1, { t("["), i(1), t("]") }) }),
+        c(1, { t(""), fmta("[<>]", { i(1) }) }),
         d(2, get_visual),
         i(0),
       }
@@ -94,7 +95,7 @@ return {
     ]],
       {
         i(1),
-        c(2, { t(""), sn(1, { t("["), i(1), t("]") }) }),
+        c(2, { t(""), fmta("[<>]", { i(1) }) }),
         d(3, get_visual),
         i(0),
       }
@@ -1974,6 +1975,118 @@ return {
         c(2, { sn(1, { t("{"), i(1), t("}") }), t("") }),
         d(3, get_visual),
         rep(1),
+        i(0),
+      }
+    )
+  ),
+  -- tcolorbox
+  -- main
+  s(
+    {
+      trig = "tcb",
+      snippetType = "autosnippet",
+      dscr = "A tcb environment",
+      condition = line_begin,
+    },
+    fmta(
+      [[
+      \begin{tcb}<><><>{<>}
+        <>
+      \end{tcb}
+      <>
+    ]],
+      {
+        c(1, { fmta("[<>]", { i(1, "box") }), t("") }),
+        c(2, { fmta("(<>)", { i(1, "prop") }), t("") }),
+        c(3, { t(""), fmt("<{}>", { i(1, "sidebyside") }) }),
+        i(4),
+        d(5, get_visual),
+        i(0),
+      }
+    )
+  ),
+  -- tcblower
+  s(
+    {
+      trig = "tlo",
+      snippetType = "autosnippet",
+      condition = line_begin,
+      dscr = "Expands 'tlo' into \tcblower.",
+    },
+    fmta(
+      [[
+        \tcblower
+        <>
+        ]],
+      { i(0) }
+    )
+  ),
+  -- side
+  s({
+    trig = "isd",
+    snippetType = "autosnippet",
+    dscr = "A isd environment",
+    condition = line_begin,
+  }, {
+    c(1, {
+      fmta(
+        [[
+          \begin{isd}
+            <>
+            \tcblower
+            <>
+          \end{isd}
+          <>
+        ]],
+        {
+          i(1),
+          i(2),
+          i(0),
+        }
+      ),
+      fmt(
+        [[
+          \begin{{isd}}({})<{}>
+            {}
+            \tcblower
+            {}
+          \end{{isd}}
+          {}
+        ]],
+        {
+          i(1, "prop"),
+          i(2),
+          i(3),
+          i(4),
+          i(0),
+        }
+      ),
+    }),
+  }),
+  -- adaptive side
+  s(
+    {
+      trig = "sde",
+      snippetType = "autosnippet",
+      dscr = "A sde environment",
+      condition = line_begin,
+    },
+    fmta(
+      [[
+    \sde<><><<<>>>{<>}{
+    <>
+    }{
+    <>
+    }
+    <>
+    ]],
+      {
+        c(1, { fmta("[<>]", { i(1, "box") }), t("") }),
+        c(2, { fmta("(<>)", { i(1, "prop") }), t("") }),
+        c(3, { fmta("right, <>", { i(1) }), fmta("left, <>", { i(1) }) }),
+        i(4, "Titre"),
+        i(5, "Left"),
+        i(6, "Right"),
         i(0),
       }
     )

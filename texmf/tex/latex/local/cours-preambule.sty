@@ -26,8 +26,8 @@
 \RequirePackage{stackengine}
 \RequirePackage{scalerel}
 \newcommand\danger[1][2ex]{%
-  \scaleto{\stackengine{0.3pt}{\scalebox{1.1}[.9]{%
-  \color{black}$\blacktriangle$}}{\color{white}\tiny\bfseries !}{O}{c}{F}{F}{L}}{#1}%
+	\scaleto{\stackengine{0.3pt}{\scalebox{1.1}[.9]{%
+				\color{black}$\blacktriangle$}}{\color{white}\tiny\bfseries !}{O}{c}{F}{F}{L}}{#1}%
 }
 
 % Test adding text
@@ -67,12 +67,12 @@
 
 % Redefine the plain page style for chapter pages
 \fancypagestyle{plain}{%
-    \renewcommand{\headrulewidth}{0pt}  % Line at the header invisible
-    \fancyhf{}%
-    \fancyfoot[L]{Lycée \textsc{Pothier}}
-    \fancyfoot[C]{\textbf{\thepage/\pageref*{LastPage}}}
-    \fancyfoot[R]{MPSI -- 2022/2023}
-    \renewcommand{\footrulewidth}{1pt}% Line at the footer visible
+	\renewcommand{\headrulewidth}{0pt}  % Line at the header invisible
+	\fancyhf{}%
+	\fancyfoot[L]{Lycée \textsc{Pothier}}
+	\fancyfoot[C]{\textbf{\thepage/\pageref*{LastPage}}}
+	\fancyfoot[R]{MPSI -- 2022/2023}
+	\renewcommand{\footrulewidth}{1pt}% Line at the footer visible
 }
 
 % Make sure empty pages between chapters don't have a ruler
@@ -95,7 +95,7 @@
 % For \cancel and \bcancel functions
 \RequirePackage{cancel}
 \newcommand{\dcancel}[1]{
-  \cancel{\bcancel{#1}}
+	\cancel{\bcancel{#1}}
 }
 % Lots of useful shorthands
 \RequirePackage{physics}
@@ -119,16 +119,16 @@
 % For cases quantiques
 \newcolumntype{P}[1]{>{\centering\arraybackslash}p{#1}}
 \newcommand{\casea}[1]{
-    \begin{tabular}{|P{8pt}|}\hline
-        \leftskip=-2pt$#1$
-        \\\hline
-    \end{tabular}
+	\begin{tabular}{|P{8pt}|}\hline
+		\leftskip=-2pt$#1$
+		\\\hline
+	\end{tabular}
 }
 \newcommand{\casec}[3]{
-    \begin{tabular}{|P{8pt}|P{8pt}|P{8pt}|}\hline
-        \leftskip=-2pt$#1$ & \leftskip=-2pt$#2$ & \leftskip=-2pt$#3$
-        \\\hline
-    \end{tabular}
+	\begin{tabular}{|P{8pt}|P{8pt}|P{8pt}|}\hline
+		\leftskip=-2pt$#1$ & \leftskip=-2pt$#2$ & \leftskip=-2pt$#3$
+		\\\hline
+	\end{tabular}
 }
 
 % Pour \Aboxed dans un environnement align
@@ -150,15 +150,15 @@
 \renewcommand*{\notesname}{\hspace{-1.1cm} Notes}
 \makeatletter
 \renewcommand*{\enoteheading}{%
-  \section*{\notesname}%
-  \markboth{\notesname}{\notesname}}
+	\section*{\notesname}%
+	\markboth{\notesname}{\notesname}}
 \makeatother
 \renewcommand{\enotesize}{\normalsize}
 \renewcommand{\makeenmark}{\textcolor{magenta}{\hbox{$^{\theenmark}$}}}
 \renewcommand\enoteformat{%
-  \raggedright
-  \leftskip=1.8em
-  \makebox[0pt][r]{\textcolor{magenta}{\theenmark}~\rule{0pt}{\dimexpr\ht\strutbox+\baselineskip}}%
+	\raggedright
+	\leftskip=1.8em
+	\makebox[0pt][r]{\textcolor{magenta}{\theenmark}~\rule{0pt}{\dimexpr\ht\strutbox+\baselineskip}}%
 }
 % Make it clickable?
 \RequirePackage{hyperendnotes}
@@ -167,18 +167,27 @@
 \enotelinkstrue
 %\enotelinksfalse
 
+% Idk really: endnotes~?
+\makeatletter
+\newcommand*{\toccontents}{\@starttoc{toc}}
+\def\enoteheading{\section*{\notesname
+	  \@mkboth{\MakeUppercase{\notesname}}{\MakeUppercase{\notesname}}}%
+	\mbox{}\par\vskip-2.3\baselineskip\noindent\rule{.5\textwidth}{0.4pt}
+	\par\vskip\baselineskip}
+\makeatother
+
 % Figures
 \RequirePackage{graphicx}%[pdftex]{graphicx}
 \RequirePackage{svg}
 \RequirePackage[noframe]{draftfigure}
 \graphicspath{{./figures/}{../figures/}{./svg-inkscape}
-{../figures/ch1/}{../figures/ch2/}{../figures/ch3/}{../figures/ch4/}{../figures/ch5/}{../figures/ch6/}
-{../figures/ch7/}{../figures/ch8/}{../figures/ch9/}{../figures/ch10/}{../figures/ch11/}{../figures/ch12/}
-{../figures/ch13/}{../figures/ch14/}{../figures/ch15/}{../figures/ch16/}{../figures/ch17/}{../figures/ch18/}
-{../figures/ch19/}{../figures/ch20/}{../figures/ch21/}{../figures/ch22/}{../figures/ch23/}{../figures/ch24/}
-{../figures/ch25/}{../figures/ch26/}{../figures/ch27/}{../figures/ch28/}{../figures/ch29/}{../figures/ch30/}
-{../figures/ch31/}{../figures/ch32/}{../figures/ch33/}{../figures/ch34/}{../figures/ch35/}{../figures/ch36/}
-{../figures/ch37/}{../figures/ch38/}{../figures/ch39/}{../figures/ch40/}{../figures/ch41/}{../figures/ch42/}
+		{../figures/ch1/}{../figures/ch2/}{../figures/ch3/}{../figures/ch4/}{../figures/ch5/}{../figures/ch6/}
+		{../figures/ch7/}{../figures/ch8/}{../figures/ch9/}{../figures/ch10/}{../figures/ch11/}{../figures/ch12/}
+		{../figures/ch13/}{../figures/ch14/}{../figures/ch15/}{../figures/ch16/}{../figures/ch17/}{../figures/ch18/}
+		{../figures/ch19/}{../figures/ch20/}{../figures/ch21/}{../figures/ch22/}{../figures/ch23/}{../figures/ch24/}
+		{../figures/ch25/}{../figures/ch26/}{../figures/ch27/}{../figures/ch28/}{../figures/ch29/}{../figures/ch30/}
+		{../figures/ch31/}{../figures/ch32/}{../figures/ch33/}{../figures/ch34/}{../figures/ch35/}{../figures/ch36/}
+		{../figures/ch37/}{../figures/ch38/}{../figures/ch39/}{../figures/ch40/}{../figures/ch41/}{../figures/ch42/}
 }
 % Figures next to text
 \RequirePackage{wrapfig}
@@ -201,10 +210,10 @@
 % Useful to center wide tables or figures
 \makeatletter
 \newcommand*{\centerfloat}{%
-  \parindent \z@
-  \leftskip \z@ \@plus 1fil \@minus \textwidth
-  \rightskip\leftskip
-  \parfillskip \z@skip}
+	\parindent \z@
+	\leftskip \z@ \@plus 1fil \@minus \textwidth
+	\rightskip\leftskip
+	\parfillskip \z@skip}
 \makeatother
 % center graphics inline
 % $\vcenter{\hbox{\includegraphics{temp.jpg}}}$
@@ -218,11 +227,11 @@
 % Make chapter with frame
 \makeatletter
 \titleformat{\chapter}[frame]
-    {\normalfont\setlength{\fboxrule}{1pt}}
-    {\filright\enspace \@chapapp~\thechapter\enspace}
-    {8pt}{\LARGE\bfseries\filcenter}
-    \titlespacing*{\chapter}
-    {0pt}{0pt}{20pt}
+{\normalfont\setlength{\fboxrule}{1pt}}
+{\filright\enspace \@chapapp~\thechapter\enspace}
+{8pt}{\LARGE\bfseries\filcenter}
+\titlespacing*{\chapter}
+{0pt}{0pt}{20pt}
 \makeatother
 
 \renewcommand{\thesection}{\Roman{section}}
@@ -230,26 +239,26 @@
 \renewcommand{\thesubsubsection}{\Roman{section}.\Alph{subsection}.\arabic{subsubsection}}
 
 \titleformat{\section}{\Large\bfseries}{
-    \begin{tikzpicture}[scale=0.55, overlay]
-        \draw[line width=1pt, color=darkgray, xshift=1em, yshift=0.6em]
-            (1,-0.4) -- (1,0.8) --(0.8,1) -- (-0.8,1) -- (-1,0.8) -- (-1,-0.8) --
-            (-0.8,-1) -- (32,-1);
-        \node[xshift=0.6em, yshift=0.35em] at (0,0)
-            {\rmfamily\textcolor{darkgray}{\thesection}};
-    \end{tikzpicture}}{0.4em}{\hspace{1.4em}}
+	\begin{tikzpicture}[scale=0.55, overlay]
+		\draw[line width=1pt, color=darkgray, xshift=1em, yshift=0.6em]
+		(1,-0.4) -- (1,0.8) --(0.8,1) -- (-0.8,1) -- (-1,0.8) -- (-1,-0.8) --
+		(-0.8,-1) -- (32,-1);
+		\node[xshift=0.6em, yshift=0.35em] at (0,0)
+		{\rmfamily\textcolor{darkgray}{\thesection}};
+	\end{tikzpicture}}{0.4em}{\hspace{1.4em}}
 
 \titleformat{\subsection}{\large\bfseries}{\hspace{1cm}
-    \tcbox[colback=darkgray, colframe=darkgray,
-           coltext=lightgray, on line, boxsep=0pt,
-           left=4pt, right=4pt, top=4pt,bottom=4pt,
-           sharp corners=northwest]{\thesubsection}}{0.5em}{}
+	\tcbox[colback=darkgray, colframe=darkgray,
+		coltext=lightgray, on line, boxsep=0pt,
+		left=4pt, right=4pt, top=4pt,bottom=4pt,
+		sharp corners=northwest]{\thesubsection}}{0.5em}{}
 
 \titleformat{\subsubsection}{\normalsize}{\hspace{2cm}
-    \tcbox[colback=white, colframe=darkgray,
-           coltext=black, on line, boxsep=0pt,
-           left=4pt, right=4pt, top=4pt,bottom=4pt,
-           sharp corners=northwest]{\normalsize\thesubsubsection}
-       \normalsize}{0.5em}{}
+	\tcbox[colback=white, colframe=darkgray,
+		coltext=black, on line, boxsep=0pt,
+		left=4pt, right=4pt, top=4pt,bottom=4pt,
+		sharp corners=northwest]{\normalsize\thesubsubsection}
+	\normalsize}{0.5em}{}
 
 % Nice epigraph
 \RequirePackage{epigraph}
@@ -266,29 +275,29 @@
 %\RequirePackage{xurl}
 %\PassOptionsToPackage{hyphens}{url} % For hyphens in too long urls
 \RequirePackage[pdftex,
-    pdftitle={Cours de Physique-Chimie de la MPSI 3 du Lyc\'ee Pothier},
-    pdfauthor={Nora NICOLAS},
-    pdfsubject={Ressources de cours pour l'ann\'ee},
-    pdfkeywords={physique, chimie, optique, m\'ecanique, m\'ethode, analyse,
-    r\'eflexion},
-    breaklinks=true,        % For urls too long
-    linktoc=page,           % Titre pas clicable mais page si
-    backref=page,           % Add link to go back to section
-    colorlinks=true,        % false: boxed links; true: colored links
-    linkcolor=dgreen,       % color of internal links
-    citecolor=magenta,      % color of links to bibliography
-    urlcolor=urlcolor,      % color of external links
-    pdfencoding=auto,       % http://tex.stackexchange.com/questions/119079
-    psdextra=true,          % for '$' in title
-    pdfstartview=FitV,      % open fitting view as default
-    hyperfootnotes=true,    % Make the footnote marks into hyperlink to text
-    hyperindex=true,
-    hyperfigures=false]{hyperref}
+	pdftitle={Cours de Physique-Chimie de la MPSI 3 du Lyc\'ee Pothier},
+	pdfauthor={Nora NICOLAS},
+	pdfsubject={Ressources de cours pour l'ann\'ee},
+	pdfkeywords={physique, chimie, optique, m\'ecanique, m\'ethode, analyse,
+			r\'eflexion},
+	breaklinks=true,        % For urls too long
+	linktoc=page,           % Titre pas clicable mais page si
+	backref=page,           % Add link to go back to section
+	colorlinks=true,        % false: boxed links; true: colored links
+	linkcolor=dgreen,       % color of internal links
+	citecolor=magenta,      % color of links to bibliography
+	urlcolor=urlcolor,      % color of external links
+	pdfencoding=auto,       % http://tex.stackexchange.com/questions/119079
+	psdextra=true,          % for '$' in title
+	pdfstartview=FitV,      % open fitting view as default
+	hyperfootnotes=true,    % Make the footnote marks into hyperlink to text
+	hyperindex=true,
+	hyperfigures=false]{hyperref}
 \def\UrlBreaks{\do\/\do-}
 % Add an upward arrow next to backref,
 % from https://tex.stackexchange.com/a/173063
 \renewcommand\backrefxxx[3]{%
-  \hyperlink{page.#1}{$\uparrow$~Page #1}}
+	\hyperlink{page.#1}{$\uparrow$~Page #1}}
 % Make ref to multiple sections with \cref: doesn't seem to work...
 % \RequirePackage{cleveref}
 
@@ -307,21 +316,21 @@
 % Draw nice quotes in TiKz
 \RequirePackage{tikz}
 \newcommand*{\openquote}{%
-  \tikz[remember picture, overlay, xshift=-5pt, yshift=0pt]
-  \node[black!30] (OQ) {\fontfamily{qbk}\fontsize{50}{60}\selectfont«};%
-  \kern4pt
+	\tikz[remember picture, overlay, xshift=-5pt, yshift=0pt]
+	\node[black!30] (OQ) {\fontfamily{qbk}\fontsize{50}{60}\selectfont«};%
+	\kern4pt
 }
 \newcommand*{\closequote}{%
-  \tikz[remember picture, overlay, xshift=10pt, yshift=0pt]
-  \node[black!30] (CQ) {\fontfamily{qbk}\fontsize{50}{60}\selectfont»};%
+	\tikz[remember picture, overlay, xshift=10pt, yshift=0pt]
+	\node[black!30] (CQ) {\fontfamily{qbk}\fontsize{50}{60}\selectfont»};%
 }
 \usetikzlibrary{trees, positioning, arrows, tikzmark, calc}
 % Circled numbers
 % https://tex.stackexchange.com/a/7045
 \newcommand*\circled[1]{%
-  \tikz[baseline=(char.base)]{%
-    \node[shape=circle, draw, inner sep=1pt, minimum size=3ex] (char) {#1};
-  }
+	\tikz[baseline=(char.base)]{%
+		\node[shape=circle, draw, inner sep=1pt, minimum size=3ex] (char) {#1};
+	}
 }
 
 \RequirePackage{microtype}
@@ -376,7 +385,7 @@
 % Multicolumn with X column spanning entire row
 % https://tex.stackexchange.com/a/544644/284518 in the comments
 \newcommand{\mcl}[4]{\multicolumn{#1}{#2>{
-    \hsize=\dimexpr#1\hsize+\tabcolsep*(2*(#1-1))+\arrayrulewidth*(#1-2)\relax
+\hsize=\dimexpr#1\hsize+\tabcolsep*(2*(#1-1))+\arrayrulewidth*(#1-2)\relax
 }#3}{#4}}
 % For arrays
 \arraycolsep=1.4pt
@@ -396,19 +405,19 @@
 \RequirePackage{siunitx}[=v2]
 \NewCommandCopy\mycdot\cdot
 \sisetup{%
-    detect-all,
-    free-standing-units,           % create standalone commands
-    locale=FR,                     % language
-    inter-unit-product=
-        {\ensuremath{\mycdot}},  % character between units
-    separate-uncertainty,          % x ± dx
-    retain-explicit-plus,          % p.ex. +45°
-    range-units=brackets,          % (0 to 40) m
-    range-phrase=~;~,              % 0~;~40 m
-    % range-phrase=\textup{--},    % 0--40 m
-    % open-bracket= [,
-    % close-bracket= ],
-    % angle-symbol-over-decimal,   % p.ex. 0.''11
+	detect-all,
+	free-standing-units,           % create standalone commands
+	locale=FR,                     % language
+	inter-unit-product=
+		{\ensuremath{\mycdot}},  % character between units
+	separate-uncertainty,          % x ± dx
+	retain-explicit-plus,          % p.ex. +45°
+	range-units=brackets,          % (0 to 40) m
+	range-phrase=~;~,              % 0~;~40 m
+	% range-phrase=\textup{--},    % 0--40 m
+	% open-bracket= [,
+	% close-bracket= ],
+	% angle-symbol-over-decimal,   % p.ex. 0.''11
 }
 \def\Lsun{L\ensuremath{_{\odot}}}
 \def\Rsun{R\ensuremath{_{\odot}}}
@@ -428,16 +437,16 @@
 \makeatletter
 \newcommand{\sitime}[1]{\sitime@aux#1;;;\@nil}
 \def\sitime@aux#1;#2;#3;#4\@nil{%
-  \@ifmtarg{#1#2#3}%
-  {%
-    \PackageError{siunitx (modified)}%
-                 {Empty \string\sitime\space argument}{}%
-  }%
-{%
-\@ifmtarg{#1}{}{\SI{#1}{\hour}\@ifmtarg{#2#3}{}{\csname l_siunitx_number_unit_separator_tl\endcsname}}%
-\@ifmtarg{#2}{}{~ \SI{#2}{\minute}\@ifmtarg{#3}{}{\csname l_siunitx_number_unit_separator_tl\endcsname}}%
-\@ifmtarg{#3}{}{~\SI{#3}{\second}}%
-}%
+	\@ifmtarg{#1#2#3}%
+	{%
+		\PackageError{siunitx (modified)}%
+		{Empty \string\sitime\space argument}{}%
+	}%
+	{%
+		\@ifmtarg{#1}{}{\SI{#1}{\hour}\@ifmtarg{#2#3}{}{\csname l_siunitx_number_unit_separator_tl\endcsname}}%
+		\@ifmtarg{#2}{}{~ \SI{#2}{\minute}\@ifmtarg{#3}{}{\csname l_siunitx_number_unit_separator_tl\endcsname}}%
+		\@ifmtarg{#3}{}{~\SI{#3}{\second}}%
+	}%
 }
 \makeatother
 
@@ -451,23 +460,23 @@
 \lstset{inputencoding=utf8/latin1}
 \definecolor{fond}{gray}{0.95}
 \lstnewenvironment{python}{
-    \lstset{language     = python,
-        basicstyle       = \ttfamily,
-        keywordstyle     = \bfseries\ttfamily\color{green!40!black},
-        commentstyle     = \itshape\color{purple!40!black},
-        identifierstyle  = \color{black},
-        stringstyle      = \color{black},
-        backgroundcolor  = \color{fond},
-        numbers          = none,
-        frame            = leftline,
-        framerule        = 3pt,
-        rulecolor        = \color{gray},
-        showstringspaces = false
-        extendedchars    = true,
-        literate         = {á}{{\'a}}1
-                           {à}{{\`a}}1
-                           {ã}{{\~a}}1
-                           {é}{{\'e}}1,
+\lstset{language     = python,
+basicstyle       = \ttfamily,
+keywordstyle     = \bfseries\ttfamily\color{green!40!black},
+commentstyle     = \itshape\color{purple!40!black},
+identifierstyle  = \color{black},
+stringstyle      = \color{black},
+backgroundcolor  = \color{fond},
+numbers          = none,
+frame            = leftline,
+framerule        = 3pt,
+rulecolor        = \color{gray},
+showstringspaces = false
+extendedchars    = true,
+literate         = {á}{{\'a}}1
+{à}{{\`a}}1
+{ã}{{\~a}}1
+{é}{{\'e}}1,
 }}{}
 
 % Include verbatim in text
@@ -477,57 +486,6 @@
 % Profondeur des sections dans la table of contents
 \setcounter{tocdepth}{3}
 \setcounter{secnumdepth}{4}
-
-% % Sections fantômes dans la table of contents
-% \makeatletter
-% \newcommand{\appch}[2]{%
-%   \phantomsection
-%   \refstepcounter{chapter}%
-%   \chapter*{#1}%
-%   \addtocounter{chapter}{-1}%
-%   \def\@currentlabelname{App: #1}%
-%   \def\@currentlabel{\thechapter}%
-%   \label{#2}%
-%   \addcontentsline{toc}{chapter}{#1}%
-% }
-% \newcommand{\appsec}[2]{%
-%   \phantomsection
-%   \refstepcounter{section}%
-%   \section*{#1}%
-%   \addtocounter{section}{-1}%
-%   \def\@currentlabelname{App: #1}%
-%   \def\@currentlabel{\thesection}%
-%   \label{#2}%
-%   \addcontentsline{toc}{section}{#1}%
-% }
-% \newcommand{\appssec}[2]{%
-%   \refstepcounter{subsection}%
-%   \subsection*{#1}%
-%   \addtocounter{subsection}{-1}%
-%   \def\@currentlabelname{App: #1}%
-%   \def\@currentlabel{\thesubsection}%
-%   \label{#2}%
-%   \addcontentsline{toc}{subsection}{#1}
-% }
-% \newcommand{\appsssec}[2]{%
-%   \refstepcounter{subsubsection}%
-%   \subsubsection*{#1}%
-%   \addtocounter{subsubsection}{-1}%
-%   \def\@currentlabelname{App: #1}%
-%   \def\@currentlabel{\thesubsubsection}%
-%   \label{#2}%
-%   \addcontentsline{toc}{subsubsection}{#1}
-% }
-% \makeatother
-
-% Idk really
-\makeatletter
-\newcommand*{\toccontents}{\@starttoc{toc}}
-\def\enoteheading{\section*{\notesname
-  \@mkboth{\MakeUppercase{\notesname}}{\MakeUppercase{\notesname}}}%
-  \mbox{}\par\vskip-2.3\baselineskip\noindent\rule{.5\textwidth}{0.4pt}
-  \par\vskip\baselineskip}
-\makeatother
 
 % Définition des puces des listes
 %\setlist{nosep} % Interligne nul
@@ -541,21 +499,21 @@
 
 % Setup clitem et sqitem
 \newif\iffitem
-\newcommand{\setupmodenumerate}{%
-  \global\fitemfalse
-  \let\origmakelabel\makelabel
-  \def\fitem##1{\global\fitemtrue\def\toapply{##1}\item}%
-  \def\makelabel##1{%
-    \origmakelabel{%
-      \iffitem{%
-        \renewcommand{\labelenumi}{\arabic{enumi}}%
-        \renewcommand{\labelenumii}{\alph{enumii}}%
-        \renewcommand{\labelenumiii}{\roman{enumiii}}%
-        \toapply{##1}%
-      }%
-    \else##1\fi}%
-    \global\fitemfalse
-  }%
+	\newcommand{\setupmodenumerate}{%
+	\global\fitemfalse
+	\let\origmakelabel\makelabel
+	\def\fitem##1{\global\fitemtrue\def\toapply{##1}\item}%
+	\def\makelabel##1{%
+\origmakelabel{%
+	\iffitem{%
+		\renewcommand{\labelenumi}{\arabic{enumi}}%
+		\renewcommand{\labelenumii}{\alph{enumii}}%
+		\renewcommand{\labelenumiii}{\roman{enumiii}}%
+		\toapply{##1}%
+	}%
+\else##1\fi}%
+\global\fitemfalse
+}%
 }
 \setlist[enumerate]{before=\setupmodenumerate}
 % Number in squares
@@ -577,7 +535,7 @@
 % https://tex.stackexchange.com/a/266229
 \newenvironment{bolditemize}{\begin{itemize} }{\end{itemize}}
 \expandafter\def\expandafter\bolditemize\expandafter{%
-\bolditemize \let\olditem\item \def\item[##1]{\olditem \textbf{##1}}}
+	\bolditemize \let\olditem\item \def\item[##1]{\olditem \textbf{##1}}}
 
 \newcommand{\ed}[2]{#1\endnote{\textcolor{black}{#1} : #2}}
 \newcommand{\obar}[1]{\mkern 1.5mu\overline{\mkern-1.5mu#1\mkern-1.5mu}\mkern 1.5mu}
@@ -587,7 +545,7 @@
 
 % Environnements de mises en valeur
 \RequirePackage[many]{tcolorbox}
-\tcbuselibrary{skins, raster}
+\tcbuselibrary{skins, raster, xparse}
 
 % Useful tools
 \RequirePackage{etoolbox}
@@ -622,12 +580,12 @@
 \newcommand{\encadreminipage}[2]{%
 	\leftcentersright{}{\fbox{%
 			\begin{minipage}{#1} #2 \end{minipage}%
-	}}{}%
+		}}{}%
 }
 
 \newcommand{\centersminipage}[2]{%
 	\leftcentersright{}{%
-			\begin{minipage}{#1} #2 \end{minipage}%
+		\begin{minipage}{#1} #2 \end{minipage}%
 	}{}%
 }
 
@@ -638,29 +596,29 @@
 \newtoggle{student}
 \togglefalse{student}
 \newcommand{\ifstudent}[1]{
-    \iftoggle{student}{%
-        #1%
-    }{}
+	\iftoggle{student}{%
+		#1%
+	}{}
 }
 \newcommand{\ifprof}[1]{
-    \iftoggle{student}{%
-    }{
-        #1%
-    }
+	\iftoggle{student}{%
+	}{
+		#1%
+	}
 }
 \newcommand{\switch}[2]{
-    \iftoggle{student}{%
-        #2%
-    }{%
-        #1%
-    }%
+	\iftoggle{student}{%
+		#2%
+	}{%
+		#1%
+	}%
 }
 
 % Command for easy color switch
 \newcommand{\cswitch}[2]{%
-    \textcolor{\switch{black!100}{#1!10}}{%
-        #2%
-    }%
+	\textcolor{\switch{black!100}{#1!10}}{%
+		#2%
+	}%
 }
 
 % Hide
@@ -668,1116 +626,177 @@
 \newif\ifHideSolutions
 % Make a solution environment
 \generalcomment{hide}{%
-  \begingroup
-  \ifHideSolutions%
-  % if \HideSolutionstrue is not called, then we remove the contents
-  \def\ProcessCutFile{}\fi%
+	\begingroup
+	\ifHideSolutions%
+		% if \HideSolutionstrue is not called, then we remove the contents
+		\def\ProcessCutFile{}\fi%
 }{%
-  \ifHideSolutions%
-    % aand,now (also when it's not called), we make a box
-    % and then we \input the \CommentCutFile.
-    \setbox1=\vbox{\input{\CommentCutFile}}%
-    % Get the height from \ht1 and use \vskip to make appropriate space
-    \vskip\ht1
-  \fi
-\endgroup%
+	\ifHideSolutions%
+		% aand,now (also when it's not called), we make a box
+		% and then we \input the \CommentCutFile.
+		\setbox1=\vbox{\input{\CommentCutFile}}%
+		% Get the height from \ht1 and use \vskip to make appropriate space
+		\vskip\ht1
+	\fi
+	\endgroup%
+}
+
+% My generic box name
+% based on the great answer https://tex.stackexchange.com/a/471615/284518
+\NewTColorBox{tcb}{O{lft}D(){defi}D<>{}+m}{%
+base,
+#1={#2}{#4},
+#3
 }
 
 % Basic styles of boxes
+% thanks to https://tex.stackexchange.com/a/252907/284518 for 2 args
 \tcbset{
-  base/.style={
-    boxrule=0pt, frame hidden, interior hidden, sharp corners, enhanced
-  }
+	base/.style={
+			boxrule=0pt, frame hidden, interior hidden, enhanced,
+			sharp corners=uphill, valign=center,
+		}
 }
 \tcbset{
-  lft/.style 2 args={
-    borderline west={1pt}{0pt}{#1},
-    overlay unbroken and first ={%
-      \node[rotate=90,
-        minimum width=1cm,
-        anchor=south,
-        font=\bfseries,
-        color=#1]
-      at (frame.west) {#2};
-    }
-  }
+	lft/.style 2 args={
+			borderline west={1pt}{0pt}{#1},
+			overlay unbroken and first ={%
+					\node[rotate=90,
+						minimum width=1cm,
+						anchor=south,
+						font=\bfseries,
+						color=#1]
+					at (frame.west) {#2};
+				}
+		}
 }
 \tcbset{
-  rgt/.style 2 args={
-    borderline east={1pt}{0pt}{#1},
-    overlay unbroken and first ={%
-      \node[rotate=90,
-        minimum width=1cm,
-        anchor=south,
-        font=\bfseries,
-        color=#1]
-        at ([shift={(16pt,0)}]frame.east) {#2};
-    }
-  }
+	rgt/.style 2 args={
+			borderline east={1pt}{0pt}{#1},
+			overlay unbroken and first ={%
+					\node[rotate=90,
+						minimum width=1cm,
+						anchor=south,
+						font=\bfseries,
+						color=#1]
+					at ([shift={(16pt,0)}]frame.east) {#2};
+				}
+		}
 }
 \tcbset{
-  box/.style 2 args={
-    borderline={1pt}{0pt}{#1}, coltitle=#1,
-    fonttitle=\bfseries, top=10pt,
-    attach boxed title to top left={yshift={-11pt}, xshift=10pt},
-    boxed title style={enhanced, frame hidden, colback=white},
-    title=#2,
-  }
+	box/.style 2 args={
+			borderline={1pt}{0pt}{#1}, coltitle=#1,
+			fonttitle=\bfseries, top=10pt,
+			attach boxed title to top left={yshift={-9pt}, xshift=10pt},
+			boxed title style={enhanced, frame hidden, colback=white},
+			title=#2,
+		}
+}
+
+% For side inside box
+\NewTColorBox{isd}{D(){black}D<>{}}{%
+side={#1},
+#2
+}
+
+\tcbset{
+	side/.style={
+			arc=0pt, boxsep=0mm, notitle, oversize, nobeforeafter, frame hidden,
+			enhanced,
+			colframe=#1, colback=white,
+			sidebyside, sidebyside align=center, valign=center
+		}
+}
+
+% For side adapt box
+\NewDocumentCommand{\sde}{sO{box}D(){defi}D<>{} mmm}{%
+\IfBooleanTF#1
+{
+	\tcbsidebyside[
+		base,
+		colframe=#3,
+		#2={#3}{#5},
+		halign=center,
+		halign lower=center,
+		sidebyside adapt=#4]{#6}{#7}
+}
+{
+	\tcbsidebyside[
+		base,
+		#2={#3}{#5},
+		sidebyside adapt=#4]{#6}{#7}
+}
+}
+
+% For instruc or aide
+\tcbset{
+	inst/.style={
+			enhanced, attach boxed title to top center={yshift=-2mm},
+			fonttitle=\bfseries,
+			title={#1},
+		}
+}
+\tcbset{
+	aide/.style={
+			tikz={rotate=180, transform shape}
+		}
+}
+\NewTColorBox{itc}{D<>{}+m}{%
+	inst=#2,
+	#1
 }
 
 % Useful styles to add to a box
 \tcbset{heart/.style={overlay={
-    \node[below left] at (frame.north west)
-        {\includegraphics[width=1.2cm]{../../figures_generales/heart.jpg}};}}}
+					\node[below left] at (frame.north west)
+					{\includegraphics[width=1.2cm]{../../figures_generales/heart.jpg}};}}}
 
 \tcbset{hand/.style={overlay={
-    \node[below left] at (frame.north west)
-        {\includegraphics[width=1.2cm]{../../figures_generales/pr.jpg}};}}}
+					\node[below left] at (frame.north west)
+					{\includegraphics[width=1.2cm]{../../figures_generales/pr.jpg}};}}}
 
 \tcbset{dngr/.style={overlay={
-    \node[below left, scale=2] at (frame.north west)
-        {\danger};}}}
+					\node[below left, scale=2] at (frame.north west)
+					{\danger};}}}
 
 \tcbset{trans/.style={overlay={
-    \node[xshift=-0.8cm, yshift=-0.75cm] at (frame.north west)
-        {\includegraphics[angle=-90, origin=c, height=1.2cm]{../../figures_generales/pr.jpg}};}}}
+					\node[xshift=-0.8cm, yshift=-0.75cm] at (frame.north west)
+					{\includegraphics[angle=-90, origin=c, height=1.2cm]{../../figures_generales/pr.jpg}};}}}
 
 \newcommand{\includehand}[2]{
-\includegraphics[angle=#1,
-        origin=c,
-    height=#2]{../../figures_generales/pr.jpg}
+	\includegraphics[angle=#1,
+		origin=c,
+		height=#2]{../../figures_generales/pr.jpg}
 }
 
 \newcommand{\includeheart}[2]{
-    \vspace*{-20pt}
-    \includegraphics[angle=#1,
-        origin=c,
-        height=#2]{../../figures_generales/heart.jpg}
+	\vspace*{-20pt}
+	\includegraphics[angle=#1,
+		origin=c,
+		height=#2]{../../figures_generales/heart.jpg}
 }
 
 % Box colors
+\colorlet{loi}{red!80!black}
+\colorlet{theo}{red!70!black}
 \colorlet{prop}{red!60!black}
+\colorlet{coro}{VioletRed!60!black}
+\colorlet{demo}{blue!60!black}
+\colorlet{inte}{RoyalBlue!50!black}
+\colorlet{impl}{DodgerBlue!50!black}
 \colorlet{defi}{green!60!black}
-
-\newtcolorbox[auto counter, number within=chapter]{loi}[2][]{%
-enhanced, colback=red!10, colframe=, valign=center,
-sharp corners=uphill, fonttitle=\bfseries,
-title=Loi~\thetcbcounter~: #2, #1}
-
-\newtcolorbox[auto counter, number within=chapter]{NCloi}[2][]{%
-enhanced, colback=red!10, colframe=red!80!black, valign=center,
-sharp corners=uphill, fonttitle=\bfseries,
-title=#2, #1}
-
-\newtcolorbox[auto counter, number within=chapter]{Theo}[2][]{%
-enhanced, colback=red!10, colframe=red!70!black, valign=center,
-sharp corners=uphill, fonttitle=\bfseries,
-title=Théorème~\thetcbcounter~: #2, #1}
-
-\newtcolorbox[auto counter, number within=chapter]{NCtheo}[2][]{%
-enhanced, colback=red!10, colframe=red!70!black, valign=center,
-sharp corners=uphill, fonttitle=\bfseries,
-title=#2, #1}
-
-\newtcolorbox[auto counter, number within=chapter]{prop}[2][]{%
-enhanced, colback=red!10, colframe=red!60!black, valign=center,
-sharp corners=uphill, fonttitle=\bfseries,
-title=Propriété~\thetcbcounter~: #2, #1}
-
-\newtcolorbox[auto counter, number within=chapter]{NCprop}[2][]{%
-enhanced, colback=red!10, colframe=red!60!black, valign=center,
-sharp corners=uphill, fonttitle=\bfseries,
-title=#2, #1}
-
-\newtcolorbox{propside}{sidebyside, sidebyside align=top,
-    enhanced, colback=red!10, colframe=red!60!black, valign=center,
-    arc=0pt, boxsep=0mm, notitle, oversize, nobeforeafter, frame hidden}
-
-\newtcolorbox{rprop}[2][]{boxrule=0pt, frame hidden, interior hidden, sharp corners,
-enhanced, borderline west={1pt}{0pt}{red!80!black},
- overlay unbroken and first ={%
-    \node[rotate=90,
-          minimum width=1cm,
-          anchor=south,
-          font=\bfseries,
-          color=red!80!black]
-    at (frame.west) {#2};
-  }, breakable
-}
-
-\newtcolorbox{rpropside}[2][]{boxrule=0pt, frame hidden, interior hidden, sharp corners,
-enhanced, borderline west={1pt}{0pt}{red!80!black},
- overlay unbroken and first ={%
-    \node[rotate=90,
-          minimum width=1cm,
-          anchor=south,
-          font=\bfseries,
-          color=red!80!black]
-    at (frame.west) {#2};
-  }, breakable, sidebyside
-}
-
-\newtcolorbox{bprop}[2][]{boxrule=0pt, frame hidden, interior hidden, sharp corners,
-enhanced, borderline={1pt}{0pt}{red!80!black},
- overlay unbroken and first ={%
-    \node[rotate=90,
-          minimum width=1cm,
-          anchor=south,
-          font=\bfseries,
-          color=red!80!black]
-    at (frame.west) {#2};
-  }, breakable
-}
-
-\newtcolorbox{rsideprop}{sidebyside, sidebyside align=center,
-    enhanced, colback=white, colframe=red!80!black, valign=center,
-    arc=0pt, boxsep=0mm, notitle, oversize, nobeforeafter, frame hidden}
-
-\newtcolorbox{tprop}[2][]{boxrule=0pt, frame hidden, interior hidden, sharp corners,
-enhanced,
-borderline={1pt}{0pt}{red!80!black},
-top=10pt, coltitle=red!80!black, fonttitle=\bfseries,
-attach boxed title to top left={yshift={-11pt}, xshift=10pt}, boxed title
-style={enhanced, frame hidden, colback=white},
-title=#2,
-% breakable,
-}
-
-\newtcolorbox{tbprop}[3][]{boxrule=0pt, frame hidden, interior hidden, sharp corners,
-enhanced, borderline={1pt}{0pt}{red!80!black},
-top=10pt, coltitle=red!80!black, fonttitle=\bfseries,
-attach boxed title to top left={yshift={-11pt}, xshift=10pt}, boxed title
-style={enhanced, frame hidden, colback=white},
- overlay unbroken and first ={%
-    \node[rotate=90,
-          minimum width=1cm,
-          anchor=south,
-          font=\bfseries,
-          color=red!80!black]
-    at (frame.west) {#2};
-  }, breakable,
-  title=#3,
-}
-
-\newtcolorbox{bpropside}[2][]{boxrule=0pt, frame hidden, interior hidden, sharp corners,
-enhanced, borderline={1pt}{0pt}{red!80!black},
- overlay unbroken and first ={%
-    \node[rotate=90,
-          minimum width=1cm,
-          anchor=south,
-          font=\bfseries,
-          color=red!80!black]
-    at (frame.west) {#2};
-  }, breakable, sidebyside
-}
-
-\newtcolorbox{lprop}[2][]{boxrule=0pt, frame hidden, interior hidden, sharp corners,
-enhanced, borderline east={1pt}{-10pt}{red!80!black},
- overlay unbroken and first ={%
-    \node[rotate=90,
-          minimum width=1cm,
-          anchor=north,
-          font=\bfseries,
-          color=red!80!black]
-    at ([shift={(10pt,0)}]frame.east) {#2};
-  }, breakable
-}
-
-\newtcolorbox{lpropside}[2][]{boxrule=0pt, frame hidden, interior hidden, sharp corners,
-enhanced, borderline east={1pt}{-10pt}{red!80!black},
- overlay unbroken and first ={%
-    \node[rotate=90,
-          minimum width=1cm,
-          anchor=north,
-          font=\bfseries,
-          color=red!80!black]
-    at ([shift={(10pt,0)}]frame.east) {#2};
-  }, breakable, sidebyside
-}
-
-\newtcolorbox[auto counter, number within=chapter]{coro}[2][]{%
-enhanced, colback=VioletRed!10, colframe=VioletRed!60!black, valign=center,
-sharp corners=uphill, fonttitle=\bfseries,
-title=Corollaire~\thetcbcounter~: #2, #1}
-
-\newtcolorbox[auto counter, number within=chapter]{NCcoro}[2][]{%
-enhanced, colback=VioletRed!10, colframe=VioletRed!60!black, valign=center,
-sharp corners=uphill, fonttitle=\bfseries,
-title=#2, #1}
-
-\newtcolorbox{tcoro}[2][]{boxrule=0pt, frame hidden, interior hidden, sharp corners,
-enhanced, borderline={1pt}{0pt}{VioletRed!60!black},
-top=10pt, coltitle=VioletRed!60!black, fonttitle=\bfseries,
-attach boxed title to top left={yshift={-11pt}, xshift=10pt}, boxed title
-style={enhanced, frame hidden, colback=white},
-title=#2,
-breakable,
-}
-
-\newtcolorbox{coroside}{sidebyside, sidebyside align=top,
-    enhanced, colback=VioletRed!10, colframe=VioletRed!60!black, valign=center,
-    arc=0pt, boxsep=0mm, notitle, oversize, nobeforeafter, frame hidden}
-
-\newtcolorbox[auto counter, number within=chapter]{demo}[2][]{%
-enhanced, colback=blue!10, colframe=blue!60!black, valign=center,
-sharp corners=uphill, fonttitle=\bfseries,
-title=Démonstration~\thetcbcounter~: #2, #1}
-
-\newtcolorbox[auto counter, number within=chapter]{NCdemo}[2][]{%
-enhanced, colback=blue!10, colframe=blue!60!black, valign=center,
-sharp corners=uphill, fonttitle=\bfseries,
-title=#2, #1}
-
-\newtcolorbox{demoside}{sidebyside, sidebyside align=center,
-    enhanced, colback=blue!10!, colframe=blue!60!black, valign=center,
-    arc=0pt, boxsep=1mm, notitle, oversize, nobeforeafter, frame hidden}
-
-\newtcolorbox{rdemo}[2][]{boxrule=0pt, frame hidden, interior hidden, sharp corners,
-enhanced, borderline west={1pt}{0pt}{blue!80!black},
- overlay unbroken and first ={%
-    \node[rotate=90,
-          minimum width=1cm,
-          anchor=south,
-          font=\bfseries,
-          color=blue!80!black]
-    at (frame.west) {#2};
-  }, breakable
-}
-
-\newtcolorbox{rdemoside}[2][]{boxrule=0pt, frame hidden, interior hidden, sharp corners,
-enhanced, borderline west={1pt}{0pt}{blue!80!black},
- overlay unbroken and first ={%
-    \node[rotate=90,
-          minimum width=1cm,
-          anchor=south,
-          font=\bfseries,
-          color=blue!80!black]
-    at (frame.west) {#2};
-  }, breakable, sidebyside
-}
-
-\newtcolorbox{rsidedemo}{sidebyside, sidebyside align=center,
-    enhanced, colback=white, colframe=blue!60!black, valign=center,
-    arc=0pt, boxsep=0mm, notitle, oversize, nobeforeafter, frame hidden}
-
-\newtcolorbox{bdemo}[2][]{boxrule=0pt, frame hidden, interior hidden, sharp corners,
-enhanced, borderline={1pt}{0pt}{blue!80!black},
- overlay unbroken and first ={%
-    \node[rotate=90,
-          minimum width=1cm,
-          anchor=south,
-          font=\bfseries,
-          color=blue!80!black]
-    at (frame.west) {#2};
-  }, breakable
-}
-
-\newtcolorbox{tdemo}[2][]{boxrule=0pt, frame hidden, interior hidden, sharp corners,
-enhanced, borderline={1pt}{0pt}{blue!80!black},
-top=10pt, coltitle=blue!80!black, fonttitle=\bfseries,
-attach boxed title to top left={yshift={-11pt}, xshift=10pt}, boxed title
-style={enhanced, frame hidden, colback=white},
-title=#2,
-% breakable,
-}
-
-\newtcolorbox{tbdemo}[3][]{boxrule=0pt, frame hidden, interior hidden, sharp corners,
-enhanced, borderline={1pt}{0pt}{blue!80!black},
-top=10pt, coltitle=blue!80!black, fonttitle=\bfseries,
-attach boxed title to top left={yshift={-11pt}, xshift=10pt}, boxed title
-style={enhanced, frame hidden, colback=white},
- overlay unbroken and first ={%
-    \node[rotate=90,
-          minimum width=1cm,
-          anchor=south,
-          font=\bfseries,
-          color=blue!80!black]
-    at (frame.west) {#2};
-  }, breakable,
-  title=#3,
-}
-
-\newtcolorbox{bdemoside}[2][]{boxrule=0pt, frame hidden, interior hidden, sharp corners,
-enhanced, borderline={1pt}{0pt}{blue!80!black},
- overlay unbroken and first ={%
-    \node[rotate=90,
-          minimum width=1cm,
-          anchor=south,
-          font=\bfseries,
-          color=blue!80!black]
-    at (frame.west) {#2};
-  }, breakable, sidebyside
-}
-
-\newtcolorbox[auto counter, number within=chapter]{inte}[2][]{%
-enhanced, colback=RoyalBlue!10, colframe=RoyalBlue!50!black, valign=center,
-sharp corners=uphill, fonttitle=\bfseries,
-title=Interprétation~\thetcbcounter~: #2, #1}
-
-\newtcolorbox[auto counter, number within=chapter]{NCinte}[2][]{%
-enhanced, colback=RoyalBlue!10, colframe=RoyalBlue!50!black, valign=center,
-sharp corners=uphill, fonttitle=\bfseries,
-title=#2, #1}
-
-\newtcolorbox[auto counter, number within=chapter]{impl}[2][]{%
-enhanced, colback=DodgerBlue!10, colframe=DodgerBlue!50!black, valign=center,
-sharp corners=uphill, fonttitle=\bfseries,
-title=Implication~\thetcbcounter~: #2, #1}
-
-\newtcolorbox[auto counter, number within=chapter]{NCimpl}[2][]{%
-enhanced, colback=DodgerBlue!10, colframe=DodgerBlue!50!black, valign=center,
-sharp corners=uphill, fonttitle=\bfseries,
-title=#2, #1}
-
-\newtcolorbox{rimpl}[2][]{boxrule=0pt, frame hidden, interior hidden, sharp corners,
-enhanced, borderline west={1pt}{0pt}{DodgerBlue!50!black},
- overlay unbroken and first ={%
-    \node[rotate=90,
-          minimum width=1cm,
-          anchor=south,
-          font=\bfseries,
-          color=DodgerBlue!50!black]
-    at (frame.west) {#2};
-  }, breakable
-}
-
-\newtcolorbox{rimplside}[2][]{boxrule=0pt, frame hidden, interior hidden, sharp corners,
-enhanced, borderline west={1pt}{0pt}{DodgerBlue!50!black},
- overlay unbroken and first ={%
-    \node[rotate=90,
-          minimum width=1cm,
-          anchor=south,
-          font=\bfseries,
-          color=DodgerBlue!50!black]
-    at (frame.west) {#2};
-  }, breakable, sidebyside
-}
-
-\newtcolorbox{bimpl}[2][]{boxrule=0pt, frame hidden, interior hidden, sharp corners,
-enhanced, borderline={1pt}{0pt}{DodgerBlue!50!black},
- overlay unbroken and first ={%
-    \node[rotate=90,
-          minimum width=1cm,
-          anchor=south,
-          font=\bfseries,
-          color=DodgerBlue!50!black]
-    at (frame.west) {#2};
-  }, breakable
-}
-
-\newtcolorbox{bimplside}[2][]{boxrule=0pt, frame hidden, interior hidden, sharp corners,
-enhanced, borderline={1pt}{0pt}{DodgerBlue!50!black},
- overlay unbroken and first ={%
-    \node[rotate=90,
-          minimum width=1cm,
-          anchor=south,
-          font=\bfseries,
-          color=DodgerBlue!50!black]
-    at (frame.west) {#2};
-  }, breakable, sidebyside
-}
-
-% \newtcolorbox[auto counter, number within=chapter]{defi}[2][]{%
-% enhanced, colback=green!10, colframe=deficol, valign=center,
-% sharp corners=uphill, fonttitle=\bfseries,
-% title=Définition~\thetcbcounter~: #2, #1}
-
-\newtcolorbox[auto counter, number within=chapter]{NCdefi}[2][]{%
-enhanced, colback=green!10, colframe=deficol, valign=center,
-sharp corners=uphill, fonttitle=\bfseries,
-title=#2, #1}
-
-\newtcolorbox{defiside}{sidebyside, sidebyside align=top,
-    enhanced, colback=green!10!, colframe=deficol, valign=center,
-    arc=0pt, boxsep=1mm, notitle, oversize, nobeforeafter, frame hidden}
-
-\newtcolorbox{rdefi}[2][]{boxrule=0pt, frame hidden, interior hidden, sharp corners,
-enhanced, borderline west={1pt}{0pt}{deficol},
- overlay unbroken and first ={%
-    \node[rotate=90,
-          minimum width=1cm,
-          anchor=south,
-          font=\bfseries,
-          color=deficol]
-    at (frame.west) {#2};
-  }, breakable
-}
-
-\newtcolorbox{rdefiside}[2][]{boxrule=0pt, frame hidden, interior hidden, sharp corners,
-enhanced, borderline west={1pt}{0pt}{deficol},
- overlay unbroken and first ={%
-    \node[rotate=90,
-          minimum width=1cm,
-          anchor=south,
-          font=\bfseries,
-          color=deficol]
-    at (frame.west) {#2};
-  }, breakable, sidebyside
-}
-
-\newtcolorbox{bdefi}[2][]{boxrule=0pt, frame hidden, interior hidden, sharp corners,
-enhanced, borderline={1pt}{0pt}{deficol},
- overlay unbroken and first ={%
-    \node[rotate=90,
-          minimum width=1cm,
-          anchor=south,
-          font=\bfseries,
-          color=deficol]
-    at (frame.west) {#2};
-  }, breakable
-}
-
-\newtcolorbox{tdefi}[2][]{boxrule=0pt, frame hidden, interior hidden, sharp corners,
-enhanced, borderline={1pt}{0pt}{deficol},
-top=10pt, coltitle=deficol, fonttitle=\bfseries,
-attach boxed title to top left={yshift={-10pt}, xshift=10pt}, boxed title
-style={enhanced, frame hidden, colback=white},
-title=#2,
-breakable,
-}
-
-\newtcolorbox{side}{sidebyside, sidebyside align=top,
-    enhanced, colback=white, colframe=black, valign=center,
-    arc=0pt, boxsep=0mm, notitle, oversize, nobeforeafter, frame hidden}
-
-\newtcolorbox{tbdefi}[3][]{boxrule=0pt, frame hidden, interior hidden, sharp corners,
-enhanced, borderline={1pt}{0pt}{deficol},
-top=10pt, coltitle=deficol, fonttitle=\bfseries,
-attach boxed title to top left={yshift={-11pt}, xshift=10pt}, boxed title
-style={enhanced, frame hidden, colback=white},
- overlay unbroken and first ={%
-    \node[rotate=90,
-          minimum width=1cm,
-          anchor=south,
-          font=\bfseries,
-          color=deficol]
-    at (frame.west) {#2};
-  }, breakable,
-  title=#3,
-}
-
-\newtcolorbox{bdefiside}[2][]{boxrule=0pt, frame hidden, interior hidden, sharp corners,
-enhanced, borderline={1pt}{0pt}{deficol},
- overlay unbroken and first ={%
-    \node[rotate=90,
-          minimum width=1cm,
-          anchor=south,
-          font=\bfseries,
-          color=deficol]
-    at (frame.west) {#2};
-  }, breakable, sidebyside
-}
-
-\newtcolorbox{ldefi}[2][]{boxrule=0pt, frame hidden, interior hidden, sharp corners,
-enhanced, borderline east={1pt}{0pt}{deficol},
- overlay unbroken and first ={%
-    \node[rotate=90,
-          minimum width=1cm,
-          anchor=north,
-          font=\bfseries,
-          color=deficol]
-    at (frame.east) {#2};
-  }, breakable
-}
-
-\newtcolorbox{ldefiside}[2][]{boxrule=0pt, frame hidden, interior hidden, sharp corners,
-enhanced, borderline east={1pt}{0pt}{deficol},
- overlay unbroken and first ={%
-    \node[rotate=90,
-          minimum width=1cm,
-          anchor=north,
-          font=\bfseries,
-          color=deficol]
-    at (frame.east) {#2};
-  }, breakable, sidebyside
-}
-
-\newtcolorbox[auto counter, number within=chapter]{nota}[2][]{%
-enhanced, colback=green!10, colframe=green!50!black, valign=center,
-sharp corners=uphill, fonttitle=\bfseries,
-title=Notation~\thetcbcounter~: #2, #1}
-
-\newtcolorbox[auto counter, number within=chapter]{NCnota}[2][]{%
-enhanced, colback=green!10, colframe=green!50!black, valign=center,
-sharp corners=uphill, fonttitle=\bfseries,
-title=#2, #1}
-
-\newtcolorbox[auto counter, number within=chapter]{impo}[2][]{%
-enhanced, colback=BlueViolet!10, colframe=BlueViolet!50!black, valign=center,
-sharp corners=uphill, fonttitle=\bfseries,
-title=Important~\thetcbcounter~: #2, #1}
-
-\newtcolorbox[auto counter, number within=chapter]{NCimpo}[2][]{%
-enhanced, colback=BlueViolet!10, colframe=BlueViolet!50!black, valign=center,
-sharp corners=uphill, fonttitle=\bfseries,
-title=#2, #1}
-
-\newtcolorbox{imposide}{sidebyside, sidebyside align=top,
-    enhanced, colback=BlueViolet!10, colframe=BlueViolet!50!black, valign=center,
-    arc=0pt, boxsep=1mm, notitle, oversize, nobeforeafter, frame hidden}
-
-\newtcolorbox{rimpo}[2][]{boxrule=0pt, frame hidden, interior hidden, sharp corners,
-enhanced, borderline west={1pt}{0pt}{BlueViolet!70!black},
- overlay unbroken and first ={%
-    \node[rotate=90,
-          minimum width=1cm,
-          anchor=south,
-          font=\bfseries,
-          color=BlueViolet!70!black]
-    at (frame.west) {#2};
-  }, breakable
-}
-
-\newtcolorbox{rimposide}[2][]{boxrule=0pt, frame hidden, interior hidden, sharp corners,
-enhanced, borderline west={1pt}{0pt}{BlueViolet!70!black},
- overlay unbroken and first ={%
-    \node[rotate=90,
-          minimum width=1cm,
-          anchor=south,
-          font=\bfseries,
-          color=BlueViolet!70!black]
-    at (frame.west) {#2};
-  }, breakable, sidebyside
-}
-
-\newtcolorbox{bimpo}[2][]{boxrule=0pt, frame hidden, interior hidden, sharp corners,
-enhanced, borderline={1pt}{0pt}{BlueViolet!70!black},
- overlay unbroken and first ={%
-    \node[rotate=90,
-          minimum width=1cm,
-          anchor=south,
-          font=\bfseries,
-          color=BlueViolet!70!black]
-    at (frame.west) {#2};
-  }, breakable
-}
-
-\newtcolorbox{timpo}[2][]{boxrule=0pt, frame hidden, interior hidden, sharp corners,
-enhanced, borderline={1pt}{0pt}{BlueViolet!70!black},
-top=10pt, coltitle=BlueViolet!70!black, fonttitle=\bfseries,
-attach boxed title to top left={yshift={-10pt}, xshift=10pt}, boxed title
-style={enhanced, frame hidden, colback=white},
-title=#2,
-breakable,
-}
-
-\newtcolorbox{tbimpo}[3][]{boxrule=0pt, frame hidden, interior hidden, sharp corners,
-enhanced, borderline={1pt}{0pt}{BlueViolet!70!black},
-top=10pt, coltitle=BlueViolet!70!black, fonttitle=\bfseries,
-attach boxed title to top left={yshift={-11pt}, xshift=10pt}, boxed title
-style={enhanced, frame hidden, colback=white},
- overlay unbroken and first ={%
-    \node[rotate=90,
-          minimum width=1cm,
-          anchor=south,
-          font=\bfseries,
-          color=BlueViolet!70!black]
-    at (frame.west) {#2};
-  }, breakable,
-  title=#3,
-}
-
-\newtcolorbox{bimposide}[2][]{boxrule=0pt, frame hidden, interior hidden, sharp corners,
-enhanced, borderline={1pt}{0pt}{BlueViolet!70!black},
- overlay unbroken and first ={%
-    \node[rotate=90,
-          minimum width=1cm,
-          anchor=south,
-          font=\bfseries,
-          color=BlueViolet!70!black]
-    at (frame.west) {#2};
-  }, breakable, sidebyside
-}
-
-\newtcolorbox[auto counter, number within=chapter]{ror}[2][]{%
-enhanced, colback=orange!10, colframe=orange!80!black, valign=center,
-sharp corners=uphill, fonttitle=\bfseries,
-title=Important~\thetcbcounter~: #2, #1}
-
-\newtcolorbox[auto counter, number within=chapter]{NCror}[2][]{%
-enhanced, colback=orange!10, colframe=orange!80!black, valign=center,
-sharp corners=uphill, fonttitle=\bfseries,
-title=#2, #1}
-
-\newtcolorbox{rorside}{sidebyside, sidebyside align=top,
-    enhanced, colback=orange!10!, colframe=orange!80!black, valign=center,
-    arc=0pt, boxsep=1mm, notitle, oversize, nobeforeafter, frame hidden}
-
-\newtcolorbox{rror}[2][]{boxrule=0pt, frame hidden, interior hidden, sharp corners,
-enhanced, borderline west={1pt}{0pt}{orange!90!black},
- overlay unbroken and first ={%
-    \node[rotate=90,
-          minimum width=1cm,
-          anchor=south,
-          font=\bfseries,
-          color=orange!90!black]
-    at (frame.west) {#2};
-  }, breakable
-}
-
-\newtcolorbox{rrorside}[2][]{boxrule=0pt, frame hidden, interior hidden, sharp corners,
-enhanced, borderline west={1pt}{0pt}{orange!90!black},
- overlay unbroken and first ={%
-    \node[rotate=90,
-          minimum width=1cm,
-          anchor=south,
-          font=\bfseries,
-          color=orange!90!black]
-    at (frame.west) {#2};
-  }, breakable, sidebyside
-}
-
-\newtcolorbox{bror}[2][]{boxrule=0pt, frame hidden, interior hidden, sharp corners,
-enhanced, borderline={1pt}{0pt}{orange!90!black},
- overlay unbroken and first ={%
-    \node[rotate=90,
-          minimum width=1cm,
-          anchor=south,
-          font=\bfseries,
-          color=orange!90!black]
-    at (frame.west) {#2};
-  }, breakable
-}
-
-\newtcolorbox{tror}[2][]{boxrule=0pt, frame hidden, interior hidden, sharp corners,
-enhanced, borderline={1pt}{0pt}{orange!90!black},
-top=10pt, coltitle=orange!90!black, fonttitle=\bfseries,
-attach boxed title to top left={yshift={-10pt}, xshift=10pt}, boxed title
-style={enhanced, frame hidden, colback=white},
-title=#2,
-breakable,
-}
-
-\newtcolorbox{tbror}[3][]{boxrule=0pt, frame hidden, interior hidden, sharp corners,
-enhanced, borderline={1pt}{0pt}{orange!90!black},
-top=10pt, coltitle=orange!90!black, fonttitle=\bfseries,
-attach boxed title to top left={yshift={-11pt}, xshift=10pt}, boxed title
-style={enhanced, frame hidden, colback=white},
- overlay unbroken and first ={%
-    \node[rotate=90,
-          minimum width=1cm,
-          anchor=south,
-          font=\bfseries,
-          color=orange!90!black]
-    at (frame.west) {#2};
-  }, breakable,
-  title=#3,
-}
-
-\newtcolorbox{brorside}[2][]{boxrule=0pt, frame hidden, interior hidden, sharp corners,
-enhanced, borderline={1pt}{0pt}{orange!90!black},
- overlay unbroken and first ={%
-    \node[rotate=90,
-          minimum width=1cm,
-          anchor=south,
-          font=\bfseries,
-          color=orange!90!black]
-    at (frame.west) {#2};
-  }, breakable, sidebyside
-}
-
-\newtcolorbox[auto counter, number within=chapter]{rapp}[2][]{%
-enhanced, colback=BlueViolet!10, colframe=BlueViolet!60!black, valign=center,
-sharp corners=uphill, fonttitle=\bfseries,
-title=Rappel~\thetcbcounter~: #2, #1}
-
-\newtcolorbox[auto counter, number within=chapter]{NCrapp}[2][]{%
-enhanced, colback=BlueViolet!10, colframe=BlueViolet!60!black, valign=center,
-sharp corners=uphill, fonttitle=\bfseries,
-title=#2, #1}
-
-\newtcolorbox{rrapp}[2][]{boxrule=0pt, frame hidden, interior hidden, sharp corners,
-enhanced, borderline west={1pt}{0pt}{BlueViolet!60!black},
- overlay unbroken and first ={%
-    \node[rotate=90,
-          minimum width=1cm,
-          anchor=south,
-          font=\bfseries,
-          color=BlueViolet!60!black]
-    at (frame.west) {#2};
-  }, breakable
-}
-
-\newtcolorbox{rrappside}[2][]{boxrule=0pt, frame hidden, interior hidden, sharp corners,
-enhanced, borderline west={1pt}{0pt}{BlueViolet!60!black},
- overlay unbroken and first ={%
-    \node[rotate=90,
-          minimum width=1cm,
-          anchor=south,
-          font=\bfseries,
-          color=BlueViolet!60!black]
-    at (frame.west) {#2};
-  }, breakable, sidebyside
-}
-
-\newtcolorbox{brapp}[2][]{boxrule=0pt, frame hidden, interior hidden, sharp corners,
-    enhanced, borderline={1pt}{0pt}{BlueViolet!60!black},
-    overlay unbroken and first ={%
-    \node[rotate=90,
-          minimum width=1cm,
-          anchor=south,
-          font=\bfseries,
-          color=BlueViolet!60!black]
-    at (frame.west) {#2};
-  }, breakable
-}
-
-\newtcolorbox{brappside}[2][]{boxrule=0pt, frame hidden, interior hidden, sharp corners,
-    enhanced, borderline={1pt}{0pt}{BlueViolet!60!black},
-    overlay unbroken and first ={%
-    \node[rotate=90,
-          minimum width=1cm,
-          anchor=south,
-          font=\bfseries,
-          color=BlueViolet!60!black]
-    at (frame.west) {#2};
-  }, breakable, sidebyside
-}
-
-\newtcolorbox[auto counter, number within=chapter]{exem}[2][]{%
-enhanced, colback=lightgray!10, colframe=lightgray!50!black, valign=center,
-sharp corners=uphill, fonttitle=\bfseries,
-title=Exemple~\thetcbcounter~: #2, #1}
-
-\newtcolorbox[auto counter, number within=chapter]{NCexem}[2][]{%
-enhanced, colback=lightgray!10, colframe=lightgray!50!black, valign=center,
-sharp corners=uphill, fonttitle=\bfseries,
-title=#2, #1}
-
-\newtcolorbox{exemside}{sidebyside, sidebyside align=top,
-    enhanced, colback=lightgray!10!, colframe=lightgray!50!black, valign=center,
-    arc=0pt, boxsep=1mm, notitle, oversize, nobeforeafter, frame hidden}
-
-\newtcolorbox{rexem}[2][]{boxrule=0pt, frame hidden, interior hidden, sharp corners,
-enhanced, borderline west={1pt}{0pt}{lightgray!55!black},
- overlay unbroken and first ={%
-    \node[rotate=90,
-          minimum width=1cm,
-          anchor=south,
-          font=\bfseries,
-          color=lightgray!55!black]
-    at (frame.west) {#2};
-  }, breakable
-}
-
-\newtcolorbox{rexemside}[2][]{boxrule=0pt, frame hidden, interior hidden, sharp corners,
-enhanced, borderline west={1pt}{0pt}{lightgray!55!black},
- overlay unbroken and first ={%
-    \node[rotate=90,
-          minimum width=1cm,
-          anchor=south,
-          font=\bfseries,
-          color=lightgray!55!black]
-    at (frame.west) {#2};
-  }, breakable, sidebyside
-}
-
-\newtcolorbox{bexem}[2][]{boxrule=0pt, frame hidden, interior hidden, sharp corners,
-enhanced, borderline={1pt}{0pt}{lightgray!55!black},
- overlay unbroken and first ={%
-    \node[rotate=90,
-          minimum width=1cm,
-          anchor=south,
-          font=\bfseries,
-          color=lightgray!55!black]
-    at (frame.west) {#2};
-  }, breakable
-}
-
-\newtcolorbox{texem}[2][]{boxrule=0pt, frame hidden, interior hidden, sharp corners,
-enhanced, borderline={1pt}{0pt}{lightgray!55!black},
-top=10pt, coltitle=lightgray!55!black, fonttitle=\bfseries,
-attach boxed title to top left={yshift={-11pt}, xshift=10pt}, boxed title
-style={enhanced, frame hidden, colback=white},
-title=#2,
-breakable,
-}
-
-\newtcolorbox{tbexem}[3][]{boxrule=0pt, frame hidden, interior hidden, sharp corners,
-enhanced, borderline={1pt}{0pt}{lightgray!55!black},
-top=10pt, coltitle=lightgray!55!black, fonttitle=\bfseries,
-attach boxed title to top left={yshift={-11pt}, xshift=10pt}, boxed title
-style={enhanced, frame hidden, colback=white},
- overlay unbroken and first ={%
-    \node[rotate=90,
-          minimum width=1cm,
-          anchor=south,
-          font=\bfseries,
-          color=lightgray!55!black]
-    at (frame.west) {#2};
-  }, breakable,
-  title=#3,
-}
-
-\newtcolorbox{bexemside}[2][]{boxrule=0pt, frame hidden, interior hidden, sharp corners,
-enhanced, borderline={1pt}{0pt}{lightgray!55!black},
- overlay unbroken and first ={%
-    \node[rotate=90,
-          minimum width=1cm,
-          anchor=south,
-          font=\bfseries,
-          color=lightgray!55!black]
-    at (frame.west) {#2};
-  }, breakable, sidebyside
-}
-
-\newtcolorbox{lexem}[2][]{boxrule=0pt, frame hidden, interior hidden, sharp corners,
-enhanced, borderline east={1pt}{0pt}{lightgray!55!black},
- overlay unbroken and first ={%
-    \node[rotate=90,
-          minimum width=1cm,
-          anchor=north,
-          font=\bfseries,
-          color=lightgray!55!black]
-    at (frame.east) {#2};
-  }, breakable
-}
-
-\newtcolorbox{lexemside}[2][]{boxrule=0pt, frame hidden, interior hidden, sharp corners,
-enhanced, borderline east={1pt}{0pt}{lightgray!55!black},
- overlay unbroken and first ={%
-    \node[rotate=90,
-          minimum width=1cm,
-          anchor=north,
-          font=\bfseries,
-          color=lightgray!55!black]
-    at (frame.east) {#2};
-  }, breakable, sidebyside
-}
-
-\newtcolorbox[auto counter, number within=chapter]{odgr}[2][]{%
-enhanced, colback=lightgray!10, colframe=lightgray!55!black, valign=center,
-sharp corners=uphill, fonttitle=\bfseries,
-title=Ordre de grandeur~\thetcbcounter~: #2, #1}
-
-\newtcolorbox[auto counter, number within=chapter]{NCodgr}[2][]{%
-enhanced, colback=lightgray!10, colframe=lightgray!55!black, valign=center,
-sharp corners=uphill, fonttitle=\bfseries,
-title=#2, #1}
-
-\newtcolorbox[auto counter, number within=chapter]{cexe}[2][]{%
-enhanced, colback=gray!10, colframe=gray!50!black, valign=center,
-sharp corners=uphill, fonttitle=\bfseries,
-title=Contre-exemple~\thetcbcounter~: #2, #1}
-
-\newtcolorbox[auto counter, number within=chapter]{NCcexe}[2][]{%
-enhanced, colback=gray!10, colframe=gray!50!black, valign=center,
-sharp corners=uphill, fonttitle=\bfseries,
-title=#2, #1}
-
-\newtcolorbox[auto counter, number within=chapter]{rema}[2][]{%
-enhanced, colback=darkgray!10, colframe=darkgray!50!black, valign=center,
-sharp corners=uphill, fonttitle=\bfseries,
-title=Remarque~\thetcbcounter~: #2, #1}
-
-\newtcolorbox[auto counter, number within=chapter]{NCrema}[2][]{%
-enhanced, colback=darkgray!10, colframe=darkgray!50!black, valign=center,
-sharp corners=uphill, fonttitle=\bfseries,
-title=#2, #1}
-
-\newtcolorbox{remaside}{sidebyside, sidebyside align=top,
-    enhanced, colback=darkgray!10, colframe=darkgray!50!black, valign=center,
-    arc=0pt, boxsep=1mm, notitle, oversize, nobeforeafter, frame hidden}
-
-\newtcolorbox{rrema}[2][]{boxrule=0pt, frame hidden, interior hidden, sharp corners,
-enhanced, borderline west={1pt}{0pt}{darkgray!50!black},
- overlay unbroken and first ={%
-    \node[rotate=90,
-          minimum width=1cm,
-          anchor=south,
-          font=\bfseries,
-          color=darkgray!50!black]
-    at (frame.west) {#2};
-  }, breakable
-}
-
-\newtcolorbox{rremaside}[2][]{boxrule=0pt, frame hidden, interior hidden, sharp corners,
-enhanced, borderline west={1pt}{0pt}{darkgray!50!black},
- overlay unbroken and first ={%
-    \node[rotate=90,
-          minimum width=1cm,
-          anchor=south,
-          font=\bfseries,
-          color=darkgray!50!black]
-    at (frame.west) {#2};
-  }, breakable, sidebyside
-}
-
-\newtcolorbox{brema}[2][]{boxrule=0pt, frame hidden, interior hidden, sharp corners,
-enhanced, borderline={1pt}{0pt}{darkgray!50!black},
- overlay unbroken and first ={%
-    \node[rotate=90,
-          minimum width=1cm,
-          anchor=south,
-          font=\bfseries,
-          color=darkgray!50!black]
-    at (frame.west) {#2};
-  }, breakable
-}
-
-\newtcolorbox{bremaside}[2][]{boxrule=0pt, frame hidden, interior hidden, sharp corners,
-enhanced, borderline={1pt}{0pt}{darkgray!50!black},
- overlay unbroken and first ={%
-    \node[rotate=90,
-          minimum width=1cm,
-          anchor=south,
-          font=\bfseries,
-          color=darkgray!50!black]
-    at (frame.west) {#2};
-  }, breakable, sidebyside
-}
-
-\newtcolorbox{lrema}[2][]{boxrule=0pt, frame hidden, interior hidden, sharp corners,
-enhanced, borderline east={1pt}{0pt}{darkgray!50!black},
- overlay unbroken and first ={%
-    \node[rotate=90,
-          minimum width=1cm,
-          anchor=north,
-          font=\bfseries,
-          color=darkgray!50!black]
-    at (frame.east) {#2};
-  }, breakable
-}
-
-\newtcolorbox{lremaside}[2][]{boxrule=0pt, frame hidden, interior hidden, sharp corners,
-enhanced, borderline east={1pt}{0pt}{darkgray!50!black},
- overlay unbroken and first ={%
-    \node[rotate=90,
-          minimum width=1cm,
-          anchor=north,
-          font=\bfseries,
-          color=darkgray!50!black]
-    at (frame.east) {#2};
-  }, breakable, sidebyside
-}
-\newtcolorbox[]{instruc}[2][]{
-enhanced, attach boxed title to top center={yshift=-2mm},
-fonttitle=\bfseries,
-title={#2},#1}
-
-%!!!!!!!!!!!!!!!!!!!!!!!!!!!!               !!!!!!!!!!!!!!!!!!!!!!!!!!!!
-%!!!!!!!!!!!!!!!!!!!!!!!!!!!!   Gomtrie   !!!!!!!!!!!!!!!!!!!!!!!!!!!!
-%!!!!!!!!!!!!!!!!!!!!!!!!!!!!               !!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-% Dessiner des vecteurs est trs difficile. La commande LaTeX standard,
-% \overrightarrow, ne produit pas un rsultat satisfaisant sur les lettres
-% majuscules. Pour pallier ce manque, on peut utiliser la commande \vect.
-%
-% Exemple: $\vect{AB}$
-%	   $\vect{u}$
-%
-% Ce type de flche doit tre utilis en toute circonstance, sauf une: lorsque
-% le vecteur est plac en exposant (notamment en optique), on utiliser plutt
-% \svect, qui sert prcisment et uniquement  cela.
-%
-% Exemple pour les vecteurs en exposant: $e^{ i\,\svect{k} \cdot \svect{r} }$
-
-\newlength{\moreinterligne}
-\setlength{\moreinterligne}{5.5 pt}
-\newlength{\letterarrowvskip}
-\setlength{\letterarrowvskip}{-1.5 pt}
-\newlength{\vectlength}
-\newlength{\vectheight}
-\newlength{\boxlength}
-\newcommand{\vect}[1]{%
-	\settowidth{\vectlength}{\ensuremath{#1}}%
-	\settoheight{\vectheight}{\ensuremath{#1}}%
-	\settowidth{\boxlength}{%
-		\ensuremath{%
-			\overrightarrow{%
-				\parbox[b][\the\vectheight + \letterarrowvskip][b]{%
-					\the\vectlength%
-				}{\ensuremath{#1}}%
-			}%
-		}%
-	}
-	\parbox[b][\the\vectheight + \moreinterligne][b]{\the\boxlength}{%
-		\ensuremath{%
-			\overset{\hbox to \the\boxlength{\rightarrowfill}}{%
-				\parbox[b][\the\vectheight + \letterarrowvskip][b]{
-					\the\vectlength%
-				}{\ensuremath{#1}}%
-			}%
-		}%
-	}
-}
-
-\newlength{\smoreinterligne}
-\setlength{\smoreinterligne}{5.5 pt}
-\newlength{\sletterarrowvskip}
-\setlength{\sletterarrowvskip}{0 pt}
-\newlength{\svectlength}
-\newlength{\svectheight}
-\newlength{\sboxlength}
-\newlength{\sebtemp}
-\newcommand{\svect}[1]{%
-	\settowidth{\svectlength}{\mbox{\scriptsize{\ensuremath{#1}}}}%
-	\settoheight{\svectheight}{\mbox{\scriptsize{\ensuremath{#1}}}}%
-	\settowidth{\sboxlength}{%
-		\ensuremath{%
-			\overrightarrow{%
-				\parbox[b][\the\svectheight + \sletterarrowvskip][b]{%
-					\the\svectlength%
-				}%
-				{\mbox{\scriptsize{\ensuremath{#1}}}}%
-			}%
-		}%
-	}
-	\parbox[b][\the\svectheight + \smoreinterligne][b]{\the\sboxlength}{%
-		\ensuremath{%
-			\overrightarrow{%
-				\parbox[b][\the\svectheight + \sletterarrowvskip][b]{%
-					\the\svectlength%
-				}%
-				{\mbox{\scriptsize{\ensuremath{#1}}}}%
-			}%
-		}%
-	}
-}
-
-% \vec (pour les petits arguments) est remplac par \vect.
-\renewcommand{\vec}[1]{\vect{#1}}
-
-% Pour les vecteurs complexes
-\newcommand{\uvect}[1]{\ensuremath{\underline{\vect{#1}}}}
-\newcommand{\vectu}[1]{\ensuremath{\vect{\underline{#1}}}}
-
-% Exceptionnellement, on peut vouloir utiliser \vec pour les *indices*.
-\newcommand{\oldvec}{\mathaccent"17E }
+\colorlet{nota}{green!50!black}
+\colorlet{impo}{BlueViolet!50!black}
+\colorlet{ror}{orange!80!black}
+\colorlet{rapp}{BlueViolet!60!black}
+\colorlet{exem}{lightgray!55!black}
+\colorlet{cexe}{gray!50!black}
+\colorlet{rema}{darkgray!50!black}
+\colorlet{odgr}{lightgray!50!black}
 
 % For bigger boxrule in fbox
 \edef\oldfboxrule{\the\fboxrule}
 \newcommand{\fatbox}[1]{\setlength{\fboxrule}{1pt}\fbox{#1}\setlength{\fboxrule}{\oldfboxrule}}
-
-% Les vecteurs usuels ont un petit nom.
-%	\vecti, \vectj, \vectk: la base usuelle de \R?
-%	\vectE: le champ lectrique
-%	\vectB: le champ magntique
-% \newcommand{\vecti}{\ensuremath{\vect{\imath}}}
-% \newcommand{\vectj}{\ensuremath{\vect{\jmath}}}
-% \newcommand{\vectk}{\ensuremath{\vect{k}}}
-% \newcommand{\vectux}{\ensuremath{\vect{u_x}}}
-% \newcommand{\vectuy}{\ensuremath{\vect{u_y}}}
-% \newcommand{\vectuz}{\ensuremath{\vect{u_z}}}
-% \newcommand{\vectex}{\ensuremath{\vect{e_x}}}
-% \newcommand{\vectey}{\ensuremath{\vect{e_y}}}
-% \newcommand{\vectez}{\ensuremath{\vect{e_z}}}
-% \newcommand{\vux}{\ensuremath{\vect{u_x}}}
-% \newcommand{\vuy}{\ensuremath{\vect{u_y}}}
-% \newcommand{\vuz}{\ensuremath{\vect{u_z}}}
-% \newcommand{\vex}{\ensuremath{\vect{e_x}}}
-% \newcommand{\vey}{\ensuremath{\vect{e_y}}}
-% \newcommand{\vez}{\ensuremath{\vect{e_z}}}
-% \newcommand{\vectE}{\ensuremath{\vect{E}}}
-% \newcommand{\vectB}{\ensuremath{\vect{B}}}
-% \newcommand{\vur}{\ensuremath{\vect{u_r}}}
-% \newcommand{\vurho}{\ensuremath{\vect{u_\rho}}}
-% \newcommand{\vutheta}{\ensuremath{\vect{u_\theta}}}
-% \newcommand{\vuphi}{\ensuremath{\vect{u_\ph}}}
-% \newcommand{\ver}{\ensuremath{\vect{e_r}}}
-% \newcommand{\verho}{\ensuremath{\vect{e_\rho}}}
-% \newcommand{\vetheta}{\ensuremath{\vect{e_\theta}}}
-% \newcommand{\vephi}{\ensuremath{\vect{e_\ph}}}
 
 % Journal abbreviations
 \newcommand*\aap{A\&A}
