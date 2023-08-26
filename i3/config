@@ -210,8 +210,8 @@ bindsym $mod+Shift+0 move container to workspace $ws10
 # Name monitors for ease of use
 set $laptop "eDP-1"
 set $htop "HDMI-1"
-set $lvert "DVI-I-3-2"
-set $main "DVI-I-2-1"
+set $lvert "DP-3-1-5"
+set $main "DP-3-2"
 
 # Multiple monitors
 workspace $ws1 output $laptop
