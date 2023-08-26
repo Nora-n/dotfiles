@@ -59,7 +59,7 @@
 \fancyhead[RO]{\thepage}               % Top right even: page
 \fancyfoot[L]{Lycée \textsc{Pothier}}
 \fancyfoot[C]{\textbf{\thepage/\pageref*{LastPage}}}
-\fancyfoot[R]{MPSI -- 2022/2023}
+\fancyfoot[R]{MPSI -- 2023/2024}
 %\fancyfoot{}                           % Empty footer
 \renewcommand{\footrulewidth}{1pt}
 % Space before ruler
@@ -71,7 +71,7 @@
 	\fancyhf{}%
 	\fancyfoot[L]{Lycée \textsc{Pothier}}
 	\fancyfoot[C]{\textbf{\thepage/\pageref*{LastPage}}}
-	\fancyfoot[R]{MPSI -- 2022/2023}
+	\fancyfoot[R]{MPSI -- 2023/2024}
 	\renewcommand{\footrulewidth}{1pt}% Line at the footer visible
 }
 
@@ -175,6 +175,25 @@
 	\mbox{}\par\vskip-2.3\baselineskip\noindent\rule{.5\textwidth}{0.4pt}
 	\par\vskip\baselineskip}
 \makeatother
+
+% Read linux paths
+\ExplSyntaxOn
+\NewDocumentCommand{\getenv}{om}
+{
+	\sys_get_shell:nnN { kpsewhich ~ --var-value ~ #2 }
+	{ \cctab_select:N \c_str_cctab } \l_tmpa_tl
+	\tl_trim_spaces:N \l_tmpa_tl
+	\IfNoValueTF { #1 }
+	{ \tl_use:N \l_tmpa_tl }
+	{ \tl_set_eq:NN #1 \l_tmpa_tl }
+}
+\ExplSyntaxOff
+
+% set \PREPA
+\getenv[\PREPA]{PREPA}
+
+\newcommand{\dodd}{\PREPA/2022/}
+\newcommand{\dodt}{\PREPA/2023/}
 
 % Figures
 \RequirePackage{graphicx}%[pdftex]{graphicx}
@@ -659,22 +678,23 @@ literate         = {á}{{\'a}}1
 \colorlet{cexe}{gray!50!black}
 \colorlet{rema}{darkgray!50!black}
 % for backs in fill style
-\colorlet{loiback}{red!10}%
-\colorlet{theoback}{red!10}%
-\colorlet{propback}{red!10}%
-\colorlet{demoback}{blue!10}%
-\colorlet{coroback}{VioletRed!10}%
-\colorlet{inteback}{RoyalBlue!10}%
-\colorlet{implback}{DodgerBlue!10}%
-\colorlet{impoback}{BlueViolet!10}%
-\colorlet{rappback}{BlueViolet!10}%
-\colorlet{defiback}{green!10}%
-\colorlet{notaback}{green!10}%
-\colorlet{rorback}{orange!10}%
-\colorlet{exemback}{lightgray!10}%
-\colorlet{odgrback}{lightgray!10}%
-\colorlet{cexeback}{gray!10}%
-\colorlet{remaback}{darkgray!10}%
+\colorlet{loiback}{red!10}
+\colorlet{theoback}{red!10}
+\colorlet{propback}{red!10}
+\colorlet{demoback}{blue!10}
+\colorlet{coroback}{VioletRed!10}
+\colorlet{inteback}{RoyalBlue!10}
+\colorlet{implback}{DodgerBlue!10}
+\colorlet{impoback}{BlueViolet!10}
+\colorlet{rappback}{BlueViolet!10}
+\colorlet{defiback}{green!10}
+\colorlet{notaback}{green!10}
+\colorlet{rorback}{orange!10}
+\colorlet{exemback}{lightgray!10}
+\colorlet{odgrback}{lightgray!10}
+\colorlet{cexeback}{gray!10}
+\colorlet{remaback}{darkgray!10}
+\colorlet{blackback}{white}
 % set names for counters
 \newcommand{\nameloi}{Loi}
 \newcommand{\nametheo}{Théorème}
@@ -824,6 +844,10 @@ side={#1},
 % centered
 \NewTColorBox{isd*}{D(){black}D<>{}}{%
 side={#1},
+% colback={
+%   \IfEq{#1}
+%     {black}{white}
+%   }[#1back],
 halign=center,
 halign lower=center,
 #2
@@ -869,11 +893,11 @@ halign lower=center,
 % Useful styles to add to a box
 \tcbset{heart/.style={overlay={
 					\node[below left] at (frame.north west)
-					{\includegraphics[width=1.2cm]{../../figures_generales/heart.jpg}};}}}
+					{\includegraphics[width=1.2cm]{\PREPA/figures_generales/heart.jpg}};}}}
 
 \tcbset{hand/.style={overlay={
 					\node[below left] at (frame.north west)
-					{\includegraphics[width=1.2cm]{../../figures_generales/pr.jpg}};}}}
+					{\includegraphics[width=1.2cm]{\PREPA/figures_generales/pr.jpg}};}}}
 
 \tcbset{dngr/.style={overlay={
 					\node[below left, scale=2] at (frame.north west)
@@ -881,19 +905,19 @@ halign lower=center,
 
 \tcbset{trans/.style={overlay={
 					\node[xshift=-0.8cm, yshift=-0.75cm] at (frame.north west)
-					{\includegraphics[angle=-90, origin=c, height=1.2cm]{../../figures_generales/pr.jpg}};}}}
+					{\includegraphics[angle=-90, origin=c, height=1.2cm]{\PREPA/figures_generales/pr.jpg}};}}}
 
 \newcommand{\includehand}[2]{
 	\includegraphics[angle=#1,
 		origin=c,
-		height=#2]{../../figures_generales/pr.jpg}
+		height=#2]{\PREPA/figures_generales/pr.jpg}
 }
 
 \newcommand{\includeheart}[2]{
 	\vspace*{-20pt}
 	\includegraphics[angle=#1,
 		origin=c,
-		height=#2]{../../figures_generales/heart.jpg}
+		height=#2]{\PREPA/figures_generales/heart.jpg}
 }
 
 % For bigger boxrule in fbox
