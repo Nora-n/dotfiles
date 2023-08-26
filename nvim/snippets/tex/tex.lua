@@ -2005,6 +2005,31 @@ return {
       }
     )
   ),
+  -- with star
+  s(
+    {
+      trig = "tcs",
+      snippetType = "autosnippet",
+      dscr = "A tcb starred environment",
+      condition = line_begin,
+    },
+    fmta(
+      [[
+      \begin{tcb}*<><><>{<>}
+        <>
+      \end{tcb}
+      <>
+    ]],
+      {
+        c(1, { fmta("[<>]", { i(1, "box") }), t("") }),
+        c(2, { fmta("(<>)", { i(1, "prop") }), t("") }),
+        c(3, { t(""), fmt("<{}>", { i(1, "sidebyside") }) }),
+        i(4),
+        d(5, get_visual),
+        i(0),
+      }
+    )
+  ),
   -- tcblower
   s(
     {

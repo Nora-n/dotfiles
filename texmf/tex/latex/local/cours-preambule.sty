@@ -641,24 +641,130 @@ literate         = {á}{{\'a}}1
 	\endgroup%
 }
 
+% Boxes types: colors
+\colorlet{loi}{red!80!black}
+\colorlet{theo}{red!70!black}
+\colorlet{prop}{red!60!black}
+\colorlet{demo}{blue!60!black}
+\colorlet{coro}{VioletRed!60!black}
+\colorlet{inte}{RoyalBlue!50!black}
+\colorlet{impl}{DodgerBlue!50!black}
+\colorlet{impo}{BlueViolet!50!black}
+\colorlet{rapp}{BlueViolet!60!black}
+\colorlet{defi}{green!60!black}
+\colorlet{nota}{green!50!black}
+\colorlet{ror}{orange!80!black}
+\colorlet{exem}{lightgray!55!black}
+\colorlet{odgr}{lightgray!50!black}
+\colorlet{cexe}{gray!50!black}
+\colorlet{rema}{darkgray!50!black}
+% for backs in fill style
+\colorlet{loiback}{red!10}%
+\colorlet{theoback}{red!10}%
+\colorlet{propback}{red!10}%
+\colorlet{demoback}{blue!10}%
+\colorlet{coroback}{VioletRed!10}%
+\colorlet{inteback}{RoyalBlue!10}%
+\colorlet{implback}{DodgerBlue!10}%
+\colorlet{impoback}{BlueViolet!10}%
+\colorlet{rappback}{BlueViolet!10}%
+\colorlet{defiback}{green!10}%
+\colorlet{notaback}{green!10}%
+\colorlet{rorback}{orange!10}%
+\colorlet{exemback}{lightgray!10}%
+\colorlet{odgrback}{lightgray!10}%
+\colorlet{cexeback}{gray!10}%
+\colorlet{remaback}{darkgray!10}%
+% set names for counters
+\newcommand{\nameloi}{Loi}
+\newcommand{\nametheo}{Théorème}
+\newcommand{\nameprop}{Propriété}
+\newcommand{\namedemo}{Démonstration}
+\newcommand{\namecoro}{Corollaire}
+\newcommand{\nameinte}{Intrprétation}
+\newcommand{\nameimpl}{Implication}
+\newcommand{\nameimpo}{Important}
+\newcommand{\namerapp}{Rappel}
+\newcommand{\namedefi}{Définition}
+\newcommand{\namenota}{Notation}
+\newcommand{\nameror}{Important}
+\newcommand{\nameexem}{Exemple}
+\newcommand{\nameodgr}{Ordre de grandeur}
+\newcommand{\namecexe}{Contre-exemple}
+\newcommand{\namerema}{Remarque}
+% set counters
+\newcounter{loi}[chapter]
+\renewcommand{\theloi}{\thechapter.\arabic{loi}}
+\newcounter{theo}[chapter]
+\renewcommand{\thetheo}{\thechapter.\arabic{theo}}
+\newcounter{prop}[chapter]
+\renewcommand{\theprop}{\thechapter.\arabic{prop}}
+\newcounter{demo}[chapter]
+\renewcommand{\thedemo}{\thechapter.\arabic{demo}}
+\newcounter{coro}[chapter]
+\renewcommand{\thecoro}{\thechapter.\arabic{coro}}
+\newcounter{inte}[chapter]
+\renewcommand{\theinte}{\thechapter.\arabic{inte}}
+\newcounter{impl}[chapter]
+\renewcommand{\theimpl}{\thechapter.\arabic{impl}}
+\newcounter{impo}[chapter]
+\renewcommand{\theimpo}{\thechapter.\arabic{impo}}
+\newcounter{rapp}[chapter]
+\renewcommand{\therapp}{\thechapter.\arabic{rapp}}
+\newcounter{defi}[chapter]
+\renewcommand{\thedefi}{\thechapter.\arabic{defi}}
+\newcounter{nota}[chapter]
+\renewcommand{\thenota}{\thechapter.\arabic{nota}}
+\newcounter{ror}[chapter]
+\renewcommand{\theror}{\thechapter.\arabic{ror}}
+\newcounter{exem}[chapter]
+\renewcommand{\theexem}{\thechapter.\arabic{exem}}
+\newcounter{odgr}[chapter]
+\renewcommand{\theodgr}{\thechapter.\arabic{odgr}}
+\newcounter{cexe}[chapter]
+\renewcommand{\thecexe}{\thechapter.\arabic{cexe}}
+\newcounter{rema}[chapter]
+\renewcommand{\therema}{\thechapter.\arabic{rema}}
+\newcounter{null}[chapter]
+\renewcommand{\thenull}{\thechapter.\arabic{null}}
+
 % My generic box name
 % based on the great answer https://tex.stackexchange.com/a/471615/284518
-\NewTColorBox{tcb}{O{lft}D(){defi}D<>{}+m}{%
+\NewTColorBox{tcb}{O{lft}D(){defi}D<>{}m}{%
 base,
 #1={#2}{#4},
-#3
+#3,
+}
+% with numbers
+\NewTColorBox{tcb*}{O{lft}D(){defi}D<>{}m}{%
+base,
+#1={#2}{\csname name#2\endcsname~\expandafter\csname the#2\endcsname~:~#4},
+step={#2},
+#3,
 }
 
 % Basic styles of boxes
 % thanks to https://tex.stackexchange.com/a/252907/284518 for 2 args
 \tcbset{
 	base/.style={
-			boxrule=0pt, frame hidden, interior hidden, enhanced,
-			sharp corners=uphill, valign=center,
+			enhanced, sharp corners=uphill, valign=center,
 		}
 }
+% Simple box
+\tcbset{
+	box/.style 2 args={
+			boxrule=0pt, frame hidden, interior hidden,
+			borderline={1pt}{0pt}{#1}, coltitle=#1,
+			fonttitle=\bfseries, top=10pt,
+			attach boxed title to top left={yshift={-9pt}, xshift=10pt},
+			boxed title style={enhanced, frame hidden, colback=white},
+			title={#2},
+		}
+}
+% Only left
 \tcbset{
 	lft/.style 2 args={
+			boxrule=0pt, frame hidden, interior hidden,
 			borderline west={1pt}{0pt}{#1},
 			overlay unbroken and first ={%
 					\node[rotate=90,
@@ -670,9 +776,11 @@ base,
 				}
 		}
 }
+% Only right
 \tcbset{
 	rgt/.style 2 args={
 			borderline east={1pt}{0pt}{#1},
+			boxrule=0pt, frame hidden, interior hidden,
 			overlay unbroken and first ={%
 					\node[rotate=90,
 						minimum width=1cm,
@@ -683,13 +791,28 @@ base,
 				}
 		}
 }
+% Old box style
 \tcbset{
-	box/.style 2 args={
-			borderline={1pt}{0pt}{#1}, coltitle=#1,
-			fonttitle=\bfseries, top=10pt,
-			attach boxed title to top left={yshift={-9pt}, xshift=10pt},
-			boxed title style={enhanced, frame hidden, colback=white},
-			title=#2,
+	fil/.style 2 args={
+			fonttitle=\bfseries,
+			colback=#1back,
+			colframe=#1,
+			title={#2},
+		}
+}
+% Instruction
+\tcbset{
+	itc/.style 2 args={
+			% colframe={#1},
+			fonttitle=\bfseries,
+			attach boxed title to top center={yshift=-2mm},
+			title={#2},
+		}
+}
+% Flip 180
+\tcbset{
+	aide/.style={
+			tikz={rotate=180, transform shape}
 		}
 }
 
@@ -698,53 +821,50 @@ base,
 side={#1},
 #2
 }
+% centered
+\NewTColorBox{isd*}{D(){black}D<>{}}{%
+side={#1},
+halign=center,
+halign lower=center,
+#2
+}
 
 \tcbset{
 	side/.style={
 			arc=0pt, boxsep=0mm, notitle, oversize, nobeforeafter, frame hidden,
 			enhanced,
-			colframe=#1, colback=white,
+			colframe=#1, colback=#1back,
 			sidebyside, sidebyside align=center, valign=center
+		}
+}
+\tcbset{
+	csd/.style={
+			halign=center,
+			halign lower=center
 		}
 }
 
 % For side adapt box
 \NewDocumentCommand{\sde}{sO{box}D(){defi}D<>{} mmm}{%
-\IfBooleanTF#1
-{
-	\tcbsidebyside[
-		base,
-		colframe=#3,
-		#2={#3}{#5},
-		halign=center,
-		halign lower=center,
-		sidebyside adapt=#4]{#6}{#7}
-}
-{
-	\tcbsidebyside[
-		base,
-		#2={#3}{#5},
-		sidebyside adapt=#4]{#6}{#7}
-}
+\tcbsidebyside[
+	base,
+	colframe=#3,
+	#2={#3}{
+			\IfBooleanTF{#1}%
+			{\csname name#3\endcsname~\expandafter\csname the#3\endcsname~:~#5}%
+			{#5}
+		},
+	step={\IfBooleanTF{#1}{#3}{null}},
+	% halign=center,
+	% halign lower=center,
+	sidebyside adapt=#4]{#6}{#7}
 }
 
-% For instruc or aide
-\tcbset{
-	inst/.style={
-			enhanced, attach boxed title to top center={yshift=-2mm},
-			fonttitle=\bfseries,
-			title={#1},
-		}
-}
-\tcbset{
-	aide/.style={
-			tikz={rotate=180, transform shape}
-		}
-}
-\NewTColorBox{itc}{D<>{}+m}{%
-	inst=#2,
-	#1
-}
+% % For instruc or aide
+% \NewTColorBox{itc}{D<>{}+m}{%
+% 	inst=#2,
+% 	#1
+% }
 
 % Useful styles to add to a box
 \tcbset{heart/.style={overlay={
@@ -775,24 +895,6 @@ side={#1},
 		origin=c,
 		height=#2]{../../figures_generales/heart.jpg}
 }
-
-% Box colors
-\colorlet{loi}{red!80!black}
-\colorlet{theo}{red!70!black}
-\colorlet{prop}{red!60!black}
-\colorlet{coro}{VioletRed!60!black}
-\colorlet{demo}{blue!60!black}
-\colorlet{inte}{RoyalBlue!50!black}
-\colorlet{impl}{DodgerBlue!50!black}
-\colorlet{defi}{green!60!black}
-\colorlet{nota}{green!50!black}
-\colorlet{impo}{BlueViolet!50!black}
-\colorlet{ror}{orange!80!black}
-\colorlet{rapp}{BlueViolet!60!black}
-\colorlet{exem}{lightgray!55!black}
-\colorlet{cexe}{gray!50!black}
-\colorlet{rema}{darkgray!50!black}
-\colorlet{odgr}{lightgray!50!black}
 
 % For bigger boxrule in fbox
 \edef\oldfboxrule{\the\fboxrule}

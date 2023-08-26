@@ -3,8 +3,8 @@
 -- Add any additional keymaps here
 
 -- change lazy shortcut
-vim.keymap.del("n", "<leader>l")
-vim.keymap.set("n", "<leader>lL", "<cmd>Lazy<cr>", { desc = "Lazy" })
+-- vim.keymap.del("n", "<leader>l")
+-- vim.keymap.set("n", "<leader>lL", "<cmd>Lazy<cr>", { desc = "Lazy" })
 
 -- open init.lua
 vim.keymap.set(
