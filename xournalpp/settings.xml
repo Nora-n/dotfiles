@@ -6,8 +6,8 @@
   <property name="pressureMultiplier" value="1"/>
   <property name="zoomGesturesEnabled" value="true"/>
   <property name="selectedToolbar" value="Floating Toolbox (experimental) Copy"/>
-  <property name="lastSavePath" value="/home/nora/Documents/Enseignement/Prepa/2023/figures_generales"/>
-  <property name="lastOpenPath" value="/home/nora/Documents/Enseignement/Prepa/2022/figures_generales"/>
+  <property name="lastSavePath" value="/home/nora/Documents/Enseignement/Prepa/2023/02_TD/03_chimie/C7"/>
+  <property name="lastOpenPath" value="/home/nora/Documents/Enseignement/Prepa/figures_generales"/>
   <property name="lastImagePath" value="/home/nora/Documents/Enseignement/Prepa/2022/TD/figures/ch37"/>
   <property name="edgePanSpeed" value="20"/>
   <property name="edgePanMaxMult" value="5"/>
