@@ -56,12 +56,14 @@ require("luasnip.loaders.from_vscode").load({
 --   group = luasnip_fix_augroup,
 -- })
 
+-- fix end of line (eol) being added to tex files
 vim.cmd([[
 augroup mytex | au!
     autocmd FileType tex setlocal nofixeol
 augroup end
 ]])
 
+-- Map Q to custom format command
 vim.cmd([[
 " Reformat lines (getting the spacing correct) {{{
 fun! TeX_fmt()
@@ -90,4 +92,40 @@ endfun
 
 nmap Q :call TeX_fmt()<CR>
 " }}}
+]])
+
+-- for vimwiki
+vim.cmd([[
+:autocmd FileType vimwiki map <leader>d :VimwikiMakeDiaryNote
+function! ToggleCalendar()
+  execute ":Calendar"
+  if exists("g:calendar_open")
+    if g:calendar_open == 1
+      execute "q"
+      unlet g:calendar_open
+    else
+      g:calendar_open = 1
+    end
+  else
+    let g:calendar_open = 1
+  end
+endfunction
+:autocmd FileType vimwiki map <leader>C :call ToggleCalendar()<CR>
+]])
+
+vim.cmd([[
+hi link VimwikiItalic GruvboxBlueBold
+hi link VimwikiCode GruvboxAquaBold
+hi link VimwikiBoldItalic GruvboxPurpleBold
+hi link VimwikiEqIn Question
+hi link VimwikiDelText MoreMsg
+hi link VimwikiBold WarningMsg
+hi link VimwikiLink Directory
+hi link VimwikiHeader1 GruvboxAquaBold
+hi link VimwikiHeader2 GruvboxBlueBold
+hi link VimwikiHeader3 GruvboxPurpleBold
+hi link VimwikiHeader4 MoreMsg
+hi link VimwikiHeader5 Question
+hi link VimwikiHeader6 WarningMsg
+hi link VimwikiTodo GruvboxPurpleBold
 ]])

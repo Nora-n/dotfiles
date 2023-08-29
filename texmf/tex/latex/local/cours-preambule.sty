@@ -640,7 +640,20 @@ literate         = {á}{{\'a}}1
 	}%
 }
 
-% Hide
+% To make `hide` command
+% https://tex.stackexchange.com/a/135485/284518
+\RequirePackage{varwidth}
+\newcommand\hide[1]{\phantom{\varwidth{\linewidth}#1\endvarwidth}}
+% \toggletrue{student} will hide the command
+\newcommand{\hswitch}[1]{
+	\iftoggle{student}{
+		\hide{#1}
+	}{
+		#1
+	}
+}
+
+% Hide environment
 \RequirePackage{comment}
 \newif\ifHideSolutions
 % Make a solution environment
@@ -661,62 +674,73 @@ literate         = {á}{{\'a}}1
 }
 
 % Boxes types: colors
-\colorlet{loi}{red!80!black}
+\colorlet{loi}{red!60!black}
 \colorlet{theo}{red!70!black}
-\colorlet{prop}{red!60!black}
-\colorlet{demo}{blue!60!black}
+\colorlet{ques}{red!80!black}
+\colorlet{prop}{red!80!black}
+\colorlet{demo}{blue!80!black}
 \colorlet{coro}{VioletRed!60!black}
 \colorlet{inte}{RoyalBlue!50!black}
 \colorlet{impl}{DodgerBlue!50!black}
-\colorlet{impo}{BlueViolet!50!black}
+\colorlet{impo}{BlueViolet!70!black}
+\colorlet{tool}{BlueViolet!80!black}
 \colorlet{rapp}{BlueViolet!60!black}
 \colorlet{defi}{green!60!black}
+\colorlet{data}{green!60!black}
 \colorlet{nota}{green!50!black}
 \colorlet{ror}{orange!80!black}
 \colorlet{exem}{lightgray!55!black}
 \colorlet{odgr}{lightgray!50!black}
-\colorlet{cexe}{gray!50!black}
+\colorlet{appl}{gray!50!black}
 \colorlet{rema}{darkgray!50!black}
 % for backs in fill style
 \colorlet{loiback}{red!10}
 \colorlet{theoback}{red!10}
+\colorlet{quesback}{red!10}
 \colorlet{propback}{red!10}
 \colorlet{demoback}{blue!10}
 \colorlet{coroback}{VioletRed!10}
 \colorlet{inteback}{RoyalBlue!10}
 \colorlet{implback}{DodgerBlue!10}
 \colorlet{impoback}{BlueViolet!10}
+\colorlet{toolback}{BlueViolet!10}
 \colorlet{rappback}{BlueViolet!10}
 \colorlet{defiback}{green!10}
+\colorlet{toolback}{green!10}
 \colorlet{notaback}{green!10}
 \colorlet{rorback}{orange!10}
 \colorlet{exemback}{lightgray!10}
 \colorlet{odgrback}{lightgray!10}
-\colorlet{cexeback}{gray!10}
+\colorlet{applback}{gray!10}
 \colorlet{remaback}{darkgray!10}
 \colorlet{blackback}{white}
 % set names for counters
 \newcommand{\nameloi}{Loi}
 \newcommand{\nametheo}{Théorème}
+\newcommand{\nameques}{Question}
 \newcommand{\nameprop}{Propriété}
 \newcommand{\namedemo}{Démonstration}
 \newcommand{\namecoro}{Corollaire}
-\newcommand{\nameinte}{Intrprétation}
+\newcommand{\nameinte}{Interprétation}
 \newcommand{\nameimpl}{Implication}
 \newcommand{\nameimpo}{Important}
+\newcommand{\nametool}{Outils}
 \newcommand{\namerapp}{Rappel}
 \newcommand{\namedefi}{Définition}
+\newcommand{\namedata}{Données}
 \newcommand{\namenota}{Notation}
 \newcommand{\nameror}{Important}
 \newcommand{\nameexem}{Exemple}
 \newcommand{\nameodgr}{Ordre de grandeur}
-\newcommand{\namecexe}{Contre-exemple}
+\newcommand{\nameappl}{Application}
 \newcommand{\namerema}{Remarque}
 % set counters
 \newcounter{loi}[chapter]
 \renewcommand{\theloi}{\thechapter.\arabic{loi}}
 \newcounter{theo}[chapter]
 \renewcommand{\thetheo}{\thechapter.\arabic{theo}}
+\newcounter{ques}[chapter]
+\renewcommand{\theques}{\thechapter.\arabic{ques}}
 \newcounter{prop}[chapter]
 \renewcommand{\theprop}{\thechapter.\arabic{prop}}
 \newcounter{demo}[chapter]
@@ -729,10 +753,14 @@ literate         = {á}{{\'a}}1
 \renewcommand{\theimpl}{\thechapter.\arabic{impl}}
 \newcounter{impo}[chapter]
 \renewcommand{\theimpo}{\thechapter.\arabic{impo}}
+\newcounter{tool}[chapter]
+\renewcommand{\thetool}{\thechapter.\arabic{tool}}
 \newcounter{rapp}[chapter]
 \renewcommand{\therapp}{\thechapter.\arabic{rapp}}
 \newcounter{defi}[chapter]
 \renewcommand{\thedefi}{\thechapter.\arabic{defi}}
+\newcounter{data}[chapter]
+\renewcommand{\thedata}{\thechapter.\arabic{data}}
 \newcounter{nota}[chapter]
 \renewcommand{\thenota}{\thechapter.\arabic{nota}}
 \newcounter{ror}[chapter]
@@ -741,26 +769,64 @@ literate         = {á}{{\'a}}1
 \renewcommand{\theexem}{\thechapter.\arabic{exem}}
 \newcounter{odgr}[chapter]
 \renewcommand{\theodgr}{\thechapter.\arabic{odgr}}
-\newcounter{cexe}[chapter]
-\renewcommand{\thecexe}{\thechapter.\arabic{cexe}}
+\newcounter{appl}[chapter]
+\renewcommand{\theappl}{\thechapter.\arabic{appl}}
 \newcounter{rema}[chapter]
 \renewcommand{\therema}{\thechapter.\arabic{rema}}
 \newcounter{null}[chapter]
 \renewcommand{\thenull}{\thechapter.\arabic{null}}
+% For icons
+\usepackage{fontawesome5}
+\tcbset{
+	icon/.style={
+			overlay={
+					\node[anchor=center, scale=2]
+					at ([shift={(-0.7,-0.4)}]frame.north west)
+					{\csname icon#1\endcsname};
+				}
+		}
+}
+\newcommand{\iconloi}{\faIcon{drafting-compass}}
+\newcommand{\icontheo}{\faIcon{drafting-compass}}
+\newcommand{\iconques}{\faIcon{question}}
+\newcommand{\iconprop}{\faIcon{drafting-compass}}
+\newcommand{\icondemo}{\faIcon{list-ul}}
+\newcommand{\iconcoro}{\faIcon{code-branch}}
+\newcommand{\iconinte}{\faIcon{angle-double-right}}
+\newcommand{\iconimpl}{\faIcon{angle-double-right}}
+\newcommand{\iconimpo}{\faIcon{exclamation-triangle}}
+\newcommand{\icontool}{\faIcon{wrench}}
+\newcommand{\iconrapp}{\faIcon[regular]{bookmark}}
+\newcommand{\icondefi}{\faIcon{book}}
+\newcommand{\icondata}{\faIcon{database}}
+\newcommand{\iconnota}{\faIcon{pencil-alt}}
+\newcommand{\iconror}{\includegraphics[scale=.15]{\PREPA/figures_generales/heart.jpg}}
+\newcommand{\iconexem}{\faIcon{cogs}}
+\newcommand{\iconodgr}{\faIcon{calculator}}
+\newcommand{\iconappl}{\faIcon{edit}}
+\newcommand{\iconrema}{\faIcon[regular]{hand-point-right}}
+%
+\newcommand{\icondown}{\faIcon[regular]{hand-point-down}}
+\newcommand{\iconknow}{\faIcon{brain}}
+\newcommand{\iconhow}{\faIcon{flask}}
+\newcommand{\iconbulb}{\faIcon[regular]{lightbulb}}
+\newcommand{\iconmark}{\faIcon[regular]{bookmark}}
 
 % My generic box name
 % based on the great answer https://tex.stackexchange.com/a/471615/284518
-\NewTColorBox{tcb}{O{lft}D(){defi}D<>{}m}{%
-base,
-#1={#2}{#4},
-#3,
+\NewTColorBox{tcb}{sO{box}r()D<>{}d""m}{%
+	base,
+	icon=\IfBooleanTF{#1}{#5}{#3},
+	#2={#3}{#6},
+	#4,
 }
 % with numbers
-\NewTColorBox{tcb*}{O{lft}D(){defi}D<>{}m}{%
-base,
-#1={#2}{\csname name#2\endcsname~\expandafter\csname the#2\endcsname~:~#4},
-step={#2},
-#3,
+\NewTColorBox{tcb*}{sO{box}r()D<>{}d""m}{%
+	base,
+	icon=\IfBooleanTF{#1}{#5}{#3},
+	#2={#3}{\csname name#3\endcsname~\expandafter\csname the#3\endcsname~:~#6},
+	step={#3},
+	#4,
 }
 
 % Basic styles of boxes
@@ -786,7 +852,7 @@ step={#2},
 	lft/.style 2 args={
 			boxrule=0pt, frame hidden, interior hidden,
 			borderline west={1pt}{0pt}{#1},
-			overlay unbroken and first ={%
+			overlay unbroken and first={%
 					\node[rotate=90,
 						minimum width=1cm,
 						anchor=south,
@@ -794,6 +860,12 @@ step={#2},
 						color=#1]
 					at (frame.west) {#2};
 				}
+		}
+}
+\tcbset{
+	lfnt/.style 2 args={
+			boxrule=0pt, frame hidden, interior hidden,
+			borderline west={1pt}{0pt}{#1},
 		}
 }
 % Only right
@@ -809,6 +881,12 @@ step={#2},
 						color=#1]
 					at ([shift={(16pt,0)}]frame.east) {#2};
 				}
+		}
+}
+% Empty
+\tcbset{
+	non/.style 2 args={
+			boxrule=0pt, frame hidden, interior hidden,
 		}
 }
 % Old box style
@@ -841,17 +919,6 @@ step={#2},
 side={#1},
 #2
 }
-% centered
-\NewTColorBox{isd*}{D(){black}D<>{}}{%
-side={#1},
-% colback={
-%   \IfEq{#1}
-%     {black}{white}
-%   }[#1back],
-halign=center,
-halign lower=center,
-#2
-}
 
 \tcbset{
 	side/.style={
@@ -862,33 +929,32 @@ halign lower=center,
 		}
 }
 \tcbset{
-	csd/.style={
+	cnt/.style={
 			halign=center,
 			halign lower=center
 		}
 }
 
 % For side adapt box
-\NewDocumentCommand{\sde}{sO{box}D(){defi}D<>{} mmm}{%
-\tcbsidebyside[
-	base,
-	colframe=#3,
-	#2={#3}{
-			\IfBooleanTF{#1}%
-			{\csname name#3\endcsname~\expandafter\csname the#3\endcsname~:~#5}%
-			{#5}
-		},
-	step={\IfBooleanTF{#1}{#3}{null}},
-	% halign=center,
-	% halign lower=center,
-	sidebyside adapt=#4]{#6}{#7}
+\NewDocumentCommand{\sde}{sO{box}r()D<>{}d""mmm}{%
+	\tcbsidebyside[
+		base,
+		colframe=#3,
+		sidebyside adapt=#4,
+		icon=\IfBooleanTF{#1}{#5}{#3},
+		#2={#3}{#6},
+	]{#7}{#8}
 }
-
-% % For instruc or aide
-% \NewTColorBox{itc}{D<>{}+m}{%
-% 	inst=#2,
-% 	#1
-% }
+\NewDocumentCommand{\sds}{sO{box}r()D<>{}d""mmm}{%
+	\tcbsidebyside[
+		base,
+		step=#3,
+		colframe=#3,
+		sidebyside adapt=#4,
+		icon=\IfBooleanTF{#1}{#5}{#3},
+		#2={#3}{\csname name#3\endcsname~\expandafter\csname the#3\endcsname~:~#6},
+	]{#7}{#8}
+}
 
 % Useful styles to add to a box
 \tcbset{heart/.style={overlay={

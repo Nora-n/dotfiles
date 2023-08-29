@@ -26,13 +26,13 @@ vim.keymap.set("n", "<leader>o", "o<ESC>O", { desc = "Line above below" })
 -- Save file
 vim.keymap.set(
   "n",
-  "jk",
+  "zl",
   "<cmd>w<cr>",
   { noremap = true, desc = "Save window" }
 )
 vim.keymap.set(
   "n",
-  "kj",
+  "zh",
   "u<cmd>w<cr>",
   { noremap = true, desc = "Undo and save window" }
 )
@@ -189,3 +189,5 @@ vim.keymap.set({ "i", "s" }, "<C-h>", function()
     ls.change_choice(-1)
   end
 end)
+
+vim.keymap.set("n", "<Leader>ww", "<Plug>VimwikiIndex", { desc = "Open index" })

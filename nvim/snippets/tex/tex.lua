@@ -256,9 +256,9 @@ return {
     dscr = "Expands 'xit' into LaTeX's textit{} command.",
   }, fmta("\\textit{<>}", { d(1, get_visual) })),
   s({
-    trig = "ul",
+    trig = "xul",
     snippetType = "autosnippet",
-    dscr = "Expands 'ul' into LaTeX's underline{} command.",
+    dscr = "Expands 'xul' into LaTeX's underline{} command.",
   }, fmta("\\ul{<>}", { d(1, get_visual) })),
   -- texttt
   s({
@@ -1981,55 +1981,93 @@ return {
   ),
   -- tcolorbox
   -- main
-  s(
-    {
-      trig = "tcb",
-      snippetType = "autosnippet",
-      dscr = "A tcb environment",
-      condition = line_begin,
-    },
-    fmta(
-      [[
-      \begin{tcb}<><><>{<>}
+  s({
+    trig = "tcb",
+    snippetType = "autosnippet",
+    dscr = "A tcb environment",
+    condition = line_begin,
+  }, {
+    c(1, {
+      fmta(
+        [[
+          \begin{tcb}(<>){<>}
+          <>
+          \end{tcb}
+          <>
+          ]],
+        {
+          i(1, "prop"),
+          i(2),
+          i(3),
+          i(0),
+        }
+      ),
+      fmta(
+        [[
+      \begin{tcb}[<>](<>)<><>{<>}
         <>
       \end{tcb}
       <>
     ]],
-      {
-        c(1, { fmta("[<>]", { i(1, "box") }), t("") }),
-        c(2, { fmta("(<>)", { i(1, "prop") }), t("") }),
-        c(3, { t(""), fmt("<{}>", { i(1, "sidebyside") }) }),
-        i(4),
-        d(5, get_visual),
-        i(0),
-      }
-    )
-  ),
+        {
+          i(1, "lft"),
+          i(2, "prop"),
+          c(3, {
+            t(""),
+            fmt("<{}>", { i(1, "sidebyside") }),
+          }),
+          c(4, { t(""), fmta('"<>"', { i(1, "bulb") }) }),
+          i(5),
+          d(6, get_visual),
+          i(0),
+        }
+      ),
+    }),
+  }),
   -- with star
-  s(
-    {
-      trig = "tcs",
-      snippetType = "autosnippet",
-      dscr = "A tcb starred environment",
-      condition = line_begin,
-    },
-    fmta(
-      [[
-      \begin{tcb}*<><><>{<>}
+  s({
+    trig = "tcs",
+    snippetType = "autosnippet",
+    dscr = "A tcb starred environment",
+    condition = line_begin,
+  }, {
+    c(1, {
+      fmta(
+        [[
+          \begin{tcb*}(<>){<>}
+          <>
+          \end{tcb*}
+          <>
+          ]],
+        {
+          i(1, "prop"),
+          i(2),
+          i(3),
+          i(0),
+        }
+      ),
+      fmta(
+        [[
+      \begin{tcb*}[<>](<>)<><>{<>}
         <>
-      \end{tcb}
+      \end{tcb*}
       <>
     ]],
-      {
-        c(1, { fmta("[<>]", { i(1, "box") }), t("") }),
-        c(2, { fmta("(<>)", { i(1, "prop") }), t("") }),
-        c(3, { t(""), fmt("<{}>", { i(1, "sidebyside") }) }),
-        i(4),
-        d(5, get_visual),
-        i(0),
-      }
-    )
-  ),
+        {
+          i(1, "lft"),
+          i(2, "prop"),
+          c(3, {
+            t(""),
+            fmt("<{}>", { i(1, "sidebyside") }),
+          }),
+          c(4, { t(""), fmta('"<>"', { i(1, "bulb") }) }),
+          i(5),
+          d(6, get_visual),
+          i(0),
+        }
+      ),
+    }),
+  }),
   -- tcblower
   s(
     {
@@ -2089,33 +2127,101 @@ return {
     }),
   }),
   -- adaptive side
-  s(
-    {
-      trig = "sde",
-      snippetType = "autosnippet",
-      dscr = "A sde environment",
-      condition = line_begin,
-    },
-    fmta(
-      [[
-    \sde<><><<<>>>{<>}{
-    <>
-    }{
-    <>
-    }
-    <>
-    ]],
-      {
-        c(1, { fmta("[<>]", { i(1, "box") }), t("") }),
-        c(2, { fmta("(<>)", { i(1, "prop") }), t("") }),
-        c(3, { fmta("right, <>", { i(1) }), fmta("left, <>", { i(1) }) }),
-        i(4, "Titre"),
-        i(5, "Left"),
-        i(6, "Right"),
-        i(0),
-      }
-    )
-  ),
+  s({
+    trig = "sde",
+    snippetType = "autosnippet",
+    dscr = "A sde environment",
+    condition = line_begin,
+  }, {
+    c(1, {
+      fmta(
+        [[
+          \sde(<>)<<<>>>{<>}{
+            <>
+          }{
+            <>
+          }
+          <>
+        ]],
+        {
+          i(1, "prop"),
+          c(2, { fmta("right, <>", { i(1) }), fmta("left, <>", { i(1) }) }),
+          i(3, "Titre"),
+          i(4, "Left"),
+          i(5, "Right"),
+          i(0),
+        }
+      ),
+      fmta(
+        [[
+          \sde[<>](<>)<<<>>><>{<>}{
+            <>
+          }{
+            <>
+          }
+          <>
+        ]],
+        {
+          i(1, "lft"),
+          i(2, "prop"),
+          c(3, { fmta("right, <>", { i(1) }), fmta("left, <>", { i(1) }) }),
+          c(4, { t(""), fmta('"<>"', { i(1, "bulb") }) }),
+          i(5, "Titre"),
+          i(6, "Left"),
+          i(7, "Right"),
+          i(0),
+        }
+      ),
+    }),
+  }),
+  -- starred
+  s({
+    trig = "sds",
+    snippetType = "autosnippet",
+    dscr = "A sde environment",
+    condition = line_begin,
+  }, {
+    c(1, {
+      fmta(
+        [[
+          \sds(<>)<<<>>>{<>}{
+            <>
+          }{
+            <>
+          }
+          <>
+        ]],
+        {
+          i(1, "prop"),
+          c(2, { fmta("right, <>", { i(1) }), fmta("left, <>", { i(1) }) }),
+          i(3, "Titre"),
+          i(4, "Left"),
+          i(5, "Right"),
+          i(0),
+        }
+      ),
+      fmta(
+        [[
+          \sds[<>](<>)<<<>>><>{<>}{
+            <>
+          }{
+            <>
+          }
+          <>
+        ]],
+        {
+          i(1, "lft"),
+          i(2, "prop"),
+          c(3, { fmta("right, <>", { i(1) }), fmta("left, <>", { i(1) }) }),
+          c(4, { t(""), fmta('"<>"', { i(1, "bulb") }) }),
+          i(5, "Titre"),
+          i(6, "Left"),
+          i(7, "Right"),
+          i(0),
+        }
+      ),
+    }),
+  }),
   -- hide
   s(
     {
