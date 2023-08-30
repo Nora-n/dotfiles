@@ -59,25 +59,36 @@ return {
   -- utils
   -----------------------------------------------------------------------------
   -- usepackage
-  s(
-    {
-      trig = "usp",
-      snippetType = "autosnippet",
-      dscr = "usepackage",
-      condition = line_begin,
-    },
-    fmta(
-      [[
-      \usepackage<>{<>}
+  s({
+    trig = "usp",
+    snippetType = "autosnippet",
+    dscr = "usepackage",
+    condition = line_begin,
+  }, {
+    c(1, {
+      fmta(
+        [[
+      \usepackage{<>}
       <>
     ]],
-      {
-        c(1, { t(""), fmta("[<>]", { i(1) }) }),
-        d(2, get_visual),
-        i(0),
-      }
-    )
-  ),
+        {
+          d(1, get_visual),
+          i(0),
+        }
+      ),
+      fmta(
+        [[
+      \usepackage[<>]{<>}
+      <>
+    ]],
+        {
+          i(1),
+          d(2, get_visual),
+          i(0),
+        }
+      ),
+    }),
+  }),
   -- newcommand
   s(
     {
@@ -1673,6 +1684,16 @@ return {
       d(1, get_visual),
     })
   ),
+  s(
+    {
+      trig = "ftbx",
+      snippetType = "autosnippet",
+      dscr = "Expands 'ftbx' into '\\fatbox{<>}'",
+    },
+    fmta("\\fatbox{<>}", {
+      d(1, get_visual),
+    })
+  ),
   -- underbracket & stuff
   s({
     trig = "ubk",
@@ -1998,7 +2019,7 @@ return {
         {
           i(1, "prop"),
           i(2),
-          i(3),
+          d(3, get_visual),
           i(0),
         }
       ),
@@ -2042,7 +2063,7 @@ return {
         {
           i(1, "prop"),
           i(2),
-          i(3),
+          d(3, get_visual),
           i(0),
         }
       ),
@@ -2222,6 +2243,17 @@ return {
       ),
     }),
   }),
+  -- subtitle
+  s(
+    {
+      trig = "tsu",
+      snippetType = "autosnippet",
+      dscr = "Expands 'tsu' into '\\tcbsubtitle{\\fatbox{<>}}'",
+    },
+    fmta("\\tcbsubtitle{\\fatbox{<>}}", {
+      d(1, get_visual),
+    })
+  ),
   -- hide
   s(
     {

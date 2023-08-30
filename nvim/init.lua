@@ -1,6 +1,6 @@
 -- use space as localleader too
 -- vim.g.mapleader = "<Space>"
-vim.g.maplocalleader = " "
+vim.g.maplocalleader = "<Space>"
 
 -- bootstrap lazy.nvim, LazyVim and your plugins
 require("config.lazy")
@@ -71,8 +71,8 @@ fun! TeX_fmt()
     let save_cursor = getpos(".")
         let op_wrapscan = &wrapscan
         set nowrapscan
-        let par_begin = '^\(%D\)\=\s*\($\|\\begin\|\\end\|\\\[\|\\\]\|\\\(sub\)*section\>\|\\item\>\|\\litem\>\|\\clitem\>\|\\sqlitem\>\|\\nitem\>\|\\NC\>\|\\blank\>\|\\noindent\>\|\\smallbreak\>\|\\bigbreak\>\|\\label\>\|\\hfill\>\)'
-        let par_end   = '^\(%D\)\=\s*\($\|\\begin\|\\end\|\\\]\|\\\[\|\\place\|\\\(sub\)*section\>\|\\item\>\|\\litem\>\|\\clitem\>\|\\sqlitem\>\|\\nitem\>\|\\NC\>\|\\blank\>\|\\smallbreak\>\|\\bigbreak\>\|\\label\>\|\\hfill\>\)'
+        let par_begin = '^\(%D\)\=\s*\($\|\\begin\|\\end\|\\\[\|\\\]\|\\\(sub\)*section\>\|\\item\>\|\\litem\>\|\\clitem\>\|\\sqlitem\>\|\\nitem\>\|\\NC\>\|\\blank\>\|\\noindent\>\|\\smallbreak\>\|\\bigbreak\>\|\\label\>\|\\hfill\>\|\\tcblower\>\|\\tcbsubtitle\)'
+        let par_end   = '^\(%D\)\=\s*\($\|\\begin\|\\end\|\\\]\|\\\[\|\\place\|\\\(sub\)*section\>\|\\item\>\|\\litem\>\|\\clitem\>\|\\sqlitem\>\|\\nitem\>\|\\NC\>\|\\blank\>\|\\smallbreak\>\|\\bigbreak\>\|\\label\>\|\\hfill\>\|\\tcblower\>\|\\tcbsubtitle\)'
     try
       exe '?'.par_begin.'?+'
     catch /E384/
@@ -111,21 +111,4 @@ function! ToggleCalendar()
   end
 endfunction
 :autocmd FileType vimwiki map <leader>C :call ToggleCalendar()<CR>
-]])
-
-vim.cmd([[
-hi link VimwikiItalic GruvboxBlueBold
-hi link VimwikiCode GruvboxAquaBold
-hi link VimwikiBoldItalic GruvboxPurpleBold
-hi link VimwikiEqIn Question
-hi link VimwikiDelText MoreMsg
-hi link VimwikiBold WarningMsg
-hi link VimwikiLink Directory
-hi link VimwikiHeader1 GruvboxAquaBold
-hi link VimwikiHeader2 GruvboxBlueBold
-hi link VimwikiHeader3 GruvboxPurpleBold
-hi link VimwikiHeader4 MoreMsg
-hi link VimwikiHeader5 Question
-hi link VimwikiHeader6 WarningMsg
-hi link VimwikiTodo GruvboxPurpleBold
 ]])

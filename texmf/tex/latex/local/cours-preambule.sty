@@ -199,15 +199,8 @@
 \RequirePackage{graphicx}%[pdftex]{graphicx}
 \RequirePackage{svg}
 \RequirePackage[noframe]{draftfigure}
-\graphicspath{{./figures/}{../figures/}{./svg-inkscape}
-		{../figures/ch1/}{../figures/ch2/}{../figures/ch3/}{../figures/ch4/}{../figures/ch5/}{../figures/ch6/}
-		{../figures/ch7/}{../figures/ch8/}{../figures/ch9/}{../figures/ch10/}{../figures/ch11/}{../figures/ch12/}
-		{../figures/ch13/}{../figures/ch14/}{../figures/ch15/}{../figures/ch16/}{../figures/ch17/}{../figures/ch18/}
-		{../figures/ch19/}{../figures/ch20/}{../figures/ch21/}{../figures/ch22/}{../figures/ch23/}{../figures/ch24/}
-		{../figures/ch25/}{../figures/ch26/}{../figures/ch27/}{../figures/ch28/}{../figures/ch29/}{../figures/ch30/}
-		{../figures/ch31/}{../figures/ch32/}{../figures/ch33/}{../figures/ch34/}{../figures/ch35/}{../figures/ch36/}
-		{../figures/ch37/}{../figures/ch38/}{../figures/ch39/}{../figures/ch40/}{../figures/ch41/}{../figures/ch42/}
-}
+\graphicspath{{./figures/}{figures/}}
+
 % Figures next to text
 \RequirePackage{wrapfig}
 % Caption right of figure
@@ -352,9 +345,12 @@
 	}
 }
 
+% For spectra
+\RequirePackage{pgf-spectra}
+
 \RequirePackage{microtype}
 
-% Pour des flèches entre les lignes d'un align: need more recent LaTeX...
+% Pour des flèches entre les lignes d'un align!!
 \RequirePackage{witharrows}
 \WithArrowsOptions{displaystyle}
 % Math symbols
@@ -571,8 +567,10 @@ literate         = {á}{{\'a}}1
 \RequirePackage{xstring}
 \RequirePackage{footnote}
 % Footnotes outside tcboxes
-% \BeforeBeginEnvironment{tcolorbox}{\savenotes}
-% \AfterEndEnvironment{tcolorbox}{\spewnotes}
+\BeforeBeginEnvironment{tcolorbox}{\savenotes}
+\AfterEndEnvironment{tcolorbox}{\spewnotes}
+\BeforeBeginEnvironment{tcb}{\savenotes}
+\AfterEndEnvironment{tcb}{\spewnotes}
 
 % New commands for pretty formatting (TP)
 \newlength{\leftlength}
@@ -688,7 +686,7 @@ literate         = {á}{{\'a}}1
 \colorlet{defi}{green!60!black}
 \colorlet{data}{green!60!black}
 \colorlet{nota}{green!50!black}
-\colorlet{ror}{orange!80!black}
+\colorlet{ror}{orange!90!black}
 \colorlet{exem}{lightgray!55!black}
 \colorlet{odgr}{lightgray!50!black}
 \colorlet{appl}{gray!50!black}
@@ -778,10 +776,19 @@ literate         = {á}{{\'a}}1
 % For icons
 \usepackage{fontawesome5}
 \tcbset{
-	icon/.style={
+	licon/.style={
 			overlay={
 					\node[anchor=center, scale=2]
 					at ([shift={(-0.7,-0.4)}]frame.north west)
+					{\csname icon#1\endcsname};
+				}
+		}
+}
+\tcbset{
+	ricon/.style={
+			overlay={
+					\node[anchor=center, scale=2]
+					at ([shift={(+0.7,-0.4)}]frame.north east)
 					{\csname icon#1\endcsname};
 				}
 		}
@@ -792,7 +799,7 @@ literate         = {á}{{\'a}}1
 \newcommand{\iconprop}{\faIcon{drafting-compass}}
 \newcommand{\icondemo}{\faIcon{list-ul}}
 \newcommand{\iconcoro}{\faIcon{code-branch}}
-\newcommand{\iconinte}{\faIcon{angle-double-right}}
+\newcommand{\iconinte}{\faIcon{angle-right}}
 \newcommand{\iconimpl}{\faIcon{angle-double-right}}
 \newcommand{\iconimpo}{\faIcon{exclamation-triangle}}
 \newcommand{\icontool}{\faIcon{wrench}}
@@ -814,19 +821,19 @@ literate         = {á}{{\'a}}1
 
 % My generic box name
 % based on the great answer https://tex.stackexchange.com/a/471615/284518
-\NewTColorBox{tcb}{sO{box}r()D<>{}d""m}{%
-	base,
-	icon=\IfBooleanTF{#1}{#5}{#3},
-	#2={#3}{#6},
-	#4,
+\NewTColorBox{tcb}{sO{box}r()D<>{}d""D''{l}m}{%
+base,
+#6icon=\IfBooleanTF{#1}{#5}{#3},
+#2={#3}{#7},
+#4,
 }
 % with numbers
-\NewTColorBox{tcb*}{sO{box}r()D<>{}d""m}{%
-	base,
-	icon=\IfBooleanTF{#1}{#5}{#3},
-	#2={#3}{\csname name#3\endcsname~\expandafter\csname the#3\endcsname~:~#6},
-	step={#3},
-	#4,
+\NewTColorBox{tcb*}{sO{box}r()D<>{}d""D''{l}m}{%
+base,
+#6icon=\IfBooleanTF{#1}{#5}{#3},
+#2={#3}{\csname name#3\endcsname~\expandafter\csname the#3\endcsname~:~#7},
+step={#3},
+#4,
 }
 
 % Basic styles of boxes
@@ -834,6 +841,12 @@ literate         = {á}{{\'a}}1
 \tcbset{
 	base/.style={
 			enhanced, sharp corners=uphill, valign=center,
+			subtitle style={
+					enhanced,
+					frame hidden,
+					interior hidden,
+					halign=center,
+				}
 		}
 }
 % Simple box
@@ -871,8 +884,8 @@ literate         = {á}{{\'a}}1
 % Only right
 \tcbset{
 	rgt/.style 2 args={
-			borderline east={1pt}{0pt}{#1},
 			boxrule=0pt, frame hidden, interior hidden,
+			borderline east={1pt}{0pt}{#1},
 			overlay unbroken and first ={%
 					\node[rotate=90,
 						minimum width=1cm,
@@ -881,6 +894,12 @@ literate         = {á}{{\'a}}1
 						color=#1]
 					at ([shift={(16pt,0)}]frame.east) {#2};
 				}
+		}
+}
+\tcbset{
+	rgnt/.style 2 args={
+			boxrule=0pt, frame hidden, interior hidden,
+			borderline east={1pt}{0pt}{#1},
 		}
 }
 % Empty
@@ -936,24 +955,24 @@ side={#1},
 }
 
 % For side adapt box
-\NewDocumentCommand{\sde}{sO{box}r()D<>{}d""mmm}{%
-	\tcbsidebyside[
-		base,
-		colframe=#3,
-		sidebyside adapt=#4,
-		icon=\IfBooleanTF{#1}{#5}{#3},
-		#2={#3}{#6},
-	]{#7}{#8}
+\NewDocumentCommand{\sde}{sO{box}r()D<>{}d""D''{l}mmm}{%
+\tcbsidebyside[
+	base,
+	colframe=#3,
+	sidebyside adapt=#4,
+	icon=\IfBooleanTF{#1}{#5}{#3},
+	#2={#3}{#7},
+]{#8}{#9}
 }
-\NewDocumentCommand{\sds}{sO{box}r()D<>{}d""mmm}{%
-	\tcbsidebyside[
-		base,
-		step=#3,
-		colframe=#3,
-		sidebyside adapt=#4,
-		icon=\IfBooleanTF{#1}{#5}{#3},
-		#2={#3}{\csname name#3\endcsname~\expandafter\csname the#3\endcsname~:~#6},
-	]{#7}{#8}
+\NewDocumentCommand{\sds}{sO{box}r()D<>{}d""D''{l}mmm}{%
+\tcbsidebyside[
+	base,
+	step=#3,
+	colframe=#3,
+	sidebyside adapt=#4,
+	#6icon=\IfBooleanTF{#1}{#5}{#3},
+	#2={#3}{\csname name#3\endcsname~\expandafter\csname the#3\endcsname~:~#7},
+]{#8}{#9}
 }
 
 % Useful styles to add to a box
