@@ -2031,12 +2031,9 @@ return {
       <>
     ]],
         {
-          i(1, "lft"),
+          i(1, "sidebyside"),
           i(2, "prop"),
-          c(3, {
-            t(""),
-            fmt("<{}>", { i(1, "sidebyside") }),
-          }),
+          c(3, { t(""), fmt("<{}>", { i(1, "lft") }) }),
           c(4, { t(""), fmta('"<>"', { i(1, "bulb") }) }),
           i(5),
           d(6, get_visual),
@@ -2075,12 +2072,9 @@ return {
       <>
     ]],
         {
-          i(1, "lft"),
+          i(1, "sidebyside"),
           i(2, "prop"),
-          c(3, {
-            t(""),
-            fmt("<{}>", { i(1, "sidebyside") }),
-          }),
+          c(3, { t(""), fmt("<{}>", { i(1, "lft") }) }),
           c(4, { t(""), fmta('"<>"', { i(1, "bulb") }) }),
           i(5),
           d(6, get_visual),
@@ -2128,18 +2122,18 @@ return {
           i(0),
         }
       ),
-      fmt(
+      fmta(
         [[
-          \begin{{isd}}({})<{}>
-            {}
+          \begin{isd}[<>](<>)
+            <>
             \tcblower
-            {}
-          \end{{isd}}
-          {}
+            <>
+          \end{isd}
+          <>
         ]],
         {
-          i(1, "prop"),
-          i(2),
+          i(1),
+          i(2, "prop"),
           i(3),
           i(4),
           i(0),
@@ -2148,101 +2142,59 @@ return {
     }),
   }),
   -- adaptive side
-  s({
-    trig = "sde",
-    snippetType = "autosnippet",
-    dscr = "A sde environment",
-    condition = line_begin,
-  }, {
-    c(1, {
-      fmta(
-        [[
-          \sde(<>)<<<>>>{<>}{
-            <>
-          }{
-            <>
-          }
+  s(
+    {
+      trig = "sde",
+      snippetType = "autosnippet",
+      dscr = "A sde environment",
+      condition = line_begin,
+    },
+    fmta(
+      [[
+        \sde[<>](<>){<>}{
           <>
-        ]],
-        {
-          i(1, "prop"),
-          c(2, { fmta("right, <>", { i(1) }), fmta("left, <>", { i(1) }) }),
-          i(3, "Titre"),
-          i(4, "Left"),
-          i(5, "Right"),
-          i(0),
-        }
-      ),
-      fmta(
-        [[
-          \sde[<>](<>)<<<>>><>{<>}{
-            <>
-          }{
-            <>
-          }
+        }{
           <>
-        ]],
-        {
-          i(1, "lft"),
-          i(2, "prop"),
-          c(3, { fmta("right, <>", { i(1) }), fmta("left, <>", { i(1) }) }),
-          c(4, { t(""), fmta('"<>"', { i(1, "bulb") }) }),
-          i(5, "Titre"),
-          i(6, "Left"),
-          i(7, "Right"),
-          i(0),
         }
-      ),
-    }),
-  }),
+        <>
+      ]],
+      {
+        c(1, { fmta("right, <>", { i(1) }), fmta("left, <>", { i(1) }) }),
+        i(2, "prop"),
+        i(3, "Titre"),
+        i(4, "Left"),
+        i(5, "Right"),
+        i(0),
+      }
+    )
+  ),
   -- starred
-  s({
-    trig = "sds",
-    snippetType = "autosnippet",
-    dscr = "A sde environment",
-    condition = line_begin,
-  }, {
-    c(1, {
-      fmta(
-        [[
-          \sds(<>)<<<>>>{<>}{
-            <>
-          }{
-            <>
-          }
+  s(
+    {
+      trig = "sds",
+      snippetType = "autosnippet",
+      dscr = "A sds environment",
+      condition = line_begin,
+    },
+    fmta(
+      [[
+        \sds[<>](<>){<>}{
           <>
-        ]],
-        {
-          i(1, "prop"),
-          c(2, { fmta("right, <>", { i(1) }), fmta("left, <>", { i(1) }) }),
-          i(3, "Titre"),
-          i(4, "Left"),
-          i(5, "Right"),
-          i(0),
-        }
-      ),
-      fmta(
-        [[
-          \sds[<>](<>)<<<>>><>{<>}{
-            <>
-          }{
-            <>
-          }
+        }{
           <>
-        ]],
-        {
-          i(1, "lft"),
-          i(2, "prop"),
-          c(3, { fmta("right, <>", { i(1) }), fmta("left, <>", { i(1) }) }),
-          c(4, { t(""), fmta('"<>"', { i(1, "bulb") }) }),
-          i(5, "Titre"),
-          i(6, "Left"),
-          i(7, "Right"),
-          i(0),
         }
-      ),
-    }),
-  }),
+        <>
+      ]],
+      {
+        c(1, { fmta("right, <>", { i(1) }), fmta("left, <>", { i(1) }) }),
+        i(2, "prop"),
+        i(3, "Titre"),
+        i(4, "Left"),
+        i(5, "Right"),
+        i(0),
+      }
+    )
+  ),
   -- subtitle
   s(
     {
@@ -2352,7 +2304,7 @@ return {
   }, {
     c(1, {
       fmta("\\item <>", { d(1, get_visual) }),
-      fmta("\\litem{<>}", { d(1, get_visual) }),
+      fmta("\\bitem{<>}", { d(1, get_visual) }),
       fmta("\\nitem{<>}", { d(1, get_visual) }),
       fmta("\\clitem[<>] <>", { i(1), i(2) }),
       fmta("\\sqitem[<>] <>", { i(1), i(2) }),
@@ -2386,7 +2338,7 @@ return {
         }),
         c(2, {
           fmta("\\item <>", { d(1, get_visual) }),
-          fmta("\\litem{<>}", { d(1, get_visual) }),
+          fmta("\\bitem{<>}", { d(1, get_visual) }),
           fmta("\\nitem{<>}", { d(1, get_visual) }),
           fmta("\\clitem[<>] <>", { i(1), i(2) }),
           fmta("\\sqitem[<>] <>", { i(1), i(2) }),
@@ -2420,7 +2372,7 @@ return {
         }),
         c(2, {
           fmta("\\item <>", { d(1, get_visual) }),
-          fmta("\\litem{<>}", { d(1, get_visual) }),
+          fmta("\\bitem{<>}", { d(1, get_visual) }),
           fmta("\\nitem{<>}", { d(1, get_visual) }),
           fmta("\\clitem[<>] <>", { i(1), i(2) }),
           fmta("\\sqitem[<>] <>", { i(1), i(2) }),

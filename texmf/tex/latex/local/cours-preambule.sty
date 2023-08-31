@@ -34,7 +34,7 @@
 \RequirePackage{lipsum}
 
 % Better file and folder management
-\RequirePackage{subfiles}
+\RequirePackage[v1]{subfiles}
 % To make a landscape document
 \RequirePackage{pdflscape}
 % Define margins globally
@@ -199,7 +199,6 @@
 \RequirePackage{graphicx}%[pdftex]{graphicx}
 \RequirePackage{svg}
 \RequirePackage[noframe]{draftfigure}
-\graphicspath{{./figures/}{figures/}}
 
 % Figures next to text
 \RequirePackage{wrapfig}
@@ -208,6 +207,7 @@
 \sidecaptionvpos{figure}{t}
 % General caption
 \RequirePackage[labelfont=bf, font=small]{caption}
+\captionsetup{hypcap=false}
 \captionsetup[table]{name=Tableau}
 % For subfigures
 \RequirePackage{subcaption}
@@ -336,7 +336,7 @@
 	\tikz[remember picture, overlay, xshift=10pt, yshift=0pt]
 	\node[black!30] (CQ) {\fontfamily{qbk}\fontsize{50}{60}\selectfont»};%
 }
-\usetikzlibrary{trees, positioning, arrows, tikzmark, calc}
+\usetikzlibrary{trees, positioning, arrows, tikzmark, calc, mindmap}
 % Circled numbers
 % https://tex.stackexchange.com/a/7045
 \newcommand*\circled[1]{%
@@ -538,7 +538,7 @@ literate         = {á}{{\'a}}1
 \newcommand{\clenumi}{\protect\circled{\arabic*}}
 \newcommand{\clitem}{\fitem{\circled}}
 % Description with numbers
-\newcommand\litem[1]{\item{\bfseries #1}}
+\newcommand\bitem[1]{\item{\bfseries #1}}
 \setlist[itemize, 1]{label = --}
 \setlist[itemize, 2]{label = $\bullet$}
 % Setup points left of enumerate
@@ -808,32 +808,39 @@ literate         = {á}{{\'a}}1
 \newcommand{\icondata}{\faIcon{database}}
 \newcommand{\iconnota}{\faIcon{pencil-alt}}
 \newcommand{\iconror}{\includegraphics[scale=.15]{\PREPA/figures_generales/heart.jpg}}
-\newcommand{\iconexem}{\faIcon{cogs}}
+% \newcommand{\iconexem}{\faIcon{cogs}}
+\newcommand{\iconexem}{\faIcon{external-link-alt}}
 \newcommand{\iconodgr}{\faIcon{calculator}}
 \newcommand{\iconappl}{\faIcon{edit}}
 \newcommand{\iconrema}{\faIcon[regular]{hand-point-right}}
 %
 \newcommand{\icondown}{\faIcon[regular]{hand-point-down}}
 \newcommand{\iconknow}{\faIcon{brain}}
-\newcommand{\iconhow}{\faIcon{flask}}
+% \newcommand{\iconhow}{\faIcon{cogs}}
+\newcommand{\iconhow}{\faIcon{pencil-ruler}}
+\newcommand{\iconexpe}{\faIcon{flask}}
+% \newcommand{\iconexpe}{\faIcon{fill}}
 \newcommand{\iconbulb}{\faIcon[regular]{lightbulb}}
-\newcommand{\iconmark}{\faIcon[regular]{bookmark}}
+\newcommand{\iconinfo}{\faIcon{info-circle}}
+\newcommand{\iconkeyb}{\faIcon{keyboard}}
+\newcommand{\iconwron}{\faIcon{times-circle}}
+\newcommand{\icondivi}{\faIcon{divide}}
 
 % My generic box name
 % based on the great answer https://tex.stackexchange.com/a/471615/284518
-\NewTColorBox{tcb}{sO{box}r()D<>{}d""D''{l}m}{%
+\NewTColorBox{tcb}{sO{}r()D<>{box}d""D''{l}m}{%
 base,
 #6icon=\IfBooleanTF{#1}{#5}{#3},
-#2={#3}{#7},
-#4,
+#4={#3}{#7},
+#2,
 }
 % with numbers
-\NewTColorBox{tcb*}{sO{box}r()D<>{}d""D''{l}m}{%
+\NewTColorBox{tcb*}{sO{}r()D<>{box}d""D''{l}m}{%
 base,
 #6icon=\IfBooleanTF{#1}{#5}{#3},
-#2={#3}{\csname name#3\endcsname~\expandafter\csname the#3\endcsname~:~#7},
+#4={#3}{\csname name#3\endcsname~\expandafter\csname the#3\endcsname~:~#7},
 step={#3},
-#4,
+#2,
 }
 
 % Basic styles of boxes
@@ -934,9 +941,9 @@ step={#3},
 }
 
 % For side inside box
-\NewTColorBox{isd}{D(){black}D<>{}}{%
-side={#1},
-#2
+\NewTColorBox{isd}{O{}D(){black}}{%
+	side={#2},
+	#1
 }
 
 \tcbset{
@@ -955,23 +962,23 @@ side={#1},
 }
 
 % For side adapt box
-\NewDocumentCommand{\sde}{sO{box}r()D<>{}d""D''{l}mmm}{%
+\NewDocumentCommand{\sde}{sO{}r()D<>{box}d""D''{l}mmm}{%
 \tcbsidebyside[
 	base,
 	colframe=#3,
-	sidebyside adapt=#4,
+	sidebyside adapt=#2,
 	icon=\IfBooleanTF{#1}{#5}{#3},
-	#2={#3}{#7},
+	#4={#3}{#7},
 ]{#8}{#9}
 }
-\NewDocumentCommand{\sds}{sO{box}r()D<>{}d""D''{l}mmm}{%
+\NewDocumentCommand{\sds}{sO{}r()D<>{box}d""D''{l}mmm}{%
 \tcbsidebyside[
 	base,
 	step=#3,
 	colframe=#3,
-	sidebyside adapt=#4,
+	sidebyside adapt=#2,
 	#6icon=\IfBooleanTF{#1}{#5}{#3},
-	#2={#3}{\csname name#3\endcsname~\expandafter\csname the#3\endcsname~:~#7},
+	#4={#3}{\csname name#3\endcsname~\expandafter\csname the#3\endcsname~:~#7},
 ]{#8}{#9}
 }
 
