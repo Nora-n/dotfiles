@@ -14,7 +14,7 @@ return {
       vim.g.maplocalleader = " "
       vim.g.vimtex_toc_config = {
         split_pos = "vert rightbelow",
-        split_width = 35,
+        split_width = 38,
       }
     end,
   },

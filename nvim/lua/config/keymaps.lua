@@ -24,9 +24,11 @@ vim.keymap.set(
 vim.keymap.set("n", "<leader>o", "o<ESC>O", { desc = "Line above below" })
 
 -- Save file
+-- vim.keymap.del("n", "<leader><Space>")
 vim.keymap.set(
   "n",
   "zl",
+  -- "<leader><Space>",
   "<cmd>w<cr>",
   { noremap = true, desc = "Save window" }
 )

@@ -56,6 +56,13 @@ require("luasnip.loaders.from_vscode").load({
 --   group = luasnip_fix_augroup,
 -- })
 
+-- Neotree
+require("neo-tree").setup({
+  window = {
+    width = 38,
+  },
+})
+
 -- fix end of line (eol) being added to tex files
 vim.cmd([[
 augroup mytex | au!
@@ -71,8 +78,8 @@ fun! TeX_fmt()
     let save_cursor = getpos(".")
         let op_wrapscan = &wrapscan
         set nowrapscan
-        let par_begin = '^\(%D\)\=\s*\($\|\\begin\|\\end\|\\\[\|\\\]\|\\\(sub\)*section\>\|\\item\>\|\\litem\>\|\\clitem\>\|\\sqlitem\>\|\\nitem\>\|\\NC\>\|\\blank\>\|\\noindent\>\|\\smallbreak\>\|\\bigbreak\>\|\\label\>\|\\hfill\>\|\\tcblower\>\|\\tcbsubtitle\)'
-        let par_end   = '^\(%D\)\=\s*\($\|\\begin\|\\end\|\\\]\|\\\[\|\\place\|\\\(sub\)*section\>\|\\item\>\|\\litem\>\|\\clitem\>\|\\sqlitem\>\|\\nitem\>\|\\NC\>\|\\blank\>\|\\smallbreak\>\|\\bigbreak\>\|\\label\>\|\\hfill\>\|\\tcblower\>\|\\tcbsubtitle\)'
+        let par_begin = '^\(%D\)\=\s*\($\|\\begin\|\\end\|\\\[\|\\\]\|\\\(sub\)*section\>\|\\item\>\|\\litem\>\|\\clitem\>\|\\sqlitem\>\|\\nitem\>\|\\NC\>\|\\blank\>\|\\noindent\>\|\\smallbreak\>\|\\bigbreak\>\|\\label\>\|\\hfill\>\|\\tcblower\>\|\\tcbsubtitle\|\\cswitch\>\)'
+        let par_end   = '^\(%D\)\=\s*\($\|\\begin\|\\end\|\\\]\|\\\[\|\\place\|\\\(sub\)*section\>\|\\item\>\|\\litem\>\|\\clitem\>\|\\sqlitem\>\|\\nitem\>\|\\NC\>\|\\blank\>\|\\smallbreak\>\|\\bigbreak\>\|\\label\>\|\\hfill\>\|\\tcblower\>\|\\tcbsubtitle\|\\cswitch\>\)'
     try
       exe '?'.par_begin.'?+'
     catch /E384/

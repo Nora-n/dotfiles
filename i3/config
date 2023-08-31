@@ -65,7 +65,7 @@ for_window [class="Arandr"] floating enable
 
 # Qalculate-gtk
 # bindsym XF86Tools exec --no-startup-id i3run --title qalc -- qalculate-gtk --title qalc
-bindsym $mod+F9 exec --no-startup-id i3run --title qalc -- qalculate-gtk --title qalc
+bindsym $mod+F8 exec --no-startup-id i3run --title qalc -- qalculate-gtk --title qalc
 for_window [class="Qalculate-gtk"] floating enable
 
 ## Screenshots
@@ -182,16 +182,16 @@ bindsym $mod+8 workspace $ws8
 bindsym $mod+9 workspace $ws9
 bindsym $mod+0 workspace $ws10
 # switch to workspace
-bindsym $mud+1 workspace $ws1
-bindsym $mud+2 workspace $ws2
-bindsym $mud+3 workspace $ws3
-bindsym $mud+4 workspace $ws4
-bindsym $mud+5 workspace $ws5
-bindsym $mud+6 workspace $ws6
-bindsym $mud+7 workspace $ws7
-bindsym $mud+8 workspace $ws8
-bindsym $mud+9 workspace $ws9
-bindsym $mud+0 workspace $ws10
+# bindsym $mud+1 workspace $ws1
+# bindsym $mud+2 workspace $ws2
+# bindsym $mud+3 workspace $ws3
+# bindsym $mud+4 workspace $ws4
+# bindsym $mud+5 workspace $ws5
+# bindsym $mud+6 workspace $ws6
+# bindsym $mud+7 workspace $ws7
+# bindsym $mud+8 workspace $ws8
+# bindsym $mud+9 workspace $ws9
+# bindsym $mud+0 workspace $ws10
 
 # move focused container to workspace
 bindsym $mod+Shift+1 move container to workspace $ws1
@@ -287,11 +287,15 @@ bindsym $mud+Shift+F4 exec --no-startup-id shuf -e -n1 /home/nora/Pictures/wallp
 bindsym $mud+F5 exec --no-startup-id feh --bg-fill $(shuf -n 1 -e /home/nora/Pictures/wallpapers/op/main/*) $(shuf -n 1 -e /home/nora/Pictures/wallpapers/op/laptop/*) $(shuf -n 1 -e /home/nora/Pictures/wallpapers/op/vert/*)
 bindsym $mud+F6 exec --no-startup-id feh --bg-fill /home/nora/Pictures/wallpapers/arch_nebula.jpg
 exec_always --no-startup-id feh --bg-fill /home/nora/Pictures/wallpapers/arch_nebula.jpg
-exec --no-startup-id xbindkeys
+# exec --no-startup-id xbindkeys
 exec --no-startup-id autorandr -l full
 exec --no-startup-id xidlehook --not-when-fullscreen --not-when-audio --timer 360 "betterlockscreen -l dim" ''
-bindsym $mod+F10 exec --no-startup-id xidlehook --not-when-fullscreen --not-when-audio --timer 360 "betterlockscreen -l dim" ''
-bindsym $mod+F11 exec --no-startup-id xidlehook --not-when-fullscreen --not-when-audio --timer 36000 "betterlockscreen -l dim" ''
+# bindsym $mod+F10 exec --no-startup-id xidlehook --not-when-fullscreen --not-when-audio --timer 360 "betterlockscreen -l dim" ''
+# bindsym $mod+F11 exec --no-startup-id xidlehook --not-when-fullscreen --not-when-audio --timer 36000 "betterlockscreen -l dim" ''
+bindsym $mod+F11 exec --no-startup-id screenkey
+bindsym $mod+Ctrl+F11 exec killall screenkey
+bindsym $mod+F12 exec --no-startup-id streamdeck
+bindsym $mod+Ctrl+F12 exec killall streamdeck
 # exec --no-startup-id firefox
 exec --no-startup-id thunderbird
 exec --no-startup-id i3-sensible-terminal

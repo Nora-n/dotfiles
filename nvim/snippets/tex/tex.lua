@@ -1321,9 +1321,9 @@ return {
   -- num
   s(
     {
-      trig = "nm",
+      trig = "nmm",
       snippetType = "autosnippet",
-      dscr = "Expands 'nm' into '\\num{}'",
+      dscr = "Expands 'nmm' into '\\num{}'",
     },
     fmta("\\num{<>}", {
       d(1, get_visual),
