@@ -328,7 +328,7 @@ bindsym $mod+Home exec --no-startup-id \
 	synclient TopEdge=1500 & \
 	synclient LeftEdge=1500 & \
   xinput set-prop "TPPS/2 Elan TrackPoint" "libinput Accel Profile Enabled" 0 1 0 & \
-  xinput set-prop "TPPS/2 Elan TrackPoint" "libinput Accel Speed" 1 & \
+  xinput set-prop "TPPS/2 Elan TrackPoint" "libinput Accel Speed" .5 & \
   xinput set-prop "TPPS/2 Elan TrackPoint" "libinput Scrolling Pixel Distance" 50 & \
   xinput set-prop "ThinkPad X1 Presenter Mouse" "libinput Scroll Method Enabled" 0 0 1 & \
   xinput set-prop "ThinkPad X1 Presenter Mouse" "libinput Accel Speed" .1 & \

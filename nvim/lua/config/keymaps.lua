@@ -173,6 +173,7 @@ vim.keymap.set(
 -- smap <silent><expr> kj luasnip#jumpable(-1) ? '<Plug>luasnip-jump-prev' : 'kj'
 -- ]])
 
+-- reload snippets
 vim.keymap.set(
   "n",
   "<Leader>L",
@@ -192,4 +193,22 @@ vim.keymap.set({ "i", "s" }, "<C-h>", function()
   end
 end)
 
+-- open vimwiki
 vim.keymap.set("n", "<Leader>ww", "<Plug>VimwikiIndex", { desc = "Open index" })
+
+-- switch boxes to new
+vim.keymap.set(
+  "n",
+  "<Leader>Sb",
+  "<Cmd>%s!\\vbegin\\zs\\{(NC|)(loi|theo|prop|demo|coro|inte|impl|impo|rapp|defi|nota|ror|exem|odgr|rema)\\}(\\[.*\\])!{tcb}\\3(\\2)<CR><Cmd>%s!\\vend\\zs\\{(NC|)(loi|theo|prop|demo|coro|inte|impl|impo|rapp|defi|nota|ror|exem|odgr|rema)\\}!{tcb}<CR>",
+  { desc = "Change old boxes" }
+)
+vim.keymap.set(
+  "n",
+  "<Leader>Sb",
+  "<Cmd>%s!\\vbegin\\zs\\{r(loi|theo|prop|demo|coro|inte|impl|impo|rapp|defi|nota|ror|exem|odgr|rema)\\}!{tcb}(\\2)'l'<CR><Cmd>%s!\\vend\\zs\\{(r|t|b)(loi|theo|prop|demo|coro|inte|impl|impo|rapp|defi|nota|ror|exem|odgr|rema)\\}!{tcb}<CR><Cmd>%s!\\vbegin\\zs\\{t(loi|theo|prop|demo|coro|inte|impl|impo|rapp|defi|nota|ror|exem|odgr|rema)\\}!{tcb}(\\2)<CR>",
+  { desc = "Change new boxes" }
+)
+
+-- %s!\vbegin\zs{(NC|)(loi|theo|prop|demo|coro|inte|impl|impo|rapp|defi|nota|ror|exem|odgr|rema)}([.*])!{tcb}\3(\2)
+-- %s!\vend\zs{(NC|)(loi|theo|prop|demo|coro|inte|impl|impo|rapp|defi|nota|ror|exem|odgr|rema)}!{tcb}

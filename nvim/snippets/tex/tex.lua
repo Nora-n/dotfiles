@@ -245,7 +245,7 @@ return {
     snippetType = "autosnippet",
     dscr = "footnote",
     wordTrig = false,
-  }, fmta([[ \footnote{<>} ]], { d(1, get_visual) })),
+  }, fmta([[ \ftn{<>} ]], { d(1, get_visual) })),
   -- url
   s({
     trig = "url",
@@ -270,7 +270,7 @@ return {
     trig = "xul",
     snippetType = "autosnippet",
     dscr = "Expands 'xul' into LaTeX's underline{} command.",
-  }, fmta("\\ul{<>}", { d(1, get_visual) })),
+  }, fmta("\\xul{<>}", { d(1, get_visual) })),
   -- texttt
   s({
     trig = "xtt",
@@ -344,7 +344,7 @@ return {
     },
     fmta(
       [[
-      \cswitch{<>}{
+      \csw{<>}{
         <>
       }
       <>
@@ -355,6 +355,89 @@ return {
         i(0),
       }
     )
+  ),
+  -- highlight switch white
+  s(
+    {
+      trig = "hsw",
+      wordTrig = true,
+      snippetType = "autosnippet",
+      dscr = "Expands 'hsw' into '\\hswitch{}{<>}'",
+    },
+    fmta(
+      [[
+      \hsw{
+        <>
+      }
+      <>
+      ]],
+      {
+        d(1, get_visual),
+        i(0),
+      }
+    )
+  ),
+  -- switch white
+  s(
+    {
+      trig = "wsw",
+      wordTrig = true,
+      snippetType = "autosnippet",
+      dscr = "Expands 'wsw' into '\\wsw{}{<>}'",
+    },
+    fmta(
+      [[
+      \wsw{
+        <>
+      }
+      <>
+      ]],
+      {
+        d(1, get_visual),
+        i(0),
+      }
+    )
+  ),
+  -- switch blue
+  s(
+    {
+      trig = "([^\\])bsw",
+      wordTrig = true,
+      regTrig = true,
+      snippetType = "autosnippet",
+      dscr = "Expands 'bsw' into '\\bsw{}{<>}'",
+    },
+    fmta(
+      [[
+      <>\bsw{
+        <>
+      }
+      <>
+      ]],
+      {
+        f(function(_, snip)
+          return snip.captures[1]
+        end),
+        d(1, get_visual),
+        i(0),
+      }
+    )
+  ),
+  s(
+    {
+      trig = "([^\\])mma",
+      regTrig = true,
+      wordTrig = false,
+      snippetType = "autosnippet",
+      dscr = "Power -1",
+      condition = tex_utils.in_mathzone,
+    },
+    fmta([[<>^{-<>}]], {
+      f(function(_, snip)
+        return snip.captures[1]
+      end),
+      i(1, "1"),
+    })
   ),
   -- mathrm
   s({
@@ -481,6 +564,20 @@ return {
     condition = tex_utils.in_mathzone,
   }, {
     c(1, { t("\\Delta"), fmta("\\Delta{<>}", { i(1) }) }),
+  }),
+  s({
+    trig = "@f",
+    snippetType = "autosnippet",
+    condition = tex_utils.in_mathzone,
+  }, {
+    t("\\phi"),
+  }),
+  s({
+    trig = "@F",
+    snippetType = "autosnippet",
+    condition = tex_utils.in_mathzone,
+  }, {
+    t("\\Phi"),
   }),
   -- parenthesis
   s({
@@ -719,6 +816,7 @@ return {
   -- shorthands
   s({
     trig = "^",
+    wordTrig = false,
     snippetType = "autosnippet",
     dscr = "Superscript",
     condition = tex_utils.in_mathzone,
@@ -1296,6 +1394,18 @@ return {
       }),
     }),
   }),
+  -- units
+  s(
+    {
+      trig = "sii",
+      snippetType = "autosnippet",
+      dscr = "Expands 'sii' into '\\si{}'",
+    },
+    fmta("\\si{<>}", {
+      d(1, get_visual),
+    })
+  ),
+  -- angles
   s(
     {
       trig = "ang",
@@ -1304,7 +1414,7 @@ return {
       condition = tex_utils.in_mathzone,
     },
     fmta("\\ang{<>}", {
-      i(1, "value"),
+      d(1, get_visual),
     })
   ),
   -- celsius
@@ -1643,7 +1753,7 @@ return {
       \end{array}
       \right.\\
       \mathrm{A.N.~:}\enskip
-      \ul{
+      \xul{
       <>
       }
       <>
@@ -2000,6 +2110,27 @@ return {
       }
     )
   ),
+  -- prgm
+  s(
+    {
+      trig = "prg",
+      snippetType = "autosnippet",
+      dscr = "A prgm environment",
+      condition = line_begin,
+    },
+    fmta(
+      [[
+      \begin{prgm}
+        <>
+      \end{prgm}
+      <>
+    ]],
+      {
+        d(1, get_visual),
+        i(0),
+      }
+    )
+  ),
   -- tcolorbox
   -- main
   s({
@@ -2117,7 +2248,7 @@ return {
           <>
         ]],
         {
-          i(1),
+          d(1, get_visual),
           i(2),
           i(0),
         }
@@ -2132,7 +2263,7 @@ return {
           <>
         ]],
         {
-          i(1),
+          d(1, get_visual),
           i(2, "prop"),
           i(3),
           i(4),

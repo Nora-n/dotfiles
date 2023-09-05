@@ -1,6 +1,7 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{cours-preambule}
 \RequirePackage{locdef}
+% \RequirePackage{luatextra}
 
 \RequirePackage[authoryear]{natbib}
 \setcitestyle{aysep={}}
@@ -39,6 +40,8 @@
 \RequirePackage{pdflscape}
 % Define margins globally
 \RequirePackage[hmargin=1.5cm, vmargin=1.5cm]{geometry}
+% Don't stretch spaces to fill the page
+\raggedbottom
 % To locally change margins
 \RequirePackage{changepage}
 % To resize tables inside threeparttable for instance
@@ -164,17 +167,17 @@
 \RequirePackage{hyperendnotes}
 % Toggle switch in order to turn on/off back-links in the
 % endnote-section:
-\enotelinkstrue
-%\enotelinksfalse
+% \enotelinkstrue
+% \enotelinksfalse
 
 % Idk really: endnotes~?
-\makeatletter
-\newcommand*{\toccontents}{\@starttoc{toc}}
-\def\enoteheading{\section*{\notesname
-	  \@mkboth{\MakeUppercase{\notesname}}{\MakeUppercase{\notesname}}}%
-	\mbox{}\par\vskip-2.3\baselineskip\noindent\rule{.5\textwidth}{0.4pt}
-	\par\vskip\baselineskip}
-\makeatother
+% \makeatletter
+% \newcommand*{\toccontents}{\@starttoc{toc}}
+% \def\enoteheading{\section*{\notesname
+% 	  \@mkboth{\MakeUppercase{\notesname}}{\MakeUppercase{\notesname}}}%
+% 	\mbox{}\par\vskip-2.3\baselineskip\noindent\rule{.5\textwidth}{0.4pt}
+% 	\par\vskip\baselineskip}
+% \makeatother
 
 % Read linux paths
 \ExplSyntaxOn
@@ -211,14 +214,6 @@
 \captionsetup[table]{name=Tableau}
 % For subfigures
 \RequirePackage{subcaption}
-% To have \footnotes at bottom of page when called inside subfigures
-% Needs LaTeX 2020 and plus, https://tex.stackexchange.com/a/414191
-% \AddToHook{env/figure/begin}{%
-%   \DeclareRobustCommand\footnote[1]{%
-%     \footnotemark
-%     \expanded{\AddToHookNext{env/figure/after}%
-%       {\noexpand\setcounter{footnote}{\thefootnote}%
-%        \noexpand\footnotetext\unexpanded{{#1}}}}}}
 % Useful to center wide tables or figures
 \makeatletter
 \newcommand*{\centerfloat}{%
@@ -245,6 +240,38 @@
 \titlespacing*{\chapter}
 {0pt}{0pt}{20pt}
 \makeatother
+
+% For centered and hrule before and after text
+\newcommand*\headline[1]{%
+	\par\noindent\raisebox{.8ex}{%
+		\makebox[1\linewidth]{%
+			\hrulefill%
+			\hspace{1ex}%
+			\raisebox{-.8ex}{\Large\bfseries#1}
+			\hspace{.15ex}%
+			\hrulefill%
+		}
+	}
+}
+\newcommand*\tailline[1]{%
+	\par\noindent\raisebox{.8ex}{%
+		\makebox[1\linewidth]{%
+			\hrulefill%
+			\hspace{1ex}%
+			\raisebox{-1.25ex}{$\scaleto{#1}{10pt}$}
+			\hspace{.15ex}%
+			\hrulefill%
+		}
+	}
+}
+% Make it an environment
+\newenvironment{prgm}{
+	\headline{Au programme}
+	\vspace*{-20pt}%
+}
+{
+	\tailline{\diamond}
+}
 
 \renewcommand{\thesection}{\Roman{section}}
 \renewcommand{\thesubsection}{\Alph{subsection}}
@@ -320,6 +347,20 @@
 \makeatletter
 \newcommand\footnoteref[1]{\protected@xdef\@thefnmark{\ref{#1}}\@footnotemark}
 \makeatother
+
+% Shorthand for footnotes
+\newcommand{\ftn}[1]{%
+	\footnote{#1}
+}
+\newcommand{\fnt}[1]{%
+	\footnotetext{#1}
+}
+\newcommand{\fnr}[1]{%
+	\footnoteref{#1}
+}
+\newcommand{\fnm}{%
+	\footnotemark
+}
 
 % Pour les plots
 \RequirePackage{pgfplots}
@@ -571,6 +612,8 @@ literate         = {á}{{\'a}}1
 \AfterEndEnvironment{tcolorbox}{\spewnotes}
 \BeforeBeginEnvironment{tcb}{\savenotes}
 \AfterEndEnvironment{tcb}{\spewnotes}
+\BeforeBeginEnvironment{minipage}{\savenotes}
+\AfterEndEnvironment{minipage}{\spewnotes}
 
 % New commands for pretty formatting (TP)
 \newlength{\leftlength}
@@ -625,17 +668,55 @@ literate         = {á}{{\'a}}1
 }
 \newcommand{\switch}[2]{
 	\iftoggle{student}{%
-		#2%
+		#1%
 	}{%
+		#2%
+	}%
+}
+% \newcommand{\pswitch}[2]{
+% 	\iftoggle{student}{%
+% 		#1%
+% 	}{%
+% 		#2%
+% 	}%
+% }
+% Command for easy color switch
+\newcommand{\csw}[2]{%
+	\textcolor{\switch{#1!10}{black!100}}{%
+		#2%
+	}%
+}
+% Automatic white
+\newcommand{\wsw}[1]{%
+	\textcolor{\switch{white!10}{black!100}}{%
 		#1%
 	}%
 }
-
-% Command for easy color switch
-\newcommand{\cswitch}[2]{%
-	\textcolor{\switch{black!100}{#1!10}}{%
-		#2%
+% blue for prof
+% \NewDocumentCommand{\bsw}{sm}{
+% 	\textcolor{\switch{\IfBooleanTF{#1}{black}{blue}!100}{white!10}}{
+% 		#2%
+% 	}
+% }
+\newcommand{\bsw}[1]{%
+	\textcolor{\switch{white!10}{blue!100}}{%
+		#1%
 	}%
+}
+% Command for highlighting switch
+\RequirePackage{soul}
+\sethlcolor{lightgray}
+% \RequirePackage[soul]{lua-ul}
+% \RequirePackage{luacolor}
+% \newcommand{\hl}[1]{%
+%   \highLight{#1}
+% }
+% \LuaULSetHighLightColor{gray}
+\DeclareRobustCommand{\mhl}[1]{%
+	\ifmmode\text{\hl{$#1$}}\else\hl{#1}\fi
+}
+\newcommand{\hsw}[1]{%
+	\switch{\textcolor{white!10}{#1}}{\mhl{#1}}
 }
 
 % To make `hide` command
@@ -643,11 +724,11 @@ literate         = {á}{{\'a}}1
 \RequirePackage{varwidth}
 \newcommand\hide[1]{\phantom{\varwidth{\linewidth}#1\endvarwidth}}
 % \toggletrue{student} will hide the command
-\newcommand{\hswitch}[1]{
+\newcommand{\hdsw}[1]{
 	\iftoggle{student}{
-		\hide{#1}
-	}{
 		#1
+	}{
+		\hide{#1}
 	}
 }
 
@@ -691,6 +772,7 @@ literate         = {á}{{\'a}}1
 \colorlet{odgr}{lightgray!50!black}
 \colorlet{appl}{gray!50!black}
 \colorlet{rema}{darkgray!50!black}
+\colorlet{black}{black}
 % for backs in fill style
 \colorlet{loiback}{red!10}
 \colorlet{theoback}{red!10}
@@ -958,6 +1040,12 @@ step={#3},
 	cnt/.style={
 			halign=center,
 			halign lower=center
+		}
+}
+\tcbset{
+	bld/.style={
+			fontupper=\bfseries,
+			fontlower=\bfseries
 		}
 }
 
