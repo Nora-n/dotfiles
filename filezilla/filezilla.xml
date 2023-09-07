@@ -128,9 +128,9 @@
 		<Setting name="Remote filelist column order">0,1,2,3,4,5</Setting>
 		<Setting name="Local filelist sortorder">0 0</Setting>
 		<Setting name="Remote filelist sortorder">0 0</Setting>
-		<Setting name="Queue column widths">701 60 180 80 60 100</Setting>
-		<Setting name="Window position and size">0 2080 753 1278 990 </Setting>
 		<Setting name="Splitter positions (v2)">97 -373 500000000 234 234 500000000</Setting>
+		<Setting name="Queue column widths">1479 60 180 80 60 100</Setting>
+		<Setting name="Window position and size">0 2080 752 1278 990 </Setting>
 		<Setting name="Tab data" sensitive="1">
 			<Tabs>
 				<Tab connected="1" selected="1">
@@ -146,7 +146,7 @@
 					<Name>netflix</Name>
 					<Site>0/netflix</Site>
 					<RemotePath>1 0 4 home 6 public 9 Downloads</RemotePath>
-					<LocalPath>/home/nora/Downloads/</LocalPath>
+					<LocalPath>/home/nora/Videos/</LocalPath>
 				</Tab>
 			</Tabs>
 		</Setting>

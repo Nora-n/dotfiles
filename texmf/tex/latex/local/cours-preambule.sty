@@ -465,7 +465,7 @@
 	free-standing-units,           % create standalone commands
 	locale=FR,                     % language
 	inter-unit-product=
-		{\ensuremath{\mycdot}},  % character between units
+		{\ensuremath{\!\mycdot\!}},  % character between units
 	separate-uncertainty,          % x ± dx
 	retain-explicit-plus,          % p.ex. +45°
 	range-units=brackets,          % (0 to 40) m
@@ -513,11 +513,12 @@
 % Try \RequirePackage{pythonhighlight}
 % https://github.com/olivierverdier/python-latex-highlighting
 \RequirePackage{listingsutf8}
+\RequirePackage{fix-cm}
 \lstset{inputencoding=utf8/latin1}
 \definecolor{fond}{gray}{0.95}
 \lstnewenvironment{python}{
 \lstset{language     = python,
-basicstyle       = \ttfamily,
+% basicstyle       = \ttfamily,
 keywordstyle     = \bfseries\ttfamily\color{green!40!black},
 commentstyle     = \itshape\color{purple!40!black},
 identifierstyle  = \color{black},
@@ -531,9 +532,37 @@ showstringspaces = false
 extendedchars    = true,
 literate         = {á}{{\'a}}1
 {à}{{\`a}}1
+{À}{{\`A}}1
 {ã}{{\~a}}1
-{é}{{\'e}}1,
+{é}{{\'e}}1
+{É}{{\'E}}1
+{è}{{\`e}}1
+,
 }}{}
+
+% For 80 columns automatically
+% https://tex.stackexchange.com/a/142409
+\newlength{\eightytt}
+\newcommand{\testthewidth}{%
+	\fontsize{\dimen0}{0}\selectfont
+	\sbox0{x\global\dimen1=0.6em}%
+	\ifdim 80\dimen1>\textwidth
+		\advance\dimen0 by -.1pt
+		\expandafter\testthewidth
+	\else
+		\global\eightytt\dimen0
+	\fi
+}
+\AtBeginDocument{%
+	\dimen0=\csname f@size\endcsname pt
+	\begingroup
+	\ttfamily
+	\testthewidth
+	\endgroup
+	\lstset{
+		basicstyle=\fontsize{\eightytt}{1.2\eightytt}\ttfamily
+	}%
+}
 
 % Include verbatim in text
 \RequirePackage{fancyvrb}
@@ -692,14 +721,14 @@ literate         = {á}{{\'a}}1
 		#1%
 	}%
 }
-% blue for prof
+% color for prof
 % \NewDocumentCommand{\bsw}{sm}{
 % 	\textcolor{\switch{\IfBooleanTF{#1}{black}{blue}!100}{white!10}}{
 % 		#2%
 % 	}
 % }
-\newcommand{\bsw}[1]{%
-	\textcolor{\switch{white!10}{blue!100}}{%
+\newcommand{\psw}[1]{%
+	\textcolor{\switch{white!10}{gray!100}}{%
 		#1%
 	}%
 }
@@ -769,6 +798,7 @@ literate         = {á}{{\'a}}1
 \colorlet{nota}{green!50!black}
 \colorlet{ror}{orange!90!black}
 \colorlet{exem}{lightgray!55!black}
+\colorlet{expe}{lightgray!55!black}
 \colorlet{odgr}{lightgray!50!black}
 \colorlet{appl}{gray!50!black}
 \colorlet{rema}{darkgray!50!black}
@@ -790,6 +820,7 @@ literate         = {á}{{\'a}}1
 \colorlet{notaback}{green!10}
 \colorlet{rorback}{orange!10}
 \colorlet{exemback}{lightgray!10}
+\colorlet{expeback}{lightgray!10}
 \colorlet{odgrback}{lightgray!10}
 \colorlet{applback}{gray!10}
 \colorlet{remaback}{darkgray!10}
@@ -811,6 +842,7 @@ literate         = {á}{{\'a}}1
 \newcommand{\namenota}{Notation}
 \newcommand{\nameror}{Important}
 \newcommand{\nameexem}{Exemple}
+\newcommand{\nameexpe}{Manipulation}
 \newcommand{\nameodgr}{Ordre de grandeur}
 \newcommand{\nameappl}{Application}
 \newcommand{\namerema}{Remarque}
@@ -847,6 +879,8 @@ literate         = {á}{{\'a}}1
 \renewcommand{\theror}{\thechapter.\arabic{ror}}
 \newcounter{exem}[chapter]
 \renewcommand{\theexem}{\thechapter.\arabic{exem}}
+\newcounter{expe}[chapter]
+\renewcommand{\theexpe}{\thechapter.\arabic{expe}}
 \newcounter{odgr}[chapter]
 \renewcommand{\theodgr}{\thechapter.\arabic{odgr}}
 \newcounter{appl}[chapter]
@@ -859,7 +893,7 @@ literate         = {á}{{\'a}}1
 \usepackage{fontawesome5}
 \tcbset{
 	licon/.style={
-			overlay={
+			overlay unbroken and first={
 					\node[anchor=center, scale=2]
 					at ([shift={(-0.7,-0.4)}]frame.north west)
 					{\csname icon#1\endcsname};
@@ -868,7 +902,7 @@ literate         = {á}{{\'a}}1
 }
 \tcbset{
 	ricon/.style={
-			overlay={
+			overlay unbroken and first={
 					\node[anchor=center, scale=2]
 					at ([shift={(+0.7,-0.4)}]frame.north east)
 					{\csname icon#1\endcsname};
@@ -890,7 +924,6 @@ literate         = {á}{{\'a}}1
 \newcommand{\icondata}{\faIcon{database}}
 \newcommand{\iconnota}{\faIcon{pencil-alt}}
 \newcommand{\iconror}{\includegraphics[scale=.15]{\PREPA/figures_generales/heart.jpg}}
-% \newcommand{\iconexem}{\faIcon{cogs}}
 \newcommand{\iconexem}{\faIcon{external-link-alt}}
 \newcommand{\iconodgr}{\faIcon{calculator}}
 \newcommand{\iconappl}{\faIcon{edit}}
@@ -898,9 +931,11 @@ literate         = {á}{{\'a}}1
 %
 \newcommand{\icondown}{\faIcon[regular]{hand-point-down}}
 \newcommand{\iconknow}{\faIcon{brain}}
-% \newcommand{\iconhow}{\faIcon{cogs}}
 \newcommand{\iconhow}{\faIcon{pencil-ruler}}
-\newcommand{\iconexpe}{\faIcon{flask}}
+% \newcommand{\iconexpe}{\faIcon{flask}}
+\newcommand{\iconexpe}{\faIcon{cogs}}
+\newcommand{\iconwip}{\faIcon{hard-hat}}
+\newcommand{\iconbomb}{\faIcon{bomb}}
 % \newcommand{\iconexpe}{\faIcon{fill}}
 \newcommand{\iconbulb}{\faIcon[regular]{lightbulb}}
 \newcommand{\iconinfo}{\faIcon{info-circle}}
@@ -1009,9 +1044,10 @@ step={#3},
 % Instruction
 \tcbset{
 	itc/.style 2 args={
-			% colframe={#1},
 			fonttitle=\bfseries,
 			attach boxed title to top center={yshift=-2mm},
+			colback=#1back,
+			colframe={#1},
 			title={#2},
 		}
 }
@@ -1021,31 +1057,43 @@ step={#3},
 			tikz={rotate=180, transform shape}
 		}
 }
-
-% For side inside box
-\NewTColorBox{isd}{O{}D(){black}}{%
-	side={#2},
-	#1
-}
-
-\tcbset{
-	side/.style={
-			arc=0pt, boxsep=0mm, notitle, oversize, nobeforeafter, frame hidden,
-			enhanced,
-			colframe=#1, colback=#1back,
-			sidebyside, sidebyside align=center, valign=center
-		}
-}
+% Center all
 \tcbset{
 	cnt/.style={
 			halign=center,
 			halign lower=center
 		}
 }
+% Bold all
 \tcbset{
 	bld/.style={
 			fontupper=\bfseries,
 			fontlower=\bfseries
+		}
+}
+% For side inside box
+\NewTColorBox{isd}{O{}D(){black}}{%
+	side={#2},
+	#1,
+}
+
+\tcbset{
+	side/.style={
+			arc=0pt, boxsep=0mm,
+			notitle, oversize, nobeforeafter,
+			enhanced, frame hidden,
+			colframe=#1, colback=#1back,
+			sidebyside, sidebyside align=center, valign=center,
+			subtitle style={
+					enhanced,
+					frame hidden,
+					interior hidden,
+					halign=center,
+					fontupper={\color{#1}},
+					fonttitle=\bfseries,
+					colframe=#1, colback=#1back,
+					% coltitle=#1, colbacktitle=#1back,
+				},
 		}
 }
 
@@ -1055,7 +1103,7 @@ step={#3},
 	base,
 	colframe=#3,
 	sidebyside adapt=#2,
-	icon=\IfBooleanTF{#1}{#5}{#3},
+	#6icon=\IfBooleanTF{#1}{#5}{#3},
 	#4={#3}{#7},
 ]{#8}{#9}
 }

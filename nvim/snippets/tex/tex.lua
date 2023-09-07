@@ -401,15 +401,15 @@ return {
   -- switch blue
   s(
     {
-      trig = "([^\\])bsw",
+      trig = "([^\\])psw",
       wordTrig = true,
       regTrig = true,
       snippetType = "autosnippet",
-      dscr = "Expands 'bsw' into '\\bsw{}{<>}'",
+      dscr = "Expands 'psw' into '\\psw{}{<>}'",
     },
     fmta(
       [[
-      <>\bsw{
+      <>\psw{
         <>
       }
       <>
@@ -479,6 +479,7 @@ return {
   -- greek
   s({
     trig = "@a",
+    wordTrig = false,
     snippetType = "autosnippet",
     condition = tex_utils.in_mathzone,
   }, {
@@ -486,6 +487,7 @@ return {
   }),
   s({
     trig = "@b",
+    wordTrig = false,
     snippetType = "autosnippet",
     condition = tex_utils.in_mathzone,
   }, {
@@ -493,6 +495,7 @@ return {
   }),
   s({
     trig = "@g",
+    wordTrig = false,
     snippetType = "autosnippet",
     condition = tex_utils.in_mathzone,
   }, {
@@ -500,6 +503,7 @@ return {
   }),
   s({
     trig = "@G",
+    wordTrig = false,
     snippetType = "autosnippet",
     condition = tex_utils.in_mathzone,
   }, {
@@ -507,6 +511,7 @@ return {
   }),
   s({
     trig = "@l",
+    wordTrig = false,
     snippetType = "autosnippet",
     condition = tex_utils.in_mathzone,
   }, {
@@ -530,6 +535,7 @@ return {
   }),
   s({
     trig = "@t",
+    wordTrig = false,
     snippetType = "autosnippet",
     condition = tex_utils.in_mathzone,
   }, {
@@ -553,6 +559,7 @@ return {
   }),
   s({
     trig = "@d",
+    wordTrig = false,
     snippetType = "autosnippet",
     condition = tex_utils.in_mathzone,
   }, {
@@ -560,13 +567,24 @@ return {
   }),
   s({
     trig = "@D",
+    wordTrig = false,
     snippetType = "autosnippet",
     condition = tex_utils.in_mathzone,
   }, {
     c(1, { t("\\Delta"), fmta("\\Delta{<>}", { i(1) }) }),
   }),
+  -- sigma
+  s({
+    trig = "@s",
+    snippetType = "autosnippet",
+    dscr = "Expands '@s' into '\\sigma'",
+    condition = tex_utils.in_mathzone,
+  }, {
+    t("\\sigma"),
+  }),
   s({
     trig = "@f",
+    wordTrig = false,
     snippetType = "autosnippet",
     condition = tex_utils.in_mathzone,
   }, {
@@ -574,6 +592,7 @@ return {
   }),
   s({
     trig = "@F",
+    wordTrig = false,
     snippetType = "autosnippet",
     condition = tex_utils.in_mathzone,
   }, {
@@ -910,6 +929,14 @@ return {
     condition = tex_utils.in_mathzone,
   }, {
     t("\\ext"),
+  }),
+  s({
+    trig = "sex",
+    wordTrig = false,
+    snippetType = "autosnippet",
+    condition = tex_utils.in_mathzone,
+  }, {
+    t("_{\\rm exp}"),
   }),
   -- fraction
   s({

@@ -13,17 +13,15 @@ if &shortmess =~ 'A'
 else
   set shortmess=aoO
 endif
-badd +34 ~/.config/nvim/snippets/tex/tex.lua
-badd +489 ~/texmf/tex/latex/local/cours-preambule.sty
-badd +16 ~/texmf/tex/latex/local/custikz.sty
+badd +649 ~/.config/nvim/snippets/tex/tex.lua
+badd +489 ~/.config/texmf/tex/latex/local/cours-preambule.sty
+badd +16 ~/.config/texmf/tex/latex/local/custikz.sty
 badd +15 ~/.config/nvim/lua/config/keymaps.lua
 badd +28 ~/.config/nvim/snippets/tex/tex.snippets
 badd +324 ~/.config/nvim/snippets/latex/latex.json
 argglobal
 %argdel
 $argadd tex.lua
-tabnew +setlocal\ bufhidden=wipe
-tabrewind
 edit ~/.config/nvim/snippets/tex/tex.lua
 let s:save_splitbelow = &splitbelow
 let s:save_splitright = &splitright
@@ -45,19 +43,15 @@ set winminheight=0
 set winheight=1
 set winminwidth=0
 set winwidth=1
-exe 'vert 1resize ' . ((&columns * 70 + 70) / 141)
-exe '2resize ' . ((&lines * 57 + 59) / 118)
-exe 'vert 2resize ' . ((&columns * 70 + 70) / 141)
-exe '3resize ' . ((&lines * 58 + 59) / 118)
-exe 'vert 3resize ' . ((&columns * 70 + 70) / 141)
+wincmd =
 argglobal
 balt ~/.config/nvim/snippets/tex/tex.snippets
-let s:l = 662 - ((59 * winheight(0) + 58) / 116)
+let s:l = 649 - ((10 * winheight(0) + 22) / 45)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 662
-normal! 07|
+keepjumps 649
+normal! 025|
 wincmd w
 argglobal
 if bufexists(fnamemodify("~/.config/nvim/snippets/tex/tex.snippets", ":p")) | buffer ~/.config/nvim/snippets/tex/tex.snippets | else | edit ~/.config/nvim/snippets/tex/tex.snippets | endif
@@ -65,7 +59,7 @@ if &buftype ==# 'terminal'
   silent file ~/.config/nvim/snippets/tex/tex.snippets
 endif
 balt ~/.config/nvim/lua/config/keymaps.lua
-let s:l = 15 - ((14 * winheight(0) + 28) / 57)
+let s:l = 15 - ((5 * winheight(0) + 10) / 21)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
@@ -78,36 +72,15 @@ if &buftype ==# 'terminal'
   silent file ~/.config/nvim/snippets/latex/latex.json
 endif
 balt ~/.config/nvim/snippets/tex/tex.snippets
-let s:l = 353 - ((4 * winheight(0) + 29) / 58)
+let s:l = 353 - ((4 * winheight(0) + 11) / 23)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
 keepjumps 353
 normal! 05|
 wincmd w
-exe 'vert 1resize ' . ((&columns * 70 + 70) / 141)
-exe '2resize ' . ((&lines * 57 + 59) / 118)
-exe 'vert 2resize ' . ((&columns * 70 + 70) / 141)
-exe '3resize ' . ((&lines * 58 + 59) / 118)
-exe 'vert 3resize ' . ((&columns * 70 + 70) / 141)
-tabnext
-edit ~/.config/nvim/snippets/tex/tex.lua
-wincmd t
-let s:save_winminheight = &winminheight
-let s:save_winminwidth = &winminwidth
-set winminheight=0
-set winheight=1
-set winminwidth=0
-set winwidth=1
-argglobal
-balt ~/texmf/tex/latex/local/custikz.sty
-let s:l = 34 - ((33 * winheight(0) + 58) / 116)
-if s:l < 1 | let s:l = 1 | endif
-keepjumps exe s:l
-normal! zt
-keepjumps 34
-normal! 0
-tabnext 2
+wincmd =
+tabnext 1
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0 && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf
 endif
