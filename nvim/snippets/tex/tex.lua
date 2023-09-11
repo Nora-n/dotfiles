@@ -329,7 +329,7 @@ return {
       ]],
       {
         d(1, get_visual),
-        i(2, "student"),
+        i(2, "prof"),
         i(0),
       }
     )
@@ -832,6 +832,12 @@ return {
     dscr = "Rightarrow",
     condition = tex_utils.in_mathzone,
   }, { t("\\Lra ") }),
+  s({
+    trig = "opto",
+    snippetType = "autosnippet",
+    dscr = "opto",
+    condition = tex_utils.in_mathzone,
+  }, fmta("\\opto{<>}{<>}", { i(1, "above"), i(2, "below") })),
   -- shorthands
   s({
     trig = "^",
@@ -944,7 +950,7 @@ return {
     snippetType = "autosnippet",
     dscr = "Expands 'ff' into '\frac{}{}'",
     condition = tex_utils.in_mathzone,
-  }, fmta("\\frac{<>}{<>}", { i(1), i(2) })),
+  }, fmta("\\frac{<>}{<>}", { d(1, get_visual), i(2) })),
   -- s({
   --   trig = "ff",
   --   dscr = "Expands 'ff' into '\frac{}{}'",
@@ -970,9 +976,18 @@ return {
     condition = tex_utils.in_mathzone,
   }, {
     c(1, {
-      fmta("\\left( \\frac{<>}{<>}<>  \\right)", { i(1), i(2), i(3) }),
-      fmta("\\left[ \\frac{<>}{<>}<>  \\right]", { i(1), i(2), i(3) }),
-      fmta("\\left\\{ \\frac{<>}{<>}<>  \\right\\}", { i(1), i(2), i(3) }),
+      fmta(
+        "\\left( \\frac{<>}{<>}<> \\right)",
+        { d(1, get_visual), i(2), i(3) }
+      ),
+      fmta(
+        "\\left[ \\frac{<>}{<>}<> \\right]",
+        { d(1, get_visual), i(2), i(3) }
+      ),
+      fmta(
+        "\\left\\{ \\frac{<>}{<>}<> \\right\\}",
+        { d(1, get_visual), i(2), i(3) }
+      ),
     }),
   }),
   -- ln, log, exp & co
@@ -2566,28 +2581,39 @@ return {
   ),
 
   -- gather
-  s(
-    {
-      trig = "gth",
-      snippetType = "autosnippet",
-      dscr = "A gather environment",
-      condition = line_begin,
-    },
-    fmta(
-      [[
-      \begin{gather<>}
+  s({
+    trig = "gth",
+    snippetType = "autosnippet",
+    dscr = "A gather environment",
+    condition = line_begin,
+  }, {
+    c(1, {
+      fmta(
+        [[
+      \begin{gather*}
         <>
-      \end{gather<>}
+      \end{gather*}
       <>
-    ]],
-      {
-        c(1, { t("*"), t("") }),
-        d(2, get_visual),
-        rep(1),
-        i(0),
-      }
-    )
-  ),
+      ]],
+        {
+          d(1, get_visual),
+          i(0),
+        }
+      ),
+      fmta(
+        [[
+      \begin{gather}
+        <>
+      \end{gather}
+      <>
+      ]],
+        {
+          d(1, get_visual),
+          i(0),
+        }
+      ),
+    }),
+  }),
   -----------------------------------------------------------------------------
   -- Figures
   -----------------------------------------------------------------------------

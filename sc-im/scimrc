@@ -1,5 +1,7 @@
 set autocalc
-set numeric
-set numeric_decimal=0
-set overlap
+set truncate
 set xlsx_readformulas
+nnoremap "<RIGHT>" "fl"
+nnoremap "<LEFT>" "fh"
+nnoremap "<UP>" "fk"
+nnoremap "<DOWN>" "fj"

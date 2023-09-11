@@ -210,6 +210,8 @@ set $laptop "eDP-1"
 set $htop "HDMI-1"
 set $lvert "DP-3-1-5"
 set $main "DP-3-2"
+set $vgat "DP-3"
+set $vgab "DP-2"
 
 # Multiple monitors
 workspace $ws1 output $laptop
@@ -217,9 +219,9 @@ workspace $ws2 output $htop $lvert $laptop
 workspace $ws3 output $lvert $laptop
 workspace $ws4 output $htop $lvert $laptop
 workspace $ws5 output $lvert $laptop
-workspace $ws6 output $htop $main $laptop
+workspace $ws6 output $htop $main $vgat $vgab $laptop
 workspace $ws7 output $htop $main $laptop
-workspace $ws8 output $main $laptop
+workspace $ws8 output $main $vgat $vgab $laptop
 workspace $ws9 output $htop $main $laptop
 workspace $ws10 output $laptop
 

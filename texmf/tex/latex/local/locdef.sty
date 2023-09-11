@@ -187,24 +187,26 @@
 \newcommand{\gd}{\vv{\rm grad}\,}
 \def\nab{\nabla}
 \def\nabf{\vv{\nab}}
-\def\ABr{{\rm AB}}
-\def\AB{\vv{\ABr}}
 \def\OMr{\mathrm{OM}}
 \def\SMr{\mathrm{SM}}
 \def\SaMr{\mathrm{S_1M}}
 \def\SbMr{\mathrm{S_2M}}
-\def\OA{\obar{OA}}
-\def\OAp{\obar{OA'}}
-\def\OF{\obar{OF'}}
-\def\ABb{\obar{AB}}
-\def\ABp{\obar{A'B'}}
-\def\ABa{\obar{A_1B_1}}
+\def\OA{\obar{\rm OA}}
+\def\OAp{\obar{\rm OA'}}
+\def\OF{\obar{\rm OF}}   %:%s!\\OF!\\OFp
+\def\OFp{\obar{\rm OF'}} %:%s!\\obar{OF}!\\OF
+\def\ABr{{\rm AB}}
+\def\ABpr{{\rm A'B'}}
+% \def\AB{\vv{\ABr}}    % :%s!\\AB!\\vv{\\ABr}!
+\def\AB{\obar{\ABr}}      % :%s!ABb!AB!
+\def\ABp{\obar{\ABpr}}
+\def\ABb{\obar{\rm A_1B_1}} % :%s!ABa!ABb
 \def\bp{$'$}
-\def\SC{\obar{SC}}
-\def\SA{\obar{SA}}
-\def\SAp{\obar{SA'}}
-\def\SF{\obar{SF}}
-\def\SFp{\obar{SF'}}
+\def\SC{\obar{\rm SC}}
+\def\SA{\obar{\rm SA}}
+\def\SAp{\obar{\rm SA'}}
+\def\SF{\obar{\rm SF}}
+\def\SFp{\obar{\rm SF'}}
 \def\nf{\vv{n}}
 \def\ff{\vv{f}}
 \def\lf{\vv{l}}

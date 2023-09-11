@@ -199,13 +199,13 @@ vim.keymap.set("n", "<Leader>ww", "<Plug>VimwikiIndex", { desc = "Open index" })
 -- switch boxes to new
 vim.keymap.set(
   "n",
-  "<Leader>Sb",
-  "<Cmd>%s!\\vbegin\\zs\\{(NC|)(loi|theo|prop|demo|coro|inte|impl|impo|rapp|defi|nota|ror|exem|odgr|rema)\\}(\\[.*\\])!{tcb}\\3(\\2)<CR><Cmd>%s!\\vend\\zs\\{(NC|)(loi|theo|prop|demo|coro|inte|impl|impo|rapp|defi|nota|ror|exem|odgr|rema)\\}!{tcb}<CR>",
+  "<Leader>Sba",
+  "<Cmd>%s!\\vbegin\\zs\\{(NC|)(loi|theo|prop|demo|coro|inte|impl|impo|rapp|defi|nota|ror|exem|odgr|rema)\\}(\\[.*\\]|)!{tcb}\\3(\\2)<CR><Cmd>%s!\\vend\\zs\\{(NC|)(loi|theo|prop|demo|coro|inte|impl|impo|rapp|defi|nota|ror|exem|odgr|rema)\\}!{tcb}<CR>",
   { desc = "Change old boxes" }
 )
 vim.keymap.set(
   "n",
-  "<Leader>Sb",
+  "<Leader>Sbb",
   "<Cmd>%s!\\vbegin\\zs\\{r(loi|theo|prop|demo|coro|inte|impl|impo|rapp|defi|nota|ror|exem|odgr|rema)\\}!{tcb}(\\2)'l'<CR><Cmd>%s!\\vend\\zs\\{(r|t|b)(loi|theo|prop|demo|coro|inte|impl|impo|rapp|defi|nota|ror|exem|odgr|rema)\\}!{tcb}<CR><Cmd>%s!\\vbegin\\zs\\{t(loi|theo|prop|demo|coro|inte|impl|impo|rapp|defi|nota|ror|exem|odgr|rema)\\}!{tcb}(\\2)<CR>",
   { desc = "Change new boxes" }
 )

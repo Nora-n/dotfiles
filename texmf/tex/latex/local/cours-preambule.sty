@@ -200,6 +200,7 @@
 
 % Figures
 \RequirePackage{graphicx}%[pdftex]{graphicx}
+\graphicspath{{./figures/}}
 \RequirePackage{svg}
 \RequirePackage[noframe]{draftfigure}
 
@@ -305,9 +306,9 @@
 \newenvironment{myepistyle}{\hspace{-7.8pt}}{}
 \renewcommand{\textflush}{myepistyle}
 % Pour local TOC
-% \RequirePackage{minitoc}
-% \renewcommand{\mtctitle}{Sommaire}
-% \renewcommand{\mlttitle}{Tableaux}
+\RequirePackage{minitoc}
+\renewcommand{\mtctitle}{Sommaire}
+\renewcommand{\mlttitle}{Tableaux}
 % Pour glossaire
 % \RequirePackage{glossaries-extra}
 
