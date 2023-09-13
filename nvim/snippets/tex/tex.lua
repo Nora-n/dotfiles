@@ -1426,7 +1426,7 @@ return {
   }, {
     c(1, {
       fmta("\\SI{<>}{<>}", {
-        i(1, "value"),
+        d(1, get_visual),
         i(2, "unit"),
       }),
       fmta("\\SIrange{<>}{<>}{<>}", {

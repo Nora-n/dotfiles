@@ -506,6 +506,10 @@
 	}%
 }
 \makeatother
+% Silence warning message that `physics` and `siunitx` define \qty
+\ExplSyntaxOn
+\msg_redirect_name:nnn { siunitx } { physics-pkg } { none }
+\ExplSyntaxOff
 
 % Math in section names
 \RequirePackage{bookmark} % http://tex.stackexchange.com/questions/119079
@@ -538,6 +542,8 @@ literate         = {á}{{\'a}}1
 {é}{{\'e}}1
 {É}{{\'E}}1
 {è}{{\`e}}1
+{ê}{{\^e}}1
+{ç}{{\c{c}}}1
 ,
 }}{}
 

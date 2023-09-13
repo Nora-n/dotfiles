@@ -291,7 +291,7 @@ bindsym $mud+F6 exec --no-startup-id feh --bg-fill /home/nora/Pictures/wallpaper
 exec_always --no-startup-id feh --bg-fill /home/nora/Pictures/wallpapers/arch_nebula.jpg
 # exec --no-startup-id xbindkeys
 exec --no-startup-id autorandr -l full
-exec --no-startup-id xidlehook --not-when-fullscreen --not-when-audio --timer 360 "betterlockscreen -l dim" ''
+# exec --no-startup-id xidlehook --not-when-fullscreen --not-when-audio --timer 360 "betterlockscreen -l dim" ''
 # bindsym $mod+F10 exec --no-startup-id xidlehook --not-when-fullscreen --not-when-audio --timer 360 "betterlockscreen -l dim" ''
 # bindsym $mod+F11 exec --no-startup-id xidlehook --not-when-fullscreen --not-when-audio --timer 36000 "betterlockscreen -l dim" ''
 bindsym $mod+F11 exec --no-startup-id screenkey

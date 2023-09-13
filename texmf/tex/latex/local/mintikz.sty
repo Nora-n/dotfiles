@@ -19,13 +19,13 @@
 
 \RequirePackage{siunitx}
 \sisetup{%
-  detect-all,
-  free-standing-units,          % create standalone commands
-  locale=FR,
-  inter-unit-product={\,},      % character between units
-  separate-uncertainty,         % x ± dx
-  retain-explicit-plus,         % p.ex. +45°
-  angle-symbol-over-decimal,    % p.ex. 0.''11
+	detect-all,
+	free-standing-units,          % create standalone commands
+	locale=FR,
+	inter-unit-product={\,},      % character between units
+	separate-uncertainty,         % x ± dx
+	retain-explicit-plus,         % p.ex. +45°
+	angle-symbol-over-decimal,    % p.ex. 0.''11
 }
 \def\Lsun{\ensuremath{L_{\odot}}}
 \def\Rsun{\ensuremath{R_{\odot}}}
@@ -37,6 +37,10 @@
 \DeclareSIUnit\pc{pc}           % parsec
 \DeclareSIUnit\as{as}           % arcsec
 \DeclareSIUnit\mag{mag}         % mag
+% Silence warning message that `physics` and `siunitx` define \qty
+\ExplSyntaxOn
+\msg_redirect_name:nnn { siunitx } { physics-pkg } { none }
+\ExplSyntaxOff
 
 % Custom shorthand
 \newcommand{\obar}[1]{\mkern 1.5mu\overline{\mkern-1.5mu#1\mkern-1.5mu}\mkern 1.5mu}
