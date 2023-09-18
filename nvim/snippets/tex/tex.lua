@@ -608,7 +608,13 @@ return {
   s({
     trig = "pp",
     snippetType = "autosnippet",
-  }, fmta("(<>)", { d(1, get_visual) })),
+  }, {
+    c(1, {
+      fmta("(<>)", { d(1, get_visual) }),
+      fmta("[<>]", { d(1, get_visual) }),
+      fmta("{<>}", { d(1, get_visual) }),
+    }),
+  }),
   s({
     trig = "pc",
     snippetType = "autosnippet",
