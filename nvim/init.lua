@@ -119,3 +119,21 @@ function! ToggleCalendar()
 endfunction
 :autocmd FileType vimwiki map <leader>C :call ToggleCalendar()<CR>
 ]])
+
+-- for vimtex "ie"
+-- https://github.com/lervag/vimtex/issues/2782#issuecomment-1726472817
+vim.cmd([[
+vnoremap <buffer> ie :<c-u>call SelectEnv()<cr>
+onoremap <buffer> ie :<c-u>call SelectEnv()<cr>
+
+function! SelectEnv()
+  let l:env = vimtex#env#get_inner()
+  if empty(l:env) | return | endif
+  if l:env.open.lnum == l:env.close.lnum | return | endif
+
+  normal! V
+  call cursor(l:env.close.lnum - 1, 999999)
+  normal! o
+  call cursor(l:env.open.lnum + 1, 1)
+endfunction
+]])

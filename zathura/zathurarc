@@ -7,7 +7,6 @@ set highlight-transparency 1
 
 # Zathura configuration file
 # See man `man zathurarc'
-map r reload
 map p print
 map i recolor
 map J zoom out
