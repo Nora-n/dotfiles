@@ -570,9 +570,7 @@ return {
     wordTrig = false,
     snippetType = "autosnippet",
     condition = tex_utils.in_mathzone,
-  }, {
-    c(1, { t("\\Delta"), fmta("\\Delta{<>}", { i(1) }) }),
-  }),
+  }, fmta("\\Delta<>", { c(1, { t(""), fmta("{<>}", { i(1) }) }) })),
   -- sigma
   s({
     trig = "@s",
@@ -1326,6 +1324,31 @@ return {
     trig = "abs",
     dscr = "Expands 'abs' into '\\abs'",
   }, fmta("\\abs{<>}", { d(1, get_visual) })),
+  -- lim min max
+  s({
+    trig = "lim",
+    wordTrig = false,
+    snippetType = "autosnippet",
+    condition = tex_utils.in_mathzone,
+  }, {
+    c(1, { fmta("\\lim_{<>}", { i(1) }), t("\\lim") }),
+  }),
+  s({
+    trig = "min",
+    wordTrig = false,
+    snippetType = "autosnippet",
+    condition = tex_utils.in_mathzone,
+  }, {
+    c(1, { t("\\min"), fmta("\\min_{<>}", { i(1) }) }),
+  }),
+  s({
+    trig = "max",
+    wordTrig = false,
+    snippetType = "autosnippet",
+    condition = tex_utils.in_mathzone,
+  }, {
+    c(1, { t("\\max"), fmta("\\max_{<>}", { i(1) }) }),
+  }),
   -- norm
   s({
     trig = "nrm",
@@ -1354,21 +1377,21 @@ return {
     condition = tex_utils.in_mathzone,
   }, fmta("\\sqrt{\\frac{<>}{<>}}", { i(1), i(2) })),
   -- vectors
-  s(
-    {
-      trig = "V(\\*%a)",
-      regTrig = true,
-      snippetType = "autosnippet",
-      dscr = "Expands 'V<letter>' into '\\vv{<letter>}'",
-      condition = tex_utils.in_mathzone,
-    },
-    fmta("\\vv{<><>}", {
-      f(function(_, snip)
-        return snip.captures[1]
-      end),
-      i(1),
-    })
-  ),
+  -- s(
+  --   {
+  --     trig = "V(\\*%a)",
+  --     regTrig = true,
+  --     snippetType = "autosnippet",
+  --     dscr = "Expands 'V<letter>' into '\\vv{<letter>}'",
+  --     condition = tex_utils.in_mathzone,
+  --   },
+  --   fmta("\\vv{<><>}", {
+  --     f(function(_, snip)
+  --       return snip.captures[1]
+  --     end),
+  --     i(1),
+  --   })
+  -- ),
   s(
     {
       trig = "vv",
@@ -1800,7 +1823,7 @@ return {
         <> & = & <>
       \end{array}
       \right.\\
-      \mathrm{A.N.~:}\enskip
+      \AN
       \xul{
       <>
       }

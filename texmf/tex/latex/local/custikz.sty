@@ -5,77 +5,77 @@
 \RequirePackage{tikz}
 \usetikzlibrary{arrows, arrows.meta}
 \usetikzlibrary{angles, bending, calc, fadings, intersections,
-                patterns, positioning, plotmarks, quotes, trees,
-                backgrounds, matrix}
+	patterns, positioning, plotmarks, quotes, trees,
+	backgrounds, matrix}
 \usetikzlibrary{shapes,
-    shapes.misc,
-    shapes.geometric}
+	shapes.misc,
+	shapes.geometric}
 \usetikzlibrary{decorations.markings,
-    decorations.pathmorphing,
-    decorations.pathreplacing}
+	decorations.pathmorphing,
+	decorations.pathreplacing}
 \RequirePackage[european, straightvoltages, cuteinductors]{circuitikz}
 \usetikzlibrary{babel}
 \usetikzlibrary{optics}
 \usetikzlibrary{3d}
 
 \tikzset{
-    cross/.style={
-        cross out, draw=black, fill=none, minimum
-        size=2*(#1-\pgflinewidth), inner sep=0pt, outer sep=0pt},
-    cross/.default={2pt}}
+	cross/.style={
+			cross out, draw=black, fill=none, minimum
+			size=2*(#1-\pgflinewidth), inner sep=0pt, outer sep=0pt},
+	cross/.default={2pt}}
 
 % Rounded arrows, inspired by https://tex.stackexchange.com/a/95223
 \def\circledarrowcw#1#2#3{ % #1 Style, #2 Center, #3 Radius
-\draw[#1,->] #2 + (80:#3) arc(80:-260:#3);}
+	\draw[#1,->] #2 + (80:#3) arc(80:-260:#3);}
 \def\circledarrow#1#2#3{ % #1 Style, #2 Center, #3 Radius
-\draw[#1,->] #2 + (110:#3) arc(110:440:#3);}
+	\draw[#1,->] #2 + (110:#3) arc(110:440:#3);}
 
 % For wavy lines
 \tikzset{Snake/.style={decorate, decoration={snake}}}
 
 % For arrow on ellipse
 \tikzset{% inspired by https://tex.stackexchange.com/a/316050/121799
-    arc arrow/.style args={%
-    to pos #1 with length #2}{
-    decoration={
-        markings,
-         mark=at position 0 with {\pgfextra{%
-         \pgfmathsetmacro{\tmpArrowTime}{#2/(\pgfdecoratedpathlength)}
-         \xdef\tmpArrowTime{\tmpArrowTime}}},
-        mark=at position {#1-\tmpArrowTime} with {\coordinate(@1);},
-        mark=at position {#1-2*\tmpArrowTime/3} with {\coordinate(@2);},
-        mark=at position {#1-\tmpArrowTime/3} with {\coordinate(@3);},
-        mark=at position {#1} with {\coordinate(@4);
-        \draw[-{Stealth[length=#2,bend]}]
-        (@1) .. controls (@2) and (@3) .. (@4);},
-        },
-     postaction=decorate,
-     },bent arrow/.style={arc arrow=to pos #1 with length 2mm},
-     pics/strange bar/.style={code={\draw[thick] (-#1,0) -- (#1,0);}}
+arc arrow/.style args={%
+to pos #1 with length #2}{
+decoration={
+markings,
+mark=at position 0 with {\pgfextra{%
+			\pgfmathsetmacro{\tmpArrowTime}{#2/(\pgfdecoratedpathlength)}
+			\xdef\tmpArrowTime{\tmpArrowTime}}},
+mark=at position {#1-\tmpArrowTime} with {\coordinate(@1);},
+mark=at position {#1-2*\tmpArrowTime/3} with {\coordinate(@2);},
+mark=at position {#1-\tmpArrowTime/3} with {\coordinate(@3);},
+mark=at position {#1} with {\coordinate(@4);
+\draw[-{Stealth[length=#2,bend]}]
+(@1) .. controls (@2) and (@3) .. (@4);},
+},
+postaction=decorate,
+},bent arrow/.style={arc arrow=to pos #1 with length 2mm},
+pics/strange bar/.style={code={\draw[thick] (-#1,0) -- (#1,0);}}
 }
 
 % SOON TO BE OBSOLETE: to place labels in european resistors
-\makeatletter
-\newcommand*{\shifttext}[2]{%
-  \settowidth{\@tempdima}{#2}%
-  \makebox[\@tempdima]{\hspace*{#1}#2}%
-}
-\makeatother
+% \makeatletter
+% \newcommand*{\shifttext}[2]{%
+%   \settowidth{\@tempdima}{#2}%
+%   \makebox[\@tempdima]{\hspace*{#1}#2}%
+% }
+% \makeatother
 
 % For intensity and voltage colored arrows in circuitikz
 \newcommand{\iarronly}[1]{% name
-    \node [currarrow, color=brandeisblue, anchor=center,
-    rotate=\ctikzgetdirection{#1-Iarrow}] at (#1-Ipos) {};
+	\node [currarrow, color=brandeisblue, anchor=center,
+		rotate=\ctikzgetdirection{#1-Iarrow}] at (#1-Ipos) {};
 }
 \newcommand{\varronly}[1]{% name
-    \draw [color=red!70] (#1-Vfrom) .. controls (#1-Vcont1)
-    and (#1-Vcont2).. (#1-Vto) node [currarrow,
-    sloped, anchor=tip, allow upside down,pos=1]{};
+	\draw [color=red!70] (#1-Vfrom) .. controls (#1-Vcont1)
+	and (#1-Vcont2).. (#1-Vto) node [currarrow,
+			sloped, anchor=tip, allow upside down,pos=1]{};
 }
 % NEED CIRCUITIKZ V. 1.4.3, and corresponding PGF etc
 \ctikzset{!vi/.style={no v symbols, no i symbols}}
 \ctikzset{bipole voltage style/.style={color=red!70},
-          bipole current style/.style={color=brandeisblue}}
+	bipole current style/.style={color=brandeisblue}}
 
 % To have circuitikz lines aligned with text
 \tikzset{baseline={([yshift=-0.5ex]current bounding box.center)}}
@@ -83,120 +83,120 @@
 % To draw tangent lines on \draw commands
 % https://tex.stackexchange.com/a/25940
 \tikzset{
-    tangent/.style={
-        decoration={
-            markings,% switch on markings
-            mark= at position #1 with
-                {\coordinate
-                    (tangent point-\pgfkeysvalueof{/pgf/decoration/mark info/sequence number})
-                    at (0pt,0pt);
-                \coordinate
-                (tangent unit vector-\pgfkeysvalueof{/pgf/decoration/mark info/sequence number})
-                at (1,0pt);
-                \coordinate
-                (tangent orthogonal unit vector-\pgfkeysvalueof{/pgf/decoration/mark info/sequence number})
-                at (0pt,1);}
-        },
-        postaction=decorate
-    },
-    use tangent/.style={
-        shift=(tangent point-#1),
-        x=(tangent unit vector-#1),
-        y=(tangent orthogonal unit vector-#1)
-    },
-use tangent/.default=1}
+	tangent/.style={
+			decoration={
+					markings,% switch on markings
+					mark= at position #1 with
+						{\coordinate
+							(tangent point-\pgfkeysvalueof{/pgf/decoration/mark info/sequence number})
+							at (0pt,0pt);
+							\coordinate
+							(tangent unit vector-\pgfkeysvalueof{/pgf/decoration/mark info/sequence number})
+							at (1,0pt);
+							\coordinate
+							(tangent orthogonal unit vector-\pgfkeysvalueof{/pgf/decoration/mark info/sequence number})
+							at (0pt,1);}
+				},
+			postaction=decorate
+		},
+	use tangent/.style={
+			shift=(tangent point-#1),
+			x=(tangent unit vector-#1),
+			y=(tangent orthogonal unit vector-#1)
+		},
+	use tangent/.default=1}
 
 % To draw tangent lines on \addplot
 % https://tex.stackexchange.com/a/292865
 \colorlet{Tangent}{black}
-    \makeatletter
-        \def\parsenode[#1]#2\pgf@nil{%
-            \tikzset{label node/.style={#1}}
-            \def\nodetext{#2}
-        }
-        \tikzset{
-            % define style for the points
-            Point/.style={
-                shape=circle,
-                inner sep=0pt,
-                minimum size=3pt,
-            },
-            add node at x/.style 2 args={
-                name path global=plot line,
-                /pgfplots/execute at end plot visualization/.append={
-                        \begingroup
-                        \@ifnextchar[{\parsenode}{\parsenode[]}\pgf@nil
-                    \path [name path global = position line #1-1]
-                        ({axis cs:#1,0}|-{rel axis cs:0,0}) --
-                        ({axis cs:#1,0}|-{rel axis cs:0,1});
-                    \path [xshift=1pt, name path global = position line #1-2]
-                        ({axis cs:#1,0}|-{rel axis cs:0,0}) --
-                        ({axis cs:#1,0}|-{rel axis cs:0,1});
-                    \path [
-                        name intersections={
-                            of={plot line and position line #1-1},
-                            name=left intersection
-                        },
-                        name intersections={
-                            of={plot line and position line #1-2},
-                            name=right intersection
-                        },
-                        label node/.append style={pos=1}
-                    ] (left intersection-1) -- (right intersection-1)
-                        node [label node]{\nodetext};
-                    % ---------------------------------------------------------
-                    % draw the tangent line from a bit right of the point on
-                    % the curve to the intersection with the ordinate
-                    % and draw the corresponding points
-                    \draw [Tangent] let
-                        \p1=($ (left intersection-1) - (right intersection-1) $),
-                        \p2=($ (left intersection-1)!sign(#1)*#2 cm!(right intersection-1) $),
-                        \p3=($ ({axis cs:0,0}) - (\p2) $),
-                        \n1={\x3/\x1}
-                    in
-                        (\p2) -- +($ {\n1}*(\x1,\y1) $)
-%                            node [Point,fill=Tangent] (origin intersection) {}
-%                            node [Point,fill=Curve] at (left intersection-1) {}
-                    ;
-%                    % ----------
-%                    % draw the horizontal line at the curve intersection point
-%                    % plus the label above/below the line
-%                    \tikzmath{
-%                        coordinate \c1;
-%                        \c1=(left intersection-1) - (right intersection-1);
-%                        \slope=\cy1/\cx1*sign(#1);
-%                    }
-%                    \pgfmathsetmacro{\AboveBelow}{ \slope>0 ? "above" : "below" }
-%                    \draw [dotted]
-%                        ([xshift=sign(#1)*2.5mm] left intersection-1) --
-%                        (left intersection-1) --
-%                            node [\AboveBelow,node font=\scriptsize] {$f(x)$}
-%                        (left intersection-1 -| origin intersection) --
-%                        +($ sign(#1)*(-2.5mm,0) $)
-%                            coordinate [pos=0.5] (a)
-%                    ;
-%                    % draw the horizontal line at the ordinate intersection point
-%                    \draw [dotted] (origin intersection)
-%                        +($ sign(#1)*(-2.5mm,0) $) --
-%                        (origin intersection);
-%                    % draw vertical line left/right of the ordinate
-%                    \pgfmathsetmacro{\LeftRight}{ #1<0 ? "right" : "left" }
-%                    \draw [stealth-stealth] (origin intersection)
-%                        +($ sign(#1)*(-1.25mm,0) $) -- (a)
-%                            node [midway,\LeftRight,node font=\scriptsize] {$p$}
-%                    ;
-%                    % ---------------------------------------------------------
-                        \endgroup
-                },
-            },
-        }
-    \makeatother
+\makeatletter
+\def\parsenode[#1]#2\pgf@nil{%
+	\tikzset{label node/.style={#1}}
+\def\nodetext{#2}
+}
+\tikzset{
+	% define style for the points
+	Point/.style={
+			shape=circle,
+			inner sep=0pt,
+			minimum size=3pt,
+		},
+	add node at x/.style 2 args={
+			name path global=plot line,
+			/pgfplots/execute at end plot visualization/.append={
+					\begingroup
+					\@ifnextchar[{\parsenode}{\parsenode[]}\pgf@nil
+					\path [name path global = position line #1-1]
+					({axis cs:#1,0}|-{rel axis cs:0,0}) --
+					({axis cs:#1,0}|-{rel axis cs:0,1});
+					\path [xshift=1pt, name path global = position line #1-2]
+					({axis cs:#1,0}|-{rel axis cs:0,0}) --
+					({axis cs:#1,0}|-{rel axis cs:0,1});
+					\path [
+						name intersections={
+								of={plot line and position line #1-1},
+								name=left intersection
+							},
+						name intersections={
+								of={plot line and position line #1-2},
+								name=right intersection
+							},
+						label node/.append style={pos=1}
+					] (left intersection-1) -- (right intersection-1)
+					node [label node]{\nodetext};
+					% ---------------------------------------------------------
+					% draw the tangent line from a bit right of the point on
+					% the curve to the intersection with the ordinate
+					% and draw the corresponding points
+					\draw [Tangent] let
+					\p1=($ (left intersection-1) - (right intersection-1) $),
+					\p2=($ (left intersection-1)!sign(#1)*#2 cm!(right intersection-1) $),
+					\p3=($ ({axis cs:0,0}) - (\p2) $),
+					\n1={\x3/\x1}
+					in
+					(\p2) -- +($ {\n1}*(\x1,\y1) $)
+					%                            node [Point,fill=Tangent] (origin intersection) {}
+					%                            node [Point,fill=Curve] at (left intersection-1) {}
+					;
+					%                    % ----------
+					%                    % draw the horizontal line at the curve intersection point
+					%                    % plus the label above/below the line
+					%                    \tikzmath{
+					%                        coordinate \c1;
+					%                        \c1=(left intersection-1) - (right intersection-1);
+					%                        \slope=\cy1/\cx1*sign(#1);
+					%                    }
+					%                    \pgfmathsetmacro{\AboveBelow}{ \slope>0 ? "above" : "below" }
+					%                    \draw [dotted]
+					%                        ([xshift=sign(#1)*2.5mm] left intersection-1) --
+					%                        (left intersection-1) --
+					%                            node [\AboveBelow,node font=\scriptsize] {$f(x)$}
+					%                        (left intersection-1 -| origin intersection) --
+					%                        +($ sign(#1)*(-2.5mm,0) $)
+					%                            coordinate [pos=0.5] (a)
+					%                    ;
+					%                    % draw the horizontal line at the ordinate intersection point
+					%                    \draw [dotted] (origin intersection)
+					%                        +($ sign(#1)*(-2.5mm,0) $) --
+					%                        (origin intersection);
+					%                    % draw vertical line left/right of the ordinate
+					%                    \pgfmathsetmacro{\LeftRight}{ #1<0 ? "right" : "left" }
+					%                    \draw [stealth-stealth] (origin intersection)
+					%                        +($ sign(#1)*(-1.25mm,0) $) -- (a)
+					%                            node [midway,\LeftRight,node font=\scriptsize] {$p$}
+					%                    ;
+					%                    % ---------------------------------------------------------
+					\endgroup
+				},
+		},
+}
+\makeatother
 
 % Length calculation from https://tex.stackexchange.com/a/412901
 \makeatletter
 \newcommand{\len}[3]{% % from https://tex.stackexchange.com/q/56353/121799
-\tikz@scan@one@point\pgfutil@firstofone($#1-#2$)\relax
-\pgfmathsetmacro{#3}{round(0.99626*veclen(\the\pgf@x,\the\pgf@y)/0.0283465)/1000}
+	\tikz@scan@one@point\pgfutil@firstofone($#1-#2$)\relax
+	\pgfmathsetmacro{#3}{round(0.99626*veclen(\the\pgf@x,\the\pgf@y)/0.0283465)/1000}
 }% Explanation: the calc library allows us, among other things, to add and
 % subtract points, so ($#1-#2$) is simply the difference between the points
 % #1 and #2. The combination \tikz@scan@one@point\pgfutil@firstofone extracts
@@ -207,74 +207,74 @@ use tangent/.default=1}
 
 % Angle calculation from https://tex.stackexchange.com/a/39325
 \newcommand{\pgfextractangle}[3]{%
-    \pgfmathanglebetweenpoints{\pgfpointanchor{#2}{center}}
-                              {\pgfpointanchor{#3}{center}}
-    \global\let#1\pgfmathresult
+	\pgfmathanglebetweenpoints{\pgfpointanchor{#2}{center}}
+	{\pgfpointanchor{#3}{center}}
+	\global\let#1\pgfmathresult
 }
 
 % Compute real distances to print in SI, https://tex.stackexchange.com/q/114641
 \newcommand{\mult}[2]{%
-    \FPmul{\tempSum}{#1}{#2}%
-    \FPround\roundedSum\tempSum2%
-    \roundedSum%
+	\FPmul{\tempSum}{#1}{#2}%
+	\FPround\roundedSum\tempSum2%
+	\roundedSum%
 }
 
 % Hatching distance from https://tex.stackexchange.com/a/29367/1952
 \makeatletter
 \tikzset{% customization of pattern
-        hatch distance/.store in=\hatchdistance,
-        hatch distance=5pt,
-        hatch thickness/.store in=\hatchthickness,
-        hatch thickness=5pt
-        }
+	hatch distance/.store in=\hatchdistance,
+	hatch distance=5pt,
+	hatch thickness/.store in=\hatchthickness,
+	hatch thickness=5pt
+}
 \pgfdeclarepatternformonly[\hatchdistance,\hatchthickness]{north east hatch}% name
-    {\pgfqpoint{-1pt}{-1pt}}% below left
-    {\pgfqpoint{\hatchdistance}{\hatchdistance}}% above right
-    {\pgfpoint{\hatchdistance-1pt}{\hatchdistance-1pt}}%
-    {
-        \pgfsetcolor{\tikz@pattern@color}
-        \pgfsetlinewidth{\hatchthickness}
-        \pgfpathmoveto{\pgfqpoint{0pt}{0pt}}
-        \pgfpathlineto{\pgfqpoint{\hatchdistance}{\hatchdistance}}
-        \pgfusepath{stroke}
-    }
+{\pgfqpoint{-1pt}{-1pt}}% below left
+{\pgfqpoint{\hatchdistance}{\hatchdistance}}% above right
+{\pgfpoint{\hatchdistance-1pt}{\hatchdistance-1pt}}%
+{
+	\pgfsetcolor{\tikz@pattern@color}
+	\pgfsetlinewidth{\hatchthickness}
+	\pgfpathmoveto{\pgfqpoint{0pt}{0pt}}
+	\pgfpathlineto{\pgfqpoint{\hatchdistance}{\hatchdistance}}
+	\pgfusepath{stroke}
+}
 \makeatother
 
 % Find maximum value of a row in a table,and put that in \tempMax macro
 % https://tex.stackexchange.com/a/634935
 \newcommand{\findMax}[3]{
-    \pgfplotstablegetrowsof{#1}
-    \pgfmathtruncatemacro\LastRowNo{\pgfplotsretval-1}
-    \pgfplotstablesort[sort key={#2}]{\sorted}{#1}
-    \pgfplotstablegetelem{\LastRowNo}{#2}\of{\sorted}
-    \pgfmathsetmacro{#3}{\pgfplotsretval}}
+	\pgfplotstablegetrowsof{#1}
+	\pgfmathtruncatemacro\LastRowNo{\pgfplotsretval-1}
+	\pgfplotstablesort[sort key={#2}]{\sorted}{#1}
+	\pgfplotstablegetelem{\LastRowNo}{#2}\of{\sorted}
+	\pgfmathsetmacro{#3}{\pgfplotsretval}}
 
 % Set an auto matrix style
 % https://tex.stackexchange.com/a/516077
 % \newcommand{\mycolindex}[1]{\ifnum#1=5 N\else #1\fi}
 % \newcommand{\myrowindex}[1]{\ifnum#1=5 T\else #1\fi}
 \tikzset{cust matrix/.style={
-            matrix of nodes, anchor=south,
-            draw, thick, inner sep=0pt,
-            nodes in empty cells, text=black,
-            align=center, text width=20pt,
-            %column sep=-0.2pt, row sep=-0.2pt,
-            cells={
-                nodes={
-                    minimum width=2.4em, minimum height=2.4em,
-                    draw, very thin, anchor=center, align=center,
-                    fill=white, opacity=0.9, inner sep=0}}},
-        behindmatrix/.style={
-            matrix of nodes,
-            draw, thick, inner sep=0pt,
-            nodes in empty cells, text=black,
-            align=center, text width=16pt,
-            column sep=-0.2pt, row sep=-0.2pt,
-            cells={
-                nodes={
-                    minimum width=1.9em, minimum height=1.9em,
-                    draw, very thin, dashed, anchor=center, align=center,
-                    fill=white, inner sep=0}}}}%,
+			matrix of nodes, anchor=south,
+			draw, thick, inner sep=0pt,
+			nodes in empty cells, text=black,
+			align=center, text width=20pt,
+			%column sep=-0.2pt, row sep=-0.2pt,
+			cells={
+					nodes={
+							minimum width=2.4em, minimum height=2.4em,
+							draw, very thin, anchor=center, align=center,
+							fill=white, opacity=0.9, inner sep=0}}},
+	behindmatrix/.style={
+			matrix of nodes,
+			draw, thick, inner sep=0pt,
+			nodes in empty cells, text=black,
+			align=center, text width=16pt,
+			column sep=-0.2pt, row sep=-0.2pt,
+			cells={
+					nodes={
+							minimum width=1.9em, minimum height=1.9em,
+							draw, very thin, dashed, anchor=center, align=center,
+							fill=white, inner sep=0}}}}%,
 %                     execute at begin node={%
 %     $\vphantom{x_|}\ifnum\the\pgfmatrixcurrentrow<4
 %          \ifnum\the\pgfmatrixcurrentcolumn<4
@@ -312,35 +312,35 @@ use tangent/.default=1}
 % Define right angle when using pic from https://tex.stackexchange.com/a/409550
 \makeatletter
 \tikzset{
-  pics/right angle/.style = {
-    setup code  = \tikz@lib@angle@parse#1\pgf@stop,
-    background code = \tikz@lib@rightangle@background#1\pgf@stop,
-    foreground code = \tikz@lib@rightangle@foreground#1\pgf@stop,
-  },
-  pics/right angle/.default=A--B--C,
-  angle eccentricity/.initial=.6,
-  angle radius/.initial=5mm
+	pics/right angle/.style = {
+			setup code  = \tikz@lib@angle@parse#1\pgf@stop,
+			background code = \tikz@lib@rightangle@background#1\pgf@stop,
+			foreground code = \tikz@lib@rightangle@foreground#1\pgf@stop,
+		},
+	pics/right angle/.default=A--B--C,
+	angle eccentricity/.initial=.6,
+	angle radius/.initial=5mm
 }
 
 \def\tikz@lib@rightangle@background#1--#2--#3\pgf@stop{%
-  \path [name prefix ..] [pic actions, draw=none] (#2.center)
-    -- ++(\tikz@start@angle@temp:\tikz@lib@angle@rad pt)
-    -- ++(\tikz@end@angle@temp:\tikz@lib@angle@rad pt)
-    -- ++(\tikz@start@angle@temp:-\tikz@lib@angle@rad pt)
-    -- cycle;
+	\path [name prefix ..] [pic actions, draw=none] (#2.center)
+	-- ++(\tikz@start@angle@temp:\tikz@lib@angle@rad pt)
+	-- ++(\tikz@end@angle@temp:\tikz@lib@angle@rad pt)
+	-- ++(\tikz@start@angle@temp:-\tikz@lib@angle@rad pt)
+	-- cycle;
 }
 
 \def\tikz@lib@rightangle@foreground#1--#2--#3\pgf@stop{%
-  \path [name prefix ..] [pic actions, fill=none, shade=none]
-  ([shift={(\tikz@start@angle@temp:\tikz@lib@angle@rad pt)}]#2.center)
-  -- ++(\tikz@end@angle@temp:\tikz@lib@angle@rad pt)
-  -- ++(\tikz@start@angle@temp:-\tikz@lib@angle@rad pt);
-  \ifx\tikzpictext\relax\else%
-    \def\pgf@temp{\node()[name prefix
-      ..,at={([shift={({.5*\tikz@start@angle@temp+.5*\tikz@end@angle@temp}:\pgfkeysvalueof{/tikz/angle
-            eccentricity}*sqrt(1/2)*\tikz@lib@angle@rad pt)}]#2.center)}]}
-    \expandafter\pgf@temp\expandafter[\tikzpictextoptions]{\tikzpictext};%
-  \fi
+	\path [name prefix ..] [pic actions, fill=none, shade=none]
+	([shift={(\tikz@start@angle@temp:\tikz@lib@angle@rad pt)}]#2.center)
+	-- ++(\tikz@end@angle@temp:\tikz@lib@angle@rad pt)
+	-- ++(\tikz@start@angle@temp:-\tikz@lib@angle@rad pt);
+	\ifx\tikzpictext\relax\else%
+		\def\pgf@temp{\node()[name prefix
+				..,at={([shift={({.5*\tikz@start@angle@temp+.5*\tikz@end@angle@temp}:\pgfkeysvalueof{/tikz/angle
+											eccentricity}*sqrt(1/2)*\tikz@lib@angle@rad pt)}]#2.center)}]}
+		\expandafter\pgf@temp\expandafter[\tikzpictextoptions]{\tikzpictext};%
+	\fi
 }
 \makeatother
 
@@ -353,95 +353,95 @@ use tangent/.default=1}
 % \tikzset{coillength/.store in=\coillength, coillength=1.5mm}
 % \tikzset{coilamplit/.store in=\coilamplit, coilamplit=3mm}
 \tikzset{Coil/.style n args={3}{
-            postaction={decorate,
-            decoration={
-                coil, aspect=#1,
-                segment length=#2,
-amplitude=#3}}}}
+			postaction={decorate,
+					decoration={
+							coil, aspect=#1,
+							segment length=#2,
+							amplitude=#3}}}}
 
 \tikzset{
-    fleche/.style n args={2}{
-        postaction=decorate,
-        decoration={
-            markings,
-            mark={at position #1 with \arrow[scale=1.5, >=stealth]{#2}}}}}
+	fleche/.style n args={2}{
+			postaction=decorate,
+			decoration={
+					markings,
+					mark={at position #1 with \arrow[scale=1.5, >=stealth]{#2}}}}}
 
 %simple flèche
 \tikzstyle simple=[postaction={decorate,
-                               decoration={markings,
-                                           mark=at position .25 with
-                                           {\arrow[scale=1.5,>=stealth]{>}}}}]
+		decoration={markings,
+				mark=at position .25 with
+					{\arrow[scale=1.5,>=stealth]{>}}}}]
 
 %simple flèche reverse
 \tikzstyle simplerev=[postaction={decorate,
-                                  decoration={markings,
-                                              mark=at position .25 with
-                                              {\arrow[scale=1.5,>=stealth]{<}}}}]
+		decoration={markings,
+				mark=at position .25 with
+					{\arrow[scale=1.5,>=stealth]{<}}}}]
 
 %double flèches
 \tikzstyle double=[postaction={decorate,
-                               decoration={markings,
-                                           mark=at position .5 with
-                                           {\arrow[scale=1.5,>=stealth]{>>}}}}]
+		decoration={markings,
+				mark=at position .5 with
+					{\arrow[scale=1.5,>=stealth]{>>}}}}]
 
 %double flèches reverse
 \tikzstyle doublerev=[postaction={decorate,
-                                  decoration={markings,
-                                              mark=at position .5 with
-                                              {\arrow[scale=1.5,
-                                                      >=stealth]{<<}}}}]
+		decoration={markings,
+				mark=at position .5 with
+					{\arrow[scale=1.5,
+							>=stealth]{<<}}}}]
 
 %triple flèches
 \tikzstyle triple=[postaction={decorate,
-                               decoration={markings,
-                                           mark=at position .75 with
-                                           {\arrow[scale=1.5,>=stealth]{>>>}}}}]
+		decoration={markings,
+				mark=at position .75 with
+					{\arrow[scale=1.5,>=stealth]{>>>}}}}]
 
 %triple flèches reverse
 \tikzstyle triplerev=[postaction={decorate,
-                                  decoration={markings,
-                                              mark=at position .75 with
-                                              {\arrow[scale=1.5,
-                                                      >=stealth]{<<<}}}}]
+		decoration={markings,
+				mark=at position .75 with
+					{\arrow[scale=1.5,
+							>=stealth]{<<<}}}}]
 
 %simple flèche grande taille
 \tikzstyle simplegros=[postaction={decorate,
-                                   decoration={markings,
-                                               mark=at position .25 with
-                                               {\arrow[scale=2,
-                                                       >=stealth]{>}}}}]
+		decoration={markings,
+				mark=at position .25 with
+					{\arrow[scale=2,
+							>=stealth]{>}}}}]
 
 %simple flèche grande taille reverse
 \tikzstyle simplegrosrev=[postaction={decorate,
-                                      decoration={markings,
-                                                  mark=at position .25 with
-                                                  {\arrow[scale=2,
-                                                          >=stealth]{<}}}}]
+		decoration={markings,
+				mark=at position .25 with
+					{\arrow[scale=2,
+							>=stealth]{<}}}}]
 
 %double flèches grande taille
 \tikzstyle doublegros=[postaction={decorate,
-                                   decoration={markings,
-                                               mark=at position .5 with
-                                               {\arrow[scale=2,
-                                                       >=stealth]{>>}}}}]
+		decoration={markings,
+				mark=at position .5 with
+					{\arrow[scale=2,
+							>=stealth]{>>}}}}]
 
 %double flèche grande taille reverse
 \tikzstyle doublegrosrev=[postaction={decorate,
-                                      decoration={markings,
-                                                  mark=at position .5 with
-                                                  {\arrow[scale=2,
-                                                          >=stealth]{<<}}}}]
+		decoration={markings,
+				mark=at position .5 with
+					{\arrow[scale=2,
+							>=stealth]{<<}}}}]
 
 
 %oeil, le paramètre, indiqué entre crochet permettra de positionner
 %l'oeil avec un shift, rotate...
 \newcommand{\oeil}[1][]{
-    \draw[#1,thick,rounded corners] (-15:1)--(0,0)--(15:1);
-    \draw[#1] (-15:0.8) arc (-15:15:0.8);
-    \draw[#1,fill=black] (0:0.75) ellipse(0.05 and 0.1);}
+	\draw[#1,thick,rounded corners] (-15:1)--(0,0)--(15:1);
+	\draw[#1] (-15:0.8) arc (-15:15:0.8);
+	\draw[#1,fill=black] (0:0.75) ellipse(0.05 and 0.1);}
 
 \newcommand{\sVrot}[1]{
-    \ctikzset{sources/symbol/rotate=#1}
+	\ctikzset{sources/symbol/rotate=#1}
 }
 
 %%% Fin du package

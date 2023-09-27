@@ -183,10 +183,7 @@
 \def\mf{\vv{m}}
 \def\of{\vv{0}}
 \def\pif{\vv{\pi}} \def\Pif{\vv{\Pi}}
-% \DeclareDocumentCommand\vnabla{}{\vv{\rm grad}}
-\newcommand{\gd}{\vv{\rm grad}\,}
-\def\nab{\nabla}
-\def\nabf{\vv{\nab}}
+
 \def\OMr{\mathrm{OM}}
 \def\SMr{\mathrm{SM}}
 \def\SaMr{\mathrm{S_1M}}
@@ -196,12 +193,13 @@
 \def\OF{\obar{\rm OF}}   %:%s!\\OF!\\OFp
 \def\OFp{\obar{\rm OF'}} %:%s!\\obar{OF}!\\OF
 \def\ABr{{\rm AB}}
+\def\ABbr{{\rm A_1B_1}}
 \def\ABpr{{\rm A'B'}}
 % \def\AB{\vv{\ABr}}    % :%s!\\AB!\\vv{\\ABr}!
 \def\AB{\obar{\ABr}}      % :%s!ABb!AB!
 \def\ABp{\obar{\ABpr}}
-\def\ABb{\obar{\rm A_1B_1}} % :%s!ABa!ABb
-\def\bp{$'$}
+\def\ABb{\obar{\ABbr}} % :%s!ABa!ABb
+\def\bp{$'$ }
 \def\SC{\obar{\rm SC}}
 \def\SA{\obar{\rm SA}}
 \def\SAp{\obar{\rm SA'}}
@@ -214,14 +212,14 @@
 \def\gf{\vv{g}}
 \def\qf{\vv{q}}
 \def\Tf{\vv{T}}
-\def\Gf{\Vect{G}}
+\def\Gf{\vv{G}}
 \def\Lfo{\vv{L_O}}
 \def\Lfg{\vv{L_G}}
 \def\cte{\text{cte}}
 \def\vcte{\vv{\cte}}
 \def\h{\hbar}
 \def\parr{/\!\!/}
-\def\AN{\mathrm{A.N.~:}\quad}
+\def\AN{\mathrm{A.N.~:}\enskip}
 
 \newcommand{\qMath}[1]{\quad\text{ #1 }\quad}
 \newcommand{\qet}{\qMath{et}}
@@ -246,6 +244,18 @@
 \newcommand{\pa}[1]{\left( #1 \right)}
 \newcommand{\pac}[1]{\left[ #1 \right]}
 \newcommand{\paa}[1]{\left\{ #1 \right\}}
+
+\def\mt{(M,t)}
+\def\rt{(r,t)}
+\def\xt{(x,t)}
+\def\xy{(x,y)}
+\def\xz{(x,z)}
+\def\yz{(y,z)}
+\def\xyt{(x,y,t)}
+\def\xzt{(x,z,t)}
+\def\yzt{(y,z,t)}
+\def\xyz{(x,y,z)}
+\def\xyzt{(x,y,z,t)}
 
 % For complexes
 \newcommand{\xul}[1]{\underline{#1}}

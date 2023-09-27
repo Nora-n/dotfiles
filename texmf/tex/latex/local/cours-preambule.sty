@@ -102,6 +102,25 @@
 }
 % Lots of useful shorthands
 \RequirePackage{physics}
+\undef{\div}
+\newcommand{\gd}{\vv{\rm grad}\,}
+\def\div{\rm div\,}
+\def\rot{\vv{\rm rot}\,}
+\def\nab{\nabla}
+\def\nabf{\vv{\nab}}
+\def\vgrad{\left(\vf\cdot\grad\right)}
+\newcommand{\vnabf}{\mqty(\pdv{x}\\\pdv{y}\\\pdv{z})}
+\newcommand{\Vnabf}{\mqty(\DS\pdv{x}\\[1em]\DS\pdv{y}\\[1em]\DS\pdv{z})}
+\NewDocumentCommand{\lap}{g}{
+	\IfNoValueTF{#1}{
+		\left(\pdv[2]{x} + \pdv[2]{y} + \pdv[2]{z}\right)
+	}{
+		\pdv[2]{#1}{x} + \pdv[2]{#1}{y} + \pdv[2]{#1}{z}
+	}
+}
+% \newcommand{\vlap}{\mqty(\pdv[2]{x}\\\pdv[2]{y}\\\pdv[2]{z})}
+% \newcommand{\Vlap}{\mqty(\DS\pdv[2]{x}\\[1em]\DS\pdv[2]{y}\\[1em]\DS\pdv[2]{z})}
+
 % Same for chemistry: \ch{H2O} works nice
 % Weird error of inputs limit on pgfmathfunction.code.tex…
 % \RequirePackage{chemmacros}
@@ -300,6 +319,37 @@
 		sharp corners=northwest]{\normalsize\thesubsubsection}
 	\normalsize}{0.5em}{}
 
+\NewDocumentCommand{\exercice}{om}{
+	\renewcommand{\thesection}{E\arabic{section}}
+	\titleformat{\section}{\Large\bfseries}{
+		\IfNoValueTF{#1}{}{\rpts{#1}}
+		\begin{tikzpicture}[scale=0.55, overlay]
+			\draw[line width=1pt, color=darkgray, xshift=1em, yshift=0.6em]
+			(1,-0.4) -- (1,0.8) --(0.8,1) --
+			(-0.8,1) -- (-1,0.8) -- (-1,-0.8) --
+			(-0.8,-1) -- (32,-1);
+			\node[xshift=0.6em, yshift=0.35em] at (0,0)
+			{\rmfamily\textcolor{darkgray}{\thesection}};
+		\end{tikzpicture}
+	}{0.4em}{\hspace{1.4em}}
+	\section{#2}
+}
+\NewDocumentCommand{\prblm}{om}{
+	\renewcommand{\thesection}{P\arabic{section}}
+	\titleformat{\section}{\Large\bfseries}{
+		\IfNoValueTF{#1}{}{\rpts{#1}}
+		\begin{tikzpicture}[scale=0.55, overlay]
+			\draw[line width=1pt, color=darkgray, xshift=1em, yshift=0.6em]
+			(1,-0.4) -- (1,0.8) --(0.8,1) --
+			(-0.8,1) -- (-1,0.8) -- (-1,-0.8) --
+			(-0.8,-1) -- (32,-1);
+			\node[xshift=0.6em, yshift=0.35em] at (0,0)
+			{\rmfamily\textcolor{darkgray}{\thesection}};
+		\end{tikzpicture}
+	}{0.4em}{\hspace{1.4em}}
+	\section{#2}
+}
+
 % Nice epigraph
 \RequirePackage{epigraph}
 \setlength\epigraphwidth{.5\textwidth}
@@ -470,7 +520,7 @@
 	separate-uncertainty,          % x ± dx
 	retain-explicit-plus,          % p.ex. +45°
 	range-units=brackets,          % (0 to 40) m
-	range-phrase=~;~,              % 0~;~40 m
+	range-phrase=~;,               % 0~;~40 m
 	% range-phrase=\textup{--},    % 0--40 m
 	% open-bracket= [,
 	% close-bracket= ],
@@ -585,8 +635,10 @@ literate         = {á}{{\'a}}1
 \setlist[enumerate,1]{leftmargin=10pt, label=\arabic*)}
 \setlist[enumerate,2]{leftmargin=20pt, label=\alph* --}
 \setlist[enumerate,3]{leftmargin=30pt, label=\roman*.}
-\setlist[itemize,1]{leftmargin=10pt}
-\setlist[itemize,2]{leftmargin=20pt}
+% \setlist[itemize,1]{leftmargin=10pt}
+% \setlist[itemize,2]{leftmargin=20pt}
+\setlist[itemize,1]{label=$\diamond$, leftmargin=10pt}
+\setlist[itemize,2]{label=$\triangleright$, leftmargin=20pt}
 \setlist[itemize,3]{leftmargin=30pt}
 
 % Setup clitem et sqitem
@@ -616,11 +668,10 @@ literate         = {á}{{\'a}}1
 \newcommand{\clitem}{\fitem{\circled}}
 % Description with numbers
 \newcommand\bitem[1]{\item{\bfseries #1}}
-\setlist[itemize, 1]{label = --}
-\setlist[itemize, 2]{label = $\bullet$}
 % Setup points left of enumerate
 \RequirePackage{tabto}
 \newcommand\pts[1]{\tabto*{-2.5\leftmargin}\textcolor{ForestGreen}{\llap{/#1~}\tabto{\TabPrevPos}}}
+\newcommand\rpts[1]{\tabto*{-2.5\leftmargin}\textcolor{Red}{\llap{/#1~}\tabto{\TabPrevPos}}}
 \newcommand{\nitem}[1]{\item\pts{#1}}
 
 % Bolditemize
