@@ -59,7 +59,7 @@ require("luasnip.loaders.from_vscode").load({
 -- Neotree
 require("neo-tree").setup({
   window = {
-    width = 38,
+    width = 34,
   },
 })
 

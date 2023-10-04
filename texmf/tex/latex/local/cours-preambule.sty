@@ -402,16 +402,16 @@
 
 % Shorthand for footnotes
 \newcommand{\ftn}[1]{%
-	\footnote{#1}
+	\footnote{#1}%
 }
 \newcommand{\fnt}[1]{%
-	\footnotetext{#1}
+	\footnotetext{#1}%
 }
 \newcommand{\fnr}[1]{%
-	\footnoteref{#1}
+	\footnoteref{#1}%
 }
 \newcommand{\fnm}{%
-	\footnotemark
+	\footnotemark%
 }
 
 % Pour les plots
@@ -734,6 +734,8 @@ literate         = {á}{{\'a}}1
 \AfterEndEnvironment{tcolorbox}{\spewnotes}
 \BeforeBeginEnvironment{tcb}{\savenotes}
 \AfterEndEnvironment{tcb}{\spewnotes}
+\BeforeBeginEnvironment{tcb*}{\savenotes}
+\AfterEndEnvironment{tcb*}{\spewnotes}
 \BeforeBeginEnvironment{minipage}{\savenotes}
 \AfterEndEnvironment{minipage}{\spewnotes}
 

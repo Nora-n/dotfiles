@@ -1096,6 +1096,7 @@ return {
     {
       trig = "int",
       snippetType = "autosnippet",
+      wordTrig = true,
       dscr = "Expands 'int' into '\\int'",
       condition = tex_utils.in_mathzone,
     },
