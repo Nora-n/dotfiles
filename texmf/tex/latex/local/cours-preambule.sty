@@ -101,6 +101,7 @@
 	\cancel{\bcancel{#1}}
 }
 % Lots of useful shorthands
+\let\mdiv\div % save ./. symbol before divergence
 \RequirePackage{physics}
 \undef{\div}
 \newcommand{\gd}{\vv{\rm grad}\,}
@@ -444,7 +445,41 @@
 
 % Pour des flèches entre les lignes d'un align!!
 \RequirePackage{witharrows}
-\WithArrowsOptions{displaystyle}
+\WithArrowsOptions{displaystyle, tikz={font={\small}}}
+% style for calc
+\WithArrowsNewStyle{calc}{
+	tikz-code={
+			\draw[rounded corners, every node/.style={circle,
+						draw,
+						auto=false,
+						inner sep=1pt,
+						fill=gray!50,
+						font=\tiny}
+			]
+			let \p1 = (##1),
+			\p2 = (##2)
+			in \ifdim \x1 > \x2
+				(\p1) -- node {##3} (\x1,\y2) -- (\p2)
+			\else
+				(\p1) -- (\x2,\y1) -- node {##3} (\p2)
+			\fi ;
+		}
+}
+% calc arrow
+\newcommand{\CArrow}{
+	\Arrow[
+		tikz={
+				every node/.style={
+						circle,
+						draw,
+						auto=false,
+						fill=white,
+						inner sep=1pt,
+						font=\tiny
+					}
+			}
+	]
+}
 % Math symbols
 \RequirePackage{amsmath, amssymb} % , amsthm}
 \DeclareMathOperator{\acosh}{argch}
@@ -670,9 +705,9 @@ literate         = {á}{{\'a}}1
 \newcommand\bitem[1]{\item{\bfseries #1}}
 % Setup points left of enumerate
 \RequirePackage{tabto}
-\newcommand\pts[1]{\tabto*{-2.5\leftmargin}\textcolor{ForestGreen}{\llap{/#1~}\tabto{\TabPrevPos}}}
+\newcommand\gpts[1]{\tabto*{-2\leftmargin}\textcolor{ForestGreen}{\llap{/#1~}\tabto{\TabPrevPos}}}
 \newcommand\rpts[1]{\tabto*{-2.5\leftmargin}\textcolor{Red}{\llap{/#1~}\tabto{\TabPrevPos}}}
-\newcommand{\nitem}[1]{\item\pts{#1}}
+\newcommand{\nitem}[1]{\item\gpts{#1}}
 
 % Bolditemize
 % https://tex.stackexchange.com/a/266229
@@ -975,6 +1010,7 @@ literate         = {á}{{\'a}}1
 \newcommand{\iconcoro}{\faIcon{code-branch}}
 \newcommand{\iconinte}{\faIcon{angle-right}}
 \newcommand{\iconimpl}{\faIcon{angle-double-right}}
+\newcommand{\iconlimp}{\faIcon{angle-double-left}}
 \newcommand{\iconimpo}{\faIcon{exclamation-triangle}}
 \newcommand{\icontool}{\faIcon{wrench}}
 \newcommand{\iconrapp}{\faIcon[regular]{bookmark}}

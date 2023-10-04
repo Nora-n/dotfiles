@@ -835,7 +835,7 @@ return {
     snippetType = "autosnippet",
     dscr = "Rightarrow",
     condition = tex_utils.in_mathzone,
-  }, { t("\\Lra ") }),
+  }, { t("\\Lra") }),
   s({
     trig = "opto",
     snippetType = "autosnippet",
@@ -947,6 +947,14 @@ return {
     condition = tex_utils.in_mathzone,
   }, {
     t("_{\\rm exp}"),
+  }),
+  s({
+    trig = "seq",
+    wordTrig = false,
+    snippetType = "autosnippet",
+    condition = tex_utils.in_mathzone,
+  }, {
+    t("_{\\rm eq}"),
   }),
   -- fraction
   s({
@@ -1776,6 +1784,16 @@ return {
       }),
     }),
   }),
+  s({
+    trig = "car",
+    snippetType = "autosnippet",
+    dscr = "Expands 'car' into '\\CArrow{<>}'",
+    condition = tex_utils.in_mathzone,
+  }, {
+    fmta("\\CArrow{<>}", {
+      d(1, get_visual),
+    }),
+  }),
   -- array
   s(
     {
@@ -1839,6 +1857,35 @@ return {
       }
     )
   ),
+  -- phantom xul
+  s(
+    {
+      trig = "pht",
+      wordTrig = false,
+      snippetType = "autosnippet",
+      dscr = "Expands 'pht' into phantom xul application",
+      condition = line_begin,
+    },
+    fmta("\\makebox[0pt][l]{$\\phantom{\\AN}\\xul{\\phantom{<>}}$}", {
+      d(1, get_visual),
+    })
+  ),
+  -- obar
+  s({
+    trig = "obr",
+    snippetType = "autosnippet",
+    dscr = "Expands 'obr' into '\\obr{<>}'",
+    condition = tex_utils.in_mathzone,
+  }, {
+    c(1, {
+      fmta("\\obar{\\rm <>}", {
+        d(1, get_visual),
+      }),
+      fmta("\\obar{<>}", {
+        d(1, get_visual),
+      }),
+    }),
+  }),
   -- boxed
   s({
     trig = "bx",
@@ -2701,21 +2748,21 @@ return {
     )
   ),
   -- caption
-  s(
-    {
-      trig = "cpt",
-      snippetType = "autosnippet",
-      dscr = "captions",
-      condition = line_begin,
-    },
-    fmta("\\<>{<>}", {
-      c(
-        1,
-        { t("caption"), sn(1, { t("captionof{"), i(1, "figure"), t("}") }) }
-      ),
-      i(2, "text"),
-    })
-  ),
+  s({
+    trig = "cpt",
+    snippetType = "autosnippet",
+    dscr = "captions",
+    condition = line_begin,
+  }, {
+    c(1, {
+      fmta("\\caption{<>}", {
+        d(1, get_visual),
+      }),
+      fmta("\\captionof{figure}{<>}", {
+        d(1, get_visual),
+      }),
+    }),
+  }),
   -----------------------------------------------------------------------------
   -- Tables
   -----------------------------------------------------------------------------
