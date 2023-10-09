@@ -435,7 +435,7 @@
 \newcommand*\circled[1]{%
 	\tikz[baseline=(char.base)]{%
 		\node[shape=circle, draw, inner sep=1pt, minimum size=3ex] (char) {#1};
-	}
+	}\kern-3pt
 }
 
 % For spectra
@@ -894,6 +894,7 @@ literate         = {á}{{\'a}}1
 \colorlet{ror}{orange!90!black}
 \colorlet{exem}{lightgray!55!black}
 \colorlet{expe}{lightgray!55!black}
+\colorlet{mate}{lightgray!55!black}
 \colorlet{odgr}{lightgray!50!black}
 \colorlet{appl}{gray!50!black}
 \colorlet{rema}{darkgray!50!black}
@@ -916,6 +917,7 @@ literate         = {á}{{\'a}}1
 \colorlet{rorback}{orange!10}
 \colorlet{exemback}{lightgray!10}
 \colorlet{expeback}{lightgray!10}
+\colorlet{mateback}{lightgray!10}
 \colorlet{odgrback}{lightgray!10}
 \colorlet{applback}{gray!10}
 \colorlet{remaback}{darkgray!10}
@@ -938,6 +940,7 @@ literate         = {á}{{\'a}}1
 \newcommand{\nameror}{Important}
 \newcommand{\nameexem}{Exemple}
 \newcommand{\nameexpe}{Manipulation}
+\newcommand{\namemate}{Matériel}
 \newcommand{\nameodgr}{Ordre de grandeur}
 \newcommand{\nameappl}{Application}
 \newcommand{\namerema}{Remarque}
@@ -976,6 +979,8 @@ literate         = {á}{{\'a}}1
 \renewcommand{\theexem}{\thechapter.\arabic{exem}}
 \newcounter{expe}[chapter]
 \renewcommand{\theexpe}{\thechapter.\arabic{expe}}
+\newcounter{mate}[chapter]
+\renewcommand{\themate}{\thechapter.\arabic{mate}}
 \newcounter{odgr}[chapter]
 \renewcommand{\theodgr}{\thechapter.\arabic{odgr}}
 \newcounter{appl}[chapter]
@@ -1028,7 +1033,7 @@ literate         = {á}{{\'a}}1
 \newcommand{\icondown}{\faIcon[regular]{hand-point-down}}
 \newcommand{\iconknow}{\faIcon{brain}}
 \newcommand{\iconhow}{\faIcon{pencil-ruler}}
-% \newcommand{\iconexpe}{\faIcon{flask}}
+\newcommand{\iconmate}{\faIcon{flask}}
 \newcommand{\iconexpe}{\faIcon{cogs}}
 \newcommand{\iconwip}{\faIcon{hard-hat}}
 \newcommand{\iconbomb}{\faIcon{bomb}}

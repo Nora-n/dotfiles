@@ -24,6 +24,12 @@ vim.o.gdefault = true
 -- see multiple spaces as tabstops so <BS> does the right thing?
 vim.o.softtabstop = 2
 
+-- set undo and backup
+local prefix = vim.fn.expand("~/.local/state/nvim")
+vim.opt.undodir = { prefix .. "/undo/" }
+vim.opt.backupdir = { prefix .. "/backup/" }
+vim.opt.directory = { prefix .. "/swap/" }
+
 -- for autosnippets in luasnip
 require("luasnip").config.set_config({ -- Setting LuaSnip config
   -- Enable autotriggered snippets

@@ -130,7 +130,7 @@
 		<Setting name="Queue column widths">1479 60 180 80 60 100</Setting>
 		<Setting name="Remote filelist colwidths">710 147 80 100 80 85</Setting>
 		<Setting name="Window position and size">0 0 27 1920 965 </Setting>
-		<Setting name="Splitter positions (v2)">97 -221 500000000 234 234 500000000</Setting>
+		<Setting name="Splitter positions (v2)">97 -323 500000000 234 370 500000000</Setting>
 		<Setting name="Tab data" sensitive="1">
 			<Tabs>
 				<Tab connected="1" selected="1">
@@ -145,7 +145,7 @@
 					<BypassProxy>0</BypassProxy>
 					<Name>netflix</Name>
 					<Site>0/netflix</Site>
-					<RemotePath>1 0 4 home 6 public 9 Downloads 68 Madagascar Trilogie (2005-2012) MULTi VFF AC3 1080p HDLight x264.GHT</RemotePath>
+					<RemotePath>1 0 4 home 6 public 9 Downloads 67 Sex.Education.S04.COMPLETE.1080p.NF.WEB-DL.DDP5.1.H.264-Archie[TGx]</RemotePath>
 					<LocalPath>/home/nora/Videos/</LocalPath>
 				</Tab>
 			</Tabs>
