@@ -14,6 +14,8 @@
 	decorations.pathmorphing,
 	decorations.pathreplacing}
 \RequirePackage[european, straightvoltages, cuteinductors]{circuitikz}
+\ctikzset{bipoles/thickness=1}
+\ctikzset{grounds/thickness=1}
 \usetikzlibrary{babel}
 \usetikzlibrary{optics}
 \usetikzlibrary{3d}
@@ -352,12 +354,16 @@ pics/strange bar/.style={code={\draw[thick] (-#1,0) -- (#1,0);}}
 % \tikzset{coilaspect/.store in=\coilaspect, coilaspect=0.3}
 % \tikzset{coillength/.store in=\coillength, coillength=1.5mm}
 % \tikzset{coilamplit/.store in=\coilamplit, coilamplit=3mm}
-\tikzset{Coil/.style n args={3}{
-			postaction={decorate,
-					decoration={
-							coil, aspect=#1,
-							segment length=#2,
-							amplitude=#3}}}}
+\tikzset{
+	Coil/.style n args={3}{
+			decorate,
+			decoration={
+					coil, aspect={#1},
+					segment length={#2},
+					amplitude={#3}
+				}
+		}
+}
 
 \tikzset{
 	fleche/.style n args={2}{

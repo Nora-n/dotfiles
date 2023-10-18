@@ -15,6 +15,7 @@
 % Enlever l'espace après la virgule pour les nombres
 \RequirePackage{icomma}
 \frenchbsetup{StandardLists=true}
+\RequirePackage{tasks}
 \RequirePackage{booktabs}
 
 %% ajout pour les dérivées \diff[n]{a}{b} \diffp[n]{a}{b} et \diffp*{a}{b}{c}
@@ -26,9 +27,9 @@
 \RequirePackage{esvect}
 \RequirePackage{graphicx}
 \graphicspath{{./figures/}{../figures/}
-{../figures/ch1/}{../figures/ch2/}{../figures/ch3/}{../figures/ch4/}{../figures/ch5/}{../figures/ch6/}
-{../figures/ch7/}{../figures/ch8/}{../figures/ch9/}{../figures/ch10/}{../figures/ch11/}{../figures/ch12/}}
-\RequirePackage[verbose=silent]{microtype} 
+		{../figures/ch1/}{../figures/ch2/}{../figures/ch3/}{../figures/ch4/}{../figures/ch5/}{../figures/ch6/}
+		{../figures/ch7/}{../figures/ch8/}{../figures/ch9/}{../figures/ch10/}{../figures/ch11/}{../figures/ch12/}}
+\RequirePackage[verbose=silent]{microtype}
 
 \RequirePackage{twoopt} % permet de mettre 2 options facultatives pour le barème
 
@@ -36,7 +37,7 @@
 \RequirePackage{etoolbox}  % pour le toggle
 \RequirePackage{mathtools} %  contient amsmath
 \usepackage{fp} % utile pour fpeval
-\RequirePackage{wrapfig} 
+\RequirePackage{wrapfig}
 
 \RequirePackage[svgnames, dvipsnames, table]{xcolor}
 \definecolor{urlcolor}{rgb}{0,0,1}
@@ -59,7 +60,7 @@
 \fancyhead[LO]{\nouppercase\rightmark} % Top (head) left (L) odd (O): chapter
 \fancyhead[RO]{\thepage}               % Top right even: page
 \fancyfoot[L]{Lycée \textsc{Pothier}}
-\fancyfoot[C]{\textbf{\thepage/\pageref{LastPage}}} 
+\fancyfoot[C]{\textbf{\thepage/\pageref{LastPage}}}
 \fancyfoot[R]{MPSI -- 2022/2023}
 %\fancyfoot{}                           % Empty footer
 \renewcommand{\footrulewidth}{1pt}
@@ -68,12 +69,12 @@
 
 % Redefine the plain page style for chapter pages
 \fancypagestyle{plain}{%
-    \renewcommand{\headrulewidth}{0pt}  % Line at the header invisible
-    \fancyhf{}%
-    \fancyfoot[L]{Lycée \textsc{Pothier}}
-    \fancyfoot[C]{\textbf{\thepage/\pageref{LastPage}}} 
-    \fancyfoot[R]{MPSI -- 2022/2023}
-    \renewcommand{\footrulewidth}{1pt}% Line at the footer visible
+	\renewcommand{\headrulewidth}{0pt}  % Line at the header invisible
+	\fancyhf{}%
+	\fancyfoot[L]{Lycée \textsc{Pothier}}
+	\fancyfoot[C]{\textbf{\thepage/\pageref{LastPage}}}
+	\fancyfoot[R]{MPSI -- 2022/2023}
+	\renewcommand{\footrulewidth}{1pt}% Line at the footer visible
 }
 
 % Nice chapter
@@ -90,34 +91,34 @@
 
 \makeatletter
 \titleformat{\chapter}[frame]
-    {\normalfont\setlength{\fboxrule}{1pt}}
-    {\filright\enspace \@chapapp\enspace}
-    {8pt}{\LARGE\bfseries\filcenter}
-    \titlespacing*{\chapter}
-    {0pt}{0pt}{20pt}
+{\normalfont\setlength{\fboxrule}{1pt}}
+{\filright\enspace \@chapapp\enspace}
+{8pt}{\LARGE\bfseries\filcenter}
+\titlespacing*{\chapter}
+{0pt}{0pt}{20pt}
 \makeatother
 
 \titleformat{\section}{\Large\bfseries}{
-    \begin{tikzpicture}[scale=0.55, overlay]
-        \draw[line width=1pt, color=darkgray, xshift=1em, yshift=0.6em]
-            (1,-0.4) -- (1,0.8) --(0.8,1) -- (-0.8,1) -- (-1,0.8) -- (-1,-0.8) --
-            (-0.8,-1) -- (31,-1);
-        \node[xshift=0.6em, yshift=0.35em] at (0,0)
-            {\rmfamily\textcolor{darkgray}{\thesection}};
-    \end{tikzpicture}}{0.4em}{\hspace{1.4em}}
+	\begin{tikzpicture}[scale=0.55, overlay]
+		\draw[line width=1pt, color=darkgray, xshift=1em, yshift=0.6em]
+		(1,-0.4) -- (1,0.8) --(0.8,1) -- (-0.8,1) -- (-1,0.8) -- (-1,-0.8) --
+		(-0.8,-1) -- (31,-1);
+		\node[xshift=0.6em, yshift=0.35em] at (0,0)
+		{\rmfamily\textcolor{darkgray}{\thesection}};
+	\end{tikzpicture}}{0.4em}{\hspace{1.4em}}
 
 \titleformat{\subsection}{\large\bfseries}{\hspace{1cm}
-    \tcbox[colback=darkgray, colframe=darkgray,
-           coltext=lightgray, on line, boxsep=0pt,
-           left=4pt, right=4pt, top=4pt,bottom=4pt,
-           sharp corners=northwest]{\thesubsection}}{0.5em}{}
-    
+	\tcbox[colback=darkgray, colframe=darkgray,
+		coltext=lightgray, on line, boxsep=0pt,
+		left=4pt, right=4pt, top=4pt,bottom=4pt,
+		sharp corners=northwest]{\thesubsection}}{0.5em}{}
+
 \titleformat{\subsubsection}{\normalsize}{\hspace{2cm}
-    \tcbox[colback=white, colframe=darkgray,
-           coltext=black, on line, boxsep=0pt,
-           left=4pt, right=4pt, top=4pt,bottom=4pt,
-           sharp corners=northwest]{\normalsize\thesubsubsection}
-       \normalsize}{0.5em}{}
+	\tcbox[colback=white, colframe=darkgray,
+		coltext=black, on line, boxsep=0pt,
+		left=4pt, right=4pt, top=4pt,bottom=4pt,
+		sharp corners=northwest]{\normalsize\thesubsubsection}
+	\normalsize}{0.5em}{}
 
 \RequirePackage{float}
 \RequirePackage{subfigure}
@@ -132,17 +133,17 @@
 \RequirePackage{stackrel}
 \RequirePackage{siunitx}
 \sisetup{%
-  detect-all,
-  free-standing-units,          % create standalone commands
-  locale=FR,
-  inter-unit-product={\,},      % character between units
-  separate-uncertainty,         % x ± dx
-  retain-explicit-plus,         % p.ex. +45°
-  angle-symbol-over-decimal,    % p.ex. 0.''11
-  range-units=brackets,         % (0 to 40) m
-  open-bracket= [,
-  close-bracket= ],
-  range-phrase=\textup{--},     % 0--40 m
+	detect-all,
+	free-standing-units,          % create standalone commands
+	locale=FR,
+	inter-unit-product={\,},      % character between units
+	separate-uncertainty,         % x ± dx
+	retain-explicit-plus,         % p.ex. +45°
+	angle-symbol-over-decimal,    % p.ex. 0.''11
+	range-units=brackets,         % (0 to 40) m
+	open-bracket= [,
+			close-bracket= ],
+	range-phrase=\textup{--},     % 0--40 m
 }
 \def\Lsun{L\ensuremath{_{\odot}}}
 \def\Rsun{R\ensuremath{_{\odot}}}
@@ -175,23 +176,23 @@
 \RequirePackage{listings}
 \definecolor{monviolet}{rgb}{0.5,0,0.5}
 \lstset{
-language=Python,
-backgroundcolor=\color{white},
-keywordstyle=\color{blue},
-commentstyle=\color{monviolet},
-frame=trBL,
-%showspaces=false
-showstringspaces=false
+	language=Python,
+	backgroundcolor=\color{white},
+	keywordstyle=\color{blue},
+	commentstyle=\color{monviolet},
+	frame=trBL,
+	%showspaces=false
+	showstringspaces=false
 }
 \newcommand{\opto}[2]{\ensuremath\underset{#2}{\overset{#1}{\longrightarrow}}}
 \newcommand{\obar}[1]{\mkern 1.5mu\overline{\mkern-1.5mu#1\mkern-1.5mu}\mkern 1.5mu}
 
 \let\SavedIndent\indent
 \protected\def\indent{%
-  \begingroup
-    \parindent=\the\parindent
-    \SavedIndent
-  \endgroup
+	\begingroup
+	\parindent=\the\parindent
+	\SavedIndent
+	\endgroup
 }
 \setlength{\parindent}{0pt}
 
@@ -199,189 +200,189 @@ showstringspaces=false
 \tcbuselibrary{skins, raster}
 
 \newtcolorbox[auto counter, number within=chapter]{loi}[2][]{%
-enhanced, colback=red!10, colframe=red!80!black, valign=center,
-sharp corners=uphill, fonttitle=\bfseries,
-title=Loi~\thetcbcounter~: #2, #1}
+	enhanced, colback=red!10, colframe=red!80!black, valign=center,
+	sharp corners=uphill, fonttitle=\bfseries,
+	title=Loi~\thetcbcounter~: #2, #1}
 
 \newtcolorbox[auto counter, number within=chapter]{NCloi}[2][]{%
-enhanced, colback=red!10, colframe=red!80!black, valign=center,
-sharp corners=uphill, fonttitle=\bfseries,
-title=#2, #1}
+	enhanced, colback=red!10, colframe=red!80!black, valign=center,
+	sharp corners=uphill, fonttitle=\bfseries,
+	title=#2, #1}
 
 \newtcolorbox[auto counter, number within=chapter]{Theo}[2][]{%
-enhanced, colback=red!10, colframe=red!70!black, valign=center,
-sharp corners=uphill, fonttitle=\bfseries,
-title=Théorème~\thetcbcounter~: #2, #1}
-    
+	enhanced, colback=red!10, colframe=red!70!black, valign=center,
+	sharp corners=uphill, fonttitle=\bfseries,
+	title=Théorème~\thetcbcounter~: #2, #1}
+
 \newtcolorbox[auto counter, number within=chapter]{NCtheo}[2][]{%
-enhanced, colback=red!10, colframe=red!70!black, valign=center,
-sharp corners=uphill, fonttitle=\bfseries,
-title=#2, #1}
+	enhanced, colback=red!10, colframe=red!70!black, valign=center,
+	sharp corners=uphill, fonttitle=\bfseries,
+	title=#2, #1}
 
 \newtcolorbox[auto counter, number within=chapter]{prop}[2][]{%
-enhanced, colback=red!10, colframe=red!60!black, valign=center,
-sharp corners=uphill, fonttitle=\bfseries,
-title=Propriété~\thetcbcounter~: #2, #1}
+	enhanced, colback=red!10, colframe=red!60!black, valign=center,
+	sharp corners=uphill, fonttitle=\bfseries,
+	title=Propriété~\thetcbcounter~: #2, #1}
 
 \newtcolorbox[auto counter, number within=chapter]{NCprop}[2][]{%
-enhanced, colback=red!10, colframe=red!60!black, valign=center,
-sharp corners=uphill, fonttitle=\bfseries,
-title=#2, #1}
+	enhanced, colback=red!10, colframe=red!60!black, valign=center,
+	sharp corners=uphill, fonttitle=\bfseries,
+	title=#2, #1}
 
 \newtcolorbox{propside}{sidebyside, sidebyside align=top,
-    enhanced, colback=red!10, colframe=red!60!black, valign=center,
-    arc=0pt, boxsep=0mm, notitle, oversize, nobeforeafter, frame hidden}
+	enhanced, colback=red!10, colframe=red!60!black, valign=center,
+	arc=0pt, boxsep=0mm, notitle, oversize, nobeforeafter, frame hidden}
 
 \newtcolorbox[auto counter, number within=chapter]{coro}[2][]{%
-enhanced, colback=VioletRed!10, colframe=VioletRed!60!black, valign=center,
-sharp corners=uphill, fonttitle=\bfseries,
-title=Corollaire~\thetcbcounter~: #2, #1}
+	enhanced, colback=VioletRed!10, colframe=VioletRed!60!black, valign=center,
+	sharp corners=uphill, fonttitle=\bfseries,
+	title=Corollaire~\thetcbcounter~: #2, #1}
 
 \newtcolorbox[auto counter, number within=chapter]{NCcoro}[2][]{%
-enhanced, colback=VioletRed!10, colframe=VioletRed!60!black, valign=center,
-sharp corners=uphill, fonttitle=\bfseries,
-title=#2, #1}
+	enhanced, colback=VioletRed!10, colframe=VioletRed!60!black, valign=center,
+	sharp corners=uphill, fonttitle=\bfseries,
+	title=#2, #1}
 
 \newtcolorbox{coroside}{sidebyside, sidebyside align=top,
-    enhanced, colback=VioletRed!10, colframe=VioletRed!60!black, valign=center,
-    arc=0pt, boxsep=0mm, notitle, oversize, nobeforeafter, frame hidden}
+	enhanced, colback=VioletRed!10, colframe=VioletRed!60!black, valign=center,
+	arc=0pt, boxsep=0mm, notitle, oversize, nobeforeafter, frame hidden}
 
 \newtcolorbox[auto counter, number within=chapter]{demo}[2][]{%
-enhanced, colback=blue!10, colframe=blue!60!black, valign=center,
-sharp corners=uphill, fonttitle=\bfseries,
-title=Démonstration~\thetcbcounter~: #2, #1}
+	enhanced, colback=blue!10, colframe=blue!60!black, valign=center,
+	sharp corners=uphill, fonttitle=\bfseries,
+	title=Démonstration~\thetcbcounter~: #2, #1}
 
 \newtcolorbox[auto counter, number within=chapter]{NCdemo}[2][]{%
-enhanced, colback=blue!10, colframe=blue!60!black, valign=center,
-sharp corners=uphill, fonttitle=\bfseries,
-title=#2, #1}
+	enhanced, colback=blue!10, colframe=blue!60!black, valign=center,
+	sharp corners=uphill, fonttitle=\bfseries,
+	title=#2, #1}
 
 \newtcolorbox{demoside}{sidebyside, sidebyside align=center,
-    enhanced, colback=blue!10!, colframe=blue!60!black, valign=center,
-    arc=0pt, boxsep=1mm, notitle, oversize, nobeforeafter, frame hidden}
+	enhanced, colback=blue!10!, colframe=blue!60!black, valign=center,
+	arc=0pt, boxsep=1mm, notitle, oversize, nobeforeafter, frame hidden}
 
 \newtcolorbox[auto counter, number within=chapter]{inte}[2][]{%
-enhanced, colback=RoyalBlue!10, colframe=RoyalBlue!50!black, valign=center,
-sharp corners=uphill, fonttitle=\bfseries,
-title=Interprétation~\thetcbcounter~: #2, #1}
+	enhanced, colback=RoyalBlue!10, colframe=RoyalBlue!50!black, valign=center,
+	sharp corners=uphill, fonttitle=\bfseries,
+	title=Interprétation~\thetcbcounter~: #2, #1}
 
 \newtcolorbox[auto counter, number within=chapter]{NCinte}[2][]{%
-enhanced, colback=RoyalBlue!10, colframe=RoyalBlue!50!black, valign=center,
-sharp corners=uphill, fonttitle=\bfseries,
-title=#2, #1}
+	enhanced, colback=RoyalBlue!10, colframe=RoyalBlue!50!black, valign=center,
+	sharp corners=uphill, fonttitle=\bfseries,
+	title=#2, #1}
 
 \newtcolorbox[auto counter, number within=chapter]{impl}[2][]{%
-enhanced, colback=DodgerBlue!10, colframe=DodgerBlue!50!black, valign=center,
-sharp corners=uphill, fonttitle=\bfseries,
-title=Implication~\thetcbcounter~: #2, #1}
+	enhanced, colback=DodgerBlue!10, colframe=DodgerBlue!50!black, valign=center,
+	sharp corners=uphill, fonttitle=\bfseries,
+	title=Implication~\thetcbcounter~: #2, #1}
 
 \newtcolorbox[auto counter, number within=chapter]{NCimpl}[2][]{%
-enhanced, colback=DodgerBlue!10, colframe=DodgerBlue!50!black, valign=center,
-sharp corners=uphill, fonttitle=\bfseries,
-title=#2, #1}
+	enhanced, colback=DodgerBlue!10, colframe=DodgerBlue!50!black, valign=center,
+	sharp corners=uphill, fonttitle=\bfseries,
+	title=#2, #1}
 
 \newtcolorbox[auto counter, number within=chapter]{defi}[2][]{%
-enhanced, colback=green!10, colframe=green!60!black, valign=center,
-sharp corners=uphill, fonttitle=\bfseries,
-title=Définition~\thetcbcounter~: #2, #1}
+	enhanced, colback=green!10, colframe=green!60!black, valign=center,
+	sharp corners=uphill, fonttitle=\bfseries,
+	title=Définition~\thetcbcounter~: #2, #1}
 
 \newtcolorbox[auto counter, number within=chapter]{NCdefi}[2][]{%
-enhanced, colback=green!10, colframe=green!60!black, valign=center,
-sharp corners=uphill, fonttitle=\bfseries,
-title=#2, #1}
+	enhanced, colback=green!10, colframe=green!60!black, valign=center,
+	sharp corners=uphill, fonttitle=\bfseries,
+	title=#2, #1}
 
 \newtcolorbox{defiside}{sidebyside, sidebyside align=top,
-    enhanced, colback=green!10!, colframe=green!60!black, valign=center,
-    arc=0pt, boxsep=1mm, notitle, oversize, nobeforeafter, frame hidden}
+	enhanced, colback=green!10!, colframe=green!60!black, valign=center,
+	arc=0pt, boxsep=1mm, notitle, oversize, nobeforeafter, frame hidden}
 
 \newtcolorbox[auto counter, number within=chapter]{nota}[2][]{%
-enhanced, colback=green!10, colframe=green!50!black, valign=center,
-sharp corners=uphill, fonttitle=\bfseries,
-title=Notation~\thetcbcounter~: #2, #1}
+	enhanced, colback=green!10, colframe=green!50!black, valign=center,
+	sharp corners=uphill, fonttitle=\bfseries,
+	title=Notation~\thetcbcounter~: #2, #1}
 
 \newtcolorbox[auto counter, number within=chapter]{NCnota}[2][]{%
-enhanced, colback=green!10, colframe=green!50!black, valign=center,
-sharp corners=uphill, fonttitle=\bfseries,
-title=#2, #1}
+	enhanced, colback=green!10, colframe=green!50!black, valign=center,
+	sharp corners=uphill, fonttitle=\bfseries,
+	title=#2, #1}
 
 \newtcolorbox[auto counter, number within=chapter]{impo}[2][]{%
-enhanced, colback=BlueViolet!10, colframe=BlueViolet!50!black, valign=center,
-sharp corners=uphill, fonttitle=\bfseries,
-title=Important~\thetcbcounter~: #2, #1} 
+	enhanced, colback=BlueViolet!10, colframe=BlueViolet!50!black, valign=center,
+	sharp corners=uphill, fonttitle=\bfseries,
+	title=Important~\thetcbcounter~: #2, #1}
 
 \newtcolorbox[auto counter, number within=chapter]{NCimpo}[2][]{%
-enhanced, colback=BlueViolet!10, colframe=BlueViolet!50!black, valign=center,
-sharp corners=uphill, fonttitle=\bfseries,
-title=#2, #1}
+	enhanced, colback=BlueViolet!10, colframe=BlueViolet!50!black, valign=center,
+	sharp corners=uphill, fonttitle=\bfseries,
+	title=#2, #1}
 
 \newtcolorbox[auto counter, number within=chapter]{ror}[2][]{%
-enhanced, colback=orange!10, colframe=orange!80!black, valign=center,
-sharp corners=uphill, fonttitle=\bfseries,
-title=Important~\thetcbcounter~: #2, #1}
+	enhanced, colback=orange!10, colframe=orange!80!black, valign=center,
+	sharp corners=uphill, fonttitle=\bfseries,
+	title=Important~\thetcbcounter~: #2, #1}
 
 \newtcolorbox[auto counter, number within=chapter]{NCror}[2][]{%
-enhanced, colback=orange!10, colframe=orange!80!black, valign=center,
-sharp corners=uphill, fonttitle=\bfseries,
-title=#2, #1}
+	enhanced, colback=orange!10, colframe=orange!80!black, valign=center,
+	sharp corners=uphill, fonttitle=\bfseries,
+	title=#2, #1}
 
 \newtcolorbox[auto counter, number within=chapter]{rapp}[2][]{%
-enhanced, colback=BlueViolet!10, colframe=BlueViolet!60!black, valign=center,
-sharp corners=uphill, fonttitle=\bfseries,
-title=Rappel~\thetcbcounter~: #2, #1}
+	enhanced, colback=BlueViolet!10, colframe=BlueViolet!60!black, valign=center,
+	sharp corners=uphill, fonttitle=\bfseries,
+	title=Rappel~\thetcbcounter~: #2, #1}
 
 \newtcolorbox[auto counter, number within=chapter]{NCrapp}[2][]{%
-enhanced, colback=BlueViolet!10, colframe=BlueViolet!60!black, valign=center,
-sharp corners=uphill, fonttitle=\bfseries,
-title=#2, #1}
+	enhanced, colback=BlueViolet!10, colframe=BlueViolet!60!black, valign=center,
+	sharp corners=uphill, fonttitle=\bfseries,
+	title=#2, #1}
 
 \newtcolorbox[auto counter, number within=chapter]{exem}[2][]{%
-enhanced, colback=lightgray!10, colframe=lightgray!50!black, valign=center,
-sharp corners=uphill, fonttitle=\bfseries,
-title=Exemple~\thetcbcounter~: #2, #1}
+	enhanced, colback=lightgray!10, colframe=lightgray!50!black, valign=center,
+	sharp corners=uphill, fonttitle=\bfseries,
+	title=Exemple~\thetcbcounter~: #2, #1}
 
 \newtcolorbox[auto counter, number within=chapter]{NCexem}[2][]{%
-enhanced, colback=lightgray!10, colframe=lightgray!50!black, valign=center,
-sharp corners=uphill, fonttitle=\bfseries,
-title=#2, #1}
+	enhanced, colback=lightgray!10, colframe=lightgray!50!black, valign=center,
+	sharp corners=uphill, fonttitle=\bfseries,
+	title=#2, #1}
 
 \newtcolorbox{exemside}{sidebyside, sidebyside align=top,
-    enhanced, colback=lightgray!10!, colframe=lightgray!50!black, valign=center,
-    arc=0pt, boxsep=1mm, notitle, oversize, nobeforeafter, frame hidden}
+	enhanced, colback=lightgray!10!, colframe=lightgray!50!black, valign=center,
+	arc=0pt, boxsep=1mm, notitle, oversize, nobeforeafter, frame hidden}
 
 \newtcolorbox[auto counter, number within=chapter]{odgr}[2][]{%
-enhanced, colback=lightgray!10, colframe=lightgray!55!black, valign=center,
-sharp corners=uphill, fonttitle=\bfseries,
-title=Ordre de grandeur~\thetcbcounter~: #2, #1}
+	enhanced, colback=lightgray!10, colframe=lightgray!55!black, valign=center,
+	sharp corners=uphill, fonttitle=\bfseries,
+	title=Ordre de grandeur~\thetcbcounter~: #2, #1}
 
 \newtcolorbox[auto counter, number within=chapter]{NCodgr}[2][]{%
-enhanced, colback=lightgray!10, colframe=lightgray!55!black, valign=center,
-sharp corners=uphill, fonttitle=\bfseries,
-title=#2, #1}
+	enhanced, colback=lightgray!10, colframe=lightgray!55!black, valign=center,
+	sharp corners=uphill, fonttitle=\bfseries,
+	title=#2, #1}
 
 \newtcolorbox[auto counter, number within=chapter]{cexe}[2][]{%
-enhanced, colback=gray!10, colframe=gray!50!black, valign=center,
-sharp corners=uphill, fonttitle=\bfseries,
-title=Contre-exemple~\thetcbcounter~: #2, #1}
+	enhanced, colback=gray!10, colframe=gray!50!black, valign=center,
+	sharp corners=uphill, fonttitle=\bfseries,
+	title=Contre-exemple~\thetcbcounter~: #2, #1}
 
 \newtcolorbox[auto counter, number within=chapter]{NCcexe}[2][]{%
-enhanced, colback=gray!10, colframe=gray!50!black, valign=center,
-sharp corners=uphill, fonttitle=\bfseries,
-title=#2, #1}
+	enhanced, colback=gray!10, colframe=gray!50!black, valign=center,
+	sharp corners=uphill, fonttitle=\bfseries,
+	title=#2, #1}
 
 \newtcolorbox[auto counter, number within=chapter]{rema}[2][]{%
-enhanced, colback=darkgray!10, colframe=darkgray!50!black, valign=center,
-sharp corners=uphill, fonttitle=\bfseries,
-title=Remarque~\thetcbcounter~: #2, #1}
+	enhanced, colback=darkgray!10, colframe=darkgray!50!black, valign=center,
+	sharp corners=uphill, fonttitle=\bfseries,
+	title=Remarque~\thetcbcounter~: #2, #1}
 
 \newtcolorbox[auto counter, number within=chapter]{NCrema}[2][]{%
-enhanced, colback=darkgray!10, colframe=darkgray!50!black, valign=center,
-sharp corners=uphill, fonttitle=\bfseries,
-title=#2, #1}
+	enhanced, colback=darkgray!10, colframe=darkgray!50!black, valign=center,
+	sharp corners=uphill, fonttitle=\bfseries,
+	title=#2, #1}
 
 \newtcolorbox[]{instruc}[2][]{
-enhanced, attach boxed title to top center={yshift=-2mm},
-fonttitle=\bfseries, 
-title={#2},#1}
+	enhanced, attach boxed title to top center={yshift=-2mm},
+	fonttitle=\bfseries,
+	title={#2},#1}
 
 % si un package est particulier à un exercice, il peut être déclaré localement dans son préambule.
 % il sera automatiquement importé dans le fichier tex final à l'aide du logiciel d'édition ou bien devra être importé à la main si vous n'utilisez pas le logiciel.
@@ -409,15 +410,15 @@ title={#2},#1}
 
 % affichage du corrigé
 \newtoggle{corrige}   % affichage du corrigé si vrai
-\togglefalse{corrige} 
+\togglefalse{corrige}
 
 % affichage du corrigé
 \newtoggle{bareme}   % affichage du corrigé avec barème
-\togglefalse{bareme} 
+\togglefalse{bareme}
 
 % affichage de la commande enonce
 \newtoggle{enonce}   % affichage de l'énoncé en dehors de l'environnement \QR si vrai
-\toggletrue{enonce} 
+\toggletrue{enonce}
 
 % affichage du sujet
 \newtoggle{sujet}   % affichage du sujet (énoncé des questions) si vrai
@@ -442,16 +443,16 @@ title={#2},#1}
 %\newcommand{\hint}[1]{\hintFF{\rotatebox{180}{#1}}}
 \newcommand{\astuce}[1]{
 
-\iftoggle{astuces}{
-	\global\toggletrue{astucesPresentes}
-	\hintFF{#1}
-}{
-}
+	\iftoggle{astuces}{
+		\global\toggletrue{astucesPresentes}
+		\hintFF{#1}
+	}{
+	}
 }
 
 \AtEndDocument{
 	\iftoggle{astucesPresentes}{
-		\mbox{} \par \textbf{Astuces : } \\	
+		\mbox{} \par \textbf{Astuces : } \\
 		\unvbox\hints
 	}{}
 }
@@ -461,7 +462,7 @@ title={#2},#1}
 
 
 \AtVeryEndDocument{
-\label{page:last}
+	\label{page:last}
 }
 
 %%%%%%%%%%%%%%%%%
@@ -470,36 +471,36 @@ title={#2},#1}
 
 % utile pour les figures qui ne doivent pas être redimensionnées
 \newcommand{\figRaw}[2][]{ % possibilité d'ajouter des arguments optionnels dans includeGraphics en plus
-    \begin{center}
-        \includegraphics[#1]{images/#2}
-            \end{center}
+	\begin{center}
+		\includegraphics[#1]{images/#2}
+	\end{center}
 }
 
 
 \newcommand{\fig}[3][]{ % possibilité d'ajouter des arguments optionnels en plus
-    \begin{center}
-    	        \includegraphics[width=#2\linewidth, #1]{images/#3}
-            \end{center}
+	\begin{center}
+		\includegraphics[width=#2\linewidth, #1]{images/#3}
+	\end{center}
 }
 
 % figure avec caption
 
 \newcommand{\figCap}[4][]{
-    \begin{center}
-    	        \includegraphics[width=#2\linewidth, #1]{images/#3}
-            \end{center}
-    \vspace{-4mm}
-    \captionof{figure}{#4}
-    \bigskip
+	\begin{center}
+		\includegraphics[width=#2\linewidth, #1]{images/#3}
+	\end{center}
+	\vspace{-4mm}
+	\captionof{figure}{#4}
+	\bigskip
 }
 
 \newcommand{\figCapRaw}[3][]{
-    \begin{center}
-            \includegraphics[#1]{images/#2}
-            \end{center}
-    \vspace{-4mm}
-    \captionof{figure}{#3}
-    \bigskip
+	\begin{center}
+		\includegraphics[#1]{images/#2}
+	\end{center}
+	\vspace{-4mm}
+	\captionof{figure}{#3}
+	\bigskip
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%
@@ -512,20 +513,20 @@ title={#2},#1}
 % l'argument est le nom_du_fichier.pdf_tex  
 %ne pas oublier l'extension pdf_tex
 \newcommand{\figsvg}[1]{
-    \begin{center}
-            \subimport{images/}{#1}
-            \end{center}
+	\begin{center}
+		\subimport{images/}{#1}
+	\end{center}
 }
 
 % figure avec caption
 
 \newcommand{\figsvgCap}[2]{
-    \begin{center}
-            \subimport{images/}{#1}
-            \end{center}
-    \vspace{-4mm}
-    \captionof{figure}{#2}
-    \bigskip
+	\begin{center}
+		\subimport{images/}{#1}
+	\end{center}
+	\vspace{-4mm}
+	\captionof{figure}{#2}
+	\bigskip
 }
 
 %%%%%%%%%%%%%%%%%
@@ -534,16 +535,16 @@ title={#2},#1}
 
 % deprecated -> à ne plus utiliser !
 \newenvironment{tcols}[4]{
-        \begin{minipage}[t]{#1 \linewidth}        		
-            \vspace{0cm}
-            #3
-        \end{minipage}%
-        \hfill
-        \begin{minipage}[t]{ #2 \linewidth}
-            \vspace{0cm}
-            #4
-        \end{minipage}
-} 
+	\begin{minipage}[t]{#1 \linewidth}
+		\vspace{0cm}
+		#3
+	\end{minipage}%
+	\hfill
+	\begin{minipage}[t]{ #2 \linewidth}
+		\vspace{0cm}
+		#4
+	\end{minipage}
+}
 
 
 
@@ -554,16 +555,16 @@ title={#2},#1}
 	\setlength{\columnsep}{4pt}%
 	\begin{wrapfigure}{r}[20pt]{#1\linewidth}
 		\hfill
-				\includegraphics[width=0.95\linewidth]{images/#2}
-				\vspace{-2mm}
+		\includegraphics[width=0.95\linewidth]{images/#2}
+		\vspace{-2mm}
 	\end{wrapfigure}
 }
 
 \newcommand{\figCapWrapped}[3]{ % #1 : largeur du bloc de droite  ; #2 nom du fichier
 	\begin{wrapfigure}{r}[20pt]{#1\linewidth}
 		\hfill
-  		\figCap{0.85}{#2}{#3}
-  		\vspace{-6mm}
+		\figCap{0.85}{#2}{#3}
+		\vspace{-6mm}
 	\end{wrapfigure}
 }
 
@@ -572,17 +573,17 @@ title={#2},#1}
 
 % titre exercice
 \newcommand{\titreExercice}[1]{
-\stepcounter{exoIndex} 
-\section{#1} 
+	\stepcounter{exoIndex}
+	\section{#1}
 }
 
 
 
 
 \newcommand{\eq}[2][equation*]{
-\begin{#1}
+	\begin{#1}
 	#2
-\end{#1}
+	\end{#1}
 }
 
 
@@ -597,9 +598,9 @@ title={#2},#1}
 	% cette macro permet d'afficher un element que s'il est résent dans la version choisie par l'utilisateur
 	\newcommand{\showAccordingToVersion}[2][]{
 		\exploregroups
-		\ifthenelse{\equal{#1}{}}{ 
+		\ifthenelse{\equal{#1}{}}{
 			% sans argument opt, la question est toujours affichée
-			#2	
+			#2
 		}{
 			% si argument opt, on traite au cas par cas
 			\IfSubStr{#1 }{\version}{
@@ -610,9 +611,9 @@ title={#2},#1}
 			}
 		}
 	}
-	
-	
-	
+
+
+
 
 
 	% titre partie
@@ -621,14 +622,14 @@ title={#2},#1}
 			\subsection{#2}
 		}
 	}
-	
+
 	% titre sous partie
 	\newcommand{\sousPartie}[2][]{
 		\showAccordingToVersion[#1]{
 			\subsubsection{#2}
 		}
 	}
-	
+
 	% Texte de l'énoncé en dehors d'une question 
 	\newcommand{\enonce}[2][]{
 		\iftoggle{enonce}{
@@ -640,98 +641,98 @@ title={#2},#1}
 
 	% bloc de questions (pas d'imbrication pour le moment). L'argument optionnel sera affiché en préambule de la liste de questions	
 
-    \newenvironment{blocQR}[1][]{
+	\newenvironment{blocQR}[1][]{
 
-    		 \save
-	     \begin{enumerate}[start=\theqrIndexSaved]
-	     \resetQ 
-	     \item  
+		\save
+		\begin{enumerate}[start=\theqrIndexSaved]
+			\resetQ
+			\item
 
-	    }{
-	     
-		 \end{enumerate}    			
-		 \retrieve
-		 \stepcounter{qrIndex}
-		
-    }
-    
-    % ajout d'une question
+			      }{
+
+		\end{enumerate}
+		\retrieve
+		\stepcounter{qrIndex}
+
+	}
+
+	% ajout d'une question
 	\newcommandtwoopt{\QR}[4][][]{ % cette fonction gère l'affichage suivant la version. La modifier est considéré comme dangereux.	
 		\showAccordingToVersion[#1]{
-		
+
 			\begin{enumerate}[start=\theqrIndex]
 
-				 \stepcounter{qrIndex}
+				\stepcounter{qrIndex}
 				\item %\qrIndex
-					\iftoggle{sujet}{
-				     	\addQq{#3}
-					}{}
-					
-					\iftoggle{corrige}{
-						\addQr{#4}
-					}{}
-					
-					\iftoggle{bareme}{
-						\addQb{#2}{#4}
-					}{}					
+				      \iftoggle{sujet}{
+					      \addQq{#3}
+				      }{}
+
+				      \iftoggle{corrige}{
+					      \addQr{#4}
+				      }{}
+
+				      \iftoggle{bareme}{
+					      \addQb{#2}{#4}
+				      }{}
 
 			\end{enumerate}
-			
+
 		}
-    }        
+	}
 
 
 
-        \newcommand{\addQq}[1]{ % la question à afficher en mode corrigé : peut être modifié
-		   \iftoggle{corrige}{		
-    		   	#1 % affichage de la question en mode corrigé
-	        }{
-			    #1 % affichage hors mode corrigé
-    		}
-        }        
+	\newcommand{\addQq}[1]{ % la question à afficher en mode corrigé : peut être modifié
+		\iftoggle{corrige}{
+			#1 % affichage de la question en mode corrigé
+		}{
+			#1 % affichage hors mode corrigé
+		}
+	}
 
 
-		\newcommand{\addQr}[1]{ % la réponse à afficher en mode corrigé : peut être modifié
-        		\mbox{}\\	\textbf{Réponse : } \mbox{} \\
-	        #1
-			% \begin{center}
-        	% 		\rule[1ex]{.5\linewidth}{.5pt} % ajout d'un trait horizontal à la fin de la réponse
-	        % \end{center} 
-    		%     \mbox{} 
-        	% 	\vspace{-6mm}
-	        % \mbox{} \par 
-        }  
-        
-        \newcommand{\addQb}[2]{
-        		\noindent
-        		\begin{minipage}{0.9\linewidth}
-        		#2   
-        		\end{minipage}\hfill\vrule\hfill
-        		\begin{minipage}{0.08\linewidth}
-        		\centering
-        		#1 pt(s)  
-        		\end{minipage}
-        		\hrule
-	}      
-        
-     %%% commande utile pour ajouter une ou plusieurs parties facultatives au corrigé d'une quesition
+	\newcommand{\addQr}[1]{ % la réponse à afficher en mode corrigé : peut être modifié
+		\mbox{}\\	\textbf{Réponse : } \mbox{} \\
+		#1
+		% \begin{center}
+		% 		\rule[1ex]{.5\linewidth}{.5pt} % ajout d'un trait horizontal à la fin de la réponse
+		% \end{center} 
+		%     \mbox{} 
+		% 	\vspace{-6mm}
+		% \mbox{} \par 
+	}
+
+	\newcommand{\addQb}[2]{
+		\noindent
+		\begin{minipage}{0.9\linewidth}
+			#2
+		\end{minipage}\hfill\vrule\hfill
+		\begin{minipage}{0.08\linewidth}
+			\centering
+			#1 pt(s)
+		\end{minipage}
+		\hrule
+	}
+
+	%%% commande utile pour ajouter une ou plusieurs parties facultatives au corrigé d'une quesition
 	\newcommand{\corrigeBonus}[1]{
-			\iftoggle{corrigeEtendu}{
-				\mbox{} \\ \textbf{Pour aller plus loin : } \mbox{} \\	        			
-	        			#1
-	        	}{
-					        	
-	        	}
+		\iftoggle{corrigeEtendu}{
+			\mbox{} \\ \textbf{Pour aller plus loin : } \mbox{} \\
+			#1
+		}{
+
+		}
 	}
 
 	%deprecated
 	\newcommand{\switch}[2]{
-	    \iftoggle{corrige}{ 	
+		\iftoggle{corrige}{
 			#2
 		}{
 			#1
 		}
-	   % \iftoggle{bareme}{ 	 % je commente car cet ajout casse l'utilisation de la commande switch. Il faut mieux le coder !
+		% \iftoggle{bareme}{ 	 % je commente car cet ajout casse l'utilisation de la commande switch. Il faut mieux le coder !
 		%		#2
 		%}{
 		%	#1
@@ -742,16 +743,16 @@ title={#2},#1}
 		% apparait	si sujet == vrai et corrigé == faux
 		\iftoggle{sujet}{
 			\iftoggle{corrige}{}{
-				#1		
+				#1
 			}
 		}{}
 	}
-	
+
 	\newcommand{\siCorrige}[1]{
 		% apparait corrigé == vrai
-			\iftoggle{corrige}{
-				#1			
-			}{}
+		\iftoggle{corrige}{
+			#1
+		}{}
 	}
 
 }
@@ -791,12 +792,12 @@ title={#2},#1}
 \newcommand{\encadreminipage}[2]{%
 	\leftcentersright{}{\fbox{%
 			\begin{minipage}{#1} #2 \end{minipage}%
-	}}{}%
+		}}{}%
 }
 
 \newcommand{\centersminipage}[2]{%
 	\leftcentersright{}{%
-			\begin{minipage}{#1} #2 \end{minipage}%
+		\begin{minipage}{#1} #2 \end{minipage}%
 	}{}%
 }
 
@@ -842,7 +843,7 @@ title={#2},#1}
 
 
 %\renewcommand{\frac}{\dfrac} // je retire car je rencontre des problèmes avec des fractions de fractions
-\newcommand{\fracp}[2]{\pa{\frac{#1}{#2}}} 
+\newcommand{\fracp}[2]{\pa{\frac{#1}{#2}}}
 
 
 % niveau des exercices (utile en TD)
@@ -900,7 +901,9 @@ title={#2},#1}
 \def\ap{\dot{a}}
 \def\app{\ddot{a}}
 \def\b{\beta}
-\def\w{\omega}\def\O{\Omega} \def\Of{\vv{\O}}
+\def\w{\omega}\def\W{\Omega} \def\Wf{\vv{\W}}
+\def\wt{\w t} \def\wp{\dot{\w}}
+\def\Wt{\W t} \def\Wp{\dot{\W}}
 \def\wt{\w t}
 \def\mv{\m\v}
 \def\de{\delta}

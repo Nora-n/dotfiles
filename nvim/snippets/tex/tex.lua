@@ -1785,16 +1785,17 @@ return {
       }),
     }),
   }),
-  s({
-    trig = "car",
-    snippetType = "autosnippet",
-    dscr = "Expands 'car' into '\\CArrow{<>}'",
-    condition = tex_utils.in_mathzone,
-  }, {
+  s(
+    {
+      trig = "car",
+      snippetType = "autosnippet",
+      dscr = "Expands 'car' into '\\CArrow{<>}'",
+      condition = tex_utils.in_mathzone,
+    },
     fmta("\\CArrow{<>}", {
       d(1, get_visual),
-    }),
-  }),
+    })
+  ),
   -- array
   s(
     {
@@ -2521,8 +2522,8 @@ return {
         c(3, { t("width"), t("scale"), t("height") }),
         i(4),
         d(5, get_visual),
-        c(7, { t(""), sn(1, { t("\\captionof{figure}{"), i(1), t("}") }) }),
-        i(6),
+        c(6, { t(""), sn(1, { t("\\captionof{figure}{"), i(1), t("}") }) }),
+        i(7),
         i(0),
       }
     )
@@ -2561,6 +2562,19 @@ return {
       fmta("\\item[<>]", { d(1, get_visual) }),
     }),
   }),
+  -- auto task
+  s({
+    trig = "tk",
+    snippetType = "autosnippet",
+    dscr = "A task",
+    condition = line_begin,
+  }, {
+    c(1, {
+      fmta("\\task <>", { d(1, get_visual) }),
+      fmta("\\task[<>] <>", { i(1), d(2, get_visual) }),
+      fmta("\\task*(<>) <>", { i(1), d(2, get_visual) }),
+    }),
+  }),
   -- itemize
   s(
     {
@@ -2594,6 +2608,37 @@ return {
           fmta("\\sqitem[<>] <>", { i(1), i(2) }),
           fmta("\\item[<>]", { d(1, get_visual) }),
         }),
+        i(0),
+      }
+    )
+  ),
+  -- tasks
+  s(
+    {
+      trig = "tsk",
+      snippetType = "autosnippet",
+      dscr = "A tasks environment",
+      condition = line_begin,
+    },
+    fmta(
+      [[
+      \begin{tasks}<>(<>)
+        <>
+      \end{tasks}
+      <>
+    ]],
+      {
+        c(1, {
+          t(""),
+          fmta("[label=\\protect\\fbox{<>}]", { i(1, "\\Alph*") }),
+          fmta(
+            "[label=\\protect\\fbox{<>}, label-width=<>]",
+            { i(1, "\\Alph*"), i(2, "4ex") }
+          ),
+          fmta("[<>]", { i(1) }),
+        }),
+        i(2, "4"),
+        d(3, get_visual),
         i(0),
       }
     )
