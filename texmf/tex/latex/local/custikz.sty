@@ -16,6 +16,7 @@
 \RequirePackage[european, straightvoltages, cuteinductors]{circuitikz}
 \ctikzset{bipoles/thickness=1}
 \ctikzset{grounds/thickness=1}
+\ctikzset{bipoles/cuteswitch/thickness=0.5}
 \usetikzlibrary{babel}
 \usetikzlibrary{optics}
 \usetikzlibrary{3d}
@@ -66,12 +67,12 @@ pics/strange bar/.style={code={\draw[thick] (-#1,0) -- (#1,0);}}
 
 % For intensity and voltage colored arrows in circuitikz
 \newcommand{\iarronly}[1]{% name
-	\node [currarrow, color=brandeisblue, anchor=center,
+	\node [currarrow, color=brandeisblue, anchor=center, scale=.75,
 		rotate=\ctikzgetdirection{#1-Iarrow}] at (#1-Ipos) {};
 }
 \newcommand{\varronly}[1]{% name
 	\draw [color=red!70] (#1-Vfrom) .. controls (#1-Vcont1)
-	and (#1-Vcont2).. (#1-Vto) node [currarrow,
+	and (#1-Vcont2).. (#1-Vto) node [currarrow, scale=.75,
 			sloped, anchor=tip, allow upside down,pos=1]{};
 }
 % NEED CIRCUITIKZ V. 1.4.3, and corresponding PGF etc
