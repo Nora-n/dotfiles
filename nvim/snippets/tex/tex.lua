@@ -158,7 +158,7 @@ return {
     ]],
       {
         c(1, { t(""), t("*") }),
-        i(2, "-10"),
+        i(2, "-15"),
         i(0),
       }
     )
@@ -634,7 +634,7 @@ return {
   }),
   s(
     {
-      trig = "(q)([easodc])([tvoucr])",
+      trig = "(q)([easodc])([tnvoucr])",
       regTrig = true,
       snippetType = "autosnippet",
       condition = tex_utils.in_mathzone,
@@ -653,7 +653,7 @@ return {
   ),
   s(
     {
-      trig = "(qq)([easodc])([tvoucr])",
+      trig = "(qq)([easodc])([tnvoucr])",
       regTrig = true,
       snippetType = "autosnippet",
       condition = tex_utils.in_mathzone,
@@ -1002,6 +1002,27 @@ return {
       ),
     }),
   }),
+  -- par
+  s({
+    trig = "par",
+    snippetType = "autosnippet",
+    dscr = "Expands 'par' into '\\pa{}'",
+    condition = tex_utils.in_mathzone,
+  }, fmta("\\pa{<>}", { d(1, get_visual) })),
+  -- pac
+  s({
+    trig = "pac",
+    snippetType = "autosnippet",
+    dscr = "Expands 'pac' into '\\pac{}'",
+    condition = tex_utils.in_mathzone,
+  }, fmta("\\pac{<>}", { d(1, get_visual) })),
+  -- paa
+  s({
+    trig = "paa",
+    snippetType = "autosnippet",
+    dscr = "Expands 'paa' into '\\paa{}'",
+    condition = tex_utils.in_mathzone,
+  }, fmta("\\paa{<>}", { d(1, get_visual) })),
   -- ln, log, exp & co
   s({
     trig = "ln",

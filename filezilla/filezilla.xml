@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<FileZilla3 version="3.65.0" platform="*nix">
+<FileZilla3 version="3.66.0" platform="*nix">
 	<Settings>
 		<Setting name="Use Pasv mode">1</Setting>
 		<Setting name="Limit local ports">0</Setting>
@@ -115,7 +115,6 @@
 		<Setting name="Drag and Drop disabled">0</Setting>
 		<Setting name="Disable update footer">0</Setting>
 		<Setting name="Highest shown overlay id">0</Setting>
-		<Setting name="Greeting version">3.65.0</Setting>
 		<Setting name="Sitemanager last selected">0/netflix</Setting>
 		<Setting name="Prompt password save">0</Setting>
 		<Setting name="Site Manager position">0 412 705 1096 509 </Setting>
@@ -129,8 +128,9 @@
 		<Setting name="Remote filelist sortorder">0 0</Setting>
 		<Setting name="Queue column widths">1479 60 180 80 60 100</Setting>
 		<Setting name="Remote filelist colwidths">710 147 80 100 80 85</Setting>
-		<Setting name="Window position and size">0 0 27 1920 965 </Setting>
-		<Setting name="Splitter positions (v2)">97 -323 500000000 234 370 500000000</Setting>
+		<Setting name="Greeting version">3.66.0</Setting>
+		<Setting name="Window position and size">0 4000 787 1920 945 </Setting>
+		<Setting name="Splitter positions (v2)">97 -323 500000000 234 126 500000000</Setting>
 		<Setting name="Tab data" sensitive="1">
 			<Tabs>
 				<Tab connected="1" selected="1">
@@ -145,7 +145,7 @@
 					<BypassProxy>0</BypassProxy>
 					<Name>netflix</Name>
 					<Site>0/netflix</Site>
-					<RemotePath>1 0 4 home 6 public 9 Downloads 67 Sex.Education.S04.COMPLETE.1080p.NF.WEB-DL.DDP5.1.H.264-Archie[TGx]</RemotePath>
+					<RemotePath>1 0 4 home 6 public 9 Downloads</RemotePath>
 					<LocalPath>/home/nora/Videos/</LocalPath>
 				</Tab>
 			</Tabs>

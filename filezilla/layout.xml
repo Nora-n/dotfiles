@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
-<FileZilla3 version="3.65.0" platform="*nix">
-	<Layout Builddate="2023-07-10" Buildtime="16:58:43">
+<FileZilla3 version="3.66.0" platform="*nix">
+	<Layout Builddate="2023-10-23" Buildtime="16:07:40">
 		<Resources>
-			<xrc file="dialogs.xrc" date="1689008323" />
-			<xrc file="netconfwizard.xrc" date="1689008323" />
+			<xrc file="dialogs.xrc" date="1698077260" />
+			<xrc file="netconfwizard.xrc" date="1698077260" />
 		</Resources>
 		<Language id="en_US" date="">
 			<Font font="Cantarell 11" width="834" height="19" />

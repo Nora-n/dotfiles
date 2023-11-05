@@ -745,6 +745,10 @@ literate         = {á}{{\'a}}1
 \newcommand\gpts[1]{\tabto*{-2\leftmargin}\textcolor{ForestGreen}{\llap{/#1~}\tabto{\TabPrevPos}}}
 \newcommand\rpts[1]{\tabto*{-2.5\leftmargin}\textcolor{Red}{\llap{/#1~}\tabto{\TabPrevPos}}}
 \newcommand{\nitem}[1]{\item\gpts{#1}}
+% mathitem to remove space when only equation in item
+% https://tex.stackexchange.com/a/497787
+\newcommand\mnitem[1]{\item\gpts{#1}\leavevmode\vspace*{-\dimexpr\baselineskip+\abovedisplayskip\relax}}
+\newcommand\mitem{\item\leavevmode\vspace*{-\dimexpr\baselineskip+\abovedisplayskip\relax}}
 
 % Bolditemize
 % https://tex.stackexchange.com/a/266229

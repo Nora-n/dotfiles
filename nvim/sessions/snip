@@ -3,7 +3,7 @@ let s:so_save = &g:so | let s:siso_save = &g:siso | setg so=0 siso=0 | setl so=-
 let v:this_session=expand("<sfile>:p")
 silent only
 silent tabonly
-cd ~/.config/nvim/snippets/tex
+cd ~/.config/nvim/snippets/latex
 if expand('%') == '' && !&modified && line('$') <= 1 && getline(1) == ''
   let s:wipebuf = bufnr('%')
 endif
@@ -13,26 +13,23 @@ if &shortmess =~ 'A'
 else
   set shortmess=aoO
 endif
-badd +649 ~/.config/nvim/snippets/tex/tex.lua
-badd +489 ~/.config/texmf/tex/latex/local/cours-preambule.sty
+badd +629 ~/.config/nvim/snippets/tex/tex.lua
+badd +1239 ~/.config/texmf/tex/latex/local/cours-preambule.sty
 badd +16 ~/.config/texmf/tex/latex/local/custikz.sty
 badd +15 ~/.config/nvim/lua/config/keymaps.lua
-badd +28 ~/.config/nvim/snippets/tex/tex.snippets
-badd +324 ~/.config/nvim/snippets/latex/latex.json
+badd +1362 ~/.config/nvim/snippets/tex/tex.snippets
+badd +331 ~/.config/nvim/snippets/latex/latex.json
+badd +223 ~/.config/texmf/tex/latex/local/locdef.sty
 argglobal
 %argdel
-$argadd tex.lua
-edit ~/.config/nvim/snippets/tex/tex.lua
+$argadd ~/.config/nvim/snippets/tex/tex.lua
+edit ~/.config/texmf/tex/latex/local/cours-preambule.sty
 let s:save_splitbelow = &splitbelow
 let s:save_splitright = &splitright
 set splitbelow splitright
 wincmd _ | wincmd |
 vsplit
 1wincmd h
-wincmd w
-wincmd _ | wincmd |
-split
-1wincmd k
 wincmd w
 let &splitbelow = s:save_splitbelow
 let &splitright = s:save_splitright
@@ -45,41 +42,29 @@ set winminwidth=0
 set winwidth=1
 wincmd =
 argglobal
-balt ~/.config/nvim/snippets/tex/tex.snippets
-let s:l = 649 - ((10 * winheight(0) + 22) / 45)
+balt ~/.config/texmf/tex/latex/local/locdef.sty
+let s:l = 1239 - ((22 * winheight(0) + 23) / 46)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 649
-normal! 025|
+keepjumps 1239
+normal! 027|
 wincmd w
 argglobal
-if bufexists(fnamemodify("~/.config/nvim/snippets/tex/tex.snippets", ":p")) | buffer ~/.config/nvim/snippets/tex/tex.snippets | else | edit ~/.config/nvim/snippets/tex/tex.snippets | endif
+if bufexists(fnamemodify("~/.config/texmf/tex/latex/local/locdef.sty", ":p")) | buffer ~/.config/texmf/tex/latex/local/locdef.sty | else | edit ~/.config/texmf/tex/latex/local/locdef.sty | endif
 if &buftype ==# 'terminal'
-  silent file ~/.config/nvim/snippets/tex/tex.snippets
+  silent file ~/.config/texmf/tex/latex/local/locdef.sty
 endif
-balt ~/.config/nvim/lua/config/keymaps.lua
-let s:l = 15 - ((5 * winheight(0) + 10) / 21)
+balt ~/.config/nvim/snippets/latex/latex.json
+let s:l = 1 - ((0 * winheight(0) + 23) / 46)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 15
-normal! 024|
-wincmd w
-argglobal
-if bufexists(fnamemodify("~/.config/nvim/snippets/latex/latex.json", ":p")) | buffer ~/.config/nvim/snippets/latex/latex.json | else | edit ~/.config/nvim/snippets/latex/latex.json | endif
-if &buftype ==# 'terminal'
-  silent file ~/.config/nvim/snippets/latex/latex.json
-endif
-balt ~/.config/nvim/snippets/tex/tex.snippets
-let s:l = 353 - ((4 * winheight(0) + 11) / 23)
-if s:l < 1 | let s:l = 1 | endif
-keepjumps exe s:l
-normal! zt
-keepjumps 353
-normal! 05|
+keepjumps 1
+normal! 0
 wincmd w
 wincmd =
+if exists(':tcd') == 2 | tcd ~/.config | endif
 tabnext 1
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0 && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf
@@ -95,6 +80,7 @@ if filereadable(s:sx)
 endif
 let &g:so = s:so_save | let &g:siso = s:siso_save
 set hlsearch
+nohlsearch
 doautoall SessionLoadPost
 unlet SessionLoad
 " vim: set ft=vim :
