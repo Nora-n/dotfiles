@@ -944,8 +944,8 @@ literate         = {á}{{\'a}}1
     \begin{enumerate}[start=\theqrIndex]
       \stepcounter{qrIndex}
       \switch{%
-        \cswitch{\nitem{#1} #3}{\item #2}%
-      }{%
+        \cswitch{\nitem{#1} #3}{\item #2}
+      }{
         \cswitch{%
           \nitem{#1}#2%
             \begin{answ}%
@@ -960,26 +960,22 @@ literate         = {á}{{\'a}}1
     \begin{enumerate}[start=\theqrIndex]
       \stepcounter{qrIndex}
       \switch{%
-        \cswitch{\item #3}{\item #2}%
-      }{%
+        \cswitch{\item #3}{\item #2}
+      }{
         \cswitch{%
           \item #2%
-            \begin{answ}
-            #3
-            \end{answ}
+            \begin{answ}%
+            #3%
+            \end{answ}%
           }{
             \item #2%
-        }%
-      }%
-    \end{enumerate}%
+        }
+      }
+    \end{enumerate}
   }
 }
 
 % Cannibalize the rest
-% compteur d'exercices
-\newcounter{exoIndex}
-\setcounter{exoIndex}{0}
-
 \newtoggle{corrigeEtendu}
 \toggletrue{corrigeEtendu}
 
@@ -992,75 +988,38 @@ literate         = {á}{{\'a}}1
 \newtoggle{sujet}
 \toggletrue{sujet}
 
-\newcommand{\sujetUniquement}[1]{
-  % apparait	si sujet == vrai et corrigé == faux
-  \iftoggle{sujet}{
-    \iftoggle{corrige}{}{
-      #1
-    }
-  }{}
-}
-
-\newcommand{\siCorrige}[1]{
-  % apparait corrigé == vrai
-  \iftoggle{corrige}{
-    #1
-  }{}
-}
-
 \newcommand{\version}{original}
-
-% titre exercice
-\newcommand{\titreExercice}[1]{
-	\stepcounter{exoIndex}
-	\section{#1}
-}
-% titre partie
-\newcommand{\partie}[2][]{
-  \showAccordingToVersion[#1]{
-    \subsection{#2}
-  }
-}
-
-% titre sous partie
-\newcommand{\sousPartie}[2][]{
-  \showAccordingToVersion[#1]{
-    \subsubsection{#2}
-  }
-}
-\newcommand{\enonce}[2][]{
-  \iftoggle{enonce}{
-    \showAccordingToVersion[#1]{
-      #2
-    }
-  }{}
-}
-
-\newcommand{\showAccordingToVersion}[2][]{
-  \exploregroups
-  \ifthenelse{\equal{#1}{}}{
-    % sans argument opt, la question est toujours affichée
-    #2
-  }{
-    % si argument opt, on traite au cas par cas
-    \IfSubStr{#1 }{\version}{
-      % si la liste des tags de version contient la valeur de \version			
-      #2
-    }{
-      % sinon, on affiche rien !			
-    }
-  }
-}
-
-%%%%%%%%%%%%%%%%%
-%%%% Astuces %%%%
-%%%%%%%%%%%%%%%%%
 
 % gestion des astuces
 \newtoggle{astuces}
 \togglefalse{astuces}
 \newtoggle{astucesPresentes}
 \togglefalse{astucesPresentes}
+
+	% titre partie
+	\newcommand{\partie}[2][]{
+		\showAccordingToVersion[#1]{
+			\subsection{#2}
+		}
+	}
+
+	% titre sous partie
+	\newcommand{\sousPartie}[2][]{
+		\showAccordingToVersion[#1]{
+			\subsubsection{#2}
+		}
+	}
+	\newcommand{\enonce}[2][]{
+		\iftoggle{enonce}{
+			\showAccordingToVersion[#1]{
+				#2
+			}
+		}{}
+	}
+
+%%%%%%%%%%%%%%%%%
+%%%% Astuces %%%%
+%%%%%%%%%%%%%%%%%
 
 \newsavebox{\hints}
 \setbox\hints=\vbox{}

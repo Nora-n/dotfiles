@@ -310,30 +310,6 @@ return {
       }
     )
   ),
-  -- QR
-  s(
-    {
-      trig = "QR",
-      snippetType = "autosnippet",
-      dscr = "Expands 'QR' into '\\QR{<>}{<>}'",
-      condition = line_begin,
-    },
-    fmta(
-      [[
-      \QR{
-        <>
-      }{
-        <>
-      }
-      <>
-      ]],
-      {
-        d(1, get_visual),
-        i(2, "solu"),
-        i(0),
-      }
-    )
-  ),
   -- switch
   s(
     {
@@ -1355,7 +1331,7 @@ return {
   }, fmta("\\dcancel{<>}", { d(1, get_visual) })),
   -- delta
   s({
-    trig = "del",
+    trig = "de",
     snippetType = "autosnippet",
     dscr = "Expands 'de' into '\\de{}'",
     condition = tex_utils.in_mathzone,
@@ -1502,39 +1478,39 @@ return {
 	      	\hline
 	      	\multicolumn{2}{|c|}{
 	      		$\xmathstrut{\rhgt}$
-	      	\textbf{Équation}}       &
-	      	$<>\ce{<>}$              & $+$                 &
-	      	$<>\ce{<>}$              & $\ra$               &
-	      	$<>\ce{<>}$              & $+$                 &
-	      	$<>\ce{<>}$                                    \\
+	      	\textbf{Équation}}     &
+	      	$<>\ce{<>}$            & $+$                 &
+	      	$<>\ce{<>}$            & $\ra$               &
+	      	$<>\ce{<>}$            & $+$                 &
+	      	$<>\ce{<>}$                                  \\
 	      	\hline
 	      	$\xmathstrut{\rhgt}$
-	      	\textit{État}            & \textit{Avance\mnt} &
-	      	$n(\ce{<>})$             & \vline              &
-	      	$n(\ce{<>})$             & \vline              &
-	      	$n(\ce{<>})$             & \vline              &
-	      	$n(\ce{<>})$                                   \\
+	      	\textit{État}          & \textit{Avance\mnt} &
+	      	$n(\ce{<>})$           & \vline              &
+	      	$n(\ce{<>})$           & \vline              &
+	      	$n(\ce{<>})$           & \vline              &
+	      	$n(\ce{<>})$                                 \\
 	      	\hline
 	      	$\xmathstrut{\rhgt}$
-	      	Initial                  & $<> = 0$           &
-	      	$n_0(\ce{<>})$           & \vline              &
-	      	$n_0(\ce{<>})$           & \vline              &
-	      	$n_0(\ce{<>})$           & \vline              &
-	      	$n_0(\ce{<>})$                                 \\
+	      	Initial                & $\xi = 0$           &
+	      	$n_0(\ce{<>})$         & \vline              &
+	      	$n_0(\ce{<>})$         & \vline              &
+	      	$n_0(\ce{<>})$         & \vline              &
+	      	$n_0(\ce{<>})$                               \\
 	      	\hline
 	      	$\xmathstrut{\rhgt}$
-	      	Interm.                  & $<>$               &
-	      	$n_0(\ce{<>}) - <>\xi$   & \vline              &
-	      	$n_0(\ce{<>}) - <>\xi$   & \vline              &
-	      	$n_0(\ce{<>}) + <>\xi$   & \vline              &
-	      	$n_0(\ce{<>}) + <>\xi$                         \\
+	      	Interm.                & $\xi$               &
+	      	$n_0(\ce{<>}) - <>\xi$ & \vline              &
+	      	$n_0(\ce{<>}) - <>\xi$ & \vline              &
+	      	$n_0(\ce{<>}) + <>\xi$ & \vline              &
+	      	$n_0(\ce{<>}) + <>\xi$                       \\
 	      	\hline
 	      	$\xmathstrut{\rhgt}$
-	      	Final                    & $<> = <>_f$             &
-	      	$n_0(\ce{<>}) - <>\xi_f$ & \vline              &
-	      	$n_0(\ce{<>}) - <>\xi_f$ & \vline              &
-	      	$n_0(\ce{<>}) + <>\xi_f$ & \vline              &
-	      	$n_0(\ce{<>}) + <>\xi_f$                       \\
+	      	Final                  & $\xi_f$             &
+	      	$n_0(\ce{<>}) - <>\xi$ & \vline              &
+	      	$n_0(\ce{<>}) - <>\xi$ & \vline              &
+	      	$n_0(\ce{<>}) + <>\xi$ & \vline              &
+	      	$n_0(\ce{<>}) + <>\xi$                       \\
 	      	\hline
 	      \end{tabularx}
     \end{center}
@@ -1554,12 +1530,10 @@ return {
         rep(5),
         rep(7),
         rep(9),
-        i(14, "\\xi"),
         rep(3),
         rep(5),
         rep(7),
         rep(9),
-        rep(14),
         rep(3),
         rep(2),
         rep(5),
@@ -1568,8 +1542,6 @@ return {
         rep(6),
         rep(9),
         rep(8),
-        rep(14),
-        rep(14),
         rep(3),
         rep(2),
         rep(5),
@@ -1605,25 +1577,25 @@ return {
 	      	$<>\ce{<>}$                              \\
 	      	\hline
 	      	$\xmathstrut{\rhgt}$
-	      	Initial            & $<> = 0$           &
+	      	Initial            & $\xi = 0$           &
 	      	$<>$               & \vline              &
 	      	$<>$               & \vline              &
 	      	$<>$               & \vline              &
 	      	$<>$                                     \\
 	      	\hline
 	      	$\xmathstrut{\rhgt}$
-	      	Interm.            & $<>$               &
+	      	Interm.            & $\xi$               &
 	      	$<> - <>\xi$       & \vline              &
 	      	$<> - <>\xi$       & \vline              &
 	      	$<> + <>\xi$       & \vline              &
 	      	$<> + <>\xi$                             \\
 	      	\hline
 	      	$\xmathstrut{\rhgt}$
-	      	Final              & $<> = <>_f$         &
-	      	$<> - <>\xi_f$     & \vline              &
-	      	$<> - <>\xi_f$     & \vline              &
-	      	$<> + <>\xi_f$     & \vline              &
-	      	$<> + <>\xi_f$                           \\
+	      	Final              & $\xi_f$             &
+	      	$<> - <>\xi$       & \vline              &
+	      	$<> - <>\xi$       & \vline              &
+	      	$<> + <>\xi$       & \vline              &
+	      	$<> + <>\xi$                             \\
 	      	\hline
 	      \end{tabularx}
     \end{center}
@@ -1639,29 +1611,25 @@ return {
         i(7),
         i(8),
         i(9),
-        i(10, "\\xi"),
+        i(10),
         i(11),
         i(12),
         i(13),
-        i(14),
         rep(10),
-        rep(11),
         rep(2),
-        rep(12),
+        rep(11),
         rep(4),
-        rep(13),
+        rep(12),
         rep(6),
-        rep(14),
+        rep(13),
         rep(8),
         rep(10),
-        rep(10),
-        rep(11),
         rep(2),
-        rep(12),
+        rep(11),
         rep(4),
-        rep(13),
+        rep(12),
         rep(6),
-        rep(14),
+        rep(13),
         rep(8),
         i(0),
       }
@@ -1735,12 +1703,6 @@ return {
     trig = "cel",
     dscr = "Expands 'cel' into '\\degreeCelsius'",
   }, { t("\\degreeCelsius") }),
-  s({
-    trig = "°",
-    wordTrig = false,
-    snippetType = "autosnippet",
-    dscr = "Expands '°' into '\\degree'",
-  }, { t("\\degree") }),
   -- num
   s(
     {
