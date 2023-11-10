@@ -320,9 +320,9 @@ return {
     },
     fmta(
       [[
-      \QR{
+      \QR{%
         <>
-      }{
+      }{%
         <>
       }
       <>
@@ -344,7 +344,7 @@ return {
     },
     fmta(
       [[
-      \switch{
+      \sswitch{
         <>
       }{
         <>
@@ -364,33 +364,11 @@ return {
       trig = "csw",
       wordTrig = true,
       snippetType = "autosnippet",
-      dscr = "Expands 'csw' into '\\cswitch{}{<>}'",
+      dscr = "Expands 'csw' into '\\csw{<>}'",
     },
     fmta(
       [[
-      \csw{<>}{
-        <>
-      }
-      <>
-      ]],
-      {
-        i(1, "white"),
-        d(2, get_visual),
-        i(0),
-      }
-    )
-  ),
-  -- highlight switch white
-  s(
-    {
-      trig = "hsw",
-      wordTrig = true,
-      snippetType = "autosnippet",
-      dscr = "Expands 'hsw' into '\\hswitch{}{<>}'",
-    },
-    fmta(
-      [[
-      \hsw{
+      \csw{
         <>
       }
       <>
@@ -401,13 +379,34 @@ return {
       }
     )
   ),
+  -- highlight switch white
+  -- s(
+  --   {
+  --     trig = "hsw",
+  --     wordTrig = true,
+  --     snippetType = "autosnippet",
+  --     dscr = "Expands 'hsw' into '\\hswitch{}{<>}'",
+  --   },
+  --   fmta(
+  --     [[
+  --     \hsw{
+  --       <>
+  --     }
+  --     <>
+  --     ]],
+  --     {
+  --       d(1, get_visual),
+  --       i(0),
+  --     }
+  --   )
+  -- ),
   -- switch white
   s(
     {
       trig = "wsw",
       wordTrig = true,
       snippetType = "autosnippet",
-      dscr = "Expands 'wsw' into '\\wsw{}{<>}'",
+      dscr = "Expands 'wsw' into '\\wsw{<>}'",
     },
     fmta(
       [[

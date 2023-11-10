@@ -718,7 +718,7 @@ literate         = {á}{{\'a}}1
 \setlist[itemize,2]{label=$\triangleright$, leftmargin=20pt}
 \setlist[itemize,3]{leftmargin=30pt}
 
-% Setup clitem et sqitem
+% Setup special items
 \newif\iffitem
 	\newcommand{\setupmodenumerate}{%
 	\global\fitemfalse
@@ -838,12 +838,23 @@ literate         = {á}{{\'a}}1
 		#1%
 	}
 }
-\newcommand{\switch}[2]{
+\newcommand{\sswitch}[2]{
 	\iftoggle{student}{%
 		#1%
 	}{%
 		#2%
 	}%
+}
+\newcommand{\ifcorrige}[1]{
+	\iftoggle{corrige}{%
+		#1%
+	}{}
+}
+\newcommand{\ifenonce}[1]{
+	\iftoggle{enonce}{%
+	}{
+		#1%
+  }
 }
 \newcommand{\cswitch}[2]{
 	\iftoggle{corrige}{%
@@ -852,15 +863,22 @@ literate         = {á}{{\'a}}1
 		#2%
 	}%
 }
+% Setup color
+\newcommand{\mycol}{black}
+\newcommand{\csw}[1]{%
+	\textcolor{\sswitch{white!10}{\mycol}}{%
+		#1%
+	}%
+}
 % Automatic white
 \newcommand{\wsw}[1]{%
-	\textcolor{\switch{white!10}{black!100}}{%
+	\textcolor{\sswitch{white!10}{black!100}}{%
 		#1%
 	}%
 }
 % For tablette use
 \newcommand{\psw}[1]{%
-	\textcolor{\switch{white!10}{gray!100}}{%
+	\textcolor{\sswitch{white!10}{gray!100}}{%
 		#1%
 	}%
 }
@@ -914,66 +932,10 @@ literate         = {á}{{\'a}}1
 }
 
 % Make QR like BPEP
-\newcounter{qrIndex} % compteur pour les questions
-\newcounter{qrIndexSaved}
-\newcommand{\save}{\setcounter{qrIndexSaved}{\theqrIndex}}
-\newcommand{\retrieve}{\setcounter{qrIndex}{\theqrIndexSaved}}
-\newcommand{\resetQ}{\setcounter{qrIndex}{1}}
-
-\newenvironment{blocQR}[1][]{
-  \save
-  \begin{enumerate}[start=\theqrIndexSaved]
-    \resetQ
-    \item
-    }{
-  \end{enumerate}
-  \retrieve
-  \stepcounter{qrIndex}
-}
-
-\newenvironment{answ}{
-	\headline{\small Réponse}
-	% \vspace*{-20pt}%
-}
-{
-	\tailline{\diamond}
-}
-
-\NewDocumentCommand{\QR}{omm}{%
-  \IfValueTF{#1}{
-    \begin{enumerate}[start=\theqrIndex]
-      \stepcounter{qrIndex}
-      \switch{%
-        \cswitch{\nitem{#1} #3}{\item #2}%
-      }{%
-        \cswitch{%
-          \nitem{#1}#2%
-            \begin{answ}%
-            #3%
-            \end{answ}%
-          }{
-            \item #2%
-        }
-      }
-    \end{enumerate}
-  }{
-    \begin{enumerate}[start=\theqrIndex]
-      \stepcounter{qrIndex}
-      \switch{%
-        \cswitch{\item #3}{\item #2}%
-      }{%
-        \cswitch{%
-          \item #2%
-            \begin{answ}
-            #3
-            \end{answ}
-          }{
-            \item #2%
-        }%
-      }%
-    \end{enumerate}%
-  }
-}
+\newlist{blocQR}{enumerate}{2}
+\setlist[blocQR,1]{leftmargin=10pt, resume, label=\arabic*)}
+\setlist[blocQR,2]{leftmargin=20pt, resume, label=\alph* --}
+\newcommand{\resetQ}{\restartlist{blocQR}}
 
 % Cannibalize the rest
 % compteur d'exercices
@@ -993,7 +955,7 @@ literate         = {á}{{\'a}}1
 \toggletrue{sujet}
 
 \newcommand{\sujetUniquement}[1]{
-  % apparait	si sujet == vrai et corrigé == faux
+  % apparait si sujet == vrai et corrigé == faux
   \iftoggle{sujet}{
     \iftoggle{corrige}{}{
       #1
@@ -1007,7 +969,138 @@ literate         = {á}{{\'a}}1
     #1
   }{}
 }
+\newcommand{\enonce}[2][]{
+  \iftoggle{enonce}{
+    \showAccordingToVersion[#1]{
+      #2
+    }
+  }{}
+}
 
+\newenvironment{answ}{
+	\headline{\small Réponse}
+}
+{
+	\tailline{\diamond}
+}
+
+\NewDocumentCommand{\QR}{o+m+m}{%
+  \iftoggle{bareme}{ % Force l'affichage du bareme quoiqu'il en soit
+    \begin{blocQR}
+      \iftoggle{student}{ % pour version student
+        \iftoggle{corrige}{ % version avec corrigé : affiche juste la correction
+          \nitem{#1}#3%
+          }{ % version sans corrigé
+          \nitem{#1}#2%
+          }%
+      }{% pour version prof
+        \iftoggle{corrige}{% pour version avec corrigé : question ET réponse
+          \nitem{#1}#2%
+            \begin{answ}%
+            #3%
+            \end{answ}%
+          }{ % version sans corrigé : que la question.
+            \item #2%
+        }
+      }
+    \end{blocQR}
+  }{
+    \IfValueTF{#1}{ % Si [nb], ajoute un nombre de points
+      % \iftoggle{bareme}{ % si bareme == true, ajoute les points dans [nb]
+      \begin{blocQR}
+        \iftoggle{student}{ % pour version student
+          \iftoggle{corrige}{ % version avec corrigé : affiche juste la correction
+            \nitem{#1}#3%
+            }{ % version sans corrigé
+            \item #2%
+            }%
+        }{% pour version prof
+          \iftoggle{corrige}{% pour version avec corrigé : question ET réponse
+            \nitem{#1}#2%
+              \begin{answ}%
+              #3%
+              \end{answ}%
+            }{ % version sans corrigé : que la question.
+              \item #2%
+          }
+        }
+      \end{blocQR}
+    }{ % Si bareme == false, pas de points
+      \begin{blocQR}
+        \iftoggle{student}{% pour version student
+          \iftoggle{corrige}{% version avec corrigé : affiche juste la correction
+            \item #3%
+            }{
+            \item #2%
+            }%
+        }{%
+          \iftoggle{corrige}{% pour version avec corrigé : question ET réponse
+            \item #2%
+              \begin{answ}
+              #3
+              \end{answ}
+            }{ % version sans corrigé : que la question.
+              \item #2%
+          }%
+        }%
+      \end{blocQR}%
+    }
+  }
+}
+
+% QR of actual BPEP
+\newcounter{qrIndex} % compteur pour les questions
+\newcounter{qrIndexSaved}
+\newcommand{\save}{\setcounter{qrIndexSaved}{\theqrIndex}}
+\newcommand{\retrieve}{\setcounter{qrIndex}{\theqrIndexSaved}}
+\newcommand{\resetQold}{\setcounter{qrIndex}{1}}
+% ajout d'une question
+\RequirePackage{twoopt} % permet de mettre 2 options facultatives pour le barème
+\newcommandtwoopt{\QRold}[4][][]{ % cette fonction gère l'affichage suivant la version. La modifier est considéré comme dangereux.	
+  \showAccordingToVersion[#1]{
+    \begin{enumerate}[start=\theqrIndex]
+      \stepcounter{qrIndex}
+      \item %\qrIndex
+            \iftoggle{sujet}{
+              \addQq{#3}
+            }{}
+
+            \iftoggle{corrige}{
+              \addQr{#4}
+            }{}
+
+            \iftoggle{bareme}{
+              \addQb{#2}{#4}
+            }{}
+    \end{enumerate}
+  }
+}
+
+\newcommand{\addQq}[1]{ % la question à afficher en mode corrigé : peut être modifié
+  \iftoggle{corrige}{
+    #1 % affichage de la question en mode corrigé
+  }{
+    #1 % affichage hors mode corrigé
+  }
+}
+
+
+\newcommand{\addQr}[1]{ % la réponse à afficher en mode corrigé : peut être modifié
+  \mbox{}\\	\textbf{Réponse : } \mbox{} \\
+  #1
+}
+
+\newcommand{\addQb}[2]{
+  \noindent
+  \begin{minipage}[t]{0.9\linewidth}
+  #2
+  \end{minipage}\hfill\vrule\hfill
+  \begin{minipage}[t]{0.08\linewidth}
+  \centering
+  #1 pt(s)
+  \end{minipage}
+  \hrule
+}
 \newcommand{\version}{original}
 
 % titre exercice
@@ -1027,13 +1120,6 @@ literate         = {á}{{\'a}}1
   \showAccordingToVersion[#1]{
     \subsubsection{#2}
   }
-}
-\newcommand{\enonce}[2][]{
-  \iftoggle{enonce}{
-    \showAccordingToVersion[#1]{
-      #2
-    }
-  }{}
 }
 
 \newcommand{\showAccordingToVersion}[2][]{
