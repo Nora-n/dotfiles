@@ -22,7 +22,7 @@
 \newcommand{\hand}{\ding{45}}%
 % Knuth and danger \dbend
 \RequirePackage{manfnt}
-% Selfmade with stackrel
+% Selfmade with skalerel
 % https://tex.stackexchange.com/a/483175/284518
 \RequirePackage{stackengine}
 \RequirePackage{scalerel}
@@ -298,10 +298,12 @@
 	\par\noindent\raisebox{.8ex}{%
 		\makebox[1\linewidth]{%
 			\hrulefill%
+      % \fullhrulefill
 			\hspace{1ex}%
 			\raisebox{-.8ex}{\Large\bfseries#1}
 			\hspace{.15ex}%
 			\hrulefill%
+      % \fullhrulefill
 		}
 	}
 }
@@ -933,8 +935,9 @@ literate         = {á}{{\'a}}1
 
 % Make QR like BPEP
 \newlist{blocQR}{enumerate}{2}
-\setlist[blocQR,1]{leftmargin=10pt, resume, label=\arabic*)}
-\setlist[blocQR,2]{leftmargin=20pt, resume, label=\alph* --}
+\setlist[blocQR]{resume}
+\setlist[blocQR,1]{leftmargin=10pt, label=\arabic*)}
+\setlist[blocQR,2]{leftmargin=20pt, label=\alph* --}
 \newcommand{\resetQ}{\restartlist{blocQR}}
 
 % Cannibalize the rest
@@ -977,70 +980,102 @@ literate         = {á}{{\'a}}1
   }{}
 }
 
+% Thicker hrulefill
+\makeatletter
+  \def\vhrulefill#1{\leavevmode\leaders\hrule\@height#1\hfill \kern\z@}
+\makeatother
+% For centered and fullhrule before and after text
+\newcommand*\fullheadline[1]{%
+	\par\noindent\raisebox{.8ex}{%
+		\makebox[1\linewidth]{%
+			% \hrulefill%
+      \vhrulefill{2pt}
+      \hspace{1ex}%
+			\raisebox{-.4ex}{\bfseries#1}
+			\hspace{.15ex}%
+			% \hrulefill%
+      \vhrulefill{2pt}
+l%
+		}
+	}
+}
+\newcommand*\fulltailline[1]{%
+	\par\noindent\raisebox{.8ex}{%
+		\makebox[1\linewidth]{%
+			% \hrulefill%
+      \vhrulefill{2pt}
+			\hspace{1ex}%
+			\raisebox{-1.0ex}{$\scaleto{#1}{10pt}$}
+			\hspace{.15ex}%
+      \vhrulefill{2pt}
+			% \hrulefill%
+		}
+	}
+}
 \newenvironment{answ}{
-	\headline{\small Réponse}
+	\fullheadline{Réponse}
 }
 {
-	\tailline{\diamond}
+	\fulltailline{\diamond}
 }
 
-\NewDocumentCommand{\QR}{o+m+m}{%
+\NewDocumentCommand{\QR}{D<>{}o+m+m}{%
   \iftoggle{bareme}{ % Force l'affichage du bareme quoiqu'il en soit
-    \begin{blocQR}
+    \begin{blocQR}#1
       \iftoggle{student}{ % pour version student
         \iftoggle{corrige}{ % version avec corrigé : affiche juste la correction
-          \nitem{#1}#3%
+          \nitem{#2}#4%
           }{ % version sans corrigé
-          \nitem{#1}#2%
+          \nitem{#2}#3%
           }%
       }{% pour version prof
         \iftoggle{corrige}{% pour version avec corrigé : question ET réponse
-          \nitem{#1}#2%
+          \nitem{#2}#3%
             \begin{answ}%
-            #3%
+            #4%
             \end{answ}%
           }{ % version sans corrigé : que la question.
-            \item #2%
+            \item #3%
         }
       }
     \end{blocQR}
   }{
-    \IfValueTF{#1}{ % Si [nb], ajoute un nombre de points
+    \IfValueTF{#2}{ % Si [nb], ajoute un nombre de points
       % \iftoggle{bareme}{ % si bareme == true, ajoute les points dans [nb]
-      \begin{blocQR}
+      \begin{blocQR}#1
         \iftoggle{student}{ % pour version student
           \iftoggle{corrige}{ % version avec corrigé : affiche juste la correction
-            \nitem{#1}#3%
+            \nitem{#2}#4%
             }{ % version sans corrigé
-            \item #2%
+            \item #3%
             }%
         }{% pour version prof
           \iftoggle{corrige}{% pour version avec corrigé : question ET réponse
-            \nitem{#1}#2%
+            \nitem{#2}#3%
               \begin{answ}%
-              #3%
+              #4%
               \end{answ}%
             }{ % version sans corrigé : que la question.
-              \item #2%
+              \item #3%
           }
         }
       \end{blocQR}
     }{ % Si bareme == false, pas de points
-      \begin{blocQR}
+      \begin{blocQR}#1
         \iftoggle{student}{% pour version student
           \iftoggle{corrige}{% version avec corrigé : affiche juste la correction
-            \item #3%
+            \item #4%
             }{
-            \item #2%
+            \item #3%
             }%
         }{%
           \iftoggle{corrige}{% pour version avec corrigé : question ET réponse
-            \item #2%
+            \item #3%
               \begin{answ}
-              #3
+              #4
               \end{answ}
             }{ % version sans corrigé : que la question.
-              \item #2%
+              \item #3%
           }%
         }%
       \end{blocQR}%
