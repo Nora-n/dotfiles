@@ -361,8 +361,8 @@ return {
   -- cswitch
   s(
     {
-      trig = "csw",
-      wordTrig = true,
+      trig = "([^\\])csw",
+      regTrig = true,
       snippetType = "autosnippet",
       dscr = "Expands 'csw' into '\\csw{<>}'",
     },
@@ -403,8 +403,8 @@ return {
   -- switch white
   s(
     {
-      trig = "wsw",
-      wordTrig = true,
+      trig = "([^\\])wsw",
+      regTrig = true,
       snippetType = "autosnippet",
       dscr = "Expands 'wsw' into '\\wsw{<>}'",
     },
@@ -421,11 +421,10 @@ return {
       }
     )
   ),
-  -- switch blue
+  -- switch gray
   s(
     {
       trig = "([^\\])psw",
-      wordTrig = true,
       regTrig = true,
       snippetType = "autosnippet",
       dscr = "Expands 'psw' into '\\psw{}{<>}'",
@@ -446,6 +445,123 @@ return {
       }
     )
   ),
+  -- force white
+  s(
+    {
+      trig = "([^\\])wht",
+      regTrig = true,
+      snippetType = "autosnippet",
+      dscr = "Expands 'wht' into '\\wht{}{<>}'",
+    },
+    fmta(
+      [[
+      <>\wht{<>}
+      <>
+      ]],
+      {
+        f(function(_, snip)
+          return snip.captures[1]
+        end),
+        d(1, get_visual),
+        i(0),
+      }
+    )
+  ),
+  -- leftcenters & co
+  s(
+    {
+      trig = "lfc",
+      snippetType = "autosnippet",
+      dscr = "Expands 'lfc' into '\\leftcenters{<>}{<>}'",
+      condition = line_begin,
+    },
+    fmta(
+      [[
+      \leftcenters{%
+        <>
+      }{%
+        <>
+      }
+      <>
+      ]],
+      {
+        d(1, get_visual),
+        i(2),
+        i(0),
+      }
+    )
+  ),
+  s(
+    {
+      trig = "lrc",
+      snippetType = "autosnippet",
+      dscr = "Expands 'lrc' into '\\leftrightcenters{<>}{<>}{<>}'",
+      condition = line_begin,
+    },
+    fmta(
+      [[
+      \leftrightcenters{%
+        <>
+      }{%
+        <>
+      }{%
+        <>
+      }
+      <>
+      ]],
+      {
+        d(1, get_visual),
+        i(2),
+        i(3),
+        i(0),
+      }
+    )
+  ),
+  s(
+    {
+      trig = "rgc",
+      snippetType = "autosnippet",
+      dscr = "Expands 'rgc' into '\\rightcenters{<>}{<>}'",
+      condition = line_begin,
+    },
+    fmta(
+      [[
+      \rightcenters{%
+        <>
+      }{%
+        <>
+      }
+      <>
+      ]],
+      {
+        d(1, get_visual),
+        i(2),
+        i(0),
+      }
+    )
+  ),
+  -- enonce
+  s(
+    {
+      trig = "ennc",
+      snippetType = "autosnippet",
+      dscr = "Expands 'ennc' into '\\ennc{<>}'",
+      condtion = line_begin,
+    },
+    fmta(
+      [[
+      \enonce{%
+        <>
+      }
+      <>
+      ]],
+      {
+        d(1, get_visual),
+        i(0),
+      }
+    )
+  ),
+  -- power minus one
   s(
     {
       trig = "([^\\])mma",
@@ -547,6 +663,14 @@ return {
     condition = tex_utils.in_mathzone,
   }, {
     t("\\w"),
+  }),
+  s({
+    trig = "@W",
+    wordTrig = false,
+    snippetType = "autosnippet",
+    condition = tex_utils.in_mathzone,
+  }, {
+    t("\\W"),
   }),
   s({
     trig = "@O",
@@ -733,7 +857,7 @@ return {
     condition = tex_utils.in_mathzone,
   }, { t("\\times ") }),
   s({
-    trig = "<=",
+    trig = "<= ",
     snippetType = "autosnippet",
     dscr = "leq",
     condition = tex_utils.in_mathzone,
@@ -1061,24 +1185,24 @@ return {
   }, fmta("\\log <>", { d(1, get_visual) })),
   s(
     {
-      trig = "xx",
+      trig = "xp",
       wordTrig = false,
       snippetType = "autosnippet",
-      dscr = "Expands 'xx' into '\\exp'",
+      dscr = "Expands 'xp' into '\\exp'",
       condition = tex_utils.in_mathzone,
     },
     fmta("\\exp<>", {
       c(1, {
+        fmta("<>", { d(1, get_visual) }),
         fmta("(<>)", { d(1, get_visual) }),
-        fmta("\\left( <> \\right)", { d(1, get_visual) }),
       }),
     })
   ),
   s({
-    trig = "xp",
+    trig = "xx",
     wordTrig = false,
     snippetType = "autosnippet",
-    dscr = "Expands 'xp' into 'e^{}'",
+    dscr = "Expands 'xx' into 'e^{}'",
     condition = tex_utils.in_mathzone,
   }, fmta("\\exr^{<>}", { d(1, get_visual) })),
   s({
@@ -1523,17 +1647,17 @@ return {
 	      	\hline
 	      	$\xmathstrut{\rhgt}$
 	      	Interm.                  & $<>$               &
-	      	$n_0(\ce{<>}) - <>\xi$   & \vline              &
-	      	$n_0(\ce{<>}) - <>\xi$   & \vline              &
-	      	$n_0(\ce{<>}) + <>\xi$   & \vline              &
-	      	$n_0(\ce{<>}) + <>\xi$                         \\
+	      	$n_0(\ce{<>}) - <><>$   & \vline              &
+	      	$n_0(\ce{<>}) - <><>$   & \vline              &
+	      	$n_0(\ce{<>}) + <><>$   & \vline              &
+	      	$n_0(\ce{<>}) + <><>$                         \\
 	      	\hline
 	      	$\xmathstrut{\rhgt}$
 	      	Final                    & $<> = <>_f$             &
-	      	$n_0(\ce{<>}) - <>\xi_f$ & \vline              &
-	      	$n_0(\ce{<>}) - <>\xi_f$ & \vline              &
-	      	$n_0(\ce{<>}) + <>\xi_f$ & \vline              &
-	      	$n_0(\ce{<>}) + <>\xi_f$                       \\
+	      	$n_0(\ce{<>}) - <><>_f$ & \vline              &
+	      	$n_0(\ce{<>}) - <><>_f$ & \vline              &
+	      	$n_0(\ce{<>}) + <><>_f$ & \vline              &
+	      	$n_0(\ce{<>}) + <><>_f$                       \\
 	      	\hline
 	      \end{tabularx}
     \end{center}
@@ -1561,22 +1685,30 @@ return {
         rep(14),
         rep(3),
         rep(2),
+        rep(14),
         rep(5),
         rep(4),
+        rep(14),
         rep(7),
         rep(6),
+        rep(14),
         rep(9),
         rep(8),
+        rep(14),
         rep(14),
         rep(14),
         rep(3),
         rep(2),
+        rep(14),
         rep(5),
         rep(4),
+        rep(14),
         rep(7),
         rep(6),
+        rep(14),
         rep(9),
         rep(8),
+        rep(14),
         i(0),
       }
     )
@@ -1593,9 +1725,9 @@ return {
     \begin{center}
 	      \def\rhgt{<>}
         \centering
-	      \begin{tabularx}{\linewidth}{|l|c|YdYdYdY|}
+	      \begin{tabularx}{\linewidth}{|l|c||YdYdYdY|}
 	      	\hline
-	      	\multicolumn{2}{|c|}{
+	      	\multicolumn{2}{|c||}{
 	      		$\xmathstrut{\rhgt}$
 	      	\textbf{Équation}} &
 	      	$<>\ce{<>}$        & $+$                 &
@@ -1612,17 +1744,17 @@ return {
 	      	\hline
 	      	$\xmathstrut{\rhgt}$
 	      	Interm.            & $<>$               &
-	      	$<> - <>\xi$       & \vline              &
-	      	$<> - <>\xi$       & \vline              &
-	      	$<> + <>\xi$       & \vline              &
-	      	$<> + <>\xi$                             \\
+	      	$<> - <><>$       & \vline              &
+	      	$<> - <><>$       & \vline              &
+	      	$<> + <><>$       & \vline              &
+	      	$<> + <><>$                             \\
 	      	\hline
 	      	$\xmathstrut{\rhgt}$
 	      	Final              & $<> = <>_f$         &
-	      	$<> - <>\xi_f$     & \vline              &
-	      	$<> - <>\xi_f$     & \vline              &
-	      	$<> + <>\xi_f$     & \vline              &
-	      	$<> + <>\xi_f$                           \\
+	      	$<> - <><>_f$     & \vline              &
+	      	$<> - <><>_f$     & \vline              &
+	      	$<> + <><>_f$     & \vline              &
+	      	$<> + <><>_f$                           \\
 	      	\hline
 	      \end{tabularx}
     \end{center}
@@ -1646,22 +1778,134 @@ return {
         rep(10),
         rep(11),
         rep(2),
+        rep(10),
         rep(12),
         rep(4),
+        rep(10),
         rep(13),
         rep(6),
+        rep(10),
         rep(14),
         rep(8),
+        rep(10),
         rep(10),
         rep(10),
         rep(11),
         rep(2),
+        rep(10),
         rep(12),
         rep(4),
+        rep(10),
         rep(13),
         rep(6),
+        rep(10),
         rep(14),
         rep(8),
+        rep(10),
+        i(0),
+      }
+    )
+  ),
+  s(
+    {
+      trig = "tabg",
+      snippetType = "autosnippet",
+      dscr = "Expands 'tabg' into a tableau d'avancement numérique avec gaz",
+      condition = line_begin,
+    },
+    fmta(
+      [[
+    \begin{center}
+	      \def\rhgt{<>}
+        \centering
+	      \begin{tabularx}{\linewidth}{|l|c||YdYdYdY||Y|}
+	      	\hline
+	      	\multicolumn{2}{|c||}{
+	      		$\xmathstrut{\rhgt}$
+	      	\textbf{Équation}} &
+	      	$<>\ce{<>}$        & $+$                 &
+	      	$<>\ce{<>}$        & $\ra$               &
+	      	$<>\ce{<>}$        & $+$                 &
+	      	$<>\ce{<>}$        &
+	      	$n_{\tot, gaz}$                          \\
+	      	\hline
+	      	$\xmathstrut{\rhgt}$
+	      	Initial            & $<> = 0$            &
+	      	$<>$               & \vline              &
+	      	$<>$               & \vline              &
+	      	$<>$               & \vline              &
+	      	$<>$               &
+          $<>$                                    \\
+	      	\hline
+	      	$\xmathstrut{\rhgt}$
+	      	Interm.            & $<>$               &
+	      	$<> - <><>$       & \vline              &
+	      	$<> - <><>$       & \vline              &
+	      	$<> + <><>$       & \vline              &
+	      	$<> + <><>$       &
+	      	$<> + <><>$                             \\
+	      	\hline
+	      	$\xmathstrut{\rhgt}$
+	      	Final              & $<> = <>_f$        &
+	      	$<> - <><>_f$     & \vline              &
+	      	$<> - <><>_f$     & \vline              &
+	      	$<> + <><>_f$     & \vline              &
+	      	$<> + <><>_f$     &
+          $<> + <><>_f$                           \\
+	      	\hline
+	      \end{tabularx}
+    \end{center}
+    <>
+      ]],
+      {
+        i(1, "0.50"),
+        i(2),
+        i(3),
+        i(4),
+        i(5),
+        i(6),
+        i(7),
+        i(8),
+        i(9),
+        i(10, "\\xi"),
+        i(11),
+        i(12),
+        i(13),
+        i(14),
+        i(15),
+        rep(10),
+        rep(11),
+        rep(2),
+        rep(10),
+        rep(12),
+        rep(4),
+        rep(10),
+        rep(13),
+        rep(6),
+        rep(10),
+        rep(14),
+        rep(8),
+        rep(10),
+        rep(15),
+        i(29),
+        i(10),
+        rep(10),
+        rep(10),
+        rep(11),
+        rep(2),
+        rep(10),
+        rep(12),
+        rep(4),
+        rep(10),
+        rep(13),
+        rep(6),
+        rep(10),
+        rep(14),
+        rep(8),
+        rep(10),
+        rep(15),
+        rep(29),
+        rep(10),
         i(0),
       }
     )
