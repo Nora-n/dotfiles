@@ -493,14 +493,14 @@ return {
   ),
   s(
     {
-      trig = "lrc",
+      trig = "lcr",
       snippetType = "autosnippet",
-      dscr = "Expands 'lrc' into '\\leftrightcenters{<>}{<>}{<>}'",
+      dscr = "Expands 'lcr' into '\\leftcentersright{<>}{<>}{<>}'",
       condition = line_begin,
     },
     fmta(
       [[
-      \leftrightcenters{%
+      \leftcentersright{%
         <>
       }{%
         <>
@@ -2420,7 +2420,7 @@ return {
   s({
     trig = "obk",
     snippetType = "autosnippet",
-    dscr = "Expands 'ovb' into '\\overbracket{<>}_{<>}'",
+    dscr = "Expands 'ovb' into '\\overbracket{<>}^{<>}'",
   }, {
     c(1, {
       fmta("\\overbracket{<>}_{<>}", {

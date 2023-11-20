@@ -599,7 +599,7 @@
 	separate-uncertainty,          % x ± dx
 	retain-explicit-plus,          % p.ex. +45°
 	range-units=brackets,          % (0 to 40) m
-	range-phrase=~;,               % 0~;~40 m
+	range-phrase=~;~,               % 0~;~40 m
 	% range-phrase=\textup{--},    % 0--40 m
 	% open-bracket= [,
 	% close-bracket= ],
@@ -1275,6 +1275,7 @@ literate         = {á}{{\'a}}1
 \colorlet{theo}{red!70!black}
 \colorlet{ques}{red!80!black}
 \colorlet{prop}{red!80!black}
+\colorlet{rslt}{red!80!black}
 \colorlet{demo}{blue!80!black}
 \colorlet{coro}{VioletRed!60!black}
 \colorlet{inte}{RoyalBlue!50!black}
@@ -1297,6 +1298,7 @@ literate         = {á}{{\'a}}1
 \colorlet{loiback}{red!10}
 \colorlet{theoback}{red!10}
 \colorlet{quesback}{red!10}
+\colorlet{rsltback}{red!10}
 \colorlet{propback}{red!10}
 \colorlet{demoback}{blue!10}
 \colorlet{coroback}{VioletRed!10}
@@ -1321,6 +1323,7 @@ literate         = {á}{{\'a}}1
 \newcommand{\nametheo}{Théorème}
 \newcommand{\nameques}{Question}
 \newcommand{\nameprop}{Propriété}
+\newcommand{\namerslt}{Résultat}
 \newcommand{\namedemo}{Démonstration}
 \newcommand{\namecoro}{Corollaire}
 \newcommand{\nameinte}{Interprétation}
@@ -1347,6 +1350,8 @@ literate         = {á}{{\'a}}1
 \renewcommand{\theques}{\thechapter.\arabic{ques}}
 \newcounter{prop}[chapter]
 \renewcommand{\theprop}{\thechapter.\arabic{prop}}
+\newcounter{rslt}[chapter]
+\renewcommand{\therslt}{\thechapter.\arabic{rslt}}
 \newcounter{demo}[chapter]
 \renewcommand{\thedemo}{\thechapter.\arabic{demo}}
 \newcounter{coro}[chapter]
@@ -1407,6 +1412,7 @@ literate         = {á}{{\'a}}1
 \newcommand{\icontheo}{\faIcon{drafting-compass}}
 \newcommand{\iconques}{\faIcon{question}}
 \newcommand{\iconprop}{\faIcon{drafting-compass}}
+\newcommand{\iconrslt}{\faIcon{check}}
 \newcommand{\icondemo}{\faIcon{list-ul}}
 \newcommand{\iconcoro}{\faIcon{code-branch}}
 \newcommand{\iconinte}{\faIcon{angle-right}}
