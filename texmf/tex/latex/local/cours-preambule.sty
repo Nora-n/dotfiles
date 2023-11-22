@@ -124,7 +124,13 @@
 
 % Same for chemistry: \ch{H2O} works nice
 % Weird error of inputs limit on pgfmathfunction.code.tex…
-% \RequirePackage{chemmacros}
+% \RequirePackage[modules]{chemmacros}
+% \chemsetup{
+%   formula = mhchem,
+% }
+% % \renewcommand\thereaction{R\,\thechapter.\arabic{reaction}}
+% \renewtagform{reaction}{(}{)}
+% \NewChemReaction{reactionsat}[1]{alignat}
 % \chemsetup{modules=base, errorcheck, chemformula, charges, phases}
 % \chemsetup[phases]{pos=sub}
 \RequirePackage{chemfig}
@@ -354,7 +360,7 @@
 	\normalsize}{0.5em}{}
 
 \NewDocumentCommand{\exercice}{om}{
-	\renewcommand{\thesection}{E\arabic{section}}
+  \renewcommand{\thesection}{{\bfseries E\arabic{section}}}
 	\titleformat{\section}{\Large\bfseries}{
 		\IfNoValueTF{#1}{}{\rpts{#1}}
 		\begin{tikzpicture}[scale=0.55, overlay]
@@ -369,7 +375,7 @@
 	\section{#2}
 }
 \NewDocumentCommand{\prblm}{om}{
-	\renewcommand{\thesection}{P\arabic{section}}
+  \renewcommand{\thesection}{{\bfseries P\arabic{section}}}
 	\titleformat{\section}{\Large\bfseries}{
 		\IfNoValueTF{#1}{}{\rpts{#1}}
 		\begin{tikzpicture}[scale=0.55, overlay]
@@ -532,6 +538,63 @@
 \newcommand{\qef}{\tag*{$\square$}}
 \newcommand{\hqed}{\hfill{$\blacksquare$}}
 \newcommand{\hqef}{\hfill{$\square$}}
+% left text in align !!
+% https://tex.stackexchange.com/a/61369/284518
+\makeatletter
+\newif\if@gather@prefix 
+\preto\place@tag@gather{% 
+  \if@gather@prefix\iftagsleft@ 
+    \kern-\gdisplaywidth@ 
+    \rlap{\gather@prefix}% 
+    \kern\gdisplaywidth@ 
+  \fi\fi 
+} 
+\appto\place@tag@gather{% 
+  \if@gather@prefix\iftagsleft@\else 
+    \kern-\displaywidth 
+    \rlap{\gather@prefix}% 
+    \kern\displaywidth 
+  \fi\fi 
+  \global\@gather@prefixfalse 
+} 
+\preto\place@tag{% 
+  \if@gather@prefix\iftagsleft@ 
+    \kern-\gdisplaywidth@ 
+    \rlap{\gather@prefix}% 
+    \kern\displaywidth@ 
+  \fi\fi 
+} 
+\appto\place@tag{% 
+  \if@gather@prefix\iftagsleft@\else 
+    \kern-\displaywidth 
+    \rlap{\gather@prefix}% 
+    \kern\displaywidth 
+  \fi\fi 
+  \global\@gather@prefixfalse 
+} 
+\def\math@cr@@@align{%
+  \ifst@rred\nonumber\fi
+  \if@eqnsw \global\tag@true \fi
+  \global\advance\row@\@ne
+  \add@amps\maxfields@
+  \omit
+  \kern-\alignsep@
+  \if@gather@prefix\tag@true\fi
+  \iftag@
+    \setboxz@h{\@lign\strut@{\make@display@tag}}%
+    \place@tag
+  \fi
+  \ifst@rred\else\global\@eqnswtrue\fi
+  \global\lineht@\z@
+  \cr
+}
+\newcommand*{\beforetext}[1]{% 
+  \ifmeasuring@\else
+  \gdef\gather@prefix{#1}% 
+  \global\@gather@prefixtrue 
+  \fi
+} 
+\makeatother
 \RequirePackage{textcomp}
 \RequirePackage{eurosym}
 % For integrals
@@ -950,6 +1013,11 @@ literate         = {á}{{\'a}}1
 \newcommand{\resetQ}{\restartlist{blocQR}}
 
 % Cannibalize the rest
+\newcommand{\eq}[2][equation*]{
+	\begin{#1}
+	#2
+	\end{#1}
+}
 % compteur d'exercices
 \newcounter{exoIndex}
 \setcounter{exoIndex}{0}
@@ -1270,6 +1338,7 @@ literate         = {á}{{\'a}}1
 	\captionof{figure}{#3}
 	\bigskip
 }
+
 % Boxes types: colors
 \colorlet{loi}{red!60!black}
 \colorlet{theo}{red!70!black}
@@ -1318,6 +1387,30 @@ literate         = {á}{{\'a}}1
 \colorlet{applback}{gray!10}
 \colorlet{remaback}{darkgray!10}
 \colorlet{blackback}{white}
+% for TITLE backs in fill style
+\colorlet{loibacktitle}{red!30}
+\colorlet{theobacktitle}{red!30}
+\colorlet{quesbacktitle}{red!30}
+\colorlet{rsltbacktitle}{red!30}
+\colorlet{propbacktitle}{red!30}
+\colorlet{demobacktitle}{blue!30}
+\colorlet{corobacktitle}{VioletRed!30}
+\colorlet{intebacktitle}{RoyalBlue!30}
+\colorlet{implbacktitle}{DodgerBlue!30}
+\colorlet{impobacktitle}{BlueViolet!30}
+\colorlet{toolbacktitle}{BlueViolet!30}
+\colorlet{rappbacktitle}{BlueViolet!30}
+\colorlet{defibacktitle}{green!10}
+\colorlet{toolbacktitle}{green!10}
+\colorlet{notabacktitle}{green!10}
+\colorlet{rorbacktitle}{orange!30}
+\colorlet{exembacktitle}{lightgray!50}
+\colorlet{expebacktitle}{lightgray!50}
+\colorlet{matebacktitle}{lightgray!50}
+\colorlet{odgrbacktitle}{lightgray!50}
+\colorlet{applbacktitle}{gray!30}
+\colorlet{remabacktitle}{darkgray!30}
+\colorlet{blackbacktitle}{white}
 % set names for counters
 \newcommand{\nameloi}{Loi}
 \newcommand{\nametheo}{Théorème}
@@ -1553,6 +1646,10 @@ step={#3},
 	itc/.style 2 args={
 			fonttitle=\bfseries,
 			attach boxed title to top center={yshift=-2mm},
+      coltitle=black,
+      boxed title style={
+        colback=#1backtitle,
+      },
 			colback=#1back,
 			colframe={#1},
 			title={#2},

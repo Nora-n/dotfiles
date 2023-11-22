@@ -289,6 +289,18 @@ return {
     snippetType = "autosnippet",
     dscr = "Expands 'bf' into '\textbf{}'",
   }, fmta("\\textbf{<>}", { d(1, get_visual) })),
+  -- intertext in math
+  s({
+    trig = "inx",
+    snippetType = "autosnippet",
+    dscr = "Expands 'itx' into LaTeX's intertext{} command.",
+  }, fmta("\\intertext{<>}", { d(1, get_visual) })),
+  -- beforetext in math
+  s({
+    trig = "bfx",
+    snippetType = "autosnippet",
+    dscr = "Expands 'btx' into beforetext{} command.",
+  }, fmta("\\beforetext{<>}", { d(1, get_visual) })),
   -- studonly
   s(
     {
@@ -1030,6 +1042,14 @@ return {
     dscr = "Subscript",
     condition = tex_utils.in_mathzone,
   }, fmta("_{<>}", { d(1, get_visual) })),
+  -- subtext
+  s({
+    trig = "ind",
+    wordTrig = false,
+    snippetType = "autosnippet",
+    dscr = "Subtext",
+    condition = tex_utils.in_mathzone,
+  }, fmta("\\ind{<>}", { d(1, get_visual) })),
   -- sub super scripts
   s(
     {
@@ -1750,11 +1770,11 @@ return {
 	      	$<> + <><>$                             \\
 	      	\hline
 	      	$\xmathstrut{\rhgt}$
-	      	Final              & $<> = <>_f$         &
-	      	$<> - <><>_f$     & \vline              &
-	      	$<> - <><>_f$     & \vline              &
-	      	$<> + <><>_f$     & \vline              &
-	      	$<> + <><>_f$                           \\
+	      	Final              & $<>_f = <>_{<>}$         &
+	      	$<> - <><>_{<>}$     & \vline              &
+	      	$<> - <><>_{<>}$     & \vline              &
+	      	$<> + <><>_{<>}$     & \vline              &
+	      	$<> + <><>_{<>}$                           \\
 	      	\hline
 	      \end{tabularx}
     \end{center}
@@ -1790,18 +1810,24 @@ return {
         rep(10),
         rep(10),
         rep(10),
+        i(30, "\\equ"),
+        -- c(30, { t("\\equ"), t("\\max") }),
         rep(11),
         rep(2),
         rep(10),
+        rep(30),
         rep(12),
         rep(4),
         rep(10),
+        rep(30),
         rep(13),
         rep(6),
         rep(10),
+        rep(30),
         rep(14),
         rep(8),
         rep(10),
+        rep(30),
         i(0),
       }
     )
@@ -1982,8 +2008,8 @@ return {
     trig = "°",
     wordTrig = false,
     snippetType = "autosnippet",
-    dscr = "Expands '°' into '\\degree'",
-  }, { t("\\degree") }),
+    dscr = "Expands '°' into '^\\circ'",
+  }, { t("^\\circ") }),
   -- num
   s(
     {
