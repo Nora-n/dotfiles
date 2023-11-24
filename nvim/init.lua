@@ -67,6 +67,16 @@ require("neo-tree").setup({
   window = {
     width = 34,
   },
+  event_handlers = {
+    {
+      event = "neo_tree_buffer_enter",
+      handler = function(arg)
+        vim.cmd([[
+          setlocal relativenumber
+        ]])
+      end,
+    },
+  },
 })
 
 -- fix end of line (eol) being added to tex files

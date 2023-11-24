@@ -376,17 +376,20 @@ return {
       trig = "([^\\])csw",
       regTrig = true,
       snippetType = "autosnippet",
-      dscr = "Expands 'csw' into '\\csw{<>}'",
+      dscr = "Expands 'csw' into '\\cswitch{<>}{<>}'",
     },
     fmta(
       [[
-      \csw{
+      \cswitch{
+        <>
+      }{
         <>
       }
       <>
       ]],
       {
         d(1, get_visual),
+        i(2, "énoncé"),
         i(0),
       }
     )
@@ -2212,7 +2215,7 @@ return {
             fmta("code-after=<>", { i(1) }),
             fmta("name=<>", { i(1) }),
           }),
-          i(2),
+          d(2, get_visual),
           i(0),
         }
       ),
@@ -2232,7 +2235,7 @@ return {
             fmta("code-after=<>", { i(1) }),
             fmta("name=<>", { i(1) }),
           }),
-          i(2),
+          d(2, get_visual),
           i(0),
         }
       ),
@@ -3023,7 +3026,7 @@ return {
         i(2),
         c(3, { t("width"), t("scale"), t("height") }),
         i(4),
-        d(5, get_visual),
+        i(5),
         c(6, { t(""), sn(1, { t("\\captionof{figure}{"), i(1), t("}") }) }),
         i(7),
         i(0),

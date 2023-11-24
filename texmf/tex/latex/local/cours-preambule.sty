@@ -933,9 +933,10 @@ literate         = {á}{{\'a}}1
 		#2%
 	}%
 }
+% For tablette use
 % Setup color
 \newcommand{\mycol}{black}
-\newcommand{\csw}[1]{%
+\newcommand{\psw}[1]{%
 	\textcolor{\sswitch{white!10}{\mycol}}{%
 		#1%
 	}%
@@ -947,12 +948,6 @@ literate         = {á}{{\'a}}1
 % Automatic white
 \newcommand{\wsw}[1]{%
 	\textcolor{\sswitch{white!10}{black!100}}{%
-		#1%
-	}%
-}
-% For tablette use
-\newcommand{\psw}[1]{%
-	\textcolor{\sswitch{white!10}{gray!100}}{%
 		#1%
 	}%
 }
@@ -1584,7 +1579,18 @@ step={#3},
 			title={#2},
 		}
 }
-% Only left
+% Only left, title and icon
+\tcbset{
+	lftt/.style 2 args={
+			boxrule=0pt, frame hidden, interior hidden,
+			borderline west={1pt}{0pt}{#1}, coltitle=#1,
+			fonttitle=\bfseries, top=10pt,
+			attach boxed title to top left={yshift={-9pt}, xshift=4pt},
+			boxed title style={enhanced, frame hidden, colback=white},
+			title={#2},
+		}
+}
+% Only left, title first
 \tcbset{
 	lft/.style 2 args={
 			boxrule=0pt, frame hidden, interior hidden,
@@ -1599,6 +1605,7 @@ step={#3},
 				}
 		}
 }
+% Only left, only icon
 \tcbset{
 	lfnt/.style 2 args={
 			boxrule=0pt, frame hidden, interior hidden,
