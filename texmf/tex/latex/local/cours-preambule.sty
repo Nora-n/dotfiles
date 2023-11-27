@@ -936,9 +936,9 @@ literate         = {á}{{\'a}}1
 % For tablette use
 % Setup color
 \newcommand{\mycol}{black}
-\newcommand{\psw}[1]{%
-	\textcolor{\sswitch{white!10}{\mycol}}{%
-		#1%
+\NewDocumentCommand{\psw}{O{\mycol}m}{%
+	\textcolor{\sswitch{white!10}{#1}}{%
+		#2%
 	}%
 }
 % force white
@@ -1110,7 +1110,7 @@ literate         = {á}{{\'a}}1
       \iftoggle{student}{ % pour version student
         \iftoggle{corrige}{ % version avec corrigé : affiche juste la correction
           \nitem{#2}#4%
-          }{ % version sans corrigé
+          }{ % énoncé uniquement
           \nitem{#2}#3%
           }%
       }{% pour version prof
@@ -1119,7 +1119,7 @@ literate         = {á}{{\'a}}1
             \begin{answ}%
             #4%
             \end{answ}%
-          }{ % version sans corrigé : que la question.
+          }{ % énoncé uniquement
             \item #3%
         }
       }
@@ -1131,7 +1131,7 @@ literate         = {á}{{\'a}}1
         \iftoggle{student}{ % pour version student
           \iftoggle{corrige}{ % version avec corrigé : affiche juste la correction
             \nitem{#2}#4%
-            }{ % version sans corrigé
+          }{ % énoncé uniquement
             \item #3%
             }%
         }{% pour version prof
@@ -1140,7 +1140,7 @@ literate         = {á}{{\'a}}1
               \begin{answ}%
               #4%
               \end{answ}%
-            }{ % version sans corrigé : que la question.
+          }{ % énoncé uniquement
               \item #3%
           }
         }
@@ -1150,7 +1150,7 @@ literate         = {á}{{\'a}}1
         \iftoggle{student}{% pour version student
           \iftoggle{corrige}{% version avec corrigé : affiche juste la correction
             \item #4%
-            }{
+          }{ % énoncé uniquement
             \item #3%
             }%
         }{%
@@ -1159,7 +1159,7 @@ literate         = {á}{{\'a}}1
               \begin{answ}
               #4
               \end{answ}
-            }{ % version sans corrigé : que la question.
+          }{ % énoncé uniquement
               \item #3%
           }%
         }%
