@@ -1242,6 +1242,34 @@ return {
     dscr = "Expands 'jw' into '\\jw'",
     condition = tex_utils.in_mathzone,
   }, { t("\\jw") }),
+  s({
+    trig = "jcw",
+    wordTrig = false,
+    snippetType = "autosnippet",
+    dscr = "Expands 'jcw' into '\\jcw'",
+    condition = tex_utils.in_mathzone,
+  }, { t("\\jcw") }),
+  s({
+    trig = "jrcw",
+    wordTrig = false,
+    snippetType = "autosnippet",
+    dscr = "Expands 'jrcw' into '\\jrcw'",
+    condition = tex_utils.in_mathzone,
+  }, { t("\\jrcw") }),
+  s({
+    trig = "jlw",
+    wordTrig = false,
+    snippetType = "autosnippet",
+    dscr = "Expands 'jlw' into '\\jlw'",
+    condition = tex_utils.in_mathzone,
+  }, { t("\\jlw") }),
+  s({
+    trig = "jx",
+    wordTrig = false,
+    snippetType = "autosnippet",
+    dscr = "Expands 'jx' into '\\jx'",
+    condition = tex_utils.in_mathzone,
+  }, { t("\\jx") }),
   -- trigfuncs
   s({
     trig = "cos",
@@ -1252,8 +1280,19 @@ return {
   }, {
     c(1, {
       fmta("\\cos(<>)", { i(1, "\\theta") }),
-      fmta("\\cos\\left(<>\\right)", { i(1, "\\theta") }),
       fmta("\\cos{<>}", { i(1, "\\theta") }),
+    }),
+  }),
+  s({
+    trig = "acos",
+    wordTrig = false,
+    snippetType = "autosnippet",
+    dscr = "Expands 'acos' into '\\acos{<>}'",
+    condition = tex_utils.in_mathzone,
+  }, {
+    c(1, {
+      fmta("\\arccos(<>)", { i(1, "\\theta") }),
+      fmta("\\arccos{<>}", { i(1, "\\theta") }),
     }),
   }),
   s({
@@ -1265,21 +1304,31 @@ return {
   }, {
     c(1, {
       fmta("\\sin(<>)", { i(1, "\\theta") }),
-      fmta("\\sin\\left(<>\\right)", { i(1, "\\theta") }),
       fmta("\\sin{<>}", { i(1, "\\theta") }),
     }),
   }),
   s({
-    trig = "tan",
+    trig = "asin",
     wordTrig = false,
     snippetType = "autosnippet",
-    dscr = "Expands 'tan' into '\\tan{<>}'",
+    dscr = "Expands 'asin' into '\\asin{<>}'",
     condition = tex_utils.in_mathzone,
   }, {
     c(1, {
-      fmta("\\tan(<>)", { i(1, "\\theta") }),
-      fmta("\\tan\\left(<>\\right)", { i(1, "\\theta") }),
-      fmta("\\tan{<>}", { i(1, "\\theta") }),
+      fmta("\\arcsin(<>)", { i(1, "\\theta") }),
+      fmta("\\arcsin{<>}", { i(1, "\\theta") }),
+    }),
+  }),
+  s({
+    trig = "atan",
+    wordTrig = false,
+    snippetType = "autosnippet",
+    dscr = "Expands 'atan' into '\\atan{<>}'",
+    condition = tex_utils.in_mathzone,
+  }, {
+    c(1, {
+      fmta("\\arctan(<>)", { i(1, "\\theta") }),
+      fmta("\\arctan{<>}", { i(1, "\\theta") }),
     }),
   }),
   -- integrals
@@ -1291,7 +1340,7 @@ return {
       dscr = "Expands 'int' into '\\int'",
       condition = tex_utils.in_mathzone,
     },
-    fmta("\\int <>", {
+    fmta("\\int<>", {
       c(1, {
         fmta([[_{<>}^{<>}]], {
           i(1, "lower"),
@@ -1300,7 +1349,7 @@ return {
         fmta([[_{<>}]], {
           i(1, "lower"),
         }),
-        t(""),
+        t(" "),
       }),
     })
   ),
@@ -1311,7 +1360,7 @@ return {
       dscr = "Expands 'oint' into '\\oint'",
       condition = tex_utils.in_mathzone,
     },
-    fmta("\\oint <>", {
+    fmta("\\oint<>", {
       c(1, {
         fmta([[_{<>}]], {
           i(1, "lower"),
@@ -1320,7 +1369,7 @@ return {
           i(1, "lower"),
           i(2, "upper"),
         }),
-        t(""),
+        t(" "),
       }),
     })
   ),
@@ -1331,7 +1380,7 @@ return {
       dscr = "Expands 'iint' into '\\iint'",
       condition = tex_utils.in_mathzone,
     },
-    fmta("\\iint <>", {
+    fmta("\\iint<>", {
       c(1, {
         fmta([[_{<>}^{<>}]], {
           i(1, "lower"),
@@ -1340,7 +1389,7 @@ return {
         fmta([[_{<>}]], {
           i(1, "lower"),
         }),
-        t(""),
+        t(" "),
       }),
     })
   ),
@@ -1351,7 +1400,7 @@ return {
       dscr = "Expands 'oiint' into '\\oiint'",
       condition = tex_utils.in_mathzone,
     },
-    fmta("\\oiint <>", {
+    fmta("\\oiint<>", {
       c(1, {
         fmta([[_{<>}]], {
           i(1, "lower"),
@@ -1360,7 +1409,7 @@ return {
           i(1, "lower"),
           i(2, "upper"),
         }),
-        t(""),
+        t(" "),
       }),
     })
   ),
@@ -1371,7 +1420,7 @@ return {
       dscr = "Expands 'iiint' into '\\iiint'",
       condition = tex_utils.in_mathzone,
     },
-    fmta("\\iiint <>", {
+    fmta("\\iiint<>", {
       c(1, {
         fmta([[_{<>}^{<>}]], {
           i(1, "lower"),
@@ -1380,7 +1429,7 @@ return {
         fmta([[_{<>}]], {
           i(1, "lower"),
         }),
-        t(""),
+        t(" "),
       }),
     })
   ),
@@ -1391,7 +1440,7 @@ return {
       dscr = "Expands 'oiiint' into '\\oiiint'",
       condition = tex_utils.in_mathzone,
     },
-    fmta("\\oiiint <>", {
+    fmta("\\oiiint<>", {
       c(1, {
         fmta([[_{<>}]], {
           i(1, "lower"),
@@ -1400,7 +1449,7 @@ return {
           i(1, "lower"),
           i(2, "upper"),
         }),
-        t(""),
+        t(" "),
       }),
     })
   ),
@@ -1415,15 +1464,13 @@ return {
     fmta("\\sum<>", {
       c(1, {
         t(" "),
-        sn(1, { t("_{"), i(1, "lower"), t("}^{"), i(2, "upper"), t("}") }),
-        sn(2, {
-          t("_{"),
-          i(1, "n"),
-          t("="),
-          i(2, "1"),
-          t("}^{"),
-          i(3, "+\\infty"),
-          t("}"),
+        fmta([[_{<>}^{<>}]], {
+          i(1, "lower"),
+          i(2, "upper"),
+        }),
+        fmta([[_{<>}^{<>}]], {
+          i(1, "n=1"),
+          i(2, "+\\infty"),
         }),
       }),
     })
@@ -2768,7 +2815,7 @@ return {
       fmta(
         [[
           \begin{tcb}(<>){<>}
-          <>
+            <>
           \end{tcb}
           <>
           ]],
@@ -2782,7 +2829,7 @@ return {
       fmta(
         [[
       \begin{tcb}[<>](<>)<><>{<>}
-        <>
+          <>
       \end{tcb}
       <>
     ]],
@@ -2809,7 +2856,7 @@ return {
       fmta(
         [[
           \begin{tcb*}(<>){<>}
-          <>
+            <>
           \end{tcb*}
           <>
           ]],
@@ -2823,7 +2870,7 @@ return {
       fmta(
         [[
       \begin{tcb*}[<>](<>)<><>{<>}
-        <>
+          <>
       \end{tcb*}
       <>
     ]],
@@ -3206,7 +3253,28 @@ return {
       }
     )
   ),
-
+  -- raster
+  s(
+    {
+      trig = "rst",
+      snippetType = "autosnippet",
+      dscr = "A tcbraster environment",
+      condition = line_begin,
+    },
+    fmta(
+      [[
+      \begin{tcbraster}[raster equal height=rows, raster columns=<>]
+        <>
+      \end{tcbraster}
+      <>
+    ]],
+      {
+        i(1, "2"),
+        d(2, get_visual),
+        i(0),
+      }
+    )
+  ),
   -- gather
   s({
     trig = "gth",
@@ -3290,7 +3358,7 @@ return {
         i(1),
         c(2, { t("width"), t("scale"), t("height") }),
         i(3),
-        d(4, get_visual),
+        i(4),
         c(5, { t(""), t("\\captionsetup{justification=centering}") }),
         i(6),
         i(7),

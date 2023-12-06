@@ -144,6 +144,12 @@
 \definesubmol{&7}{-[7,,,,draw=none]}
 \RequirePackage[version=4]{mhchem}
 \RequirePackage{elements}
+% Pictogrammes danger chimie: to load in individual tex
+\ExplSyntaxOn
+\cs_new:Npn \chemmacros_load_module:n #1 {}
+\ExplSyntaxOff
+\RequirePackage{ghsystem}
+\ghssetup{language=french}
 
 % For cases quantiques
 \newcolumntype{P}[1]{>{\centering\arraybackslash}p{#1}}
@@ -430,9 +436,19 @@
 	\hyperlink{page.#1}{$\uparrow$~Page #1}}
 % Make ref to multiple sections with \cref: doesn't seem to work...
 % \RequirePackage{cleveref}
+% makes multiple footnotes work with hyperref
+% https://tex.stackexchange.com/a/62091/284518
+\let\oldFootnote\footnote
+\newcommand\nextToken\relax
 
-% Reinitialise footnote number each page
-% \RequirePackage[perchapter]{footmisc}
+\renewcommand\footnote[1]{%
+    \oldFootnote{#1}\futurelet\nextToken\isFootnote}
+
+\newcommand\isFootnote{%
+    \ifx\footnote\nextToken\textsuperscript{,}\!\!\fi}
+
+% force footnote raggedbottom
+\RequirePackage[bottom]{footmisc}
 % Allow referencing to prevous footnote even if mark not a number
 % https://tex.stackexchange.com/a/35044
 \makeatletter
@@ -768,7 +784,8 @@ literate         = {á}{{\'a}}1
 % To customize it see for instance https://tex.stackexchange.com/a/85218
 
 % Better python, and verbatim python inside an environment?
-\RequirePackage{pythontex}
+% Later…
+% \RequirePackage{pythontex}
 % Note quite. Verbatim box
 \RequirePackage{verbatimbox}
 

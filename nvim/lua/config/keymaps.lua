@@ -205,15 +205,21 @@ vim.keymap.set(
 )
 vim.keymap.set(
   "n",
-  "<Leader>Sbb",
-  "<Cmd>%s!\\vbegin\\zs\\{l(loi|theo|prop|demo|coro|inte|impl|impo|rapp|defi|nota|ror|exem|odgr|rema)\\}(\\[.*\\]|)!{tcb}\\2(\\1)'r'<CR><Cmd>%s!\\vend\\zs\\{l(loi|theo|prop|demo|coro|inte|impl|impo|rapp|defi|nota|ror|exem|odgr|rema)\\}!{tcb}<CR>",
+  "<Leader>Sbl",
+  "<Cmd>%s!\\vbegin\\zs\\{l(loi|theo|prop|demo|coro|inte|impl|impo|rapp|defi|nota|ror|exem|odgr|rema)\\}(\\[.*\\]|)!{tcb}\\2(\\1)<rgt>'r'<CR><Cmd>%s!\\vend\\zs\\{l(loi|theo|prop|demo|coro|inte|impl|impo|rapp|defi|nota|ror|exem|odgr|rema)\\}!{tcb}<CR>",
   { desc = "Change new boxes l" }
 )
 vim.keymap.set(
   "n",
-  "<Leader>Sbc",
-  "<Cmd>%s!\\vbegin\\zs\\{(r|t|b)(loi|theo|prop|demo|coro|inte|impl|impo|rapp|defi|nota|ror|exem|odgr|rema)\\}(\\[.*\\]|)!{tcb}\\3(\\2)<CR><Cmd>%s!\\vend\\zs\\{(r|t|b)(loi|theo|prop|demo|coro|inte|impl|impo|rapp|defi|nota|ror|exem|odgr|rema)\\}(\\[.*\\]|)!{tcb}<CR>",
+  "<Leader>Sbr",
+  "<Cmd>%s!\\vbegin\\zs\\{(r)(loi|theo|prop|demo|coro|inte|impl|impo|rapp|defi|nota|ror|exem|odgr|rema)\\}(\\[.*\\]|)!{tcb}\\3(\\2)<lft>'l'<CR><Cmd>%s!\\vend\\zs\\{(r|t|b)(loi|theo|prop|demo|coro|inte|impl|impo|rapp|defi|nota|ror|exem|odgr|rema)\\}(\\[.*\\]|)!{tcb}<CR>",
   { desc = "Change new boxes r" }
+)
+vim.keymap.set(
+  "n",
+  "<Leader>Sbb",
+  "<Cmd>%s!\\vbegin\\zs\\{(t|b)(loi|theo|prop|demo|coro|inte|impl|impo|rapp|defi|nota|ror|exem|odgr|rema)\\}(\\[.*\\]|)!{tcb}\\3(\\2)<CR><Cmd>%s!\\vend\\zs\\{(r|t|b)(loi|theo|prop|demo|coro|inte|impl|impo|rapp|defi|nota|ror|exem|odgr|rema)\\}(\\[.*\\]|)!{tcb}<CR>",
+  { desc = "Change new boxes" }
 )
 
 -- %s!\vbegin\zs{(NC|)(loi|theo|prop|demo|coro|inte|impl|impo|rapp|defi|nota|ror|exem|odgr|rema)}([.*])!{tcb}\3(\2)
