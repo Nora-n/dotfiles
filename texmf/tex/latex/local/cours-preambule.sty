@@ -340,8 +340,8 @@
 }
 
 \renewcommand{\thesection}{\Roman{section}}
-\renewcommand{\thesubsection}{\Alph{subsection}}
-\renewcommand{\thesubsubsection}{\Roman{section}.\Alph{subsection}.\arabic{subsubsection}}
+\renewcommand{\thesubsection}{\Roman{section}/\Alph{subsection}}
+\renewcommand{\thesubsubsection}{\Roman{section}/\Alph{subsection})\,\arabic{subsubsection}}
 
 \titleformat{\section}{\Large\bfseries}{
 	\begin{tikzpicture}[scale=0.55, overlay]
@@ -355,15 +355,25 @@
 \titleformat{\subsection}{\large\bfseries}{\hspace{1cm}
 	\tcbox[colback=darkgray, colframe=darkgray,
 		coltext=lightgray, on line, boxsep=0pt,
-		left=4pt, right=4pt, top=4pt,bottom=4pt,
+		left=4pt, right=4pt, top=4pt, bottom=2pt,
 		sharp corners=northwest]{\thesubsection}}{0.5em}{}
 
 \titleformat{\subsubsection}{\normalsize}{\hspace{2cm}
 	\tcbox[colback=white, colframe=darkgray,
 		coltext=black, on line, boxsep=0pt,
-		left=4pt, right=4pt, top=4pt,bottom=4pt,
+		left=4pt, right=4pt, top=4pt, bottom=2pt,
 		sharp corners=northwest]{\normalsize\thesubsubsection}
 	\normalsize}{0.5em}{}
+
+\NewDocumentCommand{\ssubsection}{mm}{
+  \renewcommand{\thesubsection}{{\bfseries #1}}
+  \titleformat{\subsection}{\large\bfseries}{\hspace{1cm}
+    \tcbox[colback=darkgray, colframe=darkgray,
+      coltext=lightgray, on line, boxsep=0pt,
+      left=4pt, right=4pt, top=4pt,bottom=4pt,
+      sharp corners=northwest]{\thesubsection}}{0.5em}{}
+	\subsection{#2}
+}
 
 \NewDocumentCommand{\exercice}{om}{
   \renewcommand{\thesection}{{\bfseries E\arabic{section}}}
@@ -401,6 +411,19 @@
 \setlength\epigraphwidth{.5\textwidth}
 \newenvironment{myepistyle}{\hspace{-7.8pt}}{}
 \renewcommand{\textflush}{myepistyle}
+% Draw nice quotes in TiKz
+\RequirePackage{tikz}
+\usetikzlibrary{trees, positioning, arrows, tikzmark, calc, mindmap}
+\newcommand*{\openquote}{%
+	\tikz[remember picture, overlay, xshift=-5pt, yshift=0pt]
+	\node[black!30] (OQ) {\fontfamily{qbk}\fontsize{50}{60}\selectfont«};%
+	\kern4pt
+}
+\newcommand*{\closequote}{%
+	\tikz[remember picture, overlay, xshift=10pt, yshift=0pt]
+	\node[black!30] (CQ) {\fontfamily{qbk}\fontsize{50}{60}\selectfont»};%
+}
+
 % Pour local TOC
 \RequirePackage{minitoc}
 \renewcommand{\mtctitle}{Sommaire}
@@ -473,18 +496,6 @@
 \RequirePackage{pgfplots}
 \pgfplotsset{compat=newest}
 
-% Draw nice quotes in TiKz
-\RequirePackage{tikz}
-\newcommand*{\openquote}{%
-	\tikz[remember picture, overlay, xshift=-5pt, yshift=0pt]
-	\node[black!30] (OQ) {\fontfamily{qbk}\fontsize{50}{60}\selectfont«};%
-	\kern4pt
-}
-\newcommand*{\closequote}{%
-	\tikz[remember picture, overlay, xshift=10pt, yshift=0pt]
-	\node[black!30] (CQ) {\fontfamily{qbk}\fontsize{50}{60}\selectfont»};%
-}
-\usetikzlibrary{trees, positioning, arrows, tikzmark, calc, mindmap}
 % Circled numbers
 % https://tex.stackexchange.com/a/7045
 \newcommand*\circled[1]{%
@@ -548,6 +559,9 @@
 \DeclareMathOperator{\cosh}{ch}
 \let\sinh\relax
 \DeclareMathOperator{\sinh}{sh}
+\let\arg\relax
+\DeclarePairedDelimiterXPP\arg[1]{\operatorname{arg}}{(}{)}{}{#1}
+% \DeclareMathOperator{\arg}{arg}
 % To manually put \blacksquare flushedright of align* environnement
 % https://tex.stackexchange.com/a/144984/284518
 \newcommand{\qed}{\tag*{$\blacksquare$}}
@@ -641,10 +655,11 @@
 \RequirePackage{tabularx}
 \newcolumntype{Y}{>{\centering\arraybackslash}X}
 \newcolumntype{M}{>{\centering\arraybackslash}m}
-\renewcommand\tabularxcolumn[1]{>{\vspace{\fill}}m{#1}<{\vspace{\fill}}}
 % For \vline in tabav. Thanks Bruno PAGANI.
 \newcolumntype{d}{@{}c@{}}
-% \renewcommand\tabularxcolumn[1]{m{#1}}
+% Vertically center last Y column?
+% \renewcommand\tabularxcolumn[1]{>{\vspace{\fill}}m{#1}<{\vspace{\fill}}}
+\renewcommand*{\tabularxcolumn}[1]{m{#1}}
 % Multicolumn with X column spanning entire row
 % https://tex.stackexchange.com/a/544644/284518 in the comments
 \newcommand{\mcl}[4]{\multicolumn{#1}{#2>{

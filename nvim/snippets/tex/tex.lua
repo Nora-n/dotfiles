@@ -245,13 +245,19 @@ return {
     snippetType = "autosnippet",
     dscr = "footnote",
     wordTrig = false,
-  }, fmta([[ \ftn{<>} ]], { d(1, get_visual) })),
+  }, fmta([[\ftn{<>}]], { d(1, get_visual) })),
   -- url
   s({
     trig = "url",
     snippetType = "autosnippet",
     dscr = "url",
-  }, fmta([[ \url{<>} ]], { d(1, get_visual) })),
+  }, fmta([[\url{<>}]], { d(1, get_visual) })),
+  -- href
+  s({
+    trig = "href",
+    snippetType = "autosnippet",
+    dscr = "href",
+  }, fmta([[\href{<>}{<>}]], { d(1, get_visual), i(2, "texte") })),
   -----------------------------------------------------------------------------
   -- Fonts
   -----------------------------------------------------------------------------
@@ -1329,6 +1335,18 @@ return {
     c(1, {
       fmta("\\arctan(<>)", { i(1, "\\theta") }),
       fmta("\\arctan{<>}", { i(1, "\\theta") }),
+    }),
+  }),
+  s({
+    trig = "arg",
+    wordTrig = false,
+    snippetType = "autosnippet",
+    dscr = "Expands 'arg' into '\\arg{<>}'",
+    condition = tex_utils.in_mathzone,
+  }, {
+    c(1, {
+      fmta("\\arg*{<>}", { i(1, "\\theta") }),
+      fmta("\\arg{<>}", { i(1, "\\theta") }),
     }),
   }),
   -- integrals
@@ -2474,6 +2492,18 @@ return {
     },
     fmta("\\fatbox{<>}", {
       d(1, get_visual),
+    })
+  ),
+  s(
+    {
+      trig = "rbx",
+      snippetType = "autosnippet",
+      dscr = "Expands 'rbx' into '\\rotatebox[<>]{<>}{<>}'",
+    },
+    fmta("\\rotatebox[<>]{<>}{<>}", {
+      i(1, "origin=center"),
+      i(2, "90"),
+      d(3, get_visual),
     })
   ),
   -- underbracket & stuff

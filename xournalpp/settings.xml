@@ -6,7 +6,7 @@
   <property name="pressureMultiplier" value="1"/>
   <property name="zoomGesturesEnabled" value="true"/>
   <property name="selectedToolbar" value="Floating Toolbox (experimental) Copy"/>
-  <property name="lastSavePath" value="/home/nora/Documents/Enseignement/Prepa/2023/03_TP/TP11"/>
+  <property name="lastSavePath" value="/home/nora/Documents/Enseignement/Prepa/2023/05_I/02_elec"/>
   <property name="lastOpenPath" value="/home/nora/Documents/Enseignement/Prepa/figures_generales"/>
   <property name="lastImagePath" value="/home/nora/Documents/Enseignement/Prepa/2022/TD/figures/ch37"/>
   <property name="edgePanSpeed" value="20"/>
@@ -14,8 +14,8 @@
   <property name="zoomStep" value="10"/>
   <property name="zoomStepScroll" value="2"/>
   <property name="displayDpi" value="72"/>
-  <property name="mainWndWidth" value="836"/>
-  <property name="mainWndHeight" value="1391"/>
+  <property name="mainWndWidth" value="2560"/>
+  <property name="mainWndHeight" value="1413"/>
   <property name="maximized" value="false"/>
   <property name="showToolbar" value="true"/>
   <property name="showSidebar" value="false"/>
@@ -129,7 +129,7 @@
   <property name="stabilizerFinalizeStroke" value="true"/>
   <property name="latexSettings.autoCheckDependencies" value="true"/>
   <property name="latexSettings.defaultText" value="x^2"/>
-  <property name="latexSettings.globalTemplatePath" value="/usr/share/xournalpp/resources/default_template.tex"/>
+  <property name="latexSettings.globalTemplatePath" value="/usr/share/xournalpp/resources/mytemplate.tex"/>
   <property name="latexSettings.genCmd" value="/usr/local/texlive/2023/bin/x86_64-linux/pdflatex -halt-on-error -interaction=nonstopmode '{}'"/>
   <property name="latexSettings.sourceViewThemeId" value="classic"/>
   <property name="latexSettings.editorFont" value="Monospace 12"/>

@@ -68,5 +68,10 @@
 % Local def for ease of use
 \RequirePackage{locdef}
 
+% For \cancel and \bcancel functions
+\RequirePackage{cancel}
+\newcommand{\dcancel}[1]{
+	\cancel{\bcancel{#1}}
+}
 %%% Fin du package
 \endinput
