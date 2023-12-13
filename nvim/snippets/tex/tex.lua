@@ -765,12 +765,12 @@ return {
     t("\\Phi"),
   }),
   -- parenthesis
-  s({
-    trig = "pp",
-    wordTrig = false,
-    snippetType = "autosnippet",
-    condition = tex_utils.in_mathzone,
-  }, fmta("(<>)", { d(1, get_visual) })),
+  -- s({
+  --   trig = "pp",
+  --   wordTrig = false,
+  --   snippetType = "autosnippet",
+  --   condition = tex_utils.in_mathzone,
+  -- }, fmta("(<>)", { d(1, get_visual) })),
   s({
     trig = "pp",
     snippetType = "autosnippet",
@@ -2442,6 +2442,59 @@ return {
       d(1, get_visual),
     })
   ),
+  -- reglin
+  s(
+    {
+      trig = "reglin",
+      wordTrig = false,
+      snippetType = "autosnippet",
+      dscr = "Expands 'reglin' into linear regression",
+      condition = line_begin,
+    },
+    fmta(
+      [[
+      \[
+        y\tikzmark{<>} = a\tikzmark{<>}x\tikzmark{<>} + b\tikzmark{<>}
+      \]
+      \tikz[remember picture, overlay]
+      \draw[-stealth, transform canvas={xshift=-6pt, yshift=-6pt}]
+      (pic cs:<>) --++ (-10pt,-10pt)
+      node[anchor=north east] {$<>$}
+      ;
+      \tikz[remember picture, overlay]
+      \draw[-stealth, transform canvas={xshift=-5pt, yshift=-6pt}]
+      (pic cs:<>) --++(-5pt,-10pt)
+      node[anchor=north] {$<>$}
+      ;
+      \tikz[remember picture, overlay]
+      \draw[-stealth, transform canvas={xshift=0pt, yshift=-6pt}]
+      (pic cs:<>) --++(5pt,-10pt)
+      node[anchor=north] {$<>$}
+      ;
+      \tikz[remember picture, overlay]
+      \draw[-stealth, transform canvas={xshift=3pt, yshift=-6pt}]
+      (pic cs:<>) --++(10pt,-10pt)
+      node[anchor=north west] {$<>$}
+      ;
+      <>
+      ]],
+      {
+        i(1, "yn"),
+        i(2, "an"),
+        i(3, "xn"),
+        i(4, "bn"),
+        rep(1),
+        i(5, "Y"),
+        rep(2),
+        i(6, "A"),
+        rep(3),
+        i(7, "X"),
+        rep(4),
+        i(8, "B"),
+        i(0),
+      }
+    )
+  ),
   -- obar
   s({
     trig = "obr",
@@ -2587,6 +2640,47 @@ return {
       {
         d(1, get_visual),
       }
+    )
+  ),
+  -- pybloc
+  s(
+    {
+      trig = "pyb",
+      snippetType = "autosnippet",
+      dscr = "Expands 'pyb' into pybloc environment",
+      condition = line_begin,
+    },
+    fmta(
+      [[
+    \begin{pybloc}
+      <>
+    \end{pybloc}
+    ]],
+      {
+        d(1, get_visual),
+      }
+    )
+  ),
+  -- py
+  s({
+    trig = "py",
+    snippetType = "autosnippet",
+    dscr = "Expands 'py' into '\\py{}'",
+  }, fmta("\\py{<>}", { d(1, get_visual) })),
+  s({
+    trig = "pny",
+    snippetType = "autosnippet",
+    dscr = "Expands 'pny' into '\\py{fr'\\num{{{<>}}}'}'",
+  }, fmta("\\py{fr'\\num{{{<>:<>}}}'}", { d(1, get_visual), i(2, ".2e") })),
+  s(
+    {
+      trig = "psy",
+      snippetType = "autosnippet",
+      dscr = "Expands 'psy' into '\\py{fr'\\SI{{{<>}}}{{{}}}'}'",
+    },
+    fmta(
+      "\\py{fr'\\SI{{{<>:<>}}}{{<>}}'}",
+      { d(1, get_visual), i(2, ".2e"), i(3, "UNIT") }
     )
   ),
   -----------------------------------------------------------------------------

@@ -153,3 +153,14 @@ function! SelectEnv()
   call cursor(l:env.open.lnum + 1, 1)
 endfunction
 ]])
+
+-- for pythontex
+vim.cmd([[
+function! PythonTexCompile()
+    silent !clear
+    call vimtex#compiler#compile_ss()
+    execute "! pythontex " . bufname("%") 
+    call vimtex#compiler#compile_ss()
+endfunction
+nnoremap <C-p> :call PythonTexCompile() <CR>
+]])

@@ -145,16 +145,16 @@ vim.keymap.set(
 )
 
 -- Launch Python
+-- vim.keymap.set(
+--   "n",
+--   "<C-S-p>",
+--   "<cmd>term python % <CR>",
+--   -- "<cmd>sp <CR> <cmd>term python % <CR>",
+--   { noremap = true, desc = "Launch Python" }
+-- )
 vim.keymap.set(
   "n",
   "<C-S-p>",
-  "<cmd>term python % <CR>",
-  -- "<cmd>sp <CR> <cmd>term python % <CR>",
-  { noremap = true, desc = "Launch Python" }
-)
-vim.keymap.set(
-  "n",
-  "<C-p>",
   "<cmd>!python3 %<CR>",
   { noremap = true, desc = "Float Python" }
 )

@@ -6,7 +6,7 @@
   <property name="pressureMultiplier" value="1"/>
   <property name="zoomGesturesEnabled" value="true"/>
   <property name="selectedToolbar" value="Floating Toolbox (experimental) Copy"/>
-  <property name="lastSavePath" value="/home/nora/Documents/Enseignement/Prepa/2023/05_I/02_elec"/>
+  <property name="lastSavePath" value="/home/nora/Documents/Enseignement/Prepa/figures_generales"/>
   <property name="lastOpenPath" value="/home/nora/Documents/Enseignement/Prepa/figures_generales"/>
   <property name="lastImagePath" value="/home/nora/Documents/Enseignement/Prepa/2022/TD/figures/ch37"/>
   <property name="edgePanSpeed" value="20"/>
@@ -14,8 +14,8 @@
   <property name="zoomStep" value="10"/>
   <property name="zoomStepScroll" value="2"/>
   <property name="displayDpi" value="72"/>
-  <property name="mainWndWidth" value="2560"/>
-  <property name="mainWndHeight" value="1413"/>
+  <property name="mainWndWidth" value="1954"/>
+  <property name="mainWndHeight" value="1391"/>
   <property name="maximized" value="false"/>
   <property name="showToolbar" value="true"/>
   <property name="showSidebar" value="false"/>
@@ -26,7 +26,7 @@
   <property name="menubarVisible" value="true"/>
   <property name="filepathShownInTitlebar" value="false"/>
   <property name="pageNumberShownInTitlebar" value="false"/>
-  <property name="numColumns" value="1"/>
+  <property name="numColumns" value="2"/>
   <property name="numRows" value="1"/>
   <property name="viewFixedRows" value="false"/>
   <property name="showPairedPages" value="false"/>
@@ -213,7 +213,7 @@
     </data>
   </data>
   <data name="tools">
-    <attribute name="current" type="string" value="selectRegion"/>
+    <attribute name="current" type="string" value="pen"/>
     <data name="drawArrow">
       <attribute name="drawingType" type="string" value="default"/>
     </data>
@@ -251,8 +251,8 @@
       <attribute name="drawingType" type="string" value="default"/>
     </data>
     <data name="pen">
-      <attribute name="color" type="hex" value="ff0000"/>
-      <attribute name="drawingType" type="string" value="default"/>
+      <attribute name="color" type="hex" value="000000"/>
+      <attribute name="drawingType" type="string" value="rectangle"/>
       <attribute name="fill" type="int" value="0"/>
       <attribute name="fillAlpha" type="int" value="255"/>
       <attribute name="size" type="string" value="MEDIUM"/>

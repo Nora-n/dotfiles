@@ -4,9 +4,9 @@
     "recent_thr": 0.1,
     "compr_cnt": 3,
     "ignore": [],
-    "position": "bottom",
+    "position": "fixed",
     "persist": true,
-    "window": 2097281,
+    "window": null,
     "font_desc": "EB Garamond 10",
     "font_size": "medium",
     "font_color": "white",
@@ -20,10 +20,10 @@
     "vis_shift": true,
     "vis_space": true,
     "geometry": [
-        4965,
-        777,
-        945,
-        1033
+        5017,
+        1611,
+        807,
+        164
     ],
     "screen": 1,
     "start_disabled": false,
