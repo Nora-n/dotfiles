@@ -26,10 +26,11 @@
 % https://tex.stackexchange.com/a/483175/284518
 \RequirePackage{stackengine}
 \RequirePackage{scalerel}
-\newcommand\danger[1][2ex]{%
-	\scaleto{\stackengine{0.3pt}{\scalebox{1.1}[.9]{%
-				\color{black}$\blacktriangle$}}{\color{white}\tiny\bfseries !}{O}{c}{F}{F}{L}}{#1}%
-}
+% Deprecated, fontawesome5 danger.
+% \newcommand\danger[1][2ex]{%
+% 	\scaleto{\stackengine{0.3pt}{\scalebox{1.1}[.9]{%
+% 				\color{black}$\blacktriangle$}}{\color{white}\tiny\bfseries !}{O}{c}{F}{F}{L}}{#1}%
+% }
 
 % Test adding text
 \RequirePackage{lipsum}
@@ -175,6 +176,23 @@
 \newcommand{\xunderbracket}[2][\vphantom{\dfrac{A}{A}}]{\underbracket[1pt]{#1#2}}
 \newcommand{\xoverbrace}[2][\vphantom{\dfrac{A}{A}}]{\overbrace{#1#2}}
 \newcommand{\xoverbracket}[2][\vphantom{\dfrac{A}{A}}]{\overbracket[1pt]{#1#2}}
+% To print bareme in interro
+% \newcommand{\stck}[3][2]{\stackon[#1 pt]{\rm e}{$\mathclap{\circled{1}}$}}
+\newcommand{\pt}[1]{{\color{\cswitch{ForestGreen}{white!10}}\circled{#1}}}
+
+\NewDocumentCommand{\stk}{O{2}D(){on}D""{1}m}{%
+  \IfEqCase{#2}{%
+    {on}{\stackon[#1pt]{\rm #4}{$\mathclap{\pt{#3}}$}}
+    {un}{\stackunder[#1pt]{\rm #4}{$\mathclap{\pt{#3}}$}}
+  }
+}
+\NewDocumentCommand{\stm}{O{2}D(){on}D""{1}m}{%
+  \IfEqCase{#2}{%
+    {on}{\stackon[#1pt]{$#4$}{$\pt{#3}$}}
+    {un}{\stackunder[#1pt]{$#4$}{$\pt{#3}$}}
+  }
+}
+
 % To pagebreak equations
 \allowdisplaybreaks
 % Pour empheq, qui pourrait remplacer à la fois équations et align
@@ -561,6 +579,8 @@
 \DeclareMathOperator{\sinh}{sh}
 \let\arg\relax
 \DeclarePairedDelimiterXPP\arg[1]{\operatorname{arg}}{(}{)}{}{#1}
+\let\norm\relax
+\DeclarePairedDelimiter{\norm}{\lVert}{\rVert}
 % \DeclareMathOperator{\arg}{arg}
 % To manually put \blacksquare flushedright of align* environnement
 % https://tex.stackexchange.com/a/144984/284518
@@ -670,6 +690,18 @@
 % For vertical space centered
 % https://tex.stackexchange.com/a/394777/284518
 % \RequirePackage{makecell}
+% For diagonal box
+% https://tex.stackexchange.com/a/17748/284518
+% \newcommand\diagbox[4]{%
+%   \multicolumn{1}{p{#2}|}{\hskip-\tabcolsep
+%   $\vcenter{\begin{tikzpicture}[baseline=0,anchor=south west,inner sep=#1]
+%   \path[use as bounding box] (0,0) rectangle (#2+2\tabcolsep,\baselineskip);
+%   \node[minimum width={#2+2\tabcolsep},minimum height=\baselineskip+\extrarowheight] (box) {};
+%   \draw (box.north west) -- (box.south east);
+%   \node[anchor=south west] at (box.south west) {#3};
+%   \node[anchor=north east] at (box.north east) {#4};
+%  \end{tikzpicture}}$\hskip-\tabcolsep}}
+\RequirePackage{diagbox}
 
 % For dashed lines in tables
 \RequirePackage{arydshln}
@@ -1092,6 +1124,11 @@ literate         = {á}{{\'a}}1
   }
 }
 
+% niveau des exercices (utile en TD)
+\newcommand{\niveauUn}{($\star$)}
+\newcommand{\niveauDeux}{($\star \star$)}
+\newcommand{\niveauTrois}{($\star \star \star$)}
+
 % Thicker hrulefill
 \makeatletter
   \def\vhrulefill#1{\leavevmode\leaders\hrule\@height#1\hfill \kern\z@}
@@ -1448,7 +1485,7 @@ literate         = {á}{{\'a}}1
 \newcommand{\namecoro}{Corollaire}
 \newcommand{\nameinte}{Interprétation}
 \newcommand{\nameimpl}{Implication}
-\newcommand{\nameimpo}{Important}
+\newcommand{\nameimpo}{Attention}
 \newcommand{\nametool}{Outils}
 \newcommand{\namerapp}{Rappel}
 \newcommand{\namedefi}{Définition}
@@ -1762,34 +1799,35 @@ step={#3},
 }
 
 % Useful styles to add to a box
-\tcbset{heart/.style={overlay={
-					\node[below left] at (frame.north west)
-					{\includegraphics[width=1.2cm]{\PREPA/figures_generales/heart.jpg}};}}}
-
-\tcbset{hand/.style={overlay={
-					\node[below left] at (frame.north west)
-					{\includegraphics[width=1.2cm]{\PREPA/figures_generales/pr.jpg}};}}}
-
-\tcbset{dngr/.style={overlay={
-					\node[below left, scale=2] at (frame.north west)
-					{\danger};}}}
-
-\tcbset{trans/.style={overlay={
-					\node[xshift=-0.8cm, yshift=-0.75cm] at (frame.north west)
-					{\includegraphics[angle=-90, origin=c, height=1.2cm]{\PREPA/figures_generales/pr.jpg}};}}}
-
-\newcommand{\includehand}[2]{
-	\includegraphics[angle=#1,
-		origin=c,
-		height=#2]{\PREPA/figures_generales/pr.jpg}
-}
-
-\newcommand{\includeheart}[2]{
-	\vspace*{-20pt}
-	\includegraphics[angle=#1,
-		origin=c,
-		height=#2]{\PREPA/figures_generales/heart.jpg}
-}
+% deprecated, use "*" style with "ror" for heart, "impo" for dngr, "trans"…
+% \tcbset{heart/.style={overlay={
+% 					\node[below left] at (frame.north west)
+% 					{\includegraphics[width=1.2cm]{\PREPA/figures_generales/heart.jpg}};}}}
+%
+% \tcbset{hand/.style={overlay={
+% 					\node[below left] at (frame.north west)
+% 					{\includegraphics[width=1.2cm]{\PREPA/figures_generales/pr.jpg}};}}}
+%
+% \tcbset{dngr/.style={overlay={
+% 					\node[below left, scale=2] at (frame.north west)
+% 					{\danger};}}}
+%
+% \tcbset{trans/.style={overlay={
+% 					\node[xshift=-0.8cm, yshift=-0.75cm] at (frame.north west)
+% 					{\includegraphics[angle=-90, origin=c, height=1.2cm]{\PREPA/figures_generales/pr.jpg}};}}}
+%
+% \newcommand{\includehand}[2]{
+% 	\includegraphics[angle=#1,
+% 		origin=c,
+% 		height=#2]{\PREPA/figures_generales/pr.jpg}
+% }
+%
+% \newcommand{\includeheart}[2]{
+% 	\vspace*{-20pt}
+% 	\includegraphics[angle=#1,
+% 		origin=c,
+% 		height=#2]{\PREPA/figures_generales/heart.jpg}
+% }
 
 % For bigger boxrule in fbox
 \edef\oldfboxrule{\the\fboxrule}

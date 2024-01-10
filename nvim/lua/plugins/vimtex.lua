@@ -17,6 +17,7 @@ return {
         split_pos = "vert rightbelow",
         split_width = 39,
       }
+      vim.g.vimtex_format_enabled = 1
     end,
   },
 }

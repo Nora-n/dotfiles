@@ -299,7 +299,7 @@ return {
   s({
     trig = "inx",
     snippetType = "autosnippet",
-    dscr = "Expands 'itx' into LaTeX's intertext{} command.",
+    dscr = "Expands 'inx' into LaTeX's intertext{} command.",
   }, fmta("\\intertext{<>}", { d(1, get_visual) })),
   -- beforetext in math
   s({
@@ -445,24 +445,35 @@ return {
   -- switch gray
   s(
     {
-      trig = "([^\\])psw",
-      regTrig = true,
+      trig = "psw",
       snippetType = "autosnippet",
       dscr = "Expands 'psw' into '\\psw{}{<>}'",
     },
     fmta(
       [[
-      <>\psw{
+      \psw{
         <>
       }
       <>
       ]],
       {
-        f(function(_, snip)
-          return snip.captures[1]
-        end),
         d(1, get_visual),
         i(0),
+      }
+    )
+  ),
+  s(
+    {
+      trig = "Psw",
+      snippetType = "autosnippet",
+      dscr = "Expands 'Psw' into '\\psw{}{<>}'",
+    },
+    fmta(
+      [[
+      \psw{<>}
+      ]],
+      {
+        d(1, get_visual),
       }
     )
   ),
@@ -859,14 +870,14 @@ return {
     })
   ),
   -- notations points
-  s({
-    trig = "rpt",
-    snippetType = "autosnippet",
-  }, fmta("\\hfill \\textcolor{red}{/<>}", { d(1, get_visual) })),
-  s({
-    trig = "gpt",
-    snippetType = "autosnippet",
-  }, fmta("\\hfill \\textcolor{ForestGreen}{/<>}", { d(1, get_visual) })),
+  -- s({
+  --   trig = "rpt",
+  --   snippetType = "autosnippet",
+  -- }, fmta("\\hfill \\textcolor{red}{/<>}", { d(1, get_visual) })),
+  -- s({
+  --   trig = "gpt",
+  --   snippetType = "autosnippet",
+  -- }, fmta("\\hfill \\textcolor{ForestGreen}{/<>}", { d(1, get_visual) })),
   -----------------------------------------------------------------------------
   -- maths
   -----------------------------------------------------------------------------
@@ -2194,6 +2205,30 @@ return {
       end),
     })
   ),
+  -- stack for bareme
+  s(
+    {
+      trig = "stk",
+      snippetType = "autosnippet",
+      wordTrig = false,
+      dscr = "Expands 'stk' into '\\stk{<>}'",
+      condition = tex_utils.in_text,
+    },
+    fmta("\\stk{<>}", {
+      d(1, get_visual),
+    })
+  ),
+  s(
+    {
+      trig = "stm",
+      snippetType = "autosnippet",
+      dscr = "Expands 'stm' into '\\stm{<>}'",
+      condition = tex_utils.in_mathzone,
+    },
+    fmta("\\stm{<>}", {
+      d(1, get_visual),
+    })
+  ),
   -- align
   s({
     trig = "alg",
@@ -2661,20 +2696,43 @@ return {
       }
     )
   ),
+  s(
+    {
+      trig = "pyd",
+      snippetType = "autosnippet",
+      dscr = "Expands 'pyd' into pycode environment",
+      condition = line_begin,
+    },
+    fmta(
+      [[
+    \begin{pycode}
+      <>
+    \end{pycode}
+    ]],
+      {
+        d(1, get_visual),
+      }
+    )
+  ),
   -- py
   s({
-    trig = "py",
+    trig = "pyy",
     snippetType = "autosnippet",
     dscr = "Expands 'py' into '\\py{}'",
   }, fmta("\\py{<>}", { d(1, get_visual) })),
   s({
-    trig = "pny",
+    trig = "pyc",
+    snippetType = "autosnippet",
+    dscr = "Expands 'pyc' into '\\pyc{}'",
+  }, fmta("\\pyc{<>}", { d(1, get_visual) })),
+  s({
+    trig = "pyn",
     snippetType = "autosnippet",
     dscr = "Expands 'pny' into '\\py{fr'\\num{{{<>}}}'}'",
   }, fmta("\\py{fr'\\num{{{<>:<>}}}'}", { d(1, get_visual), i(2, ".2e") })),
   s(
     {
-      trig = "psy",
+      trig = "pys",
       snippetType = "autosnippet",
       dscr = "Expands 'psy' into '\\py{fr'\\SI{{{<>}}}{{{}}}'}'",
     },
