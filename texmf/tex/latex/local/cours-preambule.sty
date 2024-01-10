@@ -15,13 +15,16 @@
 \RequirePackage{icomma}
 \frenchbsetup{StandardLists=true}
 
+% Allow more writes for files of tcbox
+\RequirePackage{morewrites}
+
 % Symbols
-\RequirePackage{pifont}
-\newcommand{\cmark}{\ding{51}}%
-\newcommand{\xmark}{\ding{55}}%
-\newcommand{\hand}{\ding{45}}%
+% \RequirePackage{pifont}
+% \newcommand{\cmark}{\ding{51}}%
+% \newcommand{\xmark}{\ding{55}}%
+% \newcommand{\hand}{\ding{45}}%
 % Knuth and danger \dbend
-\RequirePackage{manfnt}
+% \RequirePackage{manfnt}
 % Selfmade with skalerel
 % https://tex.stackexchange.com/a/483175/284518
 \RequirePackage{stackengine}
@@ -355,6 +358,16 @@
 }
 {
 	\tailline{\diamond}
+	\vspace*{-20pt}%
+}
+
+\newenvironment{boxes}{
+	\headline{Résultats phares}
+	\vspace*{-20pt}%
+}
+{
+	\tailline{\diamond}
+	\vspace*{-20pt}%
 }
 
 \renewcommand{\thesection}{\Roman{section}}
@@ -1611,6 +1624,8 @@ literate         = {á}{{\'a}}1
 % based on the great answer https://tex.stackexchange.com/a/471615/284518
 \NewTColorBox{tcb}{sO{}r()D<>{box}d""D''{l}m}{%
 base,
+% add to list={#3}{chapter},
+% list entry={#7},
 #6icon=\IfBooleanTF{#1}{#5}{#3},
 #4={#3}{#7},
 #2,
@@ -1621,6 +1636,8 @@ base,
 #6icon=\IfBooleanTF{#1}{#5}{#3},
 #4={#3}{\csname name#3\endcsname~\expandafter\csname the#3\endcsname~:~#7},
 step={#3},
+add to list={#3}{section},
+list entry={\csname name#3\endcsname~\expandafter\csname the#3\endcsname~:~#7},
 #2,
 }
 
