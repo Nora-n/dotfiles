@@ -88,12 +88,13 @@
 \RequirePackage{floatpag}
 \floatpagestyle{fancy}
 % Force float Here
-\RequirePackage{float}
+% \RequirePackage{float}
 
 % Colors
 \RequirePackage[svgnames, dvipsnames, table]{xcolor}
 \definecolor{urlcolor}{rgb}{0,0,1}
 \definecolor{dgreen}{rgb}{.1,.6,.1}
+\definecolor{orchid}{RGB}{218, 112, 214}
 \definecolor{brandeisblue}{rgb}{0.0, 0.44, 1.0}
 \definecolor{cornflowerblue}{rgb}{0.3921, 0.5843, 0.9294}
 \definecolor{limegreen}{rgb}{0.2, 0.8, 0.2}
@@ -169,6 +170,9 @@
 		\\\hline
 	\end{tabular}
 }
+
+% Make lewis come back:
+\input{chemfig-lewis.tex}
 
 % Pour \Aboxed dans un environnement align
 \RequirePackage{mathtools}
@@ -293,6 +297,10 @@
 % Caption right of figure
 \RequirePackage[rightcaption]{sidecap}
 \sidecaptionvpos{figure}{t}
+% Better sidecap with floatrow and
+% \floatsetup[figure]{capposition=beside, capbesideposition={top,right}}
+\RequirePackage{floatrow}
+\floatsetup[table]{capposition=above}
 % General caption
 \RequirePackage[labelfont=bf, font=small]{caption}
 \captionsetup{hypcap=false}
@@ -734,7 +742,7 @@
 	free-standing-units,           % create standalone commands
 	locale=FR,                     % language
 	inter-unit-product=
-		{\ensuremath{\!\mycdot\!}},  % character between units
+  \ensuremath{{\mycdot}},  % character between units
 	separate-uncertainty,          % x ± dx
 	retain-explicit-plus,          % p.ex. +45°
 	range-units=brackets,          % (0 to 40) m
@@ -897,10 +905,13 @@ literate         = {á}{{\'a}}1
 \newcommand\gpts[1]{\tabto*{-2\leftmargin}\textcolor{ForestGreen}{\llap{/#1~}\tabto{\TabPrevPos}}}
 \newcommand\rpts[1]{\tabto*{-2.5\leftmargin}\textcolor{Red}{\llap{/#1~}\tabto{\TabPrevPos}}}
 \newcommand{\nitem}[1]{\item\gpts{#1}\/}
+% Left anything from item
+\newcommand\ltm[2]{\tabto*{-#1}\llap{#2~}\tabto{\TabPrevPos}}
+\newcommand{\litem}[2]{\item\ltm{#1}{#2}\/}
 % mathitem to remove space when only equation in item
 % https://tex.stackexchange.com/a/497787
-\newcommand\mnitem[1]{\item\gpts{#1}\leavevmode\vspace*{-\dimexpr\baselineskip+\abovedisplayskip\relax}}
 \newcommand\mitem{\item\leavevmode\vspace*{-\dimexpr\baselineskip+\abovedisplayskip\relax}}
+\newcommand\mnitem[1]{\item\gpts{#1}\leavevmode\vspace*{-\dimexpr\baselineskip+\abovedisplayskip\relax}}
 
 % Bolditemize
 % https://tex.stackexchange.com/a/266229
@@ -974,36 +985,36 @@ literate         = {á}{{\'a}}1
 \togglefalse{student}
 \newtoggle{corrige}
 \togglefalse{corrige}
-\newcommand{\ifstudent}[1]{
+\newcommand{\ifstudent}[1]{%
 	\iftoggle{student}{%
 		#1%
 	}{}
 }
-\newcommand{\ifprof}[1]{
+\newcommand{\ifprof}[1]{%
 	\iftoggle{student}{%
 	}{
 		#1%
 	}
 }
-\newcommand{\sswitch}[2]{
+\newcommand{\sswitch}[2]{%
 	\iftoggle{student}{%
 		#1%
 	}{%
 		#2%
 	}%
 }
-\newcommand{\ifcorrige}[1]{
+\newcommand{\ifcorrige}[1]{%
 	\iftoggle{corrige}{%
 		#1%
 	}{}
 }
-\newcommand{\ifenonce}[1]{
+\newcommand{\ifenonce}[1]{%
 	\iftoggle{enonce}{%
 	}{
 		#1%
   }
 }
-\newcommand{\cswitch}[2]{
+\newcommand{\cswitch}[2]{%
 	\iftoggle{corrige}{%
 		#1%
 	}{%
@@ -1028,6 +1039,8 @@ literate         = {á}{{\'a}}1
 		#1%
 	}%
 }
+% Color choice
+\newcommand{\lsw}[2]{\textcolor{\sswitch{white!10}{#1!100}}{#2}}
 % Command for highlighting switch
 \RequirePackage{soul}
 \sethlcolor{lightgray}
@@ -1141,6 +1154,9 @@ literate         = {á}{{\'a}}1
 \newcommand{\niveauUn}{($\star$)}
 \newcommand{\niveauDeux}{($\star \star$)}
 \newcommand{\niveauTrois}{($\star \star \star$)}
+\newcommand{\str}{\makebox(15,6){$\mqty(\star)$}}
+\newcommand{\strr}{\makebox(15,6){$\mqty(\star\\[-4pt]\star)$}}
+\newcommand{\strrr}{\makebox(15,6){$\mqty(\star\\[-4pt]\star\\[-4pt]\star)$}}
 
 % Thicker hrulefill
 \makeatletter

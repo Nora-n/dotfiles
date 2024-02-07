@@ -153,12 +153,11 @@ return {
     },
     fmta(
       [[
-      \vspace<>{<>pt}
+      \vspace{<>pt}
       <>
     ]],
       {
-        c(1, { t(""), t("*") }),
-        i(2, "-15"),
+        i(1, "-15"),
         i(0),
       }
     )
@@ -358,7 +357,7 @@ return {
       trig = "swt",
       wordTrig = true,
       snippetType = "autosnippet",
-      dscr = "Expands 'swt' into '\\switch{<>}{<>}'",
+      dscr = "Expands 'swt' into '\\sswitch{<>}{<>}'",
     },
     fmta(
       [[
@@ -376,11 +375,28 @@ return {
       }
     )
   ),
+  s(
+    {
+      trig = "Swt",
+      wordTrig = true,
+      snippetType = "autosnippet",
+      dscr = "Expands 'Swt' into '\\sswitch{<>}{<>}'",
+    },
+    fmta(
+      [[
+      \sswitch{<>}{<>}<>
+      ]],
+      {
+        d(1, get_visual),
+        i(2, "prof"),
+        i(0),
+      }
+    )
+  ),
   -- cswitch
   s(
     {
-      trig = "([^\\])csw",
-      regTrig = true,
+      trig = "csw",
       snippetType = "autosnippet",
       dscr = "Expands 'csw' into '\\cswitch{<>}{<>}'",
     },
@@ -424,8 +440,7 @@ return {
   -- switch white
   s(
     {
-      trig = "([^\\])wsw",
-      regTrig = true,
+      trig = "wsw",
       snippetType = "autosnippet",
       dscr = "Expands 'wsw' into '\\wsw{<>}'",
     },
@@ -447,7 +462,7 @@ return {
     {
       trig = "psw",
       snippetType = "autosnippet",
-      dscr = "Expands 'psw' into '\\psw{}{<>}'",
+      dscr = "Expands 'psw' into '\\psw{<>}'",
     },
     fmta(
       [[
@@ -466,7 +481,7 @@ return {
     {
       trig = "Psw",
       snippetType = "autosnippet",
-      dscr = "Expands 'Psw' into '\\psw{}{<>}'",
+      dscr = "Expands 'Psw' into '\\psw{<>}'",
     },
     fmta(
       [[
@@ -477,23 +492,38 @@ return {
       }
     )
   ),
+  -- choose color
+  s(
+    {
+      trig = "lsw",
+      wordTrig = false,
+      snippetType = "autosnippet",
+      dscr = "Expands 'lsw' into '\\lsw{<>}{<>}'",
+    },
+    fmta(
+      [[
+      \lsw{<>}{<>}<>
+      ]],
+      {
+        i(1, "orange"),
+        d(2, get_visual),
+        i(0),
+      }
+    )
+  ),
   -- force white
   s(
     {
-      trig = "([^\\])wht",
-      regTrig = true,
+      trig = "wht",
       snippetType = "autosnippet",
       dscr = "Expands 'wht' into '\\wht{}{<>}'",
     },
     fmta(
       [[
-      <>\wht{<>}
+      \wht{<>}
       <>
       ]],
       {
-        f(function(_, snip)
-          return snip.captures[1]
-        end),
         d(1, get_visual),
         i(0),
       }
@@ -1337,6 +1367,18 @@ return {
     }),
   }),
   s({
+    trig = "tan",
+    wordTrig = false,
+    snippetType = "autosnippet",
+    dscr = "Expands 'tan' into '\\tan{<>}'",
+    condition = tex_utils.in_mathzone,
+  }, {
+    c(1, {
+      fmta("\\tan(<>)", { i(1, "\\theta") }),
+      fmta("\\tan{<>}", { i(1, "\\theta") }),
+    }),
+  }),
+  s({
     trig = "atan",
     wordTrig = false,
     snippetType = "autosnippet",
@@ -1502,6 +1544,18 @@ return {
           i(2, "+\\infty"),
         }),
       }),
+    })
+  ),
+  -- Sim
+  s(
+    {
+      trig = "sim",
+      snippetType = "autosnippet",
+      dscr = "Expands 'sim' into '\\Sim'",
+      condition = tex_utils.in_mathzone,
+    },
+    fmta("\\Sim_{<>}", {
+      i(1, "x \\to 0"),
     })
   ),
   -- straight derive
@@ -2154,6 +2208,38 @@ return {
       i(1, "black"),
     })
   ),
+  -- tikzmark
+  s({
+    trig = "tkm",
+    wordTrig = false,
+    snippetType = "autosnippet",
+    dscr = "Expands 'tkm' into '\\tikzmark{<>}'",
+  }, fmta("\\tikzmark{<>}", { i(1, "MARK") })),
+  -- tikz from tikzmark
+  s(
+    {
+      trig = "Tkm",
+      snippetType = "autosnippet",
+      dscr = "Expands 'Tkm' into '\\tikz[remember picture, overlay]'",
+    },
+    fmta(
+      [[
+      \tikz[remember picture, overlay]
+      \draw[-stealth, transform canvas={<>}]
+        (pic cs:<>) to <> ([shift={<>}]pic cs:<>)
+        ;
+      <>
+      ]],
+      {
+        i(1, "yshift=6pt"),
+        i(2, "IN"),
+        c(3, { t(""), t("[out=90, in=90]") }),
+        i(4, "(-6pt,6pt)"),
+        i(5, "OUT"),
+        i(0),
+      }
+    )
+  ),
   -- dots
   s(
     {
@@ -2179,7 +2265,7 @@ return {
   ),
   s(
     {
-      trig = "([aprtvxyz])(dot)",
+      trig = "([aprltvxyz])(dot)",
       regTrig = true,
       snippetType = "autosnippet",
       dscr = "Expands 'xdot' into '\\xp'",
@@ -2193,7 +2279,7 @@ return {
   ),
   s(
     {
-      trig = "([aprtvxyz])(dtt)",
+      trig = "([aprltvxyz])(dtt)",
       regTrig = true,
       snippetType = "autosnippet",
       dscr = "Expands 'xdtt' into '\\xpp'",
@@ -2229,6 +2315,18 @@ return {
       d(1, get_visual),
     })
   ),
+  -- simple point
+  s({
+    trig = "ptt",
+    snippetType = "autosnippet",
+    dscr = "Expands 'ptt' into '\\pt{<>}'",
+  }, fmta("\\pt{<>}", { i(1, "1") })),
+  -- litem generic but mostly for point
+  s({
+    trig = "ltm",
+    snippetType = "autosnippet",
+    dscr = "Expands 'ltm' into '\\lit{<>}{<>}'",
+  }, fmta("\\ltm{<>}{<>}", { i(1, "20pt"), i(2) })),
   -- align
   s({
     trig = "alg",
@@ -2687,9 +2785,9 @@ return {
     },
     fmta(
       [[
-    \begin{pybloc}
+    \begin{pyblock}
       <>
-    \end{pybloc}
+    \end{pyblock}
     ]],
       {
         d(1, get_visual),
@@ -3518,6 +3616,7 @@ return {
     end),
     t("\\linewidth"),
   }),
+  -- fig
   s(
     {
       trig = "fig",
@@ -3548,6 +3647,39 @@ return {
       }
     )
   ),
+  -- wrapfig
+  s(
+    {
+      trig = "wfg",
+      snippetType = "autosnippet",
+      dscr = "A wrapfig environment",
+      condition = line_begin,
+    },
+    fmta(
+      [[
+      \begin{wrapfigure}[<>]{<>}{.<>\linewidth}
+        \centering
+        \includegraphics[<>=<>]{<>}
+        <>
+        \caption{<>}
+        \label{fig:<>}
+      \end{wrapfigure}
+      <>
+    ]],
+      {
+        i(1, "LINENUM"),
+        i(2, "R"),
+        i(3),
+        c(4, { t("width"), t("scale"), t("height") }),
+        i(5),
+        i(6),
+        c(7, { t(""), t("\\captionsetup{justification=centering}") }),
+        i(8),
+        i(9),
+        i(0),
+      }
+    )
+  ),
   -- caption
   s({
     trig = "cpt",
@@ -3563,6 +3695,15 @@ return {
         d(1, get_visual),
       }),
     }),
+  }),
+  -- centering caption
+  s({
+    trig = "cpc",
+    snippetType = "autosnippet",
+    dscr = "center caption",
+    condition = line_begin,
+  }, {
+    t("\\captionsetup{justification=centering}"),
   }),
   -----------------------------------------------------------------------------
   -- Tables
