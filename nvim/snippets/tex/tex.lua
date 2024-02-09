@@ -327,6 +327,26 @@ return {
       }
     )
   ),
+  s(
+    {
+      trig = "ifp",
+      wordTrig = true,
+      snippetType = "autosnippet",
+      dscr = "Expands 'ifp' into '\\ifprof{<>}'",
+    },
+    fmta(
+      [[
+      \ifprof{
+        <>
+      }
+      <>
+      ]],
+      {
+        d(1, get_visual),
+        i(0),
+      }
+    )
+  ),
   -- QR
   s(
     {
@@ -1761,6 +1781,11 @@ return {
     snippetType = "autosnippet",
     dscr = "Expands 'cce' into '\\ce'",
   }, fmta("\\ce{<>}", { d(1, get_visual) })),
+  s({
+    trig = "cfg",
+    snippetType = "autosnippet",
+    dscr = "Expands 'c' into '\\cfig'",
+  }, fmta("\\cfig{<>}", { d(1, get_visual) })),
   -- tabav
   s(
     {

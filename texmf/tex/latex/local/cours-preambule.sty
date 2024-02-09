@@ -1097,6 +1097,56 @@ literate         = {á}{{\'a}}1
 \setlist[blocQR,2]{leftmargin=20pt, label=\alph* --}
 \newcommand{\resetQ}{\restartlist{blocQR}}
 
+% Allow for compilation of enon, solu_stud and solu_prof in one go?
+% https://tex.stackexchange.com/a/5265
+\RequirePackage{currfile}
+\newcommand\settype[1]{
+  \IfEqCase{#1}{
+    {enon}{
+      \immediate\write18{%
+        pdflatex --jobname="\currfilebase_enon"
+        "\gdef\string\conditionmacro{1}\string\input\space\jobname"
+      }%
+      \ifnum\conditionmacro=1 \togglefalse{corrige}\fi
+    }
+    {solu}{
+      \immediate\write18{%
+        pdflatex --jobname="\currfilebase_solu"
+        "\gdef\string\conditionmacro{2}\string\input\space\jobname"
+      }%
+      \ifnum\conditionmacro=2 \toggletrue{corrige}\fi
+    }
+    {solu_prof}{
+      \immediate\write18{%
+        pdflatex --jobname="\currfilebase_solu-prof"
+        "\gdef\string\conditionmacro{3}\string\input\space\jobname"
+      }%
+      \ifnum\conditionmacro=3 \toggletrue{corrige}\togglefalse{student}\fi
+    }
+    {solu_stud}{
+      \immediate\write18{%
+        pdflatex --jobname="\currfilebase_solu-stud"
+        "\gdef\string\conditionmacro{4}\string\input\space\jobname"
+      }%
+      \ifnum\conditionmacro=4 \toggletrue{corrige}\toggletrue{student}\fi
+    }
+    {stud}{
+      \immediate\write18{%
+        pdflatex --jobname="\currfilebase_stud"
+        "\gdef\string\conditionmacro{5}\string\input\space\jobname"
+      }%
+      \ifnum\conditionmacro=5 \toggletrue{student}\fi
+    }
+    {prof}{
+      \immediate\write18{%
+        pdflatex --jobname="\currfilebase_prof"
+        "\gdef\string\conditionmacro{6}\string\input\space\jobname"
+      }%
+      \ifnum\conditionmacro=6 \togglefalse{student}\fi
+    }
+  }[]
+}
+
 % Cannibalize the rest
 \newcommand{\eq}[2][equation*]{
 	\begin{#1}
