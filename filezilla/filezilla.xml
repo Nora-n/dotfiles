@@ -130,7 +130,7 @@
 		<Setting name="Remote filelist colwidths">710 147 80 100 80 85</Setting>
 		<Setting name="Splitter positions (v2)">97 -323 500000000 234 238 500000000</Setting>
 		<Setting name="Greeting version">3.66.4</Setting>
-		<Setting name="Window position and size">0 1948 594 1784 1229 </Setting>
+		<Setting name="Window position and size">0 1883 614 1784 1229 </Setting>
 		<Setting name="Tab data" sensitive="1">
 			<Tabs>
 				<Tab connected="1" selected="1">

@@ -752,6 +752,18 @@
 	% close-bracket= ],
 	% angle-symbol-over-decimal,   % p.ex. 0.''11
 }
+% \SIrange{lower}{upper}{unit} with brackets
+% https://tex.stackexchange.com/a/172231
+\ExplSyntaxOn
+% \RenewDocumentCommand \SIrange { O{} m m m } {
+%   \leavevmode
+%   \group_begin:
+%      \keys_set:nn { siunitx } { open-bracket = [,  close-bracket= ], #1}
+%      \__siunitx_range_unit:nnnn {#4} { open-bracket = [,  close-bracket= ], #1} {#2} {#3}
+%   \group_end:
+% }
+% \ExplSyntaxOff
+\renewcommand{\SIrange}[3]{\lbrack\num{#1}\ {;}\ \num{#2}\rbrack\,\si{#3}}
 \def\Lsun{L\ensuremath{_{\odot}}}
 \def\Rsun{R\ensuremath{_{\odot}}}
 \def\Tsun{T\ensuremath{_{\odot}}}
