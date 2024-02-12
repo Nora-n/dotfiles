@@ -609,6 +609,10 @@
 \newcommand{\qef}{\tag*{$\square$}}
 \newcommand{\hqed}{\hfill{$\blacksquare$}}
 \newcommand{\hqef}{\hfill{$\square$}}
+% theta please
+\let\th\relax
+\newcommand*\th{\theta}
+\def\T{\Theta} \def\tp{\dot{\th}} \def\tpp{\ddot{\th}}
 % left text in align !!
 % https://tex.stackexchange.com/a/61369/284518
 \makeatletter
@@ -1035,7 +1039,7 @@ literate         = {á}{{\'a}}1
 }
 % For tablette use
 % Setup color
-\newcommand{\mycol}{black}
+\newcommand{\mycol}{gray}
 \NewDocumentCommand{\psw}{O{\mycol}m}{%
 	\textcolor{\sswitch{white!10}{#1}}{%
 		#2%
@@ -1119,7 +1123,7 @@ literate         = {á}{{\'a}}1
         pdflatex --jobname="\currfilebase_enon"
         "\gdef\string\conditionmacro{1}\string\input\space\jobname"
       }%
-      \ifnum\conditionmacro=1 \togglefalse{corrige}\fi
+      \ifnum\conditionmacro=1 \togglefalse{corrige}\toggletrue{student}\fi
     }
     {solu}{
       \immediate\write18{%
@@ -1155,6 +1159,13 @@ literate         = {á}{{\'a}}1
         "\gdef\string\conditionmacro{6}\string\input\space\jobname"
       }%
       \ifnum\conditionmacro=6 \togglefalse{student}\fi
+    }
+    {book}{
+      \immediate\write18{%
+        pdflatex --jobname="\currfilebase"
+        "\gdef\string\conditionmacro{7}\string\input\space\jobname"
+      }%
+      \ifnum\conditionmacro=7 \togglefalse{student}\toggletrue{corrige}\renewcommand{\mycol}{black}\fi
     }
   }[]
 }

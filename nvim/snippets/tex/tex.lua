@@ -1756,7 +1756,7 @@ return {
   ),
   s(
     {
-      trig = "([^\\^q])([eu])([xyzrtf]) ",
+      trig = "([^\\^q])([eu])([xyzrtdf]) ",
       regTrig = true,
       wordTrig = false,
       snippetType = "autosnippet",
@@ -2279,7 +2279,7 @@ return {
   ),
   s(
     {
-      trig = "dtt",
+      trig = "ddt",
       snippetType = "autosnippet",
       dscr = "Expands 'dtt' into '\\ddot{<>}'",
       condition = tex_utils.in_mathzone,
@@ -2304,7 +2304,7 @@ return {
   ),
   s(
     {
-      trig = "([aprltvxyz])(dtt)",
+      trig = "([aprltvxyz])(ddt)",
       regTrig = true,
       snippetType = "autosnippet",
       dscr = "Expands 'xdtt' into '\\xpp'",
