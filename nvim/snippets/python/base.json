@@ -40,6 +40,11 @@
     "body": "import ${1:package/module}$0",
     "description": "Import a package or module"
   },
+  "importbase": {
+    "prefix": "imp",
+    "body": "import numpy as np\nimport matplotlib.pyplot as plt",
+    "description": "Import a package or module"
+  },
   "from ... import ...": {
     "prefix": "fim",
     "body": "from ${1:package/module} import ${2:names}$0",
@@ -47,7 +52,10 @@
   },
   "class": {
     "prefix": "class",
-    "body": ["class ${1:classname}(${2:object}):", "\t${3:pass}"],
+    "body": [
+      "class ${1:classname}(${2:object}):",
+      "\t${3:pass}"
+    ],
     "description": "Code snippet for a class definition"
   },
   "New class": {
@@ -92,17 +100,28 @@
   },
   "if/else": {
     "prefix": "if/else",
-    "body": ["if ${1:condition}:", "\t${2:pass}", "else:", "\t${3:pass}"],
+    "body": [
+      "if ${1:condition}:",
+      "\t${2:pass}",
+      "else:",
+      "\t${3:pass}"
+    ],
     "description": "Code snippet for an if statement with else"
   },
   "elif": {
     "prefix": "elif",
-    "body": ["elif ${1:expression}:", "\t${2:pass}"],
+    "body": [
+      "elif ${1:expression}:",
+      "\t${2:pass}"
+    ],
     "description": "Code snippet for an elif"
   },
   "else": {
     "prefix": "else",
-    "body": ["else:", "\t${1:pass}"],
+    "body": [
+      "else:",
+      "\t${1:pass}"
+    ],
     "description": "Code snippet for an else"
   },
   "for": {
@@ -127,7 +146,12 @@
   },
   "while/else": {
     "prefix": "while/else",
-    "body": ["while ${1:expression}:", "\t${2:pass}", "else:", "\t${3:pass}"],
+    "body": [
+      "while ${1:expression}:",
+      "\t${2:pass}",
+      "else:",
+      "\t${3:pass}"
+    ],
     "description": "Code snippet for a while loop with else"
   },
   "try:except:": {
@@ -152,7 +176,10 @@
   },
   "with": {
     "prefix": "with",
-    "body": ["with ${1:expression} as ${2:target}:", "\t${3:pass}"],
+    "body": [
+      "with ${1:expression} as ${2:target}:",
+      "\t${3:pass}"
+    ],
     "description": "Code snippet for a with statement"
   },
   "self": {

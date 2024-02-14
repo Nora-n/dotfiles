@@ -164,3 +164,53 @@ function! PythonTexCompile()
 endfunction
 nnoremap <C-p> :call PythonTexCompile() <CR>
 ]])
+
+-- Firenvim bigger window
+vim.cmd([[
+ function! s:IsFirenvimActive(event) abort
+   if !exists('*nvim_get_chan_info')
+     return 0
+   endif
+   let l:ui = nvim_get_chan_info(a:event.chan)
+   return has_key(l:ui, 'client') && has_key(l:ui.client, 'name') &&
+       \ l:ui.client.name =~? 'Firenvim'
+ endfunction
+
+ function! OnUIEnter(event) abort
+   if s:IsFirenvimActive(a:event) && &lines < 10
+      set lines=10
+      set guifont=MesloLGS_Nerd_Font:h12
+   endif
+
+   if s:IsFirenvimActive(a:event)
+     let s:nlines = 15
+     function! AdjustnLines(amount)
+       let s:nlines = s:nlines+a:amount
+       execute "set lines=" . s:nlines
+       call rpcnotify(0, 'Gui', 'WindowMaximized', 1)
+     endfunction
+
+     noremap  <C-=> :call AdjustnLines(3)<CR>
+     noremap  <C--> :call AdjustnLines(-3)<CR>
+     inoremap <C-=> <C-O>:call AdjustnLines(3)<CR>
+     inoremap <C--> <C-O>:call AdjustnLines(-3)<CR>
+
+     let s:ncols = 80
+     function! AdjustnCols(amount)
+       let s:ncols = s:ncols+a:amount
+       execute "set columns=" . s:ncols
+       call rpcnotify(0, 'Gui', 'WindowMaximized', 1)
+     endfunction
+
+     noremap  <C-*> :call AdjustnCols(3)<CR>
+     noremap  <C-ù> :call AdjustnCols(-3)<CR>
+     inoremap <C-*> <C-O>:call AdjustnCols(3)<CR>
+     inoremap <C-ù> <C-O>:call AdjustnCols(-3)<CR>
+   endif
+ endfunction
+
+ augroup FirenvimUser
+   autocmd!
+   autocmd UIEnter * call OnUIEnter(deepcopy(v:event))
+ augroup end
+]])

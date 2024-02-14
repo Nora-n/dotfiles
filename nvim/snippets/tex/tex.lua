@@ -768,7 +768,7 @@ return {
     snippetType = "autosnippet",
     condition = tex_utils.in_mathzone,
   }, {
-    t("\\tt"),
+    t("\\th"),
   }),
   s({
     trig = "@p",
@@ -1623,6 +1623,19 @@ return {
     dscr = "Expands 'pdv' into '\\pdv'",
     condition = tex_utils.in_mathzone,
   }, fmta("\\pdv[<>]{<>}{<>}", { i(1), i(2), i(3) })),
+  -- eval
+  s(
+    {
+      trig = "evl",
+      snippetType = "autosnippet",
+      dscr = "Expands 'evl' into '\\eval'",
+      condition = tex_utils.in_mathzone,
+    },
+    fmta("\\eval{<>}_{<>}", {
+      d(1, get_visual),
+      i(2),
+    })
+  ),
   -- differential
   s({
     trig = "dd",
@@ -1784,8 +1797,13 @@ return {
   s({
     trig = "cfg",
     snippetType = "autosnippet",
-    dscr = "Expands 'c' into '\\cfig'",
+    dscr = "Expands 'cfig' into '\\cfig'",
   }, fmta("\\cfig{<>}", { d(1, get_visual) })),
+  s({
+    trig = "chg",
+    snippetType = "autosnippet",
+    dscr = "Expands 'chg' into '\\charge'",
+  }, fmta("\\charge{<>}{<>}", { i(1), d(2, get_visual) })),
   -- tabav
   s(
     {
@@ -2329,17 +2347,21 @@ return {
       d(1, get_visual),
     })
   ),
-  s(
-    {
-      trig = "stm",
-      snippetType = "autosnippet",
-      dscr = "Expands 'stm' into '\\stm{<>}'",
-      condition = tex_utils.in_mathzone,
-    },
-    fmta("\\stm{<>}", {
-      d(1, get_visual),
-    })
-  ),
+  s({
+    trig = "stm",
+    snippetType = "autosnippet",
+    dscr = "Expands 'stm' into '\\stm{<>}'",
+    condition = tex_utils.in_mathzone,
+  }, {
+    c(1, {
+      fmta("\\stm{<>}", {
+        d(1, get_visual),
+      }),
+      fmta("\\stm[-1]{<>}", {
+        d(1, get_visual),
+      }),
+    }),
+  }),
   -- simple point
   s({
     trig = "ptt",
