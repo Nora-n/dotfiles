@@ -16,9 +16,9 @@ map <Left> navigate previous
 map h navigate previous
 map l navigate next
 map <Right> navigate next
-unmap f
-map f toggle_fullscreen
-map [fullscreen] f toggle_fullscreen
+# unmap f
+# map f toggle_fullscreen
+# map [fullscreen] f toggle_fullscreen
 
 # Open document in fit-width mode by default
 set adjust-open "best-fit"

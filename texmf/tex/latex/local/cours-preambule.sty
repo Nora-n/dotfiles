@@ -19,10 +19,10 @@
 \RequirePackage{morewrites}
 
 % Symbols
-% \RequirePackage{pifont}
-% \newcommand{\cmark}{\ding{51}}%
-% \newcommand{\xmark}{\ding{55}}%
-% \newcommand{\hand}{\ding{45}}%
+\RequirePackage{pifont}
+\newcommand{\cmark}{\ding{51}}%
+\newcommand{\xmark}{\ding{55}}%
+\newcommand{\hand}{\ding{45}}%
 % Knuth and danger \dbend
 % \RequirePackage{manfnt}
 % Selfmade with skalerel
@@ -496,6 +496,10 @@
 % from https://tex.stackexchange.com/a/173063
 \renewcommand\backrefxxx[3]{%
 	\hyperlink{page.#1}{$\uparrow$~Page #1}}
+% name ref and fullref
+% https://tex.stackexchange.com/a/121871
+\newcommand*{\fullref}[2]{\hyperref[{#2}]{\ref*{#2}#1~\nameref*{#2}}}
+
 % Make ref to multiple sections with \cref: doesn't seem to work...
 % \RequirePackage{cleveref}
 % makes multiple footnotes work with hyperref
@@ -938,6 +942,8 @@ literate         = {á}{{\'a}}1
 \newcommand{\ed}[2]{#1\endnote{\textcolor{black}{#1} : #2}}
 \newcommand{\obar}[1]{\mkern 1.5mu\overline{\mkern-1.5mu#1\mkern-1.5mu}\mkern 1.5mu}
 \newcommand{\obarr}[1]{\mkern 1.5mu\overline{\mkern-1.5mu\rm #1\mkern-1.5mu}\mkern 1.5mu}
+\newcommand{\vvr}[1]{\vv{\rm #1}}
+
 \newcommand{\opto}[2]{\xrightarrow[#2]{#1}}
 \newcommand{\prob}[2]{\mathcal{P}\left(#1 \mid #2\right)}
 \newcommand{\moy}[1]{\left\langle #1 \right\rangle}
@@ -1163,7 +1169,7 @@ literate         = {á}{{\'a}}1
     }
     {book}{
       \immediate\write18{%
-        pdflatex --jobname="\currfilebase"
+        pdflatex --jobname="\currfilebase_book"
         "\gdef\string\conditionmacro{7}\string\input\space\jobname"
       }%
       \ifnum\conditionmacro=7 \togglefalse{student}\toggletrue{corrige}\renewcommand{\mycol}{black}\fi
@@ -1786,6 +1792,17 @@ list entry={\csname name#3\endcsname~\expandafter\csname the#3\endcsname~:~#7},
 	lfnt/.style 2 args={
 			boxrule=0pt, frame hidden, interior hidden,
 			borderline west={1pt}{0pt}{#1},
+		}
+}
+% Only right, title and icon
+\tcbset{
+	rgtt/.style 2 args={
+			boxrule=0pt, frame hidden, interior hidden,
+			borderline east={1pt}{0pt}{#1}, coltitle=#1,
+			fonttitle=\bfseries, top=10pt,
+			attach boxed title to top left={yshift={-9pt}, xshift=4pt},
+			boxed title style={enhanced, frame hidden, colback=white},
+			title={#2},
 		}
 }
 % Only right

@@ -214,3 +214,23 @@ vim.cmd([[
    autocmd UIEnter * call OnUIEnter(deepcopy(v:event))
  augroup end
 ]])
+
+-- ltex french
+-- require("lspconfig").ltex.setup({
+--   filetypes = {
+--     "tex",
+--     "vimwiki",
+--     "markdown",
+--     "md",
+--     "pandoc",
+--     "vimwiki.markdown.pandoc",
+--   },
+--   flags = { debounce_text_changes = 300 },
+--   settings = {
+--     ltex = {
+--       language = "fr",
+--       -- language = "de-DE",
+--     },
+--   },
+--   on_attach = on_attach,
+-- })

@@ -302,11 +302,12 @@ bindsym $mod+Ctrl+F12 exec killall streamdeck
 exec --no-startup-id thunderbird
 exec --no-startup-id i3-sensible-terminal
 exec --no-startup-id i3-sensible-terminal -e ranger
-exec --no-startup-id i3-sensible-terminal -e htop
+exec --no-startup-id i3-sensible-terminal -e btop
 # exec --no-startup-id picom -b
-exec --no-startup-id setxkbmap -layout fr oss
+exec --no-startup-id setxkbmap -layout fr oss & setxkbmap -option lv3:rwin_switch
+
 exec_always --no-startup-id xmodmap ~/.Xmodmap_full
-bindsym $mud+Insert exec --no-startup-id xmodmap ~/.Xmodmap_full
+bindsym $mud+Insert exec --no-startup-id xmodmap ~/.Xmodmap_full & setxkbmap -option lv3:rwin_switch
 exec --no-startup-id nm-applet
 exec --no-startup-id udiskie
 exec --no-startup-id blueman-applet

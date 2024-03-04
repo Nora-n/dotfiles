@@ -905,7 +905,7 @@ return {
       snippetType = "autosnippet",
       condition = tex_utils.in_mathzone,
     },
-    fmta([[\\qMath{<>}]], {
+    fmta([[\qMath{<>}]], {
       d(1, get_visual),
     })
   ),
@@ -915,7 +915,7 @@ return {
       snippetType = "autosnippet",
       condition = tex_utils.in_mathzone,
     },
-    fmta([[\\qqMath{<>}]], {
+    fmta([[\qqMath{<>}]], {
       d(1, get_visual),
     })
   ),
@@ -1073,14 +1073,14 @@ return {
   }, fmta("\\opto{<>}{<>}", { i(1, "above"), i(2, "below") })),
   -- shorthands
   s({
-    trig = "^",
+    trig = "^^",
     wordTrig = false,
     snippetType = "autosnippet",
     dscr = "Superscript",
     condition = tex_utils.in_mathzone,
   }, fmta("^{<>}", { d(1, get_visual) })),
   s({
-    trig = "^",
+    trig = "^^",
     dscr = "Superscript",
     condition = tex_utils.in_mathzone,
   }, fmta("^{<>}", { d(1, get_visual) })),
@@ -1346,8 +1346,8 @@ return {
     condition = tex_utils.in_mathzone,
   }, {
     c(1, {
-      fmta("\\cos(<>)", { i(1, "\\theta") }),
-      fmta("\\cos{<>}", { i(1, "\\theta") }),
+      fmta("\\cos(<>)", { i(1, "\\th") }),
+      fmta("\\cos{<>}", { i(1, "\\th") }),
     }),
   }),
   s({
@@ -1358,8 +1358,8 @@ return {
     condition = tex_utils.in_mathzone,
   }, {
     c(1, {
-      fmta("\\arccos(<>)", { i(1, "\\theta") }),
-      fmta("\\arccos{<>}", { i(1, "\\theta") }),
+      fmta("\\arccos(<>)", { i(1, "\\th") }),
+      fmta("\\arccos{<>}", { i(1, "\\th") }),
     }),
   }),
   s({
@@ -1370,8 +1370,8 @@ return {
     condition = tex_utils.in_mathzone,
   }, {
     c(1, {
-      fmta("\\sin(<>)", { i(1, "\\theta") }),
-      fmta("\\sin{<>}", { i(1, "\\theta") }),
+      fmta("\\sin(<>)", { i(1, "\\th") }),
+      fmta("\\sin{<>}", { i(1, "\\th") }),
     }),
   }),
   s({
@@ -1382,8 +1382,8 @@ return {
     condition = tex_utils.in_mathzone,
   }, {
     c(1, {
-      fmta("\\arcsin(<>)", { i(1, "\\theta") }),
-      fmta("\\arcsin{<>}", { i(1, "\\theta") }),
+      fmta("\\arcsin(<>)", { i(1, "\\th") }),
+      fmta("\\arcsin{<>}", { i(1, "\\th") }),
     }),
   }),
   s({
@@ -1394,8 +1394,8 @@ return {
     condition = tex_utils.in_mathzone,
   }, {
     c(1, {
-      fmta("\\tan(<>)", { i(1, "\\theta") }),
-      fmta("\\tan{<>}", { i(1, "\\theta") }),
+      fmta("\\tan(<>)", { i(1, "\\th") }),
+      fmta("\\tan{<>}", { i(1, "\\th") }),
     }),
   }),
   s({
@@ -1406,8 +1406,8 @@ return {
     condition = tex_utils.in_mathzone,
   }, {
     c(1, {
-      fmta("\\arctan(<>)", { i(1, "\\theta") }),
-      fmta("\\arctan{<>}", { i(1, "\\theta") }),
+      fmta("\\arctan(<>)", { i(1, "\\th") }),
+      fmta("\\arctan{<>}", { i(1, "\\th") }),
     }),
   }),
   s({
@@ -1418,8 +1418,8 @@ return {
     condition = tex_utils.in_mathzone,
   }, {
     c(1, {
-      fmta("\\arg*{<>}", { i(1, "\\theta") }),
-      fmta("\\arg{<>}", { i(1, "\\theta") }),
+      fmta("\\arg*{<>}", { i(1, "\\th") }),
+      fmta("\\arg{<>}", { i(1, "\\th") }),
     }),
   }),
   -- integrals
@@ -1587,7 +1587,7 @@ return {
       condition = tex_utils.in_mathzone,
     },
     fmta("\\dv{<>}<>", {
-      i(1),
+      d(1, get_visual),
       c(2, {
         fmta("{<>}", { i(1) }),
         t(""),
@@ -1634,6 +1634,18 @@ return {
     fmta("\\eval{<>}_{<>}", {
       d(1, get_visual),
       i(2),
+    })
+  ),
+  -- mqty
+  s(
+    {
+      trig = "mqty",
+      snippetType = "autosnippet",
+      dscr = "Expands 'mqty' into '\\mqty'",
+      condition = tex_utils.in_mathzone,
+    },
+    fmta("\\mqty{<>}", {
+      d(1, get_visual),
     })
   ),
   -- differential
@@ -1755,18 +1767,22 @@ return {
   --     i(1),
   --   })
   -- ),
-  s(
-    {
-      trig = "vv",
-      regTrig = true,
-      snippetType = "autosnippet",
-      dscr = "Expands 'vv' into '\\vv{<>}'",
-      condition = tex_utils.in_mathzone,
-    },
-    fmta("\\vv{<>}", {
-      d(1, get_visual),
-    })
-  ),
+  s({
+    trig = "vv",
+    regTrig = true,
+    snippetType = "autosnippet",
+    dscr = "Expands 'vv' into '\\vv{<>}'",
+    condition = tex_utils.in_mathzone,
+  }, {
+    c(1, {
+      fmta("\\vv{<>}", {
+        d(1, get_visual),
+      }),
+      fmta("\\vvr{<>}", {
+        d(1, get_visual),
+      }),
+    }),
+  }),
   s(
     {
       trig = "([^\\^q])([eu])([xyzrtdf]) ",
@@ -2683,10 +2699,10 @@ return {
     condition = tex_utils.in_mathzone,
   }, {
     c(1, {
-      fmta("\\obar{\\rm <>}", {
+      fmta("\\obar{<>}", {
         d(1, get_visual),
       }),
-      fmta("\\obar{<>}", {
+      fmta("\\obarr{<>}", {
         d(1, get_visual),
       }),
     }),
@@ -3648,7 +3664,7 @@ return {
     },
     fmta(
       [[\includegraphics[<>=<>]{<>}]],
-      { c(1, { t("width"), t("scale"), t("height") }), i(2), d(3, get_visual) }
+      { c(1, { t("width"), t("scale"), t("height") }), i(2), i(3) }
     )
   ),
   s({
