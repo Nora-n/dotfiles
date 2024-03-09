@@ -478,40 +478,64 @@ return {
     )
   ),
   -- switch gray
-  s(
-    {
-      trig = "psw",
-      snippetType = "autosnippet",
-      dscr = "Expands 'psw' into '\\psw{<>}'",
-    },
-    fmta(
-      [[
+  s({
+    trig = "psw",
+    snippetType = "autosnippet",
+    dscr = "Expands 'psw' into '\\psw{<>}'",
+  }, {
+    c(1, {
+      fmta(
+        [[
       \psw{
         <>
       }
       <>
       ]],
-      {
-        d(1, get_visual),
-        i(0),
+        {
+          d(1, get_visual),
+          i(0),
+        }
+      ),
+      fmta(
+        [[
+      \psw[<>]{
+        <>
       }
-    )
-  ),
-  s(
-    {
-      trig = "Psw",
-      snippetType = "autosnippet",
-      dscr = "Expands 'Psw' into '\\psw{<>}'",
-    },
-    fmta(
-      [[
+      <>
+      ]],
+        {
+          c(1, { t("red"), t("orange"), t("green"), t("blue") }),
+          d(2, get_visual),
+          i(0),
+        }
+      ),
+    }),
+  }),
+  s({
+    trig = "Psw",
+    snippetType = "autosnippet",
+    dscr = "Expands 'Psw' into '\\psw{<>}'",
+  }, {
+    c(1, {
+      fmta(
+        [[
       \psw{<>}
       ]],
-      {
-        d(1, get_visual),
-      }
-    )
-  ),
+        {
+          d(1, get_visual),
+        }
+      ),
+      fmta(
+        [[
+      \psw[<>]{<>}
+      ]],
+        {
+          c(1, { t("red"), t("orange"), t("green"), t("blue") }),
+          d(2, get_visual),
+        }
+      ),
+    }),
+  }),
   -- choose color
   s(
     {
@@ -1708,22 +1732,22 @@ return {
   }, {
     c(1, { fmta("\\lim_{<>}", { i(1) }), t("\\lim") }),
   }),
-  s({
-    trig = "min",
-    wordTrig = false,
-    snippetType = "autosnippet",
-    condition = tex_utils.in_mathzone,
-  }, {
-    c(1, { t("\\min"), fmta("\\min_{<>}", { i(1) }) }),
-  }),
-  s({
-    trig = "max",
-    wordTrig = false,
-    snippetType = "autosnippet",
-    condition = tex_utils.in_mathzone,
-  }, {
-    c(1, { t("\\max"), fmta("\\max_{<>}", { i(1) }) }),
-  }),
+  -- s({
+  --   trig = "min",
+  --   wordTrig = false,
+  --   snippetType = "autosnippet",
+  --   condition = tex_utils.in_mathzone,
+  -- }, {
+  --   c(1, { t("\\min"), fmta("\\min_{<>}", { i(1) }) }),
+  -- }),
+  -- s({
+  --   trig = "max",
+  --   wordTrig = false,
+  --   snippetType = "autosnippet",
+  --   condition = tex_utils.in_mathzone,
+  -- }, {
+  --   c(1, { t("\\max"), fmta("\\max_{<>}", { i(1) }) }),
+  -- }),
   -- norm
   s({
     trig = "nrm",
@@ -2890,7 +2914,7 @@ return {
     trig = "pyn",
     snippetType = "autosnippet",
     dscr = "Expands 'pny' into '\\py{fr'\\num{{{<>}}}'}'",
-  }, fmta("\\py{fr'\\num{{{<>:<>}}}'}", { d(1, get_visual), i(2, ".2e") })),
+  }, fmta("\\py{fr'\\num{{{<>:.<>}}}'}", { d(1, get_visual), i(2, "2e") })),
   s(
     {
       trig = "pys",
@@ -2898,8 +2922,8 @@ return {
       dscr = "Expands 'psy' into '\\py{fr'\\SI{{{<>}}}{{{}}}'}'",
     },
     fmta(
-      "\\py{fr'\\SI{{{<>:<>}}}{{<>}}'}",
-      { d(1, get_visual), i(2, ".2e"), i(3, "UNIT") }
+      "\\py{fr'\\SI{{{<>:.<>}}}{{<>}}'}",
+      { d(1, get_visual), i(2, "2e"), i(3, "UNIT") }
     )
   ),
   -----------------------------------------------------------------------------

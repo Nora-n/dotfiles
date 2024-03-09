@@ -3,3 +3,4 @@
 -- Add any additional options here
 local opt = vim.opt
 opt.conceallevel = 0 -- Hide * markup for bold and italic
+vim.g.maplocalleader = " "

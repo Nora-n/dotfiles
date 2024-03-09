@@ -222,5 +222,12 @@ vim.keymap.set(
   { desc = "Change new boxes" }
 )
 
+vim.keymap.set(
+  "n",
+  "<F2>",
+  "<Cmd>set filetype=markdown<CR>",
+  { desc = "ft md" }
+)
+
 -- %s!\vbegin\zs{(NC|)(loi|theo|prop|demo|coro|inte|impl|impo|rapp|defi|nota|ror|exem|odgr|rema)}([.*])!{tcb}\3(\2)
 -- %s!\vend\zs{(NC|)(loi|theo|prop|demo|coro|inte|impl|impo|rapp|defi|nota|ror|exem|odgr|rema)}!{tcb}

@@ -3,6 +3,17 @@
 \RequirePackage{locdef}
 % \RequirePackage{luatextra}
 
+% Ability to unlead package
+% https://tex.stackexchange.com/a/39418
+\makeatletter
+\newcommand{\disablepackage}[2]{%
+  \disable@package@load{#1}{#2}%
+}
+\newcommand{\reenablepackage}[1]{%
+  \reenable@package@load{#1}%
+}
+\makeatother
+
 \RequirePackage[authoryear]{natbib}
 \setcitestyle{aysep={}}
 \setcitestyle{citesep={~;}}
@@ -491,6 +502,16 @@
 	hyperfootnotes=true,    % Make the footnote marks into hyperlink to text
 	hyperindex=true,
 	hyperfigures=false]{hyperref}
+% star version of eqref for no hyperlink
+% https://tex.stackexchange.com/a/126774
+\let\oldeqref\eqref
+\makeatletter
+\RenewDocumentCommand\eqref{s m}{%
+  \IfBooleanTF#1%
+  {\textup{\tagform@{\ref*{#2}}}}% If a star is seen
+  {\oldeqref{#2}}%                 If no star is seen
+}
+\makeatother
 \def\UrlBreaks{\do\/\do-}
 % Add an upward arrow next to backref,
 % from https://tex.stackexchange.com/a/173063
@@ -939,7 +960,7 @@ literate         = {á}{{\'a}}1
 \expandafter\def\expandafter\bolditemize\expandafter{%
 	\bolditemize \let\olditem\item \def\item[##1]{\olditem \textbf{##1}}}
 
-\newcommand{\ed}[2]{#1\endnote{\textcolor{black}{#1} : #2}}
+% \newcommand{\ed}[2]{#1\endnote{\textcolor{black}{#1} : #2}}
 \newcommand{\obar}[1]{\mkern 1.5mu\overline{\mkern-1.5mu#1\mkern-1.5mu}\mkern 1.5mu}
 \newcommand{\obarr}[1]{\mkern 1.5mu\overline{\mkern-1.5mu\rm #1\mkern-1.5mu}\mkern 1.5mu}
 \newcommand{\vvr}[1]{\vv{\rm #1}}
@@ -1047,23 +1068,34 @@ literate         = {á}{{\'a}}1
 % For tablette use
 % Setup color
 \newcommand{\mycol}{gray}
-\NewDocumentCommand{\psw}{O{\mycol}m}{%
-	\textcolor{\sswitch{white!10}{#1}}{%
-		#2%
-	}%
-}
+\NewDocumentCommand{\psw}{O{\mycol}m}{\textcolor{\sswitch{white!10}{#1}}{#2}}
 % force white
 \newcommand{\wht}[1]{%
   \textcolor{white}{#1}%
 }
-% Automatic white
+% shortcut for colors
+\newcommand{\red}[1]{
+  \textcolor{red}{#1}%
+}
+\newcommand{\blu}[1]{
+  \textcolor{blue}{#1}%
+}
+\newcommand{\gre}[1]{
+  \textcolor{green}{#1}%
+}
+\newcommand{\ora}[1]{
+  \textcolor{orange}{#1}%
+}
+
+% Automatic white ??
 \newcommand{\wsw}[1]{%
 	\textcolor{\sswitch{white!10}{black!100}}{%
 		#1%
 	}%
 }
 % Color choice
-\newcommand{\lsw}[2]{\textcolor{\sswitch{white!10}{#1!100}}{#2}}
+% Obsolete : psw optional argument
+% \newcommand{\lsw}[2]{\textcolor{\sswitch{white!10}{#1!100}}{#2}}
 % Command for highlighting switch
 \RequirePackage{soul}
 \sethlcolor{lightgray}
@@ -1323,11 +1355,11 @@ literate         = {á}{{\'a}}1
           }
         }
       \end{blocQR}
-    }{ % Si bareme == false, pas de points
+    }{ % Si pas de [nb], pas de points
       \begin{blocQR}#1
         \iftoggle{student}{% pour version student
           \iftoggle{corrige}{% version avec corrigé : affiche juste la correction
-            \item #4%
+\item #4%
           }{ % énoncé uniquement
             \item #3%
             }%
@@ -1519,6 +1551,7 @@ literate         = {á}{{\'a}}1
 \colorlet{prop}{red!80!black}
 \colorlet{rslt}{red!80!black}
 \colorlet{demo}{blue!80!black}
+\colorlet{prev}{blue!70!black}
 \colorlet{coro}{VioletRed!60!black}
 \colorlet{inte}{RoyalBlue!50!black}
 \colorlet{impl}{DodgerBlue!50!black}
@@ -1531,6 +1564,7 @@ literate         = {á}{{\'a}}1
 \colorlet{ror}{orange!90!black}
 \colorlet{exem}{lightgray!55!black}
 \colorlet{expe}{lightgray!55!black}
+\colorlet{code}{lightgray!55!black}
 \colorlet{mate}{lightgray!55!black}
 \colorlet{odgr}{lightgray!50!black}
 \colorlet{appl}{gray!50!black}
@@ -1543,6 +1577,7 @@ literate         = {á}{{\'a}}1
 \colorlet{rsltback}{red!10}
 \colorlet{propback}{red!10}
 \colorlet{demoback}{blue!10}
+\colorlet{prevback}{blue!10}
 \colorlet{coroback}{VioletRed!10}
 \colorlet{inteback}{RoyalBlue!10}
 \colorlet{implback}{DodgerBlue!10}
@@ -1555,6 +1590,7 @@ literate         = {á}{{\'a}}1
 \colorlet{rorback}{orange!10}
 \colorlet{exemback}{lightgray!10}
 \colorlet{expeback}{lightgray!10}
+\colorlet{codeback}{lightgray!10}
 \colorlet{mateback}{lightgray!10}
 \colorlet{odgrback}{lightgray!10}
 \colorlet{applback}{gray!10}
@@ -1567,6 +1603,7 @@ literate         = {á}{{\'a}}1
 \colorlet{rsltbacktitle}{red!30}
 \colorlet{propbacktitle}{red!30}
 \colorlet{demobacktitle}{blue!30}
+\colorlet{prevbacktitle}{blue!30}
 \colorlet{corobacktitle}{VioletRed!30}
 \colorlet{intebacktitle}{RoyalBlue!30}
 \colorlet{implbacktitle}{DodgerBlue!30}
@@ -1579,6 +1616,7 @@ literate         = {á}{{\'a}}1
 \colorlet{rorbacktitle}{orange!30}
 \colorlet{exembacktitle}{lightgray!50}
 \colorlet{expebacktitle}{lightgray!50}
+\colorlet{codebacktitle}{lightgray!50}
 \colorlet{matebacktitle}{lightgray!50}
 \colorlet{odgrbacktitle}{lightgray!50}
 \colorlet{applbacktitle}{gray!30}
@@ -1591,6 +1629,7 @@ literate         = {á}{{\'a}}1
 \newcommand{\nameprop}{Propriété}
 \newcommand{\namerslt}{Résultat}
 \newcommand{\namedemo}{Démonstration}
+\newcommand{\nameprev}{Preuve}
 \newcommand{\namecoro}{Corollaire}
 \newcommand{\nameinte}{Interprétation}
 \newcommand{\nameimpl}{Implication}
@@ -1603,6 +1642,7 @@ literate         = {á}{{\'a}}1
 \newcommand{\nameror}{Important}
 \newcommand{\nameexem}{Exemple}
 \newcommand{\nameexpe}{Manipulation}
+\newcommand{\namecode}{Code}
 \newcommand{\namemate}{Matériel}
 \newcommand{\nameodgr}{Ordre de grandeur}
 \newcommand{\nameappl}{Application}
@@ -1620,6 +1660,8 @@ literate         = {á}{{\'a}}1
 \renewcommand{\therslt}{\thechapter.\arabic{rslt}}
 \newcounter{demo}[chapter]
 \renewcommand{\thedemo}{\thechapter.\arabic{demo}}
+\newcounter{prev}[chapter]
+\renewcommand{\theprev}{\thechapter.\arabic{prev}}
 \newcounter{coro}[chapter]
 \renewcommand{\thecoro}{\thechapter.\arabic{coro}}
 \newcounter{inte}[chapter]
@@ -1644,6 +1686,8 @@ literate         = {á}{{\'a}}1
 \renewcommand{\theexem}{\thechapter.\arabic{exem}}
 \newcounter{expe}[chapter]
 \renewcommand{\theexpe}{\thechapter.\arabic{expe}}
+\newcounter{code}[chapter]
+\renewcommand{\thecode}{\thechapter.\arabic{code}}
 \newcounter{mate}[chapter]
 \renewcommand{\themate}{\thechapter.\arabic{mate}}
 \newcounter{odgr}[chapter]
@@ -1680,6 +1724,7 @@ literate         = {á}{{\'a}}1
 \newcommand{\iconprop}{\faIcon{drafting-compass}}
 \newcommand{\iconrslt}{\faIcon{check}}
 \newcommand{\icondemo}{\faIcon{list-ul}}
+\newcommand{\iconprev}{\faIcon{list-ul}}
 \newcommand{\iconcoro}{\faIcon{code-branch}}
 \newcommand{\iconinte}{\faIcon{angle-right}}
 \newcommand{\iconimpl}{\faIcon{angle-double-right}}
@@ -1705,6 +1750,7 @@ literate         = {á}{{\'a}}1
 \newcommand{\iconhow}{\faIcon{pencil-ruler}}
 \newcommand{\iconmate}{\faIcon{flask}}
 \newcommand{\iconexpe}{\faIcon{cogs}}
+\newcommand{\iconcode}{\faIcon{python}}
 \newcommand{\iconwip}{\faIcon{hard-hat}}
 \newcommand{\iconbomb}{\faIcon{bomb}}
 % \newcommand{\iconexpe}{\faIcon{fill}}

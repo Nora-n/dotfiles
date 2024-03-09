@@ -6,27 +6,26 @@
   <property name="pressureMultiplier" value="1"/>
   <property name="zoomGesturesEnabled" value="true"/>
   <property name="selectedToolbar" value="Floating Toolbox (experimental) Copy"/>
-  <property name="lastSavePath" value="/home/nora/Documents/Enseignement/Prepa/2023/02_TD/05_meca/M6-M7"/>
+  <property name="lastSavePath" value="/home/nora/Documents/Enseignement/Prepa/2023/01_C/03_chimie/C4/figures"/>
   <property name="lastOpenPath" value="/home/nora/Documents/Enseignement/Prepa/2023/01_C/05_meca/M6"/>
-  <property name="lastImagePath" value="/home/nora/Documents/Enseignement/Prepa/2023/01_C/05_meca/M6/figures"/>
-  <property name="edgePanSpeed" value="20"/>
+  <property name="lastImagePath" value="/home/nora/Documents/Enseignement/Prepa/2023/01_C/03_chimie/C4/figures"/>
+  <property name="edgePanSpeed" value="18"/>
   <property name="edgePanMaxMult" value="5"/>
   <property name="zoomStep" value="10"/>
   <property name="zoomStepScroll" value="2"/>
-  <property name="displayDpi" value="72"/>
+  <property name="displayDpi" value="50"/>
   <property name="mainWndWidth" value="2560"/>
-  <property name="mainWndHeight" value="1393"/>
+  <property name="mainWndHeight" value="1413"/>
   <property name="maximized" value="false"/>
   <property name="showToolbar" value="true"/>
   <property name="showSidebar" value="false"/>
   <property name="sidebarWidth" value="50"/>
-  <property name="sidebarNumberingStyle" value="1"/>
+  <property name="sidebarNumberingStyle" value="0"/>
   <property name="sidebarOnRight" value="false"/>
   <property name="scrollbarOnLeft" value="false"/>
   <property name="menubarVisible" value="true"/>
   <property name="filepathShownInTitlebar" value="false"/>
-  <property name="pageNumberShownInTitlebar" value="false"/>
-  <property name="numColumns" value="1"/>
+  <property name="numColumns" value="2"/>
   <property name="numRows" value="1"/>
   <property name="viewFixedRows" value="false"/>
   <property name="showPairedPages" value="false"/>
@@ -44,7 +43,7 @@
   <!--Which GUI elements are shown in presentation view mode, separated by a colon (,)-->
   <property name="presentationViewModeAttributes" value="goFullscren,showToolbar"/>
   <!--The cursor icon used with a stylus, allowed values are "none", "dot", "big", "arrow"-->
-  <property name="stylusCursorType" value="dot"/>
+  <property name="stylusCursorType" value="big"/>
   <!--The eraser cursor visibility used with a stylus, allowed values are "never", "always", "hover", "touch"-->
   <property name="eraserVisibility" value="always"/>
   <!--The icon theme, allowed values are "iconsColor", "iconsLucide"-->
@@ -52,9 +51,9 @@
   <property name="highlightPosition" value="false"/>
   <property name="cursorHighlightColor" value="2164260608"/>
   <property name="cursorHighlightBorderColor" value="2147483903"/>
-  <property name="cursorHighlightRadius" value="30"/>
+  <property name="cursorHighlightRadius" value="24"/>
   <property name="cursorHighlightBorderWidth" value="0"/>
-  <property name="darkTheme" value="false"/>
+  <property name="darkTheme" value="true"/>
   <property name="useStockIcons" value="false"/>
   <property name="disableScrollbarFadeout" value="false"/>
   <property name="disableAudio" value="false"/>
@@ -67,12 +66,9 @@
   <property name="autosaveEnabled" value="true"/>
   <property name="autosaveTimeout" value="3"/>
   <property name="addHorizontalSpace" value="false"/>
-  <property name="addHorizontalSpaceAmountRight" value="150"/>
-  <property name="addHorizontalSpaceAmountLeft" value="150"/>
+  <property name="addHorizontalSpaceAmount" value="150"/>
   <property name="addVerticalSpace" value="false"/>
-  <property name="addVerticalSpaceAmountAbove" value="150"/>
-  <property name="addVerticalSpaceAmountBelow" value="150"/>
-  <property name="unlimitedScrolling" value="false"/>
+  <property name="addVerticalSpaceAmount" value="150"/>
   <property name="drawDirModsEnabled" value="false"/>
   <property name="drawDirModsRadius" value="50"/>
   <property name="snapRotation" value="true"/>
@@ -87,7 +83,6 @@
   <property name="selectionBorderColor" value="4294901760"/>
   <property name="backgroundColor" value="4292664021"/>
   <property name="selectionMarkerColor" value="4285702095"/>
-  <property name="activeSelectionColor" value="4286381056"/>
   <property name="touchZoomStartThreshold" value="0"/>
   <property name="pageRerenderThreshold" value="5"/>
   <!--The count of rendered PDF pages which will be cached.-->
@@ -98,13 +93,13 @@
   <!--Config for new pages-->
   <property name="pageTemplate" value="xoj/template&#10;copyLastPageSettings=true&#10;size=595.275591x841.889764&#10;backgroundType=lined&#10;backgroundColor=#ffffff&#10;"/>
   <property name="sizeUnit" value=""/>
-  <property name="audioFolder" value=""/>
-  <property name="audioInputDevice" value="-1"/>
+  <property name="audioFolder" value="/home/nora/Music"/>
+  <property name="audioInputDevice" value="7"/>
   <property name="audioOutputDevice" value="-1"/>
   <property name="audioSampleRate" value="44100"/>
   <property name="audioGain" value="1"/>
   <property name="defaultSeekTime" value="5"/>
-  <property name="pluginEnabled" value=""/>
+  <property name="pluginEnabled" value="/usr/share/xournalpp/plugins/ColorCycle,/usr/share/xournalpp/plugins/Export,/usr/share/xournalpp/plugins/LayerActions,/usr/share/xournalpp/plugins/QuickScreenshot"/>
   <property name="pluginDisabled" value=""/>
   <property name="strokeFilterIgnoreTime" value="150"/>
   <property name="strokeFilterIgnoreLength" value="1"/>
@@ -113,7 +108,7 @@
   <property name="doActionOnStrokeFiltered" value="false"/>
   <property name="trySelectOnStrokeFiltered" value="false"/>
   <property name="snapRecognizedShapesEnabled" value="false"/>
-  <property name="restoreLineWidthEnabled" value="false"/>
+  <property name="restoreLineWidthEnabled" value="true"/>
   <property name="numIgnoredStylusEvents" value="0"/>
   <property name="inputSystemTPCButton" value="true"/>
   <property name="inputSystemDrawOutsideWindow" value="true"/>
@@ -144,7 +139,6 @@
       <attribute name="color" type="hex" value="ff000000"/>
       <attribute name="drawingType" type="string" value="default"/>
       <attribute name="size" type="string" value="thin"/>
-      <attribute name="strokeType" type="string" value="none"/>
       <attribute name="tool" type="string" value="pen"/>
     </data>
     <data name="eraser">
@@ -234,7 +228,7 @@
     </data>
     <data name="eraser">
       <attribute name="drawingType" type="string" value="default"/>
-      <attribute name="size" type="string" value="VERY_FINE"/>
+      <attribute name="size" type="string" value="THIN"/>
       <attribute name="type" type="string" value="deleteStroke"/>
     </data>
     <data name="hand">
@@ -251,10 +245,10 @@
       <attribute name="drawingType" type="string" value="default"/>
     </data>
     <data name="pen">
-      <attribute name="color" type="hex" value="00c0ff"/>
-      <attribute name="drawingType" type="string" value="ellipse"/>
-      <attribute name="fill" type="int" value="1"/>
-      <attribute name="fillAlpha" type="int" value="23"/>
+      <attribute name="color" type="hex" value="000000"/>
+      <attribute name="drawingType" type="string" value="doubleArrow"/>
+      <attribute name="fill" type="int" value="0"/>
+      <attribute name="fillAlpha" type="int" value="255"/>
       <attribute name="size" type="string" value="MEDIUM"/>
       <attribute name="style" type="string" value="plain"/>
     </data>
