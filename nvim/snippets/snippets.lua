@@ -26,12 +26,24 @@ local time = function()
   return { os.date("%H:%M:%S") }
 end
 
-return {
-  s({
-    trig = "tmeis",
-    snippetType = "autosnippet",
-    dscr = "Add time",
-  }, {
-    f(time, {}),
-  }),
-}
+ls.add_snippets(nil, {
+  all = {
+    s({
+      trig = "time",
+      namr = "time",
+      dscr = "Time in the form of HH-MM-SS",
+    }, {
+      f(time, {}),
+    }),
+  },
+})
+
+-- return {
+--   s({
+--     trig = "tmeis",
+--     snippetType = "autosnippet",
+--     dscr = "Add time",
+--   }, {
+--     f(time, {}),
+--   }),
+-- }

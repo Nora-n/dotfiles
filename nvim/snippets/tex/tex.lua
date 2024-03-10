@@ -3426,7 +3426,7 @@ return {
     fmta(
       [[
       \begin{minipage}[<>]{.<>\linewidth}
-        ~
+        \vspace{0pt}
         \begin{center}
           \includegraphics[<>=<>]{<>}
           <>
