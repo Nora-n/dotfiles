@@ -5,8 +5,8 @@ return {
     init = function()
       vim.g.vimwiki_list = {
         {
-          ["path"] = "~/Documents/wiki/",
-          ["path_html"] = "~/Documents/wiki/html/",
+          path = "~/Documents/wiki/",
+          path_html = "~/Documents/wiki/html/",
         },
         {
           path = "~/Documents/worki/",

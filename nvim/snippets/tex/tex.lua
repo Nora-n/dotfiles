@@ -625,14 +625,14 @@ return {
   ),
   s(
     {
-      trig = "rgc",
+      trig = "ctr",
       snippetType = "autosnippet",
-      dscr = "Expands 'rgc' into '\\rightcenters{<>}{<>}'",
+      dscr = "Expands 'rgc' into '\\centersright{<>}{<>}'",
       condition = line_begin,
     },
     fmta(
       [[
-      \rightcenters{%
+      \centersright{%
         <>
       }{%
         <>
@@ -1144,6 +1144,14 @@ return {
     dscr = "Subtext",
     condition = tex_utils.in_mathzone,
   }, fmta("\\ind{<>}", { d(1, get_visual) })),
+  -- suptext
+  s({
+    trig = "sup",
+    wordTrig = false,
+    snippetType = "autosnippet",
+    dscr = "Suptext",
+    condition = tex_utils.in_mathzone,
+  }, fmta("\\sup{<>}", { d(1, get_visual) })),
   -- sub super scripts
   s(
     {
@@ -3231,6 +3239,21 @@ return {
           i(1, "prop"),
           i(2),
           d(3, get_visual),
+          i(0),
+        }
+      ),
+      fmta(
+        [[
+      \begin{tcb*}(<>)<<<>>>{<>}
+          <>
+      \end{tcb*}
+      <>
+      ]],
+        {
+          i(1, "prop"),
+          i(2, "lftt"),
+          i(3),
+          d(4, get_visual),
           i(0),
         }
       ),

@@ -9,3 +9,5 @@
 --     \ set number |
 --     \ let g:loaded_matchparen=1 |
 -- ]])
+-- treesitter for vimwiki: :InspectTree
+-- vim.treesitter.language.register("markdown", "vimwiki")

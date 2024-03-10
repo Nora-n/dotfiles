@@ -23,9 +23,17 @@
       {
         "language": [
           "markdown",
+          "md",
           "rmd"
         ],
         "path": "./markdown.json"
+      },
+      {
+        "language": [
+          "vimwiki",
+          "wiki"
+        ],
+        "path": "./vimwiki/vimwiki.json"
       },
       {
         "language": [

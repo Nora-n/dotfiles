@@ -638,6 +638,10 @@
 \let\th\relax
 \newcommand*\th{\theta}
 \def\T{\Theta} \def\tp{\dot{\th}} \def\tpp{\ddot{\th}}
+
+\let\sup\relax
+\newcommand*{\sup}[1]{^{\text{#1}}}   % exposant textuel en mode math
+
 % left text in align !!
 % https://tex.stackexchange.com/a/61369/284518
 \makeatletter
@@ -1785,7 +1789,8 @@ list entry={\csname name#3\endcsname~\expandafter\csname the#3\endcsname~:~#7},
 			borderline={1pt}{0pt}{#1}, coltitle=#1,
 			fonttitle=\bfseries, top=10pt,
 			attach boxed title to top left={yshift={-9pt}, xshift=10pt},
-			boxed title style={enhanced, frame hidden, colback=white},
+			% boxed title style={enhanced, frame hidden, colback=white},
+			boxed title style={enhanced, colframe=#1, colback=#1back, sharp corners},
 			title={#2},
 		}
 }

@@ -234,3 +234,20 @@ vim.cmd([[
 --   },
 --   on_attach = on_attach,
 -- })
+
+-- vimwiki color
+vim.api.nvim_set_hl(0, "VimwikiHeader1", { fg = "#8EC07C", bold = true }) -- Aqua bold
+vim.api.nvim_set_hl(0, "VimwikiHeader2", { link = "MoreMsg" }) -- Blue bold
+vim.api.nvim_set_hl(0, "VimwikiHeader3", { link = "cppStatement" }) -- Purple bold
+vim.api.nvim_set_hl(0, "VimwikiHeader4", { link = "WarningMsg" }) -- Yellow bold
+vim.api.nvim_set_hl(0, "VimwikiHeader5", { link = "markdownH6" }) -- Orange bold
+vim.api.nvim_set_hl(0, "VimwikiHeader6", { link = "markdownH1" }) -- Reddish bold
+vim.api.nvim_set_hl(0, "VimwikiItalic", { link = "VimwikiHeader2" }) -- Blue bold
+vim.api.nvim_set_hl(0, "VimwikiBoldItalic", { link = "VimwikiHeader3" }) -- Purple bold
+vim.api.nvim_set_hl(0, "VimwikiDelText", { link = "VimwikiHeader4" }) -- Yellow bold
+-- vim.api.nvim_set_hl(0, "VimwikiEqIn", { link = "VimwikiHeader5" }) -- Orange bold
+vim.api.nvim_set_hl(0, "textSnipTEX", { link = "VimwikiHeader5" }) -- Orange bold
+vim.api.nvim_set_hl(0, "VimwikiBold", { link = "VimwikiHeader6" }) -- Reddish bold
+vim.api.nvim_set_hl(0, "VimwikiLink", { link = "markdownURL" }) -- Green bold
+vim.api.nvim_set_hl(0, "VimwikiCode", { link = "MiniTestPass" }) -- Aqua bold
+vim.api.nvim_set_hl(0, "VimwikiTableRow", {}) -- nothing
