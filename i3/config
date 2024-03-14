@@ -136,9 +136,9 @@ bindsym $mod+p scratchpad show
 
 bindsym $mod+n exec --no-startup-id kitty -e ranger
 
-exec_always --no-startup-id kitti3 -n dropdown -s 0.3 1.0
-# bindsym $mod+Shift+t exec kitti3 -n dropdown -s 0.3 1.0
-bindsym $mod+t nop dropdown
+exec_always --no-startup-id kitti3 -p right -s 1.0 0.46
+# bindsym $mod+Shift+t exec kitti3 -n dropdown -s 1.0 0.46
+bindsym $mod+t nop kitti3
 # bindsym $mod+Shift+t mark "term", move scratchpad
 # bindsym $mod+t [con_mark="term"] scratchpad show
 bindsym $mod+Shift+y mark "yout", move scratchpad
@@ -307,7 +307,8 @@ exec --no-startup-id i3-sensible-terminal -e btop
 exec --no-startup-id setxkbmap -layout fr oss & setxkbmap -option lv3:rwin_switch
 
 exec_always --no-startup-id xmodmap ~/.Xmodmap_full
-bindsym $mud+Insert exec --no-startup-id xmodmap ~/.Xmodmap_full & setxkbmap -option lv3:rwin_switch
+bindsym $mud+Insert exec --no-startup-id xmodmap ~/.Xmodmap_full
+bindsym $mud+End exec setxkbmap -option lv3:rwin_switch
 exec --no-startup-id nm-applet
 exec --no-startup-id udiskie
 exec --no-startup-id blueman-applet

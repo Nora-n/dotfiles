@@ -3461,7 +3461,8 @@ return {
       {
         i(1, "t"),
         i(2),
-        c(3, { t("width"), t("scale"), t("height") }),
+        -- c(3, { t("width"), t("scale"), t("height") }),
+        i(3, "width"),
         i(4),
         i(5),
         c(6, { t(""), sn(1, { t("\\captionof{figure}{"), i(1), t("}") }) }),

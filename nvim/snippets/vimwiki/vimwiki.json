@@ -1,148 +1,22 @@
 {
-  "header 1": {
-    "prefix": "h1",
-    "body": [
-      "= ${0} ="
-    ],
-    "description": "Add header level 1"
-  },
-  "header 2": {
-    "prefix": "h2",
-    "body": [
-      "== ${0} =="
-    ],
-    "description": "Add header level 2"
-  },
-  "header 3": {
-    "prefix": "h3",
-    "body": [
-      "=== ${0} ==="
-    ],
-    "description": "Add header level 3"
-  },
-  "header 4": {
-    "prefix": "h4",
-    "body": [
-      "==== ${0} ===="
-    ],
-    "description": "Add header level 4"
-  },
-  "header 5": {
-    "prefix": "h5",
-    "body": [
-      "===== ${0} ====="
-    ],
-    "description": "Add header level 5"
-  },
-  "header 6": {
-    "prefix": "h6",
-    "body": [
-      "====== ${0} ======"
-    ],
-    "description": "Add header level 6"
-  },
-  "Links": {
-    "prefix": [
-      "l",
-      "link"
-    ],
-    "body": [
-      "[${1}](${2}) ${0}"
-    ],
-    "description": "Add links"
-  },
-  "URLS": {
-    "prefix": [
-      "u",
-      "url"
-    ],
-    "body": [
-      "<${1}> ${0}"
-    ],
-    "description": "Add urls"
-  },
-  "Images": {
-    "prefix": "img",
-    "body": [
-      "![${1}](${2}) ${0}"
-    ],
-    "description": "Add images"
-  },
-  "Insert yellow": {
-    "prefix": "jj",
-    "body": "~~${1}~~ ${0}",
-    "description": "Yellow"
-  },
-  "Insert blue": {
-    "prefix": [
-      "bb"
-    ],
-    "body": "_${1}_ $0",
-    "description": "Blue"
-  },
-  "Insert purple": {
-    "prefix": [
-      "pp"
-    ],
-    "body": "_*${1}*_ $0",
-    "description": "Purple"
-  },
-  "Insert orange": {
-    "prefix": [
-      "oo"
-    ],
-    "body": "$${1}$ $0",
-    "description": "Orange"
-  },
-  "Insert red": {
-    "prefix": [
-      "rr"
-    ],
-    "body": "*${1}* $0",
-    "description": "Red"
-  },
-  "Insert green": {
-    "prefix": "vv",
-    "body": "`${1}` $0",
-    "description": "Green"
-  },
   "Insert quoted text": {
     "prefix": "quote",
     "body": "> ${1}",
     "description": "Insert quoted text"
   },
-  "Insert code": {
-    "prefix": "code",
-    "body": "`${1}` $0",
-    "description": "Insert code"
-  },
   "Insert code block": {
     "prefix": "codeblock",
-    "body": [
-      "```${1:language}",
-      "$0",
-      "```"
-    ],
+    "body": ["```${1:language}", "$0", "```"],
     "description": "Insert fenced code block"
   },
   "Insert unordered list": {
     "prefix": "unordered list",
-    "body": [
-      "- ${1:first}",
-      "- ${2:second}",
-      "- ${3:third}",
-      "$0"
-    ],
+    "body": ["- ${1:first}", "- ${2:second}", "- ${3:third}", "$0"],
     "description": "Insert unordered list"
   },
   "Insert ordered list": {
     "prefix": "ordered list",
-    "body": [
-      "1. ${1:first}",
-      "2. ${2:second}",
-      "3. ${3:third}",
-      "$0"
-    ],
+    "body": ["1. ${1:first}", "2. ${2:second}", "3. ${3:third}", "$0"],
     "description": "Insert ordered list"
   },
   "Insert horizontal rule": {
@@ -152,19 +26,12 @@
   },
   "Insert task list": {
     "prefix": "task",
-    "body": [
-      "- [${1| ,x|}] ${2:text}",
-      "${0}"
-    ],
+    "body": ["- [${1| ,x|}] ${2:text}", "${0}"],
     "description": "Insert task list"
   },
   "Insert task list 2": {
     "prefix": "task2",
-    "body": [
-      "- [${1| ,x|}] ${2:text}",
-      "- [${3| ,x|}] ${4:text}",
-      "${0}"
-    ],
+    "body": ["- [${1| ,x|}] ${2:text}", "- [${3| ,x|}] ${4:text}", "${0}"],
     "description": "Insert task list with 2 tasks"
   },
   "Insert task list 3": {
@@ -439,19 +306,5 @@
       "${0}"
     ],
     "description": "Insert table with 5 rows and 5 columns. First row is heading."
-  },
-  "Insert subscript": {
-    "prefix": "sub",
-    "body": [
-      "${1}<sub>${0}"
-    ],
-    "description": "Create a subscript."
-  },
-  "Insert superscript": {
-    "prefix": "sup",
-    "body": [
-      "${1}<sup>${0}"
-    ],
-    "description": "Create a superscript."
   }
 }

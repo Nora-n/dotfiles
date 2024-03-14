@@ -39,6 +39,7 @@ end
 -- })
 
 return {
+  -- colors
   s(
     {
       trig = "@j",
@@ -99,17 +100,135 @@ return {
       d(1, get_visual),
     })
   ),
+  -- not auto
+  s(
+    {
+      trig = "jj",
+      dscr = "Add yellow",
+    },
+    fmta([[~~<>~~]], {
+      i(1),
+    })
+  ),
+  s(
+    {
+      trig = "rr",
+      dscr = "Add red",
+    },
+    fmta([[*<>*]], {
+      i(1),
+    })
+  ),
+  s(
+    {
+      trig = "pp",
+      dscr = "Add purple",
+    },
+    fmta([[_*<>*_]], {
+      i(1),
+    })
+  ),
+  s(
+    {
+      trig = "bb",
+      dscr = "Add blue",
+    },
+    fmta([[_<>_]], {
+      i(1),
+    })
+  ),
+  s(
+    {
+      trig = "oo",
+      dscr = "Add orange",
+    },
+    fmta([[$<>$]], {
+      i(1),
+    })
+  ),
+  s(
+    {
+      trig = "vv",
+      dscr = "Add time",
+    },
+    fmta([[`<>`]], {
+      i(1),
+    })
+  ),
+  -- diary
   s(
     {
       trig = "diary",
-      snippetType = "autosnippet",
       dscr = "Add diary entry",
     },
     fmta("~~<> [[diary:<>-<>-<>]]~~", {
-      i(1, "DATE"),
+      d(1, get_visual),
       c(2, { t("2024"), t("2025"), t("2023") }),
       i(3, "MM"),
       i(4, "JJ"),
     })
   ),
+  -- url
+  s(
+    {
+      trig = "url",
+      dscr = "Add url",
+    },
+    fmta("[[<>|<>]]", {
+      i(1, "URL"),
+      d(2, get_visual),
+    })
+  ),
+  -- headers
+  s({
+    trig = "hd",
+    snippetType = "autosnippet",
+    dscr = "Header",
+    condition = line_begin,
+  }, {
+    c(1, {
+      fmta(
+        [[
+            = <> =
+            <>
+            ]],
+        { i(1), i(0) }
+      ),
+      fmta(
+        [[
+            == <> ==
+            <>
+            ]],
+        { i(1), i(0) }
+      ),
+      fmta(
+        [[
+            === <> ===
+            <>
+            ]],
+        { i(1), i(0) }
+      ),
+      fmta(
+        [[
+            ==== <> ====
+            <>
+            ]],
+        { i(1), i(0) }
+      ),
+      fmta(
+        [[
+            ===== <> =====
+            <>
+            ]],
+        { i(1), i(0) }
+      ),
+      fmta(
+        [[
+            ====== <> ======
+            <>
+            ]],
+        { i(1), i(0) }
+      ),
+    }),
+  }),
 }

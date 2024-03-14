@@ -11,3 +11,20 @@
 -- ]])
 -- treesitter for vimwiki: :InspectTree
 -- vim.treesitter.language.register("markdown", "vimwiki")
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = {
+    "calendar",
+  },
+  callback = function()
+    vim.opt_local.number = false
+  end,
+})
+
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = {
+    "tex",
+  },
+  callback = function()
+    vim.opt_local.foldenable = false
+  end,
+})
