@@ -252,21 +252,21 @@ vim.api.nvim_set_hl(0, "VimwikiLink", { link = "markdownURL" }) -- Green bold
 vim.api.nvim_set_hl(0, "VimwikiCode", { link = "MiniTestPass" }) -- Aqua bold
 vim.api.nvim_set_hl(0, "VimwikiTableRow", {}) -- nothing
 
--- conceal color for vimtes
+-- conceal color for vimtex
 vim.api.nvim_set_hl(0, "Conceal", { link = "texCmdPart" }) -- nothing
 
 -- nvim-treesitter fucks up latex
-local function ts_disable(_, bufnr)
-  return vim.api.nvim_buf_line_count(bufnr) > 1000
-end
-
-require("nvim-treesitter.configs").setup({
-  highlight = {
-    enable = false,
-    disable = { "latex" },
-    -- disable = function(lang, bufnr)
-    --   return lang == "cmake" or ts_disable(lang, bufnr)
-    -- end,
-    -- additional_vim_regex_highlighting = { "latex" },
-  },
-})
+-- local function ts_disable(_, bufnr)
+--   return vim.api.nvim_buf_line_count(bufnr) > 1000
+-- end
+--
+-- require("nvim-treesitter.configs").setup({
+--   highlight = {
+--     enable = false,
+--     disable = { "latex" },
+--     -- disable = function(lang, bufnr)
+--     --   return lang == "cmake" or ts_disable(lang, bufnr)
+--     -- end,
+--     -- additional_vim_regex_highlighting = { "latex" },
+--   },
+-- })

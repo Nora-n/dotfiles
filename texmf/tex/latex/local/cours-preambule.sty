@@ -7,10 +7,10 @@
 % https://tex.stackexchange.com/a/39418
 \makeatletter
 \newcommand{\disablepackage}[2]{%
-  \disable@package@load{#1}{#2}%
+	\disable@package@load{#1}{#2}%
 }
 \newcommand{\reenablepackage}[1]{%
-  \reenable@package@load{#1}%
+	\reenable@package@load{#1}%
 }
 \makeatother
 
@@ -60,7 +60,7 @@
 % To locally change margins
 \RequirePackage{changepage}
 % To resize tables inside threeparttable for instance
-\RequirePackage{adjustbox}
+\RequirePackage[Export]{adjustbox}
 % For frames in multiple lines
 \RequirePackage{framed}
 % For better vectors
@@ -199,16 +199,16 @@
 \newcommand{\pt}[1]{{\color{\cswitch{ForestGreen}{white!10}}\circled{#1}}}
 
 \NewDocumentCommand{\stk}{O{2}D(){on}D""{1}m}{%
-  \IfEqCase{#2}{%
-    {on}{\stackon[#1pt]{\rm #4}{$\mathclap{\pt{#3}}$}}
-    {un}{\stackunder[#1pt]{\rm #4}{$\mathclap{\pt{#3}}$}}
-  }
+\IfEqCase{#2}{%
+	{on}{\stackon[#1pt]{\rm #4}{$\mathclap{\pt{#3}}$}}
+		{un}{\stackunder[#1pt]{\rm #4}{$\mathclap{\pt{#3}}$}}
+}
 }
 \NewDocumentCommand{\stm}{O{2}D(){on}D""{1}m}{%
-  \IfEqCase{#2}{%
-    {on}{\stackon[#1pt]{$#4$}{$\pt{#3}$}}
-    {un}{\stackunder[#1pt]{$#4$}{$\pt{#3}$}}
-  }
+\IfEqCase{#2}{%
+	{on}{\stackon[#1pt]{$#4$}{$\pt{#3}$}}
+		{un}{\stackunder[#1pt]{$#4$}{$\pt{#3}$}}
+}
 }
 
 % To pagebreak equations
@@ -350,12 +350,12 @@
 	\par\noindent\raisebox{.8ex}{%
 		\makebox[1\linewidth]{%
 			\hrulefill%
-      % \fullhrulefill
+			% \fullhrulefill
 			\hspace{1ex}%
 			\raisebox{-.8ex}{\Large\bfseries#1}
 			\hspace{.15ex}%
 			\hrulefill%
-      % \fullhrulefill
+			% \fullhrulefill
 		}
 	}
 }
@@ -416,17 +416,17 @@
 	\normalsize}{0.5em}{}
 
 \NewDocumentCommand{\ssubsection}{mm}{
-  \renewcommand{\thesubsection}{{\bfseries #1}}
-  \titleformat{\subsection}{\large\bfseries}{\hspace{1cm}
-    \tcbox[colback=darkgray, colframe=darkgray,
-      coltext=lightgray, on line, boxsep=0pt,
-      left=4pt, right=4pt, top=4pt,bottom=4pt,
-      sharp corners=northwest]{\thesubsection}}{0.5em}{}
+	\renewcommand{\thesubsection}{{\bfseries #1}}
+	\titleformat{\subsection}{\large\bfseries}{\hspace{1cm}
+		\tcbox[colback=darkgray, colframe=darkgray,
+			coltext=lightgray, on line, boxsep=0pt,
+			left=4pt, right=4pt, top=4pt,bottom=4pt,
+			sharp corners=northwest]{\thesubsection}}{0.5em}{}
 	\subsection{#2}
 }
 
 \NewDocumentCommand{\exercice}{om}{
-  \renewcommand{\thesection}{{\bfseries E\arabic{section}}}
+	\renewcommand{\thesection}{{\bfseries E\arabic{section}}}
 	\titleformat{\section}{\Large\bfseries}{
 		\IfNoValueTF{#1}{}{\rpts{#1}}
 		\begin{tikzpicture}[scale=0.55, overlay]
@@ -441,7 +441,7 @@
 	\section{#2}
 }
 \NewDocumentCommand{\prblm}{om}{
-  \renewcommand{\thesection}{{\bfseries P\arabic{section}}}
+	\renewcommand{\thesection}{{\bfseries P\arabic{section}}}
 	\titleformat{\section}{\Large\bfseries}{
 		\IfNoValueTF{#1}{}{\rpts{#1}}
 		\begin{tikzpicture}[scale=0.55, overlay]
@@ -504,12 +504,13 @@
 	hyperfigures=false]{hyperref}
 % star version of eqref for no hyperlink
 % https://tex.stackexchange.com/a/126774
+% fails without a star… weird
 \let\oldeqref\eqref
 \makeatletter
-\RenewDocumentCommand\eqref{s m}{%
-  \IfBooleanTF#1%
-  {\textup{\tagform@{\ref*{#2}}}}% If a star is seen
-  {\oldeqref{#2}}%                 If no star is seen
+\RenewDocumentCommand\eqref{sm}{%
+	\IfBooleanTF{#1}%
+	{\textup{(\ref*{#2})}}% If a star is seen
+	{\oldeqref{#2}}%                 If no star is seen
 }
 \makeatother
 \def\UrlBreaks{\do\/\do-}
@@ -529,10 +530,10 @@
 \newcommand\nextToken\relax
 
 \renewcommand\footnote[1]{%
-    \oldFootnote{#1}\futurelet\nextToken\isFootnote}
+	\oldFootnote{#1}\futurelet\nextToken\isFootnote}
 
 \newcommand\isFootnote{%
-    \ifx\footnote\nextToken\textsuperscript{,}\!\!\fi}
+	\ifx\footnote\nextToken\textsuperscript{,}\!\!\fi}
 
 % force footnote raggedbottom
 \RequirePackage[bottom]{footmisc}
@@ -645,59 +646,59 @@
 % left text in align !!
 % https://tex.stackexchange.com/a/61369/284518
 \makeatletter
-\newif\if@gather@prefix 
+\newif\if@gather@prefix
 \preto\place@tag@gather{% 
-  \if@gather@prefix\iftagsleft@ 
-    \kern-\gdisplaywidth@ 
-    \rlap{\gather@prefix}% 
-    \kern\gdisplaywidth@ 
-  \fi\fi 
-} 
+	\if@gather@prefix\iftagsleft@
+			\kern-\gdisplaywidth@
+			\rlap{\gather@prefix}% 
+			\kern\gdisplaywidth@
+		\fi\fi
+}
 \appto\place@tag@gather{% 
-  \if@gather@prefix\iftagsleft@\else 
-    \kern-\displaywidth 
-    \rlap{\gather@prefix}% 
-    \kern\displaywidth 
-  \fi\fi 
-  \global\@gather@prefixfalse 
-} 
+	\if@gather@prefix\iftagsleft@\else
+			\kern-\displaywidth
+			\rlap{\gather@prefix}% 
+			\kern\displaywidth
+		\fi\fi
+	\global\@gather@prefixfalse
+}
 \preto\place@tag{% 
-  \if@gather@prefix\iftagsleft@ 
-    \kern-\gdisplaywidth@ 
-    \rlap{\gather@prefix}% 
-    \kern\displaywidth@ 
-  \fi\fi 
-} 
+	\if@gather@prefix\iftagsleft@
+			\kern-\gdisplaywidth@
+			\rlap{\gather@prefix}% 
+			\kern\displaywidth@
+		\fi\fi
+}
 \appto\place@tag{% 
-  \if@gather@prefix\iftagsleft@\else 
-    \kern-\displaywidth 
-    \rlap{\gather@prefix}% 
-    \kern\displaywidth 
-  \fi\fi 
-  \global\@gather@prefixfalse 
-} 
+	\if@gather@prefix\iftagsleft@\else
+			\kern-\displaywidth
+			\rlap{\gather@prefix}% 
+			\kern\displaywidth
+		\fi\fi
+	\global\@gather@prefixfalse
+}
 \def\math@cr@@@align{%
-  \ifst@rred\nonumber\fi
-  \if@eqnsw \global\tag@true \fi
-  \global\advance\row@\@ne
-  \add@amps\maxfields@
-  \omit
-  \kern-\alignsep@
-  \if@gather@prefix\tag@true\fi
-  \iftag@
-    \setboxz@h{\@lign\strut@{\make@display@tag}}%
-    \place@tag
-  \fi
-  \ifst@rred\else\global\@eqnswtrue\fi
-  \global\lineht@\z@
-  \cr
+	\ifst@rred\nonumber\fi
+	\if@eqnsw \global\tag@true \fi
+	\global\advance\row@\@ne
+	\add@amps\maxfields@
+	\omit
+	\kern-\alignsep@
+	\if@gather@prefix\tag@true\fi
+	\iftag@
+		\setboxz@h{\@lign\strut@{\make@display@tag}}%
+		\place@tag
+	\fi
+	\ifst@rred\else\global\@eqnswtrue\fi
+	\global\lineht@\z@
+	\cr
 }
 \newcommand*{\beforetext}[1]{% 
-  \ifmeasuring@\else
-  \gdef\gather@prefix{#1}% 
-  \global\@gather@prefixtrue 
-  \fi
-} 
+	\ifmeasuring@\else
+		\gdef\gather@prefix{#1}% 
+		\global\@gather@prefixtrue
+	\fi
+}
 \makeatother
 \RequirePackage{textcomp}
 \RequirePackage{eurosym}
@@ -775,7 +776,7 @@
 	free-standing-units,           % create standalone commands
 	locale=FR,                     % language
 	inter-unit-product=
-  \ensuremath{{\mycdot}},  % character between units
+	\ensuremath{{\mycdot}},  % character between units
 	separate-uncertainty,          % x ± dx
 	retain-explicit-plus,          % p.ex. +45°
 	range-units=brackets,          % (0 to 40) m
@@ -787,7 +788,7 @@
 }
 % \SIrange{lower}{upper}{unit} with brackets
 % https://tex.stackexchange.com/a/172231
-\ExplSyntaxOn
+% \ExplSyntaxOn
 % \RenewDocumentCommand \SIrange { O{} m m m } {
 %   \leavevmode
 %   \group_begin:
@@ -1060,7 +1061,7 @@ literate         = {á}{{\'a}}1
 	\iftoggle{enonce}{%
 	}{
 		#1%
-  }
+	}
 }
 \newcommand{\cswitch}[2]{%
 	\iftoggle{corrige}{%
@@ -1142,57 +1143,57 @@ literate         = {á}{{\'a}}1
 % https://tex.stackexchange.com/a/5265
 \RequirePackage{currfile}
 \newcommand\settype[1]{
-  \IfEqCase{#1}{
-    {enon}{
-      \immediate\write18{%
-        pdflatex --jobname="\currfilebase_enon"
-        "\gdef\string\conditionmacro{1}\string\input\space\jobname"
-      }%
-      \ifnum\conditionmacro=1 \togglefalse{corrige}\toggletrue{student}\fi
-    }
-    {solu}{
-      \immediate\write18{%
-        pdflatex --jobname="\currfilebase_solu"
-        "\gdef\string\conditionmacro{2}\string\input\space\jobname"
-      }%
-      \ifnum\conditionmacro=2 \toggletrue{corrige}\fi
-    }
-    {solu_prof}{
-      \immediate\write18{%
-        pdflatex --jobname="\currfilebase_solu-prof"
-        "\gdef\string\conditionmacro{3}\string\input\space\jobname"
-      }%
-      \ifnum\conditionmacro=3 \toggletrue{corrige}\togglefalse{student}\fi
-    }
-    {solu_stud}{
-      \immediate\write18{%
-        pdflatex --jobname="\currfilebase_solu-stud"
-        "\gdef\string\conditionmacro{4}\string\input\space\jobname"
-      }%
-      \ifnum\conditionmacro=4 \toggletrue{corrige}\toggletrue{student}\fi
-    }
-    {stud}{
-      \immediate\write18{%
-        pdflatex --jobname="\currfilebase_stud"
-        "\gdef\string\conditionmacro{5}\string\input\space\jobname"
-      }%
-      \ifnum\conditionmacro=5 \toggletrue{student}\fi
-    }
-    {prof}{
-      \immediate\write18{%
-        pdflatex --jobname="\currfilebase_prof"
-        "\gdef\string\conditionmacro{6}\string\input\space\jobname"
-      }%
-      \ifnum\conditionmacro=6 \togglefalse{student}\fi
-    }
-    {book}{
-      \immediate\write18{%
-        pdflatex --jobname="\currfilebase_book"
-        "\gdef\string\conditionmacro{7}\string\input\space\jobname"
-      }%
-      \ifnum\conditionmacro=7 \togglefalse{student}\toggletrue{corrige}\renewcommand{\mycol}{black}\fi
-    }
-  }[]
+	\IfEqCase{#1}{
+		{enon}{
+				\immediate\write18{%
+					pdflatex --jobname="\currfilebase_enon"
+					"\gdef\string\conditionmacro{1}\string\input\space\jobname"
+				}%
+				\ifnum\conditionmacro=1 \togglefalse{corrige}\toggletrue{student}\fi
+			}
+			{solu}{
+				\immediate\write18{%
+					pdflatex --jobname="\currfilebase_solu"
+					"\gdef\string\conditionmacro{2}\string\input\space\jobname"
+				}%
+				\ifnum\conditionmacro=2 \toggletrue{corrige}\fi
+			}
+			{solu_prof}{
+				\immediate\write18{%
+					pdflatex --jobname="\currfilebase_solu-prof"
+					"\gdef\string\conditionmacro{3}\string\input\space\jobname"
+				}%
+				\ifnum\conditionmacro=3 \toggletrue{corrige}\togglefalse{student}\fi
+			}
+			{solu_stud}{
+				\immediate\write18{%
+					pdflatex --jobname="\currfilebase_solu-stud"
+					"\gdef\string\conditionmacro{4}\string\input\space\jobname"
+				}%
+				\ifnum\conditionmacro=4 \toggletrue{corrige}\toggletrue{student}\fi
+			}
+			{stud}{
+				\immediate\write18{%
+					pdflatex --jobname="\currfilebase_stud"
+					"\gdef\string\conditionmacro{5}\string\input\space\jobname"
+				}%
+				\ifnum\conditionmacro=5 \toggletrue{student}\fi
+			}
+			{prof}{
+				\immediate\write18{%
+					pdflatex --jobname="\currfilebase_prof"
+					"\gdef\string\conditionmacro{6}\string\input\space\jobname"
+				}%
+				\ifnum\conditionmacro=6 \togglefalse{student}\fi
+			}
+			{book}{
+				\immediate\write18{%
+					pdflatex --jobname="\currfilebase_book"
+					"\gdef\string\conditionmacro{7}\string\input\space\jobname"
+				}%
+				\ifnum\conditionmacro=7 \togglefalse{student}\toggletrue{corrige}\renewcommand{\mycol}{black}\fi
+			}
+	}[]
 }
 
 % Cannibalize the rest
@@ -1218,34 +1219,34 @@ literate         = {á}{{\'a}}1
 \toggletrue{sujet}
 
 \newcommand{\sujetUniquement}[1]{
-  % apparait si sujet == vrai et corrigé == faux
-  \iftoggle{sujet}{
-    \iftoggle{corrige}{}{
-      #1
-    }
-  }{}
+	% apparait si sujet == vrai et corrigé == faux
+	\iftoggle{sujet}{
+		\iftoggle{corrige}{}{
+			#1
+		}
+	}{}
 }
 
 \newcommand{\siCorrige}[1]{
-  % apparait corrigé == vrai
-  \iftoggle{corrige}{
-    #1
-  }{}
+	% apparait corrigé == vrai
+	\iftoggle{corrige}{
+		#1
+	}{}
 }
 \newcommand{\enonce}[2][]{
-  \iftoggle{corrige}{
-    \iftoggle{student}{
-      %
-    }{
-      \showAccordingToVersion[#1]{
-        #2
-      }
-    }
-  }{
-    \showAccordingToVersion[#1]{
-      #2
-    }
-  }
+	\iftoggle{corrige}{
+		\iftoggle{student}{
+			%
+		}{
+			\showAccordingToVersion[#1]{
+				#2
+			}
+		}
+	}{
+		\showAccordingToVersion[#1]{
+			#2
+		}
+	}
 }
 
 % niveau des exercices (utile en TD)
@@ -1258,19 +1259,19 @@ literate         = {á}{{\'a}}1
 
 % Thicker hrulefill
 \makeatletter
-  \def\vhrulefill#1{\leavevmode\leaders\hrule\@height#1\hfill \kern\z@}
+\def\vhrulefill#1{\leavevmode\leaders\hrule\@height#1\hfill \kern\z@}
 \makeatother
 % For centered and fullhrule before and after text
 \newcommand*\fullheadline[1]{%
 	\par\noindent\raisebox{.8ex}{%
 		\makebox[1\linewidth]{%
 			% \hrulefill%
-      \vhrulefill{1pt}
-      \hspace{.25ex}%
+			\vhrulefill{1pt}
+			\hspace{.25ex}%
 			\raisebox{-.4ex}{\bfseries#1}
 			\hspace{.15ex}%
 			% \hrulefill%
-      \vhrulefill{1pt}
+			\vhrulefill{1pt}
 		}
 	}
 }
@@ -1278,11 +1279,11 @@ literate         = {á}{{\'a}}1
 	\par\noindent\raisebox{.8ex}{%
 		\makebox[1\linewidth]{%
 			% \hrulefill%
-      \vhrulefill{1pt}
+			\vhrulefill{1pt}
 			\hspace{.25ex}%
 			\raisebox{-1.0ex}{$\scaleto{#1}{10pt}$}
 			\hspace{.15ex}%
-      \vhrulefill{1pt}
+			\vhrulefill{1pt}
 			% \hrulefill%
 		}
 	}
@@ -1292,7 +1293,7 @@ literate         = {á}{{\'a}}1
 	\fullheadline{Réponse}
 }{
 	\fulltailline{\diamond}
-  \vspace*{-20pt}
+	\vspace*{-20pt}
 }
 % \newenvironment{answ}{
 %   \begin{tcb}[breakable](ror)<lft>{Réponse}
@@ -1301,67 +1302,67 @@ literate         = {á}{{\'a}}1
 % }
 
 \NewDocumentCommand{\QR}{D<>{}o+m+m}{%
-  \iftoggle{bareme}{ % Force l'affichage du bareme quoiqu'il en soit
-    \begin{blocQR}#1
-      \iftoggle{student}{ % pour version student
-        \iftoggle{corrige}{ % version avec corrigé : affiche juste la correction
-          \nitem{#2}#4%
-          }{ % énoncé uniquement
-          \nitem{#2}#3%
-          }%
-      }{% pour version prof
-        \iftoggle{corrige}{% pour version avec corrigé : question ET réponse
-          \nitem{#2}#3%
-            \begin{answ}%
-            #4%
-            \end{answ}%
-          }{ % énoncé uniquement
-            \item #3%
-        }
-      }
-    \end{blocQR}
-  }{
-    \IfValueTF{#2}{ % Si [nb], ajoute un nombre de points
-      % \iftoggle{bareme}{ % si bareme == true, ajoute les points dans [nb]
-      \begin{blocQR}#1
-        \iftoggle{student}{ % pour version student
-          \iftoggle{corrige}{ % version avec corrigé : affiche juste la correction
-            \nitem{#2}#4%
-          }{ % énoncé uniquement
-            \item #3%
-            }%
-        }{% pour version prof
-          \iftoggle{corrige}{% pour version avec corrigé : question ET réponse
-            \nitem{#2}#3%
-              \begin{answ}%
-              #4%
-              \end{answ}%
-          }{ % énoncé uniquement
-              \item #3%
-          }
-        }
-      \end{blocQR}
-    }{ % Si pas de [nb], pas de points
-      \begin{blocQR}#1
-        \iftoggle{student}{% pour version student
-          \iftoggle{corrige}{% version avec corrigé : affiche juste la correction
-\item #4%
-          }{ % énoncé uniquement
-            \item #3%
-            }%
-        }{%
-          \iftoggle{corrige}{% pour version avec corrigé : question ET réponse
-            \item #3%
-              \begin{answ}
-              #4
-              \end{answ}
-          }{ % énoncé uniquement
-              \item #3%
-          }%
-        }%
-      \end{blocQR}%
-    }
-  }
+	\iftoggle{bareme}{ % Force l'affichage du bareme quoiqu'il en soit
+		\begin{blocQR}#1
+			\iftoggle{student}{ % pour version student
+				\iftoggle{corrige}{ % version avec corrigé : affiche juste la correction
+					\nitem{#2}#4%
+				}{ % énoncé uniquement
+					\nitem{#2}#3%
+				}%
+			}{% pour version prof
+				\iftoggle{corrige}{% pour version avec corrigé : question ET réponse
+					\nitem{#2}#3%
+					\begin{answ}%
+						#4%
+					\end{answ}%
+				}{ % énoncé uniquement
+					\item #3%
+				}
+			}
+		\end{blocQR}
+	}{
+		\IfValueTF{#2}{ % Si [nb], ajoute un nombre de points
+			% \iftoggle{bareme}{ % si bareme == true, ajoute les points dans [nb]
+			\begin{blocQR}#1
+				\iftoggle{student}{ % pour version student
+					\iftoggle{corrige}{ % version avec corrigé : affiche juste la correction
+						\nitem{#2}#4%
+					}{ % énoncé uniquement
+						\item #3%
+					}%
+				}{% pour version prof
+					\iftoggle{corrige}{% pour version avec corrigé : question ET réponse
+						\nitem{#2}#3%
+						\begin{answ}%
+							#4%
+						\end{answ}%
+					}{ % énoncé uniquement
+						\item #3%
+					}
+				}
+			\end{blocQR}
+		}{ % Si pas de [nb], pas de points
+			\begin{blocQR}#1
+				\iftoggle{student}{% pour version student
+					\iftoggle{corrige}{% version avec corrigé : affiche juste la correction
+						\item #4%
+					}{ % énoncé uniquement
+						\item #3%
+					}%
+				}{%
+					\iftoggle{corrige}{% pour version avec corrigé : question ET réponse
+						\item #3%
+						\begin{answ}
+							#4
+						\end{answ}
+					}{ % énoncé uniquement
+						\item #3%
+					}%
+				}%
+			\end{blocQR}%
+		}
+	}
 }
 
 % QR of actual BPEP
@@ -1373,49 +1374,49 @@ literate         = {á}{{\'a}}1
 % ajout d'une question
 \RequirePackage{twoopt} % permet de mettre 2 options facultatives pour le barème
 \newcommandtwoopt{\QRold}[4][][]{ % cette fonction gère l'affichage suivant la version. La modifier est considéré comme dangereux.	
-  \showAccordingToVersion[#1]{
-    \begin{enumerate}[start=\theqrIndex]
-      \stepcounter{qrIndex}
-      \item %\qrIndex
-            \iftoggle{sujet}{
-              \addQq{#3}
-            }{}
+	\showAccordingToVersion[#1]{
+		\begin{enumerate}[start=\theqrIndex]
+			\stepcounter{qrIndex}
+			\item %\qrIndex
+			      \iftoggle{sujet}{
+				      \addQq{#3}
+			      }{}
 
-            \iftoggle{corrige}{
-              \addQr{#4}
-            }{}
+			      \iftoggle{corrige}{
+				      \addQr{#4}
+			      }{}
 
-            \iftoggle{bareme}{
-              \addQb{#2}{#4}
-            }{}
-    \end{enumerate}
-  }
+			      \iftoggle{bareme}{
+				      \addQb{#2}{#4}
+			      }{}
+		\end{enumerate}
+	}
 }
 
 \newcommand{\addQq}[1]{ % la question à afficher en mode corrigé : peut être modifié
-  \iftoggle{corrige}{
-    #1 % affichage de la question en mode corrigé
-  }{
-    #1 % affichage hors mode corrigé
-  }
+	\iftoggle{corrige}{
+		#1 % affichage de la question en mode corrigé
+	}{
+		#1 % affichage hors mode corrigé
+	}
 }
 
 
 \newcommand{\addQr}[1]{ % la réponse à afficher en mode corrigé : peut être modifié
-  \mbox{}\\	\textbf{Réponse : } \mbox{} \\
-  #1
+	\mbox{}\\	\textbf{Réponse : } \mbox{} \\
+	#1
 }
 
 \newcommand{\addQb}[2]{
-  \noindent
-  \begin{minipage}[t]{0.9\linewidth}
-  #2
-  \end{minipage}\hfill\vrule\hfill
-  \begin{minipage}[t]{0.08\linewidth}
-  \centering
-  #1 pt(s)
-  \end{minipage}
-  \hrule
+	\noindent
+	\begin{minipage}[t]{0.9\linewidth}
+		#2
+	\end{minipage}\hfill\vrule\hfill
+	\begin{minipage}[t]{0.08\linewidth}
+		\centering
+		#1 pt(s)
+	\end{minipage}
+	\hrule
 }
 \newcommand{\version}{original}
 
@@ -1426,32 +1427,32 @@ literate         = {á}{{\'a}}1
 }
 % titre partie
 \newcommand{\partie}[2][]{
-  \showAccordingToVersion[#1]{
-    \subsection{#2}
-  }
+	\showAccordingToVersion[#1]{
+		\subsection{#2}
+	}
 }
 
 % titre sous partie
 \newcommand{\sousPartie}[2][]{
-  \showAccordingToVersion[#1]{
-    \subsubsection{#2}
-  }
+	\showAccordingToVersion[#1]{
+		\subsubsection{#2}
+	}
 }
 
 \newcommand{\showAccordingToVersion}[2][]{
-  \exploregroups
-  \ifthenelse{\equal{#1}{}}{
-    % sans argument opt, la question est toujours affichée
-    #2
-  }{
-    % si argument opt, on traite au cas par cas
-    \IfSubStr{#1 }{\version}{
-      % si la liste des tags de version contient la valeur de \version			
-      #2
-    }{
-      % sinon, on affiche rien !			
-    }
-  }
+	\exploregroups
+	\ifthenelse{\equal{#1}{}}{
+		% sans argument opt, la question est toujours affichée
+		#2
+	}{
+		% si argument opt, on traite au cas par cas
+		\IfSubStr{#1 }{\version}{
+			% si la liste des tags de version contient la valeur de \version			
+			#2
+		}{
+			% sinon, on affiche rien !			
+		}
+	}
 }
 
 %%%%%%%%%%%%%%%%%
@@ -1571,6 +1572,7 @@ literate         = {á}{{\'a}}1
 \colorlet{toolback}{BlueViolet!10}
 \colorlet{rappback}{BlueViolet!10}
 \colorlet{defiback}{green!10}
+\colorlet{databack}{green!10}
 \colorlet{toolback}{green!10}
 \colorlet{notaback}{green!10}
 \colorlet{rorback}{orange!10}
@@ -1597,6 +1599,7 @@ literate         = {á}{{\'a}}1
 \colorlet{toolbacktitle}{BlueViolet!30}
 \colorlet{rappbacktitle}{BlueViolet!30}
 \colorlet{defibacktitle}{green!10}
+\colorlet{databacktitle}{green!10}
 \colorlet{toolbacktitle}{green!10}
 \colorlet{notabacktitle}{green!10}
 \colorlet{rorbacktitle}{orange!30}
@@ -1723,7 +1726,7 @@ literate         = {á}{{\'a}}1
 \newcommand{\iconnota}{\faIcon{pencil-alt}}
 \newcommand{\iconror}{\includegraphics[scale=.15]{\PREPA/figures_generales/heart.jpg}}
 \newcommand{\icontrans}{
-\includegraphics[angle=-90, origin=c, height=0.5cm]{\PREPA/figures_generales/pr.jpg}
+	\includegraphics[angle=-90, origin=c, height=0.5cm]{\PREPA/figures_generales/pr.jpg}
 }
 \newcommand{\iconexem}{\faIcon{external-link-alt}}
 \newcommand{\iconodgr}{\faIcon{calculator}}
@@ -1739,6 +1742,8 @@ literate         = {á}{{\'a}}1
 \newcommand{\iconcode}{\faIcon{python}}
 \newcommand{\iconwip}{\faIcon{hard-hat}}
 \newcommand{\iconbomb}{\faIcon{bomb}}
+\newcommand{\iconchem}{\faIcon{eye-dropper}}
+\newcommand{\icontime}{\faIcon{stopwatch}}
 % \newcommand{\iconexpe}{\faIcon{fill}}
 \newcommand{\iconbulb}{\faIcon[regular]{lightbulb}}
 \newcommand{\iconinfo}{\faIcon{info-circle}}
@@ -1879,10 +1884,10 @@ list entry={\csname name#3\endcsname~\expandafter\csname the#3\endcsname~:~#7},
 	itc/.style 2 args={
 			fonttitle=\bfseries,
 			attach boxed title to top center={yshift=-2mm},
-      coltitle=black,
-      boxed title style={
-        colback=#1backtitle,
-      },
+			coltitle=black,
+			boxed title style={
+					colback=#1backtitle,
+				},
 			colback=#1back,
 			colframe={#1},
 			title={#2},

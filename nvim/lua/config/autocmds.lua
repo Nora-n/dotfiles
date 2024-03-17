@@ -20,11 +20,11 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
-vim.api.nvim_create_autocmd("FileType", {
-  pattern = {
-    "tex",
-  },
-  callback = function()
-    vim.opt_local.foldenable = false
-  end,
-})
+-- vim.api.nvim_create_autocmd("FileType", {
+--   pattern = {
+--     "tex",
+--   },
+--   callback = function()
+--     vim.opt_local.foldenable = false
+--   end,
+-- })

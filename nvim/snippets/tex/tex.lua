@@ -162,6 +162,25 @@ return {
       }
     )
   ),
+  -- for item
+  s(
+    {
+      trig = "lvv",
+      snippetType = "autosnippet",
+      dscr = "leavevmode",
+      condition = line_begin,
+    },
+    fmta(
+      [[
+      \leavevmode\vspace*{-<>pt}\relax
+      <>
+    ]],
+      {
+        i(1, "15"),
+        i(0),
+      }
+    )
+  ),
   -- hspace
   s(
     {

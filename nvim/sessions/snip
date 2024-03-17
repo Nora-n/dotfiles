@@ -13,27 +13,19 @@ if &shortmess =~ 'A'
 else
   set shortmess=aoO
 endif
-badd +633 ~/.config/nvim/snippets/tex/tex.lua
-badd +1778 ~/.config/texmf/tex/latex/local/cours-preambule.sty
-badd +16 ~/.config/texmf/tex/latex/local/custikz.sty
+badd +2516 ~/.config/nvim/snippets/tex/tex.lua
+badd +1742 ~/.config/texmf/tex/latex/local/cours-preambule.sty
+badd +30 ~/.config/texmf/tex/latex/local/custikz.sty
 badd +1 ~/.config/nvim/snippets/tex/tex.snippets
 badd +262 ~/.config/texmf/tex/latex/local/locdef.sty
-badd +60 ~/.config/texmf/tex/latex/local/mintikz.sty
-badd +92 ~/.config/nvim/snippets/vimwiki/wiki.lua
+badd +95 ~/.config/texmf/tex/latex/local/mintikz.sty
+badd +25 ~/.config/nvim/snippets/vimwiki/wiki.lua
 badd +23 ~/Documents/Enseignement/Prepa/bpep/fichiers_utiles/preambule.sty
+badd +70 ~/.config/texmf/tex/latex/local/pst-dosage.tex
 argglobal
 %argdel
 $argadd ~/.config/nvim/snippets/tex/tex.lua
-edit ~/.config/texmf/tex/latex/local/cours-preambule.sty
-let s:save_splitbelow = &splitbelow
-let s:save_splitright = &splitright
-set splitbelow splitright
-wincmd _ | wincmd |
-vsplit
-1wincmd h
-wincmd w
-let &splitbelow = s:save_splitbelow
-let &splitright = s:save_splitright
+edit ~/.config/nvim/snippets/tex/tex.lua
 wincmd t
 let s:save_winminheight = &winminheight
 let s:save_winminwidth = &winminwidth
@@ -41,9 +33,8 @@ set winminheight=0
 set winheight=1
 set winminwidth=0
 set winwidth=1
-wincmd =
 argglobal
-balt ~/Documents/Enseignement/Prepa/bpep/fichiers_utiles/preambule.sty
+balt ~/.config/texmf/tex/latex/local/cours-preambule.sty
 setlocal fdm=indent
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -52,36 +43,13 @@ setlocal fdl=99
 setlocal fml=1
 setlocal fdn=20
 setlocal fen
-let s:l = 1778 - ((10 * winheight(0) + 22) / 45)
+let s:l = 2516 - ((57 * winheight(0) + 58) / 116)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 1778
-normal! 019|
-wincmd w
-argglobal
-if bufexists(fnamemodify("~/.config/texmf/tex/latex/local/locdef.sty", ":p")) | buffer ~/.config/texmf/tex/latex/local/locdef.sty | else | edit ~/.config/texmf/tex/latex/local/locdef.sty | endif
-if &buftype ==# 'terminal'
-  silent file ~/.config/texmf/tex/latex/local/locdef.sty
-endif
-balt ~/.config/texmf/tex/latex/local/mintikz.sty
-setlocal fdm=indent
-setlocal fde=0
-setlocal fmr={{{,}}}
-setlocal fdi=#
-setlocal fdl=99
-setlocal fml=1
-setlocal fdn=20
-setlocal fen
-let s:l = 263 - ((15 * winheight(0) + 22) / 45)
-if s:l < 1 | let s:l = 1 | endif
-keepjumps exe s:l
-normal! zt
-keepjumps 263
-normal! 0
-wincmd w
-wincmd =
-if exists(':tcd') == 2 | tcd ~/.config/nvim | endif
+keepjumps 2516
+normal! 010|
+if exists(':tcd') == 2 | tcd ~/.config | endif
 tabnext 1
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0 && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf

@@ -93,6 +93,7 @@ bindsym $mod+q kill
 
 # start rofi
 bindsym $mod+d exec --no-startup-id ~/.config/rofi/launchers/type-3/launcher.sh
+bindsym $mod+Shift+d exec --no-startup-id rofi -show file-browser-extended -file-browser-dir ~/Documents/Enseignement/Prepa/2023/00_Adm/Notes/
 bindsym $mod+Delete exec --no-startup-id ~/.config/rofi/powermenu/type-2/powermenu.sh
 
 # start gitkraken, exerciceexplorer

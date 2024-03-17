@@ -1,0 +1,522 @@
+%%                    Package `pst-dosage.tex'                                 %%
+%%                           for                                               %%
+%%                   Acid-base titration curves                                %%
+%% This program can be redistributed and/or modified under                     %%
+%% the terms of the LaTeX Project Public License Distributed                   %%
+%% from CTAN archives in directory macros/latex/base/lppl.txt.                 %%
+%%                                                                             %%
+%%              Manuel LUQUE <manuel.luque27@gmail.com>                        %%
+%% calculs d'après l'article de Marc Chapelet :dans le B.U.P. n.668            %%
+%% https://bupdoc.udppc.asso.fr/consultation/article-bup.php?ID_fiche=8847     %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\def\fileversion{0.99}
+\def\filedate{2023/11/21}
+
+\message{`PST-dosage' v\fileversion, \filedate\space (Manuel Luque)}
+\csname PSTDosageLoaded\endcsname
+\let\PSTDosageLoaded\endinput
+
+% Require PSTricks, pstplot, pst-xkey and multido packages
+\ifx\PSTricksLoaded\endinput\else\input pstricks.tex\fi
+\ifx\PSTplotLoaded\endinput\else\input pst-plot.tex\fi
+\ifx\MultidoLoaded\endinput\else\input multido.tex\fi
+\ifx\PSTXKeyLoaded\endinput\else\input pst-xkey.tex\fi
+\ifx\PSTnodesLoaded\endinput\else\input pst-node.tex\fi
+\edef\PstAtCode{\the\catcode`\@} \catcode`\@=11\relax
+\pst@addfams{pst-dosage}
+\newcommand\Cadre[1]{\psframebox[fillstyle=solid,fillcolor=gray,linestyle=none,framesep=0]{#1}}
+\define@key[psset]{pst-dosage}{CA}{\edef\psk@Dosage@ConcentrationAcide{#1}}
+\define@key[psset]{pst-dosage}{CB}{\edef\psk@Dosage@ConcentrationBase{#1}}
+\define@key[psset]{pst-dosage}{VA}{\edef\psk@Dosage@VolumeAcide{#1}}
+\define@key[psset]{pst-dosage}{VB}{\edef\psk@Dosage@VolumeBase{#1}}
+\define@key[psset]{pst-dosage}{pKA}{\edef\psk@Dosage@pKA{#1}}
+\define@key[psset]{pst-dosage}{pKB}{\edef\psk@Dosage@pKB{#1}}
+\define@key[psset]{pst-dosage}{pKA1}{\@namedef{psk@Dosage@pKA1}{#1}}
+\define@key[psset]{pst-dosage}{pKA2}{\@namedef{psk@Dosage@pKA2}{#1}}
+\define@key[psset]{pst-dosage}{pKA3}{\@namedef{psk@Dosage@pKA3}{#1}}
+\define@key[psset]{pst-dosage}{dpHunit}{\@namedef{psk@Dosage@dpHunit}{#1}}
+\define@key[psset]{pst-dosage}{pH1}{\@namedef{psk@Dosage@pH1}{#1}}
+\define@key[psset]{pst-dosage}{pHstyle}{%
+	\@namedef{psk@Dosage@pHstyle}{#1}}
+\define@key[psset]{pst-dosage}{dpHstyle}{%
+	\@namedef{psk@Dosage@dpHstyle}{#1}}
+\define@key[psset]{pst-dosage}{tangentesstyle}{%
+	\@namedef{psk@Dosage@tangentesstyle}{#1}}
+\newif\ifPst@dpH
+\define@key[psset]{pst-dosage}{dpH}[true]{\@nameuse{Pst@dpH#1}}%
+\newif\ifPst@Equivalence
+\define@key[psset]{pst-dosage}{Equivalence}[true]{\@nameuse{Pst@Equivalence#1}}%
+\newif\ifPst@values
+\define@key[psset]{pst-dosage}{valeurs}[true]{\@nameuse{Pst@values#1}}%
+\newif\ifPst@tangentes
+\define@key[psset]{pst-dosage}{tangentes}[true]{\@nameuse{Pst@tangentes#1}}%
+\newpsstyle{redbold}{linecolor=red,linewidth=2\pslinewidth}
+\newpsstyle{bluenormal}{linecolor=blue}
+\newpsstyle{DarkGray}{linecolor=darkgray}
+\psset{CA=0.1,CB=0.1,VB=10,pKA=4.75,VA=10,%
+	pKB=4.75,pKA1=2.1,pKA2=7.2,pKA3=12,%
+	pHstyle=redbold,dpHstyle=bluenormal,tangentesstyle=DarkGray,%
+	dpH=true,dpHunit=1,pH1=5,Equivalence=true,tangentes=false,valeurs=false}
+\newcommand\graphpaper{%
+	\psset{gridwidth=1\pslinewidth}
+	\psgrid[gridlabels=0,subgriddiv=10,subgridwidth=0.1\pslinewidth,subgridcolor=gray,gridcolor=orange](16,14)%
+	\psgrid[gridlabels=0,subgriddiv=2,subgridwidth=0.4\pslinewidth,subgridcolor=orange,gridcolor=orange](16,14)%
+	\psset{arrowscale=1.5,arrowinset=0.2}%
+	\uput[l](0,14){\cadregris{\textsf{pH}}}%
+	\psaxes{->}(16,14)}
+\newcommand\cadregris[1]{%
+	\psframebox[fillstyle=solid,fillcolor=gray,framesep=0,linestyle=none]{\textcolor{white}{#1}}}
+\def\Vbmax{25}
+\def\myphmax{12.5}
+\def\Valeurs{%
+/Helvetica findfont
+8 scalefont
+setfont
+/chaine 10 string def
+/AfficheValeurs
+{ /Tableau exch def
+0 1 Tableau length 1 sub
+	{ Tableau exch get
+		chaine cvs
+		show } for
+} def}%
+\def\Tangentes{%
+	% tracé des tangentes
+	pH1 calc
+	/V1 V def
+	/pH2 2 pHE mul pH1 sub def
+	pH2 calc
+	/V2 V def
+	pH1 0.01 add calc
+	/V11 V def
+	/M1 0.01 V11 V1 sub div def % pente en 1
+	/B1 pH1 M1 V1 mul sub def
+	/v11 V1 2 sub def
+	/ph11 M1 v11 mul B1 add def
+	/v12 V1 2 add def
+	/ph12 M1 v12 mul B1 add def
+	/B2 pH2 M1 V2 mul sub def
+	/v21 V2 2 sub def
+	/ph21 M1 v21 mul B2 add def
+	/v22 V2 2 add def
+	/ph22 M1 v22 mul B2 add def
+	/BE pHE M1 VE mul sub def
+	/vE1 VE 2 sub def
+	/phE1 M1 vE1 mul BE add def
+	/vE2 VE 2 add def
+	/phE2 M1 vE2 mul BE add def
+}%
+%%%%%%%%% dosage d'un acide fort par une base forte%%%%%%%%%%%
+\def\dosageAB{\@ifnextchar[{\pst@dosageAB}{\pst@dosageAB[]}}%
+\def\pst@dosageAB[#1]{{%%
+			\psset{#1}%
+			%\pspicture(16,15)%
+			%\psgrid[subgridwidth=0.2\pslinewidth,gridlabels=0pt]%
+			\graphpaper
+			\uput[-90](\Vbmax,0){$\SI[parse-numbers=false]{V_B}{mL}$}
+			\ifPst@dpH
+				\psline[linecolor=black]{->}(\Vbmax,0)(\Vbmax,14)
+				\uput[0](\Vbmax,14){$\displaystyle\dv{\pH}{V_B}$}
+			\fi
+			\pnode(! %
+			/pHmax
+			/CA \psk@Dosage@ConcentrationAcide\space def
+			/CB \psk@Dosage@ConcentrationBase\space def
+			/VB \psk@Dosage@VolumeBase\space def
+			/VA \psk@Dosage@VolumeAcide\space def
+			/pH1 \@nameuse{psk@Dosage@pH1}\space def
+			/KE 1e-14 def
+			KE VA 16 add mul
+			CB 16 mul CA VA mul sub
+			div
+			log neg def
+			/pHmin
+			CA
+			log neg def
+			/pHE 7 def
+			/VE CA VA mul CB div def
+			/calc{/pH ED
+				/H 10 pH neg exp def
+				/V CA KE H div add H sub
+				H CB add KE H div sub
+				div VA mul def} def
+			\Tangentes
+			VE pHE){E}%
+			\psclip{\psframe[linestyle=none](\Vbmax,14)}%
+			\parametricplot[style=\psk@Dosage@pHstyle]{pHmin}{\myphmax}{%
+				t calc
+				V  t}%
+			\ifPst@dpH
+				\parametricplot[style=\psk@Dosage@dpHstyle,plotpoints=400,yunit=\psk@Dosage@dpHunit]{pHmin}{\myphmax}{%
+					t calc
+					/V1 V def
+					%
+					t dt add calc
+					/V2 V def
+					V1 dt V2 V1 sub div
+				}%
+			\fi
+			\ifPst@Equivalence
+				\ifPst@values
+					\uput[-45](E){\pnode(! \Valeurs
+						[/VE= VE /mL /, /pHE= pHE]
+						AfficheValeurs 0 0){AA}}
+				\fi
+				\psdot(E)
+				\uput[180](E){E}
+			\fi
+			\ifPst@tangentes
+				{\psset{style=\psk@Dosage@tangentesstyle}
+				\psline(!  v11 ph11)(! v12 ph12)
+				\psline(!  v21 ph21)(! v22 ph22)
+				\psline(!  vE1 phE1)(! vE2 phE2)
+				\psdot(!V1 pH1)
+				\psdot(!V2 pH2)}%
+			\fi
+			\endpsclip
+			%\endpspicture
+		}}%
+%%%%%%%% dosage d'un base forte par un acide fort%%%%%%%%%%%%%%%%%%%
+\def\dosageBA{\@ifnextchar[{\pst@dosageBA}{\pst@dosageBA[]}}
+\def\pst@dosageBA[#1]{{%
+			\psset{#1}%
+			%\pspicture(16,15)
+			\graphpaper
+			\uput[-90](\Vbmax,0){$\SI[parse-numbers=false]{V_A}{mL}$}
+			\ifPst@dpH
+				\psline[linecolor=black]{->}(\Vbmax,0)(\Vbmax,14)
+				\uput[0](\Vbmax,14){$\displaystyle\dv{\pH}{V_B}$}
+			\fi
+			\pnode( ! %
+			/pHmin
+			/CA \psk@Dosage@ConcentrationAcide\space def
+			/CB \psk@Dosage@ConcentrationBase\space def
+			/VB \psk@Dosage@VolumeBase\space def
+			/VA \psk@Dosage@VolumeAcide\space def
+			/pH1 \@nameuse{psk@Dosage@pH1}\space def
+			/KE 1e-14 def
+			CA 16 mul
+			CB VB mul
+			sub
+			16 VB add
+			div
+			log neg def
+			/pHmax
+			14 CB
+			log add def
+			/pHE 7 def
+			/VE CB VB mul CA div def
+			/VE VE 100 mul round 100 div def
+			/calc{/pH ED
+				/H 10 pH neg exp def
+				/V KE H div CB sub H sub
+				H CA sub KE H div sub
+				div VB mul def} def
+			\Tangentes
+			VE pHE){E}%
+			\psclip{\psframe[linestyle=none](\Vbmax,14)}%
+			\parametricplot[style=\psk@Dosage@pHstyle]{pHmin}{\myphmax}{%
+				t calc
+				V t
+			}%
+			\ifPst@dpH
+				\parametricplot[style=\psk@Dosage@dpHstyle,plotpoints=400,yunit=\psk@Dosage@dpHunit]{pHmin}{\myphmax}{%
+					t calc
+					/V1 V def
+					%
+					t dt add calc
+					/V2 V def
+					V1 dt V2 V1 sub div 14 \psk@Dosage@dpHunit\space div add
+				}%
+			\fi
+			\ifPst@Equivalence
+				\ifPst@values
+					\uput[-45](E){\pnode(! \Valeurs
+						[/VE= VE /mL /, /pHE= pHE]
+						AfficheValeurs 0 0){AA}}
+				\fi
+				\psdot(E)
+				\uput[180](E){E}
+			\fi
+			\ifPst@tangentes
+				{\psset{style=\psk@Dosage@tangentesstyle}
+				\psline(!  v11 ph11)(! v12 ph12)
+				\psline(!  v21 ph21)(! v22 ph22)
+				\psline(!  vE1 phE1)(! vE2 phE2)
+				\psdot(!V1 pH1)
+				\psdot(!V2 pH2)}%
+			\fi
+			\endpsclip
+			%\endpspicture%
+		}}
+%%%%%%%%% dosage d'un acide faible par une base forte%%%%%%%%%%%%%%
+\def\dosageAfBF{\@ifnextchar[{\pst@dosageAfBF}{\pst@dosageAfBF[]}}
+\def\pst@dosageAfBF[#1]{{%
+			\psset{#1}%
+			%\pspicture(16,15)
+			\graphpaper
+			\uput[-90](\Vbmax,0){$\SI[parse-numbers=false]{V_B}{mL}$}
+			\ifPst@dpH
+				\psline[linecolor=black]{->}(\Vbmax,0)(\Vbmax,14)
+				\uput[0](\Vbmax,14){$\displaystyle\dv{\pH}{V_B}$}
+			\fi
+			%\pstVerb{
+			\pnode(!
+			/pHmax
+			/CA \psk@Dosage@ConcentrationAcide\space def
+			/CB \psk@Dosage@ConcentrationBase\space def
+			/VB \psk@Dosage@VolumeBase\space def
+			/VA \psk@Dosage@VolumeAcide\space def
+			/KA 10 \psk@Dosage@pKA\space neg exp def
+			/pKA \psk@Dosage@pKA\space def
+			/pH1 \@nameuse{psk@Dosage@pH1}\space def
+			/KE 1e-14 def
+			/pHmax KE
+			16 CB mul
+			CA VA mul
+			sub
+			16 VA add
+			div
+			div
+			log neg def
+			/pHmin
+			KA KA mul
+			4 CA mul
+			KA mul
+			add
+			sqrt
+			KA sub
+			2
+			div
+			log neg def
+			/calc {/pH ED
+				/H 10 pH neg exp def
+				/V CA VA mul
+				1 H KA div add
+				div
+				VA KE H div H sub mul
+				add
+				CB H add KE H div sub
+				div def} def
+			/pHE 7 pKA 2 div add
+			0.5 CA CB mul CA CB add div log mul add def
+			/VE CA VA mul CB div def
+			/VE VE 100 mul round 100 div def
+			/pHE pHE 100 mul round 100 div def
+			\Tangentes
+			VE pHE){E}%
+			\psclip{\psframe[linestyle=none](\Vbmax,14)}%
+			\parametricplot[style=\psk@Dosage@pHstyle]{pHmin}{\myphmax}{%
+				t calc
+				V t
+			}
+			\ifPst@dpH
+				\parametricplot[style=\psk@Dosage@dpHstyle,plotpoints=400,yunit=\psk@Dosage@dpHunit]{pHmin}{\myphmax}{%
+					t calc
+					/V1 V def
+					%
+					t dt add calc
+					/V2 V def
+					V1 dt V2 V1 sub div
+				}
+			\fi
+			\ifPst@tangentes
+				{\psset{style=\psk@Dosage@tangentesstyle}
+				\psline(!  v11 ph11)(! v12 ph12)
+				\psline(!  v21 ph21)(! v22 ph22)
+				\psline(!  vE1 phE1)(! vE2 phE2)
+				\psdot(!V1 pH1)
+				\psdot(!V2 pH2)}%
+			\fi
+			\endpsclip
+			\ifPst@Equivalence
+				\ifPst@values
+					\uput[-45](E){\pnode(! \Valeurs
+						[/VE= VE /mL /, /pHE= pHE]
+						AfficheValeurs 0 0){AA}}
+				\fi
+				\psdot(E)
+				\uput[180](E){E}
+			\fi
+			%\endpspicture
+		}}
+%%%%%%%% dosage d'une base faible par un acide fort%%%%%%%%%%%%
+\def\dosageBfAF{\@ifnextchar[{\pst@dosageBfAF}{\pst@dosageBfAF[]}}
+\def\pst@dosageBfAF[#1]{{%
+			\psset{#1}%
+			%\pspicture(16,15)
+			\graphpaper
+			\uput[-90](\Vbmax,0){$\SI[parse-numbers=false]{V_A}{mL}$}
+			\ifPst@dpH
+				\psline[linecolor=black]{->}(16,0)(16,14)
+				\uput[0](\Vbmax,14){$\displaystyle\dv{\pH}{V_A}$}
+				% \uput[0](16,14){\Cadre{\sf\white $\displaystyle\mathsf{\frac{dpH}{dV_A}}$}}
+			\fi
+			\pnode(!%
+			/CA \psk@Dosage@ConcentrationAcide\space def
+			/CB \psk@Dosage@ConcentrationBase\space def
+			/VB \psk@Dosage@VolumeBase\space def
+			/KB 10 \psk@Dosage@pKB\space neg exp def
+			/pKB \psk@Dosage@pKB\space def
+			/pH1 \@nameuse{psk@Dosage@pH1}\space def
+			/KE 1e-14 def
+			/pHmax 14
+			pKB CB log  sub 2 div sub def
+			/pHmin
+			CA 16 mul
+			CB VB mul
+			sub
+			16 VB add
+			div
+			log neg def
+			/pHE 7 0.5 pKB mul sub 0.5 CA CB mul CA CB add div log mul sub def
+			/VE CB VB mul CA div def
+			/VE VE 100 mul round 100 div def
+			/pHE pHE 100 mul round 100 div def
+			/calc {/pH ED
+				/H 10 pH neg exp def
+				/O KE H div def
+				/V O VB mul CB VB mul KB mul O KB add div sub KE VB mul O div sub
+				KE O div O sub CA sub
+				div def
+			} def
+			\Tangentes
+			VE pHE){E}%
+			\psclip{\psframe[linestyle=none](16,14)}%
+			\parametricplot[style=\psk@Dosage@pHstyle]{pHmin}{pHmax}{%
+				t calc
+				V t
+			}
+			\ifPst@dpH
+				\parametricplot[style=\psk@Dosage@dpHstyle,plotpoints=400,yunit=\psk@Dosage@dpHunit]{pHmin}{pHmax}{%
+					t calc
+					/V1 V def
+					%
+					t dt add calc
+					/V2 V def
+					V1 dt V2 V1 sub div 14 \psk@Dosage@dpHunit\space div add
+				}
+			\fi
+			\ifPst@tangentes
+				{\psset{style=\psk@Dosage@tangentesstyle}
+				\psline(!  v11 ph11)(! v12 ph12)
+				\psline(!  v21 ph21)(! v22 ph22)
+				\psline(!  vE1 phE1)(! vE2 phE2)
+				\psdot(!V1 pH1)
+				\psdot(!V2 pH2)}%
+			\fi
+			\ifPst@Equivalence
+				\ifPst@values
+					\uput[-45](E){\pnode(! \Valeurs
+						[/VE= VE /mL /, /pHE= pHE]
+						AfficheValeurs 0 0){AA}}
+				\fi
+				\psdot(E)
+				\uput[180](E){E}
+			\fi
+			\endpsclip
+			%\endpspicture%
+		}}
+%%%%%%%% dosage d'un polyacide %%%%%%%%%
+\def\dosagetriacide{\@ifnextchar[{\pst@dosagetriacide}{\pst@dosagetriacide[]}}
+\def\pst@dosagetriacide[#1]{{%
+			\psset{#1}%
+			\graphpaper
+			\uput[-90](\Vbmax,0){$\SI[parse-numbers=false]{V_B}{mL}$}
+			\ifPst@dpH
+				\psline[linecolor=black]{->}(16,0)(16,14)
+				\uput[0](\Vbmax,14){$\displaystyle\dv{\pH}{V_B}$}
+				% \uput[0](16,14){\Cadre{\sf\white $\displaystyle\mathsf{\frac{dpH}{dV_B}}$}}
+			\fi
+			\pnode(!%
+			/CA \psk@Dosage@ConcentrationAcide\space def
+			/CB \psk@Dosage@ConcentrationBase\space def
+			/VB \psk@Dosage@VolumeBase\space def
+			/VA \psk@Dosage@VolumeAcide\space def
+			/KA 10 \psk@Dosage@pKA\space neg exp def
+			/KB 10 \psk@Dosage@pKB\space neg exp def
+			/pKA \psk@Dosage@pKA\space def
+			/pKB \psk@Dosage@pKB\space def
+			/pKA1 \@nameuse{psk@Dosage@pKA1}\space def
+			/pKA2 \@nameuse{psk@Dosage@pKA2}\space def
+			/pKA3 \@nameuse{psk@Dosage@pKA3}\space def
+			/KA1 10 pKA1 neg exp def
+			/KA2 10 pKA2 neg exp def
+			/KA3 10 pKA3 neg exp def
+			/KE 1e-14 def
+			/pHmin
+			KA1 KA1 mul
+			4 CA mul
+			KA1 mul
+			add
+			sqrt
+			KA1 sub
+			2
+			div log neg def
+			/pHmax
+			KE
+			CB 20 mul
+			CA 3 VA mul mul
+			sub
+			20 VA add
+			div
+			div
+			log neg def
+			/calc {/pH ED
+				/H 10 pH neg exp def
+				/vB
+				1
+				KA2 2 mul H div add
+				KA2 KA3 mul 3 mul H H mul div
+				add
+				CA mul
+				H KA1 div 1 add
+				KA2 H div add
+				KA2 KA3 mul H H mul div add
+				div
+				KE H div H sub add
+				H KE H div sub CB add div
+				VA mul def} def
+			/pHE1 0.5 pKA1 pKA2 add
+			1 KA1 CA CB add CA CB mul div mul add log add mul
+			100 mul round 100 div def
+			/VE1 CA VA mul CB div
+			100 mul round 100 div def VE1 pHE1){E1}%
+			\pnode(! /pHE2 0.5 pKA2 pKA3 add
+			1 KE KA3 div 2 CA mul CB add CA CB mul div mul add log sub mul
+			100 mul round 100 div def
+			/VE2 2 CA mul VA mul CB div 100 mul round 100 div def VE2 pHE2){E2}%
+			\psclip{\psframe[linestyle=none](16,14)}%
+			\parametricplot[style=\psk@Dosage@pHstyle]{pHmin}{pHmax}{%
+				t calc
+				vB t
+			}
+			\ifPst@dpH
+				\parametricplot[style=\psk@Dosage@dpHstyle,plotpoints=400,yunit=\psk@Dosage@dpHunit]{pHmin}{pHmax}{%
+					t calc
+					/V1 vB def
+					%
+					t dt add calc
+					/V2 vB def
+					V1 dt V2 V1 sub div
+				}
+			\fi
+			\ifPst@Equivalence
+				\ifPst@values
+					\uput[-45](E1){\pnode(! \Valeurs
+						[/VE1= VE1 /mL /, /pHE1= pHE1]
+						AfficheValeurs 0 0){AA}}
+					\uput[-45](E2){\pnode(! \Valeurs
+						[/VE2= VE2 /mL /, /pHE2= pHE2]
+						AfficheValeurs 0 0){AA}}
+				\fi
+				\psdot(E1)
+				\uput[180](E1){E1}
+				\psdot(E2)
+				\uput[180](E2){E2}
+			\fi
+			\endpsclip
+			%\endpspicture
+		}}
+\catcode`\@=\PstAtCode\relax
+\endinput
