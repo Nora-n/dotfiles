@@ -1871,6 +1871,50 @@ return {
     snippetType = "autosnippet",
     dscr = "Expands 'chg' into '\\charge'",
   }, fmta("\\charge{<>}{<>}", { i(1), d(2, get_visual) })),
+  s({
+    trig = "nno",
+    snippetType = "autosnippet",
+    dscr = "Expands 'nno' into '\\no'",
+  }, {
+    c(1, {
+      fmta("\\no{<>}", { d(1, get_visual) }),
+      fmta("\\no <>", { i(0) }),
+    }),
+  }),
+  s({
+    trig = "Rmn",
+    snippetType = "autosnippet",
+    dscr = "Expands 'Rmn' into '\\Roman'",
+  }, fmta("\\myRoman{<>}", { d(1, get_visual) })),
+  -- état physique
+  s({
+    trig = "aqu",
+    snippetType = "autosnippet",
+    wordTrig = false,
+    dscr = "Expands 'aqu' into '_{\\rm (aq)}'",
+    condition = tex_utils.in_mathzone,
+  }, fmta("_{\\rm(aq)}<>", { i(0) })),
+  s({
+    trig = "liq",
+    snippetType = "autosnippet",
+    wordTrig = false,
+    dscr = "Expands 'liq' into '_{\\rm (liq)}'",
+    condition = tex_utils.in_mathzone,
+  }, fmta("_{\\rm(l)}<>", { i(0) })),
+  s({
+    trig = "gaz",
+    snippetType = "autosnippet",
+    wordTrig = false,
+    dscr = "Expands 'gaz' into '_{\\rm (gaz)}'",
+    condition = tex_utils.in_mathzone,
+  }, fmta("_{\\rm(g)}<>", { i(0) })),
+  s({
+    trig = "sol",
+    snippetType = "autosnippet",
+    wordTrig = false,
+    dscr = "Expands 'sol' into '_{\\rm (sol)}'",
+    condition = tex_utils.in_mathzone,
+  }, fmta("_{\\rm(s)}<>", { i(0) })),
   -- tabav
   s(
     {
@@ -3222,6 +3266,21 @@ return {
       ),
       fmta(
         [[
+      \begin{tcb}(<>)<<<>>>{<>}
+          <>
+      \end{tcb}
+      <>
+      ]],
+        {
+          i(1, "prop"),
+          i(2, "lftt"),
+          i(3),
+          d(4, get_visual),
+          i(0),
+        }
+      ),
+      fmta(
+        [[
       \begin{tcb}[<>](<>)<><>{<>}
           <>
       \end{tcb}
@@ -3290,6 +3349,56 @@ return {
           c(4, { t(""), fmta('"<>"', { i(1, "bulb") }) }),
           i(5),
           d(6, get_visual),
+          i(0),
+        }
+      ),
+    }),
+  }),
+  -- transition
+  s({
+    trig = "itc",
+    snippetType = "autosnippet",
+    dscr = "A itc environment",
+    condition = line_begin,
+  }, {
+    c(1, {
+      fmta(
+        [[
+          \begin{tcb}(<>)<<itc>>{<>}
+            <>
+          \end{tcb}
+          <>
+          ]],
+        {
+          i(1, "prop"),
+          i(2),
+          d(3, get_visual),
+          i(0),
+        }
+      ),
+      fmta(
+        [[
+          \begin{tcb}*(expe)<<itc>>"<>"{<>}
+            <>
+          \end{tcb}
+          <>
+          ]],
+        {
+          i(1, "mate"),
+          i(2),
+          d(3, get_visual),
+          i(0),
+        }
+      ),
+      fmta(
+        [[
+          \begin{tcb}*(expe)<<itc>>"trans"{Transition}
+            <>
+          \end{tcb}
+          <>
+          ]],
+        {
+          d(1, get_visual),
           i(0),
         }
       ),

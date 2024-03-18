@@ -640,8 +640,23 @@
 \newcommand*\th{\theta}
 \def\T{\Theta} \def\tp{\dot{\th}} \def\tpp{\ddot{\th}}
 
+% subscript
 \let\sup\relax
 \newcommand*{\sup}[1]{^{\text{#1}}}   % exposant textuel en mode math
+
+% nombre d'oxydation
+\let\no\relax
+\NewDocumentCommand{\no}{g}{%
+  \IfValueTF{#1}{%
+    \text{n.o.}(\ce{#1})%
+  }{%
+    \text{n.o.}%
+  }
+}
+
+% for roman numbers
+\RequirePackage{modroman}
+\newcommand{\myRoman}[1]{\text{\nbRoman{#1}}}
 
 % left text in align !!
 % https://tex.stackexchange.com/a/61369/284518
@@ -1573,7 +1588,6 @@ literate         = {á}{{\'a}}1
 \colorlet{rappback}{BlueViolet!10}
 \colorlet{defiback}{green!10}
 \colorlet{databack}{green!10}
-\colorlet{toolback}{green!10}
 \colorlet{notaback}{green!10}
 \colorlet{rorback}{orange!10}
 \colorlet{exemback}{lightgray!10}
@@ -1600,7 +1614,6 @@ literate         = {á}{{\'a}}1
 \colorlet{rappbacktitle}{BlueViolet!30}
 \colorlet{defibacktitle}{green!10}
 \colorlet{databacktitle}{green!10}
-\colorlet{toolbacktitle}{green!10}
 \colorlet{notabacktitle}{green!10}
 \colorlet{rorbacktitle}{orange!30}
 \colorlet{exembacktitle}{lightgray!50}
