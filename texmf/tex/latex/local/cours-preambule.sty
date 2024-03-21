@@ -1248,6 +1248,13 @@ literate         = {á}{{\'a}}1
 		#1
 	}{}
 }
+\newcommand{\corrigeBonus}[1]{
+  \iftoggle{corrigeEtendu}{%
+    \textbf{Pour aller plus loin~:}
+    \smallbreak
+    #1
+  }{}
+}
 \newcommand{\enonce}[2][]{
 	\iftoggle{corrige}{
 		\iftoggle{student}{
