@@ -34,6 +34,8 @@
 \newcommand{\cmark}{\ding{51}}%
 \newcommand{\xmark}{\ding{55}}%
 \newcommand{\hand}{\ding{45}}%
+% Shadowbox
+\RequirePackage{fancybox}
 % Knuth and danger \dbend
 % \RequirePackage{manfnt}
 % Selfmade with skalerel
@@ -381,7 +383,7 @@
 }
 
 \newenvironment{boxes}{
-	\headline{Résultats phares}
+	\headline{\large L'essentiel du cours}
 	\vspace*{-20pt}%
 }
 {
@@ -494,6 +496,7 @@
 	backref=page,           % Add link to go back to section
 	colorlinks=true,        % false: boxed links; true: colored links
 	linkcolor=dgreen,       % color of internal links
+	% linkcolor=brandeisblue, % color of internal links
 	citecolor=magenta,      % color of links to bibliography
 	urlcolor=urlcolor,      % color of external links
 	pdfencoding=auto,       % http://tex.stackexchange.com/questions/119079
@@ -505,13 +508,13 @@
 % star version of eqref for no hyperlink
 % https://tex.stackexchange.com/a/126774
 % fails without a star… weird
-\let\oldeqref\eqref
-\makeatletter
-\RenewDocumentCommand\eqref{sm}{%
-	\IfBooleanTF{#1}%
-	{\textup{(\ref*{#2})}}% If a star is seen
-	{\oldeqref{#2}}%                 If no star is seen
-}
+% \let\oldeqref\eqref
+% \makeatletter
+% \RenewDocumentCommand\eqref{sm}{%
+% 	\IfBooleanTF{#1}%
+% 	{\textup{(\ref*{#2})}}% If a star is seen
+% 	{\oldeqref{#2}}%                 If no star is seen
+% }
 \makeatother
 \def\UrlBreaks{\do\/\do-}
 % Add an upward arrow next to backref,
@@ -571,6 +574,13 @@
 \newcommand*\icircled[1]{%
 	\tikz[baseline=(char.base)]{%
 		\node[shape=circle, draw, inner sep=1pt, minimum size=3ex] (char) {#1};
+	}\kern-3pt
+}
+% rounded for checkbox
+\newcommand*\rcheck{%
+	\tikz[baseline=(char.base)]{%
+    \node[rectangle, draw, rounded corners=3, inner sep=1pt, line width=.7pt]
+    (char) {\small\wht{$\square$}};
 	}\kern-3pt
 }
 
@@ -930,8 +940,8 @@ literate         = {á}{{\'a}}1
 \setlist[enumerate,3]{leftmargin=30pt, label=\roman*.}
 % \setlist[itemize,1]{leftmargin=10pt}
 % \setlist[itemize,2]{leftmargin=20pt}
-\setlist[itemize,1]{label=$\diamond$, leftmargin=10pt}
-\setlist[itemize,2]{label=$\triangleright$, leftmargin=20pt}
+\setlist[itemize,1]{label=$\scaleto{\diamond}{7pt}$, leftmargin=10pt}
+\setlist[itemize,2]{label=$\scaleto{\triangleright}{7pt}$, leftmargin=20pt}
 \setlist[itemize,3]{leftmargin=30pt}
 
 % Setup special items
@@ -964,6 +974,7 @@ literate         = {á}{{\'a}}1
 % Setup points left of enumerate
 \RequirePackage{tabto}
 \newcommand\gpts[1]{\tabto*{-2\leftmargin}\textcolor{ForestGreen}{\llap{/#1~}\tabto{\TabPrevPos}}}
+\newcommand\bpts[1]{\tabto*{-2\leftmargin}\textcolor{brandeisblue}{\llap{/#1~}\tabto{\TabPrevPos}}}
 \newcommand\rpts[1]{\tabto*{-2.5\leftmargin}\textcolor{Red}{\llap{/#1~}\tabto{\TabPrevPos}}}
 \newcommand{\nitem}[1]{\item\gpts{#1}\/}
 % Left anything from item
@@ -1790,7 +1801,9 @@ base,
 #4={#3}{\csname name#3\endcsname~\expandafter\csname the#3\endcsname~:~#7},
 step={#3},
 add to list={#3}{section},
-list entry={\csname name#3\endcsname~\expandafter\csname the#3\endcsname~:~#7},
+list entry={\hspace{-15pt}\protect\rcheck~
+% \csname name#3\endcsname~\expandafter\csname the#3\endcsname~:~
+#7},
 #2,
 }
 
