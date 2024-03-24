@@ -1746,7 +1746,8 @@ literate         = {á}{{\'a}}1
 \newcommand{\icondemo}{\faIcon{list-ul}}
 \newcommand{\iconprev}{\faIcon{list-ul}}
 \newcommand{\iconcoro}{\faIcon{code-branch}}
-\newcommand{\iconinte}{\faIcon{angle-right}}
+\newcommand{\iconinte}{\faIcon[regular]{lightbulb}}
+% \newcommand{\iconinte}{\faIcon{angle-right}}
 \newcommand{\iconimpl}{\faIcon{angle-double-right}}
 \newcommand{\iconlimp}{\faIcon{angle-double-left}}
 \newcommand{\iconimpo}{\faIcon{exclamation-triangle}}
@@ -1756,6 +1757,7 @@ literate         = {á}{{\'a}}1
 \newcommand{\icondata}{\faIcon{database}}
 \newcommand{\iconnota}{\faIcon{pencil-alt}}
 \newcommand{\iconror}{\includegraphics[scale=.15]{\PREPA/figures_generales/heart.jpg}}
+\newcommand{\iconhart}{\faIcon{heart}}
 \newcommand{\icontrans}{
 	\includegraphics[angle=-90, origin=c, height=0.5cm]{\PREPA/figures_generales/pr.jpg}
 }
@@ -1783,6 +1785,8 @@ literate         = {á}{{\'a}}1
 \newcommand{\icondivi}{\faIcon{divide}}
 \newcommand{\iconleft}{\faIcon{angle-left}}
 \newcommand{\iconrigt}{\faIcon{angle-right}}
+\newcommand{\iconsomm}{\faIcon{book-open}}
+\newcommand{\iconchek}{\faIcon{check}}
 
 % My generic box name
 % based on the great answer https://tex.stackexchange.com/a/471615/284518
@@ -1801,7 +1805,7 @@ base,
 #4={#3}{\csname name#3\endcsname~\expandafter\csname the#3\endcsname~:~#7},
 step={#3},
 add to list={#3}{section},
-list entry={\hspace{-15pt}\protect\rcheck~
+list entry={\hspace*{-20pt}\protect\rcheck~
 % \csname name#3\endcsname~\expandafter\csname the#3\endcsname~:~
 #7},
 #2,
@@ -1828,6 +1832,17 @@ list entry={\hspace{-15pt}\protect\rcheck~
 			fonttitle=\bfseries, top=10pt,
 			attach boxed title to top left={yshift={-9pt}, xshift=10pt},
 			% boxed title style={enhanced, frame hidden, colback=white},
+			boxed title style={enhanced, colframe=#1, colback=#1back, sharp corners},
+			title={#2},
+		}
+}
+% center
+\tcbset{
+	ctc/.style 2 args={
+			boxrule=0pt, frame hidden, interior hidden,
+			borderline north={1pt}{0pt}{#1}, coltitle=#1,
+			fonttitle=\bfseries, top=10pt,
+			attach boxed title to top center={yshift=-2mm},
 			boxed title style={enhanced, colframe=#1, colback=#1back, sharp corners},
 			title={#2},
 		}

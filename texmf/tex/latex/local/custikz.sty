@@ -439,6 +439,14 @@ pics/strange bar/.style={code={\draw[thick] (-#1,0) -- (#1,0);}}
 		}
 }
 
+% Any node
+\tikzset{
+	mynode/.style n args={3}{
+			postaction=decorate,
+			decoration={
+					markings,
+					mark={at position #1 with \node[#2]{#3};}}}}
+
 \tikzset{
 	fleche/.style n args={2}{
 			postaction=decorate,

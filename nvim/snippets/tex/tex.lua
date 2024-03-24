@@ -3267,7 +3267,7 @@ return {
       fmta(
         [[
       \begin{tcb}(<>)<<<>>>{<>}
-          <>
+        <>
       \end{tcb}
       <>
       ]],
@@ -3282,7 +3282,7 @@ return {
       fmta(
         [[
       \begin{tcb}[<>](<>)<><>{<>}
-          <>
+        <>
       \end{tcb}
       <>
     ]],
