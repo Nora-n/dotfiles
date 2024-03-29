@@ -1159,10 +1159,11 @@ literate         = {á}{{\'a}}1
 }
 
 % Make QR like BPEP
-\newlist{blocQR}{enumerate}{2}
+\newlist{blocQR}{enumerate}{3}
 \setlist[blocQR]{resume}
 \setlist[blocQR,1]{leftmargin=10pt, label=\arabic*)}
 \setlist[blocQR,2]{leftmargin=20pt, label=\alph* --}
+\setlist[blocQR,3]{leftmargin=10pt, label=\roman*.}
 \newcommand{\resetQ}{\restartlist{blocQR}}
 
 % Allow for compilation of enon, solu_stud and solu_prof in one go?
@@ -1286,9 +1287,72 @@ literate         = {á}{{\'a}}1
 \newcommand{\niveauUn}{($\star$)}
 \newcommand{\niveauDeux}{($\star \star$)}
 \newcommand{\niveauTrois}{($\star \star \star$)}
-\newcommand{\str}{\makebox(15,6){$\mqty(\star)$}}
-\newcommand{\strr}{\makebox(15,6){$\mqty(\star\\[-4pt]\star)$}}
-\newcommand{\strrr}{\makebox(15,6){$\mqty(\star\\[-4pt]\star\\[-4pt]\star)$}}
+
+\usetikzlibrary{shapes,
+	shapes.misc,
+	shapes.geometric}
+
+\newcommand*\str{%
+  \tikz[scale=.8, baseline={([yshift=-.8ex]current bounding box.center)}]{%
+		\node[star,
+			star point height=2.2pt,
+			minimum size=7.92pt,
+			inner sep=0,
+			draw, fill,] (s) {};
+      \node[circle,
+      inner sep=4.5pt,
+      draw, thick] (c) {};
+	}%
+}
+\newcommand*\strr{%
+  \tikz[scale=.8, baseline={([yshift=-.8ex]current bounding box.center)}]{%
+	\def\xoff{3.5pt}
+	\def\sscale{.55}
+	\node [star,
+		star point height=2.2pt,
+		minimum size=7.92pt,
+		inner sep=0,
+		draw, fill,
+    scale=\sscale] (sl)
+	at (30:\xoff) {};
+	\node [star,
+		star point height=2.2pt,
+		minimum size=7.92pt,
+		inner sep=0,
+		draw, fill, scale=\sscale] (sr)
+	at (210:\xoff) {};
+      \node[circle,
+      inner sep=4.5pt,
+      draw, thick] (c) {};
+	}%
+}
+\newcommand*\strrr{%
+  \tikz[scale=.8, baseline={([yshift=-.8ex]current bounding box.center)}]{%
+	\def\xoff{3.5pt}
+	\def\sscale{.55}
+	\node [star,
+		star point height=2.2pt,
+		minimum size=7.92pt,
+		inner sep=0,
+		draw, fill, scale=\sscale] (sa)
+	at (90:\xoff) {};
+	\node [star,
+		star point height=2.2pt,
+		minimum size=7.92pt,
+		inner sep=0,
+		draw, fill, scale=\sscale] (sb)
+	at (210:\xoff) {};
+	\node [star,
+		star point height=2.2pt,
+		minimum size=7.92pt,
+		inner sep=0,
+		draw, fill, scale=\sscale] (sc)
+	at (-30:\xoff) {};
+      \node[circle,
+      inner sep=4.5pt,
+      draw, thick] (c) {};
+	}%
+}
 
 % Thicker hrulefill
 \makeatletter
