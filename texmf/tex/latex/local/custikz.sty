@@ -454,17 +454,6 @@ pics/strange bar/.style={code={\draw[thick] (-#1,0) -- (#1,0);}}
 					markings,
 					mark={at position #1 with \node[#2]{#3};}}}}
 
-\tikzset{
-	fleche/.style 2 args={
-			postaction=decorate,
-			decoration={
-					markings,
-					mark=at position #1 with {\arrow[scale=#2]{stealth}}
-				}
-		},
-	fleche/.default={0.5}{1}
-}
-
 \tikzset{%
 	flch/.style={%
 			/utils/exec=\tikzset{flch arrow/.cd,#1},
