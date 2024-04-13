@@ -56,8 +56,10 @@ set notification-error-fg "#151515" #00
 set notification-warning-bg "#AC4142" #08
 set notification-warning-fg "#151515" #00
 
-set highlight-color "#F4BF75" #0A
-set highlight-active-color "#6A9FB5" #0D
+# set highlight-color "#F4BF75" #0A
+# set highlight-active-color "#6A9FB5" #0D
+set highlight-color"rgba(136,192,208,0.5)"
+set highlight-active-color"rgba(236,239,244,0.5)"
 
 set completion-highlight-fg "#151515" #02
 set completion-highlight-bg "#90A959" #0C
@@ -71,7 +73,7 @@ set notification-fg "#151515" #00
 set recolor "true"
 # set recolor-lightcolor "#000000" #00
 # set recolor-darkcolor "#E0E0E0" #06
-#
+
 set recolor-lightcolor "#1f2329" #00
 set recolor-darkcolor  "#9ea6b5" #06
 set recolor-reverse-video "true"

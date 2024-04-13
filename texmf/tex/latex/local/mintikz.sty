@@ -120,5 +120,13 @@
 \newcommand{\gre}[1]{\textcolor{LimeGreen}{#1}}
 \newcommand{\ora}[1]{\textcolor{orange}{#1}}
 
+% Points in figures
+\newcommand*\circled[1]{%
+	\tikz[baseline=(char.base)]{%
+		\node[shape=circle, draw, inner sep=1pt] (char) {#1};
+	}%
+}
+\newcommand{\pt}[1]{{\color{ForestGreen}\circled{#1}}}
+
 %%% Fin du package
 \endinput

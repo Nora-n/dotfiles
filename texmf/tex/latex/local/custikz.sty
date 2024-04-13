@@ -5,7 +5,7 @@
 \RequirePackage{tikz}
 \usetikzlibrary{arrows, arrows.meta}
 \usetikzlibrary{angles, bending, calc, fadings, intersections,
-	patterns, positioning, plotmarks, quotes, trees,
+	patterns, patterns.meta, positioning, plotmarks, quotes, trees,
 	backgrounds, matrix, math}
 \usetikzlibrary{shapes,
 	shapes.misc,
@@ -297,22 +297,29 @@ pics/strange bar/.style={code={\draw[thick] (-#1,0) -- (#1,0);}}
 
 % Hatching distance from https://tex.stackexchange.com/a/29367/1952
 \makeatletter
-\tikzset{% customization of pattern
-	hatch distance/.store in=\hatchdistance,
-	hatch distance=5pt,
-	hatch thickness/.store in=\hatchthickness,
-	hatch thickness=5pt
+\pgfdeclarepattern{
+	name=flexible hatch,
+	parameters={\hatchdistance,\hatchthickness,\hatchangle},
+	bottom left={\pgfpointorigin},
+	top right={\pgfpoint{\hatchdistance}{\hatchdistance}},
+	tile size={\pgfpoint{\hatchdistance}{\hatchdistance}},
+	tile transformation={\pgftransformrotate{\hatchangle}},
+	code={
+			\begin{pgfscope}
+				\pgfsetlinewidth{\hatchthickness}
+				\pgfpathmoveto{\pgfpoint{0}{\hatchdistance/2}}
+				\pgfpathlineto{\pgfpoint{\hatchdistance}{\hatchdistance/2}}
+				\pgfusepath{stroke}
+			\end{pgfscope}
+		}
 }
-\pgfdeclarepatternformonly[\hatchdistance,\hatchthickness]{north east hatch}% name
-{\pgfqpoint{-1pt}{-1pt}}% below left
-{\pgfqpoint{\hatchdistance}{\hatchdistance}}% above right
-{\pgfpoint{\hatchdistance-1pt}{\hatchdistance-1pt}}%
-{
-	\pgfsetcolor{\tikz@pattern@color}
-	\pgfsetlinewidth{\hatchthickness}
-	\pgfpathmoveto{\pgfqpoint{0pt}{0pt}}
-	\pgfpathlineto{\pgfqpoint{\hatchdistance}{\hatchdistance}}
-	\pgfusepath{stroke}
+\tikzset{
+	hatch distance/.store in=\hatchdistance,
+	hatch distance=6pt,
+	hatch thickness/.store in=\hatchthickness,
+	hatch thickness=3pt,
+	hatch angle/.store in=\hatchangle,
+	hatch angle=45,
 }
 \makeatother
 
@@ -448,12 +455,37 @@ pics/strange bar/.style={code={\draw[thick] (-#1,0) -- (#1,0);}}
 					mark={at position #1 with \node[#2]{#3};}}}}
 
 \tikzset{
-	fleche/.style n args={2}{
+	fleche/.style 2 args={
 			postaction=decorate,
 			decoration={
 					markings,
-					mark={at position #1 with \arrow[scale=1.5, >=stealth]{#2}}}}}
+					mark=at position #1 with {\arrow[scale=#2]{stealth}}
+				}
+		},
+	fleche/.default={0.5}{1}
+}
 
+\tikzset{%
+	flch/.style={%
+			/utils/exec=\tikzset{flch arrow/.cd,#1},
+			decoration={markings,
+					mark= at position \pgfkeysvalueof{/tikz/flch arrow/pos} with
+						{\arrow{\pgfkeysvalueof{/tikz/flch arrow/type}[%
+									% length=\pgfkeysvalueof{/tikz/flch arrow/length},%
+									% width=\pgfkeysvalueof{/tikz/flch arrow/width},%
+									scale=\pgfkeysvalueof{/tikz/flch arrow/scale}%
+								]}}},
+			postaction={decorate}
+		},
+	flch/.default={pos=0.5},
+	flch arrow/.is family,
+	flch arrow/.cd,
+	pos/.initial=0.5,
+	% length/.initial=2.5mm,
+	% width/.initial=2mm,
+	scale/.initial=1,
+	type/.initial=Stealth,
+}
 %simple flèche
 \tikzstyle simplef=[postaction={decorate,
 		decoration={markings,
@@ -530,6 +562,21 @@ pics/strange bar/.style={code={\draw[thick] (-#1,0) -- (#1,0);}}
 
 \newcommand{\sVrot}[1]{
 	\ctikzset{sources/symbol/rotate=#1}
+}
+
+% For thermo
+\colorlet{adia}{BlueViolet!70!black} % Adiabatique : purple
+\colorlet{isoT}{green!60!black} % Isotherme : green
+\colorlet{isoP}{red!80!black} % IsoP : red
+\colorlet{isoV}{blue!80!black} % IsoV : blue
+
+\newcommand{\xtick}[2]{
+	\draw[thick]
+	(#1)++(0,.1) --++ (0,-.2) node[below=-.5pt,scale=0.9] {#2};
+}
+\newcommand{\ytick}[2]{
+	\draw[thick]
+	(#1)++(.1,0) --++ (-.2,0) node[left=-.5pt,scale=0.9] {#2};
 }
 
 %%% Fin du package

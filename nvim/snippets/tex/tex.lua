@@ -1220,14 +1220,14 @@ return {
     snippetType = "autosnippet",
     condition = tex_utils.in_mathzone,
   }, fmta("_{\\mathrm{<>}}", { d(1, get_visual) })),
-  s({
-    trig = "ext",
-    wordTrig = false,
-    snippetType = "autosnippet",
-    condition = tex_utils.in_mathzone,
-  }, {
-    t("\\ext"),
-  }),
+  -- s({
+  --   trig = "ext",
+  --   wordTrig = false,
+  --   snippetType = "autosnippet",
+  --   condition = tex_utils.in_mathzone,
+  -- }, {
+  --   t("\\ext"),
+  -- }),
   s({
     trig = "sex",
     wordTrig = false,
@@ -1893,28 +1893,28 @@ return {
     wordTrig = false,
     dscr = "Expands 'aqu' into '_{\\rm (aq)}'",
     condition = tex_utils.in_mathzone,
-  }, fmta("_{\\rm(aq)}<>", { i(0) })),
+  }, fmta("_{\\aqu}<>", { i(0) })),
   s({
     trig = "liq",
     snippetType = "autosnippet",
     wordTrig = false,
     dscr = "Expands 'liq' into '_{\\rm (liq)}'",
     condition = tex_utils.in_mathzone,
-  }, fmta("_{\\rm(l)}<>", { i(0) })),
+  }, fmta("_{\\liq}<>", { i(0) })),
   s({
     trig = "gaz",
     snippetType = "autosnippet",
     wordTrig = false,
     dscr = "Expands 'gaz' into '_{\\rm (gaz)}'",
     condition = tex_utils.in_mathzone,
-  }, fmta("_{\\rm(g)}<>", { i(0) })),
+  }, fmta("_{\\gaz}<>", { i(0) })),
   s({
     trig = "sol",
     snippetType = "autosnippet",
     wordTrig = false,
     dscr = "Expands 'sol' into '_{\\rm (sol)}'",
     condition = tex_utils.in_mathzone,
-  }, fmta("_{\\rm(s)}<>", { i(0) })),
+  }, fmta("_{\\sol}<>", { i(0) })),
   -- tabav
   s(
     {
@@ -2480,11 +2480,11 @@ return {
     dscr = "Expands 'ptt' into '\\pt{<>}'",
   }, fmta("\\pt{<>}", { i(1, "1") })),
   -- litem generic but mostly for point
-  s({
-    trig = "ltm",
-    snippetType = "autosnippet",
-    dscr = "Expands 'ltm' into '\\lit{<>}{<>}'",
-  }, fmta("\\ltm{<>}{<>}", { i(1, "20pt"), i(2) })),
+  -- s({
+  --   trig = "ltm",
+  --   snippetType = "autosnippet",
+  --   dscr = "Expands 'ltm' into '\\lit{<>}{<>}'",
+  -- }, fmta("\\ltm{<>}{<>}", { i(1, "20pt"), i(2) })),
   -- align
   s({
     trig = "alg",
@@ -3298,6 +3298,62 @@ return {
       ),
     }),
   }),
+  -- without number
+  s({
+    trig = "tcn",
+    snippetType = "autosnippet",
+    dscr = "A tcb environment",
+    condition = line_begin,
+  }, {
+    c(1, {
+      fmta(
+        [[
+          \begin{tcn}(<>){<>}
+            <>
+          \end{tcn}
+          <>
+          ]],
+        {
+          i(1, "prop"),
+          i(2),
+          d(3, get_visual),
+          i(0),
+        }
+      ),
+      fmta(
+        [[
+      \begin{tcn}(<>)<<<>>>{<>}
+        <>
+      \end{tcn}
+      <>
+      ]],
+        {
+          i(1, "prop"),
+          i(2, "lftt"),
+          i(3),
+          d(4, get_visual),
+          i(0),
+        }
+      ),
+      fmta(
+        [[
+      \begin{tcn}[<>](<>)<><>{<>}
+        <>
+      \end{tcn}
+      <>
+    ]],
+        {
+          i(1, "sidebyside"),
+          i(2, "prop"),
+          c(3, { t(""), fmt("<{}>", { i(1, "lft") }) }),
+          c(4, { t(""), fmta('"<>"', { i(1, "bulb") }) }),
+          i(5),
+          d(6, get_visual),
+          i(0),
+        }
+      ),
+    }),
+  }),
   -- with star
   s({
     trig = "tcs",
@@ -3356,7 +3412,7 @@ return {
   }),
   -- transition
   s({
-    trig = "itc",
+    trig = "tci",
     snippetType = "autosnippet",
     dscr = "A itc environment",
     condition = line_begin,
@@ -3626,10 +3682,10 @@ return {
   }, {
     c(1, {
       fmta("\\item <>", { d(1, get_visual) }),
-      fmta("\\bitem{<>}", { d(1, get_visual) }),
-      fmta("\\nitem{<>}", { d(1, get_visual) }),
-      fmta("\\clitem[<>] <>", { i(1), i(2) }),
-      fmta("\\sqitem[<>] <>", { i(1), i(2) }),
+      fmta("\\item[b]{<>}", { d(1, get_visual) }),
+      fmta("\\item[n]{<>}", { d(1, get_visual) }),
+      fmta("\\item[cl]{<>} <>", { i(1), i(2) }),
+      fmta("\\item[sq]{<>} <>", { i(1), i(2) }),
       fmta("\\item[<>]", { d(1, get_visual) }),
     }),
   }),
@@ -3673,10 +3729,10 @@ return {
         }),
         c(2, {
           fmta("\\item <>", { d(1, get_visual) }),
-          fmta("\\bitem{<>}", { d(1, get_visual) }),
-          fmta("\\nitem{<>}", { d(1, get_visual) }),
-          fmta("\\clitem[<>] <>", { i(1), i(2) }),
-          fmta("\\sqitem[<>] <>", { i(1), i(2) }),
+          fmta("\\item[b]{<>}", { d(1, get_visual) }),
+          fmta("\\item[n]{<>}", { d(1, get_visual) }),
+          fmta("\\item[cl]{<>} <>", { i(1), i(2) }),
+          fmta("\\item[sq]{<>} <>", { i(1), i(2) }),
           fmta("\\item[<>]", { d(1, get_visual) }),
         }),
         i(0),
@@ -3738,10 +3794,10 @@ return {
         }),
         c(2, {
           fmta("\\item <>", { d(1, get_visual) }),
-          fmta("\\bitem{<>}", { d(1, get_visual) }),
-          fmta("\\nitem{<>}", { d(1, get_visual) }),
-          fmta("\\clitem[<>] <>", { i(1), i(2) }),
-          fmta("\\sqitem[<>] <>", { i(1), i(2) }),
+          fmta("\\item[b]{<>}", { d(1, get_visual) }),
+          fmta("\\item[n]{<>}", { d(1, get_visual) }),
+          fmta("\\item[cl]{<>} <>", { i(1), i(2) }),
+          fmta("\\item[sq]{<>} <>", { i(1), i(2) }),
           fmta("\\item[<>]", { d(1, get_visual) }),
         }),
         i(0),

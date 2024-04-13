@@ -197,8 +197,8 @@
 \newcommand{\xoverbrace}[2][\vphantom{\dfrac{A}{A}}]{\overbrace{#1#2}}
 \newcommand{\xoverbracket}[2][\vphantom{\dfrac{A}{A}}]{\overbracket[1pt]{#1#2}}
 % To print bareme in interro
-% \newcommand{\stck}[3][2]{\stackon[#1 pt]{\rm e}{$\mathclap{\circled{1}}$}}
-\newcommand{\pt}[1]{{\color{\cswitch{ForestGreen}{white!10}}\circled{#1}}}
+\def\ptcol{ForestGreen}
+\newcommand{\pt}[1]{{\color{\cswitch{\ptcol}{white!10}}\circled{#1}}}
 
 \NewDocumentCommand{\stk}{O{2}D(){on}D""{1}m}{%
 \IfEqCase{#2}{%
@@ -417,45 +417,45 @@
 		sharp corners=northwest]{\normalsize\thesubsubsection}
 	\normalsize}{0.5em}{}
 
-\NewDocumentCommand{\ssubsection}{mm}{
-	\renewcommand{\thesubsection}{{\bfseries #1}}
-	\titleformat{\subsection}{\large\bfseries}{\hspace{1cm}
-		\tcbox[colback=darkgray, colframe=darkgray,
-			coltext=lightgray, on line, boxsep=0pt,
-			left=4pt, right=4pt, top=4pt,bottom=4pt,
-			sharp corners=northwest]{\thesubsection}}{0.5em}{}
-	\subsection{#2}
+% Custom section and subsection
+\def\sspace{40}
+\let\oldsection\section
+\RenewDocumentCommand{\section}{ood""m}{%
+	\IfValueTF{#3}{%
+		\IfEqCase{#3}{%
+			{E}{\renewcommand{\thesection}{{\bfseries E\arabic{section}}}}
+				{P}{\renewcommand{\thesection}{{\bfseries P\arabic{section}}}}
+				{1}{\def\ustr{$\scaleto{\str}{15pt}$}}%
+				{2}{\def\ustr{$\scaleto{\strr}{15pt}$}}%
+				{3}{\def\ustr{$\scaleto{\strrr}{15pt}$}}%
+			% {1}{\def\ustr{\str}}%
+			% {2}{\def\ustr{\strr}}%
+			% {3}{\def\ustr{\strrr}}%
+		}%
+	}{}%
+	\IfValueTF{#1}{%
+		\IfEq{#1}{s}{%
+			\IfValueTF{#2}{%
+				\oldsection[#4]{\texorpdfstring{\ltm[#2]{\ustr}#4}{#4}}%
+			}{%
+				\oldsection[#4]{\texorpdfstring{\ltm[\sspace]{\ustr}#4}{#4}}%
+			}%
+		}{%
+			\IfValueTF{#2}{%
+				\oldsection{\texorpdfstring{\ltm[#2]{\textcolor{Red}{/#1}}#4}{#4}}%
+			}{%
+				\oldsection{\texorpdfstring{\ltm[\sspace]{\textcolor{Red}{/#1}}#4}{#4}}%
+			}%
+		}%
+	}{\oldsection{#4}}
 }
 
-\NewDocumentCommand{\exercice}{om}{
-	\renewcommand{\thesection}{{\bfseries E\arabic{section}}}
-	\titleformat{\section}{\Large\bfseries}{
-		\IfNoValueTF{#1}{}{\rpts{#1}}
-		\begin{tikzpicture}[scale=0.55, overlay]
-			\draw[line width=1pt, color=darkgray, xshift=1em, yshift=0.6em]
-			(1,-0.4) -- (1,0.8) --(0.8,1) --
-			(-0.8,1) -- (-1,0.8) -- (-1,-0.8) --
-			(-0.8,-1) -- (32,-1);
-			\node[xshift=0.6em, yshift=0.35em] at (0,0)
-			{\rmfamily\textcolor{darkgray}{\thesection}};
-		\end{tikzpicture}
-	}{0.4em}{\hspace{1.4em}}
-	\section{#2}
-}
-\NewDocumentCommand{\prblm}{om}{
-	\renewcommand{\thesection}{{\bfseries P\arabic{section}}}
-	\titleformat{\section}{\Large\bfseries}{
-		\IfNoValueTF{#1}{}{\rpts{#1}}
-		\begin{tikzpicture}[scale=0.55, overlay]
-			\draw[line width=1pt, color=darkgray, xshift=1em, yshift=0.6em]
-			(1,-0.4) -- (1,0.8) --(0.8,1) --
-			(-0.8,1) -- (-1,0.8) -- (-1,-0.8) --
-			(-0.8,-1) -- (32,-1);
-			\node[xshift=0.6em, yshift=0.35em] at (0,0)
-			{\rmfamily\textcolor{darkgray}{\thesection}};
-		\end{tikzpicture}
-	}{0.4em}{\hspace{1.4em}}
-	\section{#2}
+\let\oldsubsection\subsection
+\RenewDocumentCommand{\subsection}{d()m}{%
+	\IfValueT{#1}{%
+		\renewcommand{\thesubsection}{{\bfseries #1}}%
+	}
+	\oldsubsection{#2}
 }
 
 % Nice epigraph
@@ -480,6 +480,13 @@
 \RequirePackage{minitoc}
 \renewcommand{\mtctitle}{Sommaire}
 \renewcommand{\mlttitle}{Tableaux}
+% silence warnings
+\usepackage{silence}
+\WarningFilter{minitoc(hints)}{W0099}
+\WarningFilter{minitoc(hints)}{W0040}
+\WarningFilter{minitoc(hints)}{W0030}
+\WarningFilter{minitoc(hints)}{W0023}
+\WarningFilter{minitoc(hints)}{W0028}
 % Pour glossaire
 % \RequirePackage{glossaries-extra}
 
@@ -579,8 +586,8 @@
 % rounded for checkbox
 \newcommand*\rcheck{%
 	\tikz[baseline=(char.base)]{%
-    \node[rectangle, draw, rounded corners=3, inner sep=1pt, line width=.7pt]
-    (char) {\small\wht{$\square$}};
+		\node[rectangle, draw, rounded corners=3, inner sep=1pt, line width=.7pt]
+		(char) {\small\wht{$\square$}};
 	}\kern-3pt
 }
 
@@ -657,11 +664,11 @@
 % nombre d'oxydation
 \let\no\relax
 \NewDocumentCommand{\no}{g}{%
-  \IfValueTF{#1}{%
-    \text{n.o.}(\ce{#1})%
-  }{%
-    \text{n.o.}%
-  }
+	\IfValueTF{#1}{%
+		\text{n.o.}(\ce{#1})%
+	}{%
+		\text{n.o.}%
+	}
 }
 
 % for roman numbers
@@ -940,8 +947,10 @@ literate         = {á}{{\'a}}1
 \setlist[enumerate,3]{leftmargin=30pt, label=\roman*.}
 % \setlist[itemize,1]{leftmargin=10pt}
 % \setlist[itemize,2]{leftmargin=20pt}
-\setlist[itemize,1]{label=$\scaleto{\diamond}{7pt}$, leftmargin=10pt}
-\setlist[itemize,2]{label=$\scaleto{\triangleright}{7pt}$, leftmargin=20pt}
+\newcommand{\bdmd}{$\scaleto{\diamond}{7pt}$}
+\setlist[itemize,1]{label=\bdmd, leftmargin=10pt}
+\newcommand{\btrg}{$\scaleto{\triangleright}{7pt}$}
+\setlist[itemize,2]{label=\btrg, leftmargin=20pt}
 \setlist[itemize,3]{leftmargin=30pt}
 
 % Setup special items
@@ -963,33 +972,67 @@ literate         = {á}{{\'a}}1
 }%
 }
 \setlist[enumerate]{before=\setupmodenumerate}
-% Number in squares
+% Auto number in squares
 \newcommand{\sqenumi}{\protect\fbox{\arabic*}}
-\newcommand{\sqitem}{\fitem{\fbox}}
-% Number in circles
+% Auto number in circles
 \newcommand{\clenumi}{\protect\icircled{\arabic*}}
-\newcommand{\clitem}{\fitem{\icircled}}
-% Description with numbers
-\newcommand\bitem[1]{\item{\bfseries #1}}
-% Setup points left of enumerate
-\RequirePackage{tabto}
-\newcommand\gpts[1]{\tabto*{-2\leftmargin}\textcolor{ForestGreen}{\llap{/#1~}\tabto{\TabPrevPos}}}
-\newcommand\bpts[1]{\tabto*{-2\leftmargin}\textcolor{brandeisblue}{\llap{/#1~}\tabto{\TabPrevPos}}}
-\newcommand\rpts[1]{\tabto*{-2.5\leftmargin}\textcolor{Red}{\llap{/#1~}\tabto{\TabPrevPos}}}
-\newcommand{\nitem}[1]{\item\gpts{#1}\/}
-% Left anything from item
-\newcommand\ltm[2]{\tabto*{-#1}\llap{#2~}\tabto{\TabPrevPos}}
-\newcommand{\litem}[2]{\item\ltm{#1}{#2}\/}
-% mathitem to remove space when only equation in item
-% https://tex.stackexchange.com/a/497787
-\newcommand\mitem{\item\leavevmode\vspace*{-\dimexpr\baselineskip+\abovedisplayskip\relax}}
-\newcommand\mnitem[1]{\item\gpts{#1}\leavevmode\vspace*{-\dimexpr\baselineskip+\abovedisplayskip\relax}}
+\newcommand{\clalphi}{\protect\icircled{\Alph*}}
+% New item
+\let\olditem\item % Store \item in \olditem
+\def\lspace{20} % default left space
+\def\mspace{-15}
+\NewDocumentCommand{\ltm}{O{\lspace}m}{%
+	\llap{#2\hspace{#1pt}}%
+}
+\RenewDocumentCommand{\item}{ooD""{1}g}{% Redefine \item to
+\IfValueTF{#1}{% If [<>] after \item
+	\IfEqCase{#1}{% Check the value
+		{l}{% \litem : generic left of item, optional left distance
+				\IfValueTF{#2}{% if second optional value to \item : \item[l][opt]{mand}
+					\olditem\leavevmode\ltm[#2]{#4}%
+				}{% If no second optional value : \item[l]{mand}, do nothing with #2
+					\olditem\leavevmode\ltm{#4}%
+				}%
+			}%
+			{n}{% \nitem : left item /nb in green for points
+				\IfValueTF{#2}{% if second optional value to \item : \item[l][opt]{mand}
+					\olditem\leavevmode\ltm[#2]{\textcolor{ForestGreen}{/#4}}%
+				}{% If no second optional value : \item[l]{mand}, do nothing with #2
+					\olditem\leavevmode\ltm{\textcolor{ForestGreen}{/#4}}%
+				}%
+			}%
+			{m}{% \mitem : remove vertical math space
+				\IfValueTF{#2}{%
+					\olditem\leavevmode\vspace*{-#2pt}\relax
+				}{%
+					\olditem\leavevmode\vspace*{\mspace pt}\relax
+				}%
+			}%
+			{b}{% \bitem
+				\olditem\leavevmode\textbf{#4}
+			}%
+			{s}{% \litem for difficulty stars
+				\IfValueTF{#2}{%
+					\olditem\leavevmode\ltm[#2]{\strs{#3}}%
+				}{%
+					\olditem\leavevmode\ltm{\strs{#3}}%
+				}%
+			}%
+			{cl}{% \clitem for circled
+				\fitem{\icircled}
+			}%
+			{sq}{% \sqitem for fbox
+				\fitem{\fbox}
+			}%
+	}%
+}{\olditem}
+}
 
 % Bolditemize
 % https://tex.stackexchange.com/a/266229
-\newenvironment{bolditemize}{\begin{itemize} }{\end{itemize}}
-\expandafter\def\expandafter\bolditemize\expandafter{%
-	\bolditemize \let\olditem\item \def\item[##1]{\olditem \textbf{##1}}}
+% \newenvironment{bolditemize}{\begin{itemize} }{\end{itemize}}
+% \expandafter\def\expandafter\bolditemize\expandafter{%
+% 	\bolditemize \let\olditem\item \def\item[##1]{\olditem \textbf{##1}}}
 
 % \newcommand{\ed}[2]{#1\endnote{\textcolor{black}{#1} : #2}}
 \newcommand{\obar}[1]{\mkern 1.5mu\overline{\mkern-1.5mu#1\mkern-1.5mu}\mkern 1.5mu}
@@ -1261,11 +1304,11 @@ literate         = {á}{{\'a}}1
 	}{}
 }
 \newcommand{\corrigeBonus}[1]{
-  \iftoggle{corrigeEtendu}{%
-    \textbf{Pour aller plus loin~:}
-    \smallbreak
-    #1
-  }{}
+	\iftoggle{corrigeEtendu}{%
+		\textbf{Pour aller plus loin~:}
+		\smallbreak
+		#1
+	}{}
 }
 \newcommand{\enonce}[2][]{
 	\iftoggle{corrige}{
@@ -1292,67 +1335,97 @@ literate         = {á}{{\'a}}1
 	shapes.misc,
 	shapes.geometric}
 
-\newcommand*\str{%
-  \tikz[scale=.8, baseline={([yshift=-.8ex]current bounding box.center)}]{%
-		\node[star,
+\DeclareRobustCommand\str{%
+	\begin{tikzpicture}[scale=.8,
+			baseline={([yshift=-.8ex]current bounding box.center)}]
+		\def\xoff{3.5pt}
+		\def\sscale{.55}
+		\node [star,
 			star point height=2.2pt,
 			minimum size=7.92pt,
 			inner sep=0,
-			draw, fill,] (s) {};
-      \node[circle,
-      inner sep=4.5pt,
-      draw, thick] (c) {};
-	}%
+			draw, fill, scale=\sscale] (sa)
+		at (90:\xoff) {};
+		\node [star,
+			star point height=2.2pt,
+			minimum size=7.92pt,
+			inner sep=0,
+			draw, scale=\sscale] (sb)
+		at (210:\xoff) {};
+		\node [star,
+			star point height=2.2pt,
+			minimum size=7.92pt,
+			inner sep=0,
+			draw, scale=\sscale] (sc)
+		at (-30:\xoff) {};
+		% \node[circle,
+		% 	inner sep=4.5pt,
+		% 	draw, thick] (c) {};
+	\end{tikzpicture}
 }
-\newcommand*\strr{%
-  \tikz[scale=.8, baseline={([yshift=-.8ex]current bounding box.center)}]{%
-	\def\xoff{3.5pt}
-	\def\sscale{.55}
-	\node [star,
-		star point height=2.2pt,
-		minimum size=7.92pt,
-		inner sep=0,
-		draw, fill,
-    scale=\sscale] (sl)
-	at (30:\xoff) {};
-	\node [star,
-		star point height=2.2pt,
-		minimum size=7.92pt,
-		inner sep=0,
-		draw, fill, scale=\sscale] (sr)
-	at (210:\xoff) {};
-      \node[circle,
-      inner sep=4.5pt,
-      draw, thick] (c) {};
-	}%
+\DeclareRobustCommand\strr{%
+	\begin{tikzpicture}[scale=.8,
+			baseline={([yshift=-.8ex]current bounding box.center)}]
+		\def\xoff{3.5pt}
+		\def\sscale{.55}
+		\node [star,
+			star point height=2.2pt,
+			minimum size=7.92pt,
+			inner sep=0,
+			draw, fill, scale=\sscale] (sa)
+		at (90:\xoff) {};
+		\node [star,
+			star point height=2.2pt,
+			minimum size=7.92pt,
+			inner sep=0,
+			draw, fill, scale=\sscale] (sb)
+		at (210:\xoff) {};
+		\node [star,
+			star point height=2.2pt,
+			minimum size=7.92pt,
+			inner sep=0,
+			draw, scale=\sscale] (sc)
+		at (-30:\xoff) {};
+		% \node[circle,
+		% 	inner sep=4.5pt,
+		% 	draw, thick] (c) {};
+	\end{tikzpicture}
 }
-\newcommand*\strrr{%
-  \tikz[scale=.8, baseline={([yshift=-.8ex]current bounding box.center)}]{%
-	\def\xoff{3.5pt}
-	\def\sscale{.55}
-	\node [star,
-		star point height=2.2pt,
-		minimum size=7.92pt,
-		inner sep=0,
-		draw, fill, scale=\sscale] (sa)
-	at (90:\xoff) {};
-	\node [star,
-		star point height=2.2pt,
-		minimum size=7.92pt,
-		inner sep=0,
-		draw, fill, scale=\sscale] (sb)
-	at (210:\xoff) {};
-	\node [star,
-		star point height=2.2pt,
-		minimum size=7.92pt,
-		inner sep=0,
-		draw, fill, scale=\sscale] (sc)
-	at (-30:\xoff) {};
-      \node[circle,
-      inner sep=4.5pt,
-      draw, thick] (c) {};
-	}%
+\DeclareRobustCommand\strrr{%
+	\begin{tikzpicture}[scale=.8,
+			baseline={([yshift=-.8ex]current bounding box.center)}]
+		\def\xoff{3.5pt}
+		\def\sscale{.55}
+		\node [star,
+			star point height=2.2pt,
+			minimum size=7.92pt,
+			inner sep=0,
+			draw, fill, scale=\sscale] (sa)
+		at (90:\xoff) {};
+		\node [star,
+			star point height=2.2pt,
+			minimum size=7.92pt,
+			inner sep=0,
+			draw, fill, scale=\sscale] (sb)
+		at (210:\xoff) {};
+		\node [star,
+			star point height=2.2pt,
+			minimum size=7.92pt,
+			inner sep=0,
+			draw, fill, scale=\sscale] (sc)
+		at (-30:\xoff) {};
+		% \node[circle,
+		% 	inner sep=4.5pt,
+		% 	draw, thick] (c) {};
+	\end{tikzpicture}
 }
+\NewDocumentCommand{\strs}{m}{%
+	\IfEqCase{#1}{%
+		{1}{\str}%
+			{2}{\strr}%
+			{3}{\strrr}%
+	}%
+}%
 
 % Thicker hrulefill
 \makeatletter
@@ -1403,13 +1476,13 @@ literate         = {á}{{\'a}}1
 		\begin{blocQR}#1
 			\iftoggle{student}{ % pour version student
 				\iftoggle{corrige}{ % version avec corrigé : affiche juste la correction
-					\nitem{#2}#4%
+					\item[n]{#2}#4%
 				}{ % énoncé uniquement
-					\nitem{#2}#3%
+					\item[n]{#2}#3%
 				}%
 			}{% pour version prof
 				\iftoggle{corrige}{% pour version avec corrigé : question ET réponse
-					\nitem{#2}#3%
+					\item[n]{#2}#3%
 					\begin{answ}%
 						#4%
 					\end{answ}%
@@ -1424,13 +1497,13 @@ literate         = {á}{{\'a}}1
 			\begin{blocQR}#1
 				\iftoggle{student}{ % pour version student
 					\iftoggle{corrige}{ % version avec corrigé : affiche juste la correction
-						\nitem{#2}#4%
+						\item[n]{#2}#4%
 					}{ % énoncé uniquement
 						\item #3%
 					}%
 				}{% pour version prof
 					\iftoggle{corrige}{% pour version avec corrigé : question ET réponse
-						\nitem{#2}#3%
+						\item[n]{#2}#3%
 						\begin{answ}%
 							#4%
 						\end{answ}%
@@ -1628,6 +1701,22 @@ literate         = {á}{{\'a}}1
 	\bigskip
 }
 
+\newcommand{\figsvg}[1]{
+	\begin{center}
+		\subimport{images/}{#1}
+	\end{center}
+}
+
+% figure avec caption
+\newcommand{\figsvgCap}[2]{
+	\begin{center}
+		\subimport{images/}{#1}
+	\end{center}
+	\vspace{-4mm}
+	\captionof{figure}{#2}
+	\bigskip
+}
+
 % Boxes types: colors
 \colorlet{loi}{red!60!black}
 \colorlet{theo}{red!70!black}
@@ -1647,6 +1736,7 @@ literate         = {á}{{\'a}}1
 \colorlet{nota}{green!50!black}
 \colorlet{ror}{orange!90!black}
 \colorlet{exem}{lightgray!55!black}
+\colorlet{cexe}{lightgray!55!black}
 \colorlet{expe}{lightgray!55!black}
 \colorlet{code}{lightgray!55!black}
 \colorlet{mate}{lightgray!55!black}
@@ -1673,6 +1763,7 @@ literate         = {á}{{\'a}}1
 \colorlet{notaback}{green!10}
 \colorlet{rorback}{orange!10}
 \colorlet{exemback}{lightgray!10}
+\colorlet{cexeback}{lightgray!10}
 \colorlet{expeback}{lightgray!10}
 \colorlet{codeback}{lightgray!10}
 \colorlet{mateback}{lightgray!10}
@@ -1699,6 +1790,7 @@ literate         = {á}{{\'a}}1
 \colorlet{notabacktitle}{green!10}
 \colorlet{rorbacktitle}{orange!30}
 \colorlet{exembacktitle}{lightgray!50}
+\colorlet{cexebacktitle}{lightgray!50}
 \colorlet{expebacktitle}{lightgray!50}
 \colorlet{codebacktitle}{lightgray!50}
 \colorlet{matebacktitle}{lightgray!50}
@@ -1725,6 +1817,7 @@ literate         = {á}{{\'a}}1
 \newcommand{\namenota}{Notation}
 \newcommand{\nameror}{Important}
 \newcommand{\nameexem}{Exemple}
+\newcommand{\namecexe}{Contre-exemple}
 \newcommand{\nameexpe}{Manipulation}
 \newcommand{\namecode}{Code}
 \newcommand{\namemate}{Matériel}
@@ -1768,6 +1861,8 @@ literate         = {á}{{\'a}}1
 \renewcommand{\theror}{\thechapter.\arabic{ror}}
 \newcounter{exem}[chapter]
 \renewcommand{\theexem}{\thechapter.\arabic{exem}}
+\newcounter{cexe}[chapter]
+\renewcommand{\thecexe}{\thechapter.\arabic{cexe}}
 \newcounter{expe}[chapter]
 \renewcommand{\theexpe}{\thechapter.\arabic{expe}}
 \newcounter{code}[chapter]
@@ -1826,6 +1921,7 @@ literate         = {á}{{\'a}}1
 	\includegraphics[angle=-90, origin=c, height=0.5cm]{\PREPA/figures_generales/pr.jpg}
 }
 \newcommand{\iconexem}{\faIcon{external-link-alt}}
+\newcommand{\iconcexe}{\faIcon{external-link-alt}}
 \newcommand{\iconodgr}{\faIcon{calculator}}
 \newcommand{\iconappl}{\faIcon{edit}}
 \newcommand{\iconrema}{\faIcon[regular]{hand-point-right}}
@@ -1854,24 +1950,33 @@ literate         = {á}{{\'a}}1
 
 % My generic box name
 % based on the great answer https://tex.stackexchange.com/a/471615/284518
-\NewTColorBox{tcb}{sO{}r()D<>{box}d""D''{l}m}{%
+\NewTColorBox{tcn}{sO{}r()D<>{box}d""D''{l}m}{%
 base,
-% add to list={#3}{chapter},
-% list entry={#7},
 #6icon=\IfBooleanTF{#1}{#5}{#3},
 #4={#3}{#7},
+% #4={#3}{\csname name#3\endcsname~\expandafter\csname the#3\endcsname~:~#7},
+% step={#3},
 #2,
 }
 % with numbers
+\NewTColorBox{tcb}{sO{}r()D<>{box}d""D''{l}m}{%
+base,
+#6icon=\IfBooleanTF{#1}{#5}{#3},
+% #4={#3}{#7},
+#4={#3}{\csname name#3\endcsname~\expandafter\csname the#3\endcsname~:~#7},
+step={#3},
+#2,
+}
+% on list
 \NewTColorBox{tcb*}{sO{}r()D<>{box}d""D''{l}m}{%
 base,
 #6icon=\IfBooleanTF{#1}{#5}{#3},
-#4={#3}{\csname name#3\endcsname~\expandafter\csname the#3\endcsname~:~#7},
+#4={#3}{\iconhart~\csname name#3\endcsname~\expandafter\csname the#3\endcsname~:~#7},
 step={#3},
 add to list={#3}{section},
 list entry={\hspace*{-20pt}\protect\rcheck~
-% \csname name#3\endcsname~\expandafter\csname the#3\endcsname~:~
-#7},
+		% \csname name#3\endcsname~\expandafter\csname the#3\endcsname~:~
+		#7},
 #2,
 }
 
@@ -1905,6 +2010,17 @@ list entry={\hspace*{-20pt}\protect\rcheck~
 	ctc/.style 2 args={
 			boxrule=0pt, frame hidden, interior hidden,
 			borderline north={1pt}{0pt}{#1}, coltitle=#1,
+			fonttitle=\bfseries, top=10pt,
+			attach boxed title to top center={yshift=-2mm},
+			boxed title style={enhanced, colframe=#1, colback=#1back, sharp corners},
+			title={#2},
+		}
+}
+% center and bottom
+\tcbset{
+	ctb/.style 2 args={
+			boxrule=0pt, frame hidden, interior hidden,
+			borderline north={1pt}{0pt}{#1}, borderline south={1pt}{0pt}{#1}, coltitle=#1,
 			fonttitle=\bfseries, top=10pt,
 			attach boxed title to top center={yshift=-2mm},
 			boxed title style={enhanced, colframe=#1, colback=#1back, sharp corners},
@@ -2071,37 +2187,6 @@ list entry={\hspace*{-20pt}\protect\rcheck~
 	#4={#3}{\csname name#3\endcsname~\expandafter\csname the#3\endcsname~:~#7},
 ]{#8}{#9}
 }
-
-% Useful styles to add to a box
-% deprecated, use "*" style with "ror" for heart, "impo" for dngr, "trans"…
-% \tcbset{heart/.style={overlay={
-% 					\node[below left] at (frame.north west)
-% 					{\includegraphics[width=1.2cm]{\PREPA/figures_generales/heart.jpg}};}}}
-%
-% \tcbset{hand/.style={overlay={
-% 					\node[below left] at (frame.north west)
-% 					{\includegraphics[width=1.2cm]{\PREPA/figures_generales/pr.jpg}};}}}
-%
-% \tcbset{dngr/.style={overlay={
-% 					\node[below left, scale=2] at (frame.north west)
-% 					{\danger};}}}
-%
-% \tcbset{trans/.style={overlay={
-% 					\node[xshift=-0.8cm, yshift=-0.75cm] at (frame.north west)
-% 					{\includegraphics[angle=-90, origin=c, height=1.2cm]{\PREPA/figures_generales/pr.jpg}};}}}
-%
-% \newcommand{\includehand}[2]{
-% 	\includegraphics[angle=#1,
-% 		origin=c,
-% 		height=#2]{\PREPA/figures_generales/pr.jpg}
-% }
-%
-% \newcommand{\includeheart}[2]{
-% 	\vspace*{-20pt}
-% 	\includegraphics[angle=#1,
-% 		origin=c,
-% 		height=#2]{\PREPA/figures_generales/heart.jpg}
-% }
 
 % For bigger boxrule in fbox
 \edef\oldfboxrule{\the\fboxrule}

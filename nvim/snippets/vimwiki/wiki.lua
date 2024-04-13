@@ -42,117 +42,62 @@ return {
   -- colors
   s(
     {
-      trig = "@j",
-      snippetType = "autosnippet",
-      dscr = "Add yellow",
-    },
-    fmta([[~~<>~~]], {
-      d(1, get_visual),
-    })
-  ),
-  s(
-    {
-      trig = "@r",
-      snippetType = "autosnippet",
-      dscr = "Add red",
-    },
-    fmta([[*<>*]], {
-      d(1, get_visual),
-    })
-  ),
-  s(
-    {
-      trig = "@p",
-      snippetType = "autosnippet",
-      dscr = "Add purple",
-    },
-    fmta([[_*<>*_]], {
-      d(1, get_visual),
-    })
-  ),
-  s(
-    {
-      trig = "@b",
-      snippetType = "autosnippet",
-      dscr = "Add blue",
-    },
-    fmta([[_<>_]], {
-      d(1, get_visual),
-    })
-  ),
-  s(
-    {
-      trig = "@o",
-      snippetType = "autosnippet",
-      dscr = "Add orange",
-    },
-    fmta([[$<>$]], {
-      d(1, get_visual),
-    })
-  ),
-  s(
-    {
-      trig = "@v",
-      snippetType = "autosnippet",
-      dscr = "Add time",
-    },
-    fmta([[`<>`]], {
-      d(1, get_visual),
-    })
-  ),
-  -- not auto
-  s(
-    {
       trig = "jj",
+      snippetType = "autosnippet",
       dscr = "Add yellow",
     },
     fmta([[~~<>~~]], {
-      i(1),
+      d(1, get_visual),
     })
   ),
   s(
     {
       trig = "rr",
+      snippetType = "autosnippet",
       dscr = "Add red",
     },
     fmta([[*<>*]], {
-      i(1),
+      d(1, get_visual),
     })
   ),
   s(
     {
       trig = "pp",
+      snippetType = "autosnippet",
       dscr = "Add purple",
     },
     fmta([[_*<>*_]], {
-      i(1),
+      d(1, get_visual),
     })
   ),
   s(
     {
       trig = "bb",
+      snippetType = "autosnippet",
       dscr = "Add blue",
     },
     fmta([[_<>_]], {
-      i(1),
+      d(1, get_visual),
     })
   ),
   s(
     {
       trig = "oo",
+      snippetType = "autosnippet",
       dscr = "Add orange",
     },
     fmta([[$<>$]], {
-      i(1),
+      d(1, get_visual),
     })
   ),
   s(
     {
       trig = "vv",
+      snippetType = "autosnippet",
       dscr = "Add time",
     },
     fmta([[`<>`]], {
-      i(1),
+      d(1, get_visual),
     })
   ),
   -- diary
@@ -231,4 +176,23 @@ return {
       ),
     }),
   }),
+  -- second header
+  s(
+    {
+      trig = "h2",
+      snippetType = "autosnippet",
+      dscr = "Add level 2 header",
+      condition = line_begin,
+    },
+    fmta(
+      [[
+    == <> ==
+    <>
+    ]],
+      {
+        i(1, "HEADER"),
+        i(0),
+      }
+    )
+  ),
 }
