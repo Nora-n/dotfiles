@@ -842,7 +842,10 @@ return {
     wordTrig = false,
     snippetType = "autosnippet",
     condition = tex_utils.in_mathzone,
-  }, fmta("\\Delta<>", { c(1, { t(""), fmta("{<>}", { i(1) }) }) })),
+  }, fmta(
+    "\\Delta<>",
+    { c(1, { t(""), fmta("{<>}", { d(1, get_visual) }) }) }
+  )),
   -- sigma
   s({
     trig = "@s",
@@ -2857,7 +2860,7 @@ return {
     dscr = "Expands 'udb' into '\\underbracket{<>}_{<>}'",
   }, {
     c(1, {
-      fmta("\\underbracket{<>}_{<>}", {
+      fmta("\\underbracket[1pt]{<>}_{<>}", {
         d(1, get_visual),
         i(2),
       }),

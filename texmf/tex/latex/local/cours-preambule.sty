@@ -199,7 +199,7 @@
 % To print bareme in interro
 \def\ptcol{ForestGreen}
 \newcommand{\pt}[1]{{\color{\cswitch{\ptcol}{white!10}}\circled{#1}}}
-
+% Stack
 \NewDocumentCommand{\stk}{O{2}D(){on}D""{1}m}{%
 \IfEqCase{#2}{%
 	{on}{\stackon[#1pt]{\rm #4}{$\mathclap{\pt{#3}}$}}
@@ -212,6 +212,13 @@
 		{un}{\stackunder[#1pt]{$#4$}{$\pt{#3}$}}
 }
 }
+
+% Auto fboxsep
+% Doesn't work
+% \let\oldboxed\boxed
+% \RenewDocumentCommand{\boxed}{om}{%
+% 	\IfValueTF{#1}{\setlength{\fboxsep}{#1}\oldboxed{#2}}{\oldboxed{#2}}%
+% }
 
 % To pagebreak equations
 \allowdisplaybreaks
@@ -944,21 +951,21 @@ literate         = {á}{{\'a}}1
 \setlist{itemsep=3pt} % Interligne nul
 \setlist[enumerate,1]{leftmargin=10pt, label=\arabic*)}
 \setlist[enumerate,2]{leftmargin=20pt, label=\alph* --}
-\setlist[enumerate,3]{leftmargin=30pt, label=\roman*.}
+\setlist[enumerate,3]{leftmargin=20pt, label=\roman*.}
 % \setlist[itemize,1]{leftmargin=10pt}
 % \setlist[itemize,2]{leftmargin=20pt}
 \newcommand{\bdmd}{$\scaleto{\diamond}{7pt}$}
 \setlist[itemize,1]{label=\bdmd, leftmargin=10pt}
 \newcommand{\btrg}{$\scaleto{\triangleright}{7pt}$}
 \setlist[itemize,2]{label=\btrg, leftmargin=20pt}
-\setlist[itemize,3]{leftmargin=30pt}
+\setlist[itemize,3]{label=$\bullet$, leftmargin=20pt}
 
 % Setup special items
 \newif\iffitem
 	\newcommand{\setupmodenumerate}{%
 	\global\fitemfalse
 	\let\origmakelabel\makelabel
-	\def\fitem##1{\global\fitemtrue\def\toapply{##1}\item}%
+	\def\fitem##1{\global\fitemtrue\def\toapply{##1}\olditem}%
 	\def\makelabel##1{%
 \origmakelabel{%
 	\iffitem{%
@@ -980,25 +987,42 @@ literate         = {á}{{\'a}}1
 % New item
 \let\olditem\item % Store \item in \olditem
 \def\lspace{20} % default left space
-\def\mspace{-15}
+\def\mspace{-25}
 \NewDocumentCommand{\ltm}{O{\lspace}m}{%
 	\llap{#2\hspace{#1pt}}%
 }
-\RenewDocumentCommand{\item}{ooD""{1}g}{% Redefine \item to
+% make alpha a number
+\ExplSyntaxOn
+\DeclareExpandableDocumentCommand \makealph { m }
+{
+	\int_to_alph:n { #1 }
+}
+\DeclareExpandableDocumentCommand \makeroman { m }
+{
+	\int_to_roman:n { #1 }
+}
+\ExplSyntaxOff
+% Here comes the big function
+\RenewDocumentCommand{\item}{ooD""{1}d()g}{% Redefine \item to
+\IfValueT{#4}{% if (<>) after \item
+	\renewcommand{\labelenumi}{{#4)}}
+	\renewcommand{\labelenumii}{{\makealph{#4} --}}
+	\renewcommand{\labelenumiii}{{\makeroman{#4}}.}
+}%
 \IfValueTF{#1}{% If [<>] after \item
 	\IfEqCase{#1}{% Check the value
 		{l}{% \litem : generic left of item, optional left distance
 				\IfValueTF{#2}{% if second optional value to \item : \item[l][opt]{mand}
-					\olditem\leavevmode\ltm[#2]{#4}%
+					\olditem\leavevmode\ltm[#2]{#5}%
 				}{% If no second optional value : \item[l]{mand}, do nothing with #2
-					\olditem\leavevmode\ltm{#4}%
+					\olditem\leavevmode\ltm{#5}%
 				}%
 			}%
 			{n}{% \nitem : left item /nb in green for points
 				\IfValueTF{#2}{% if second optional value to \item : \item[l][opt]{mand}
-					\olditem\leavevmode\ltm[#2]{\textcolor{ForestGreen}{/#4}}%
+					\olditem\leavevmode\ltm[#2]{\textcolor{ForestGreen}{/#5}}%
 				}{% If no second optional value : \item[l]{mand}, do nothing with #2
-					\olditem\leavevmode\ltm{\textcolor{ForestGreen}{/#4}}%
+					\olditem\leavevmode\ltm{\textcolor{ForestGreen}{/#5}}%
 				}%
 			}%
 			{m}{% \mitem : remove vertical math space
@@ -1009,7 +1033,7 @@ literate         = {á}{{\'a}}1
 				}%
 			}%
 			{b}{% \bitem
-				\olditem\leavevmode\textbf{#4}
+				\olditem\leavevmode\textbf{#5}
 			}%
 			{s}{% \litem for difficulty stars
 				\IfValueTF{#2}{%
@@ -1019,10 +1043,18 @@ literate         = {á}{{\'a}}1
 				}%
 			}%
 			{cl}{% \clitem for circled
-				\fitem{\icircled}
+				\IfValueTF{#4}{%
+					\fitem{\icircled}[#4]%
+				}{%
+					\fitem{\icircled}%
+				}%
 			}%
 			{sq}{% \sqitem for fbox
-				\fitem{\fbox}
+				\IfValueTF{#4}{%
+					\fitem{\fbox}[#4]%
+				}{%
+					\fitem{\fbox}%
+				}%
 			}%
 	}%
 }{\olditem}
@@ -1880,7 +1912,7 @@ literate         = {á}{{\'a}}1
 % For icons
 \usepackage{fontawesome5}
 \tcbset{
-	licon/.style={
+	licon/.style 2 args={
 			overlay unbroken and first={
 					\node[anchor=center, scale=2]
 					at ([shift={(-0.7,-0.4)}]frame.north west)
@@ -1889,12 +1921,17 @@ literate         = {á}{{\'a}}1
 		}
 }
 \tcbset{
-	ricon/.style={
+	ricon/.style 2 args={
 			overlay unbroken and first={
 					\node[anchor=center, scale=2]
 					at ([shift={(+0.7,-0.4)}]frame.north east)
 					{\csname icon#1\endcsname};
 				}
+		}
+}
+\tcbset{
+	ticon/.style 2 args={
+			title={\csname icon#1\endcsname~#2},
 		}
 }
 \newcommand{\iconloi}{\faIcon{drafting-compass}}
@@ -1950,29 +1987,40 @@ literate         = {á}{{\'a}}1
 
 % My generic box name
 % based on the great answer https://tex.stackexchange.com/a/471615/284518
+% No counter
 \NewTColorBox{tcn}{sO{}r()D<>{box}d""D''{l}m}{%
 base,
-#6icon=\IfBooleanTF{#1}{#5}{#3},
 #4={#3}{#7},
+#6icon={\IfBooleanTF{#1}{#5}{#3}}{#7},
 % #4={#3}{\csname name#3\endcsname~\expandafter\csname the#3\endcsname~:~#7},
 % step={#3},
 #2,
 }
-% with numbers
+% No counter, icon in title not left
+% Use tcn with 't' style
+% \NewTColorBox{tci}{sO{}r()D<>{box}d""D''{t}m}{%
+% base,
+% #4={#3}{#7},
+% #6icon={\IfBooleanTF{#1}{#5}{#3}}{#7},
+% % #4={#3}{\csname name#3\endcsname~\expandafter\csname the#3\endcsname~:~#7},
+% % step={#3},
+% #2,
+% }
+% with numbers, but not on list
 \NewTColorBox{tcb}{sO{}r()D<>{box}d""D''{l}m}{%
 base,
-#6icon=\IfBooleanTF{#1}{#5}{#3},
 % #4={#3}{#7},
 #4={#3}{\csname name#3\endcsname~\expandafter\csname the#3\endcsname~:~#7},
 step={#3},
+#6icon={\IfBooleanTF{#1}{#5}{#3}}{\csname name#3\endcsname~\expandafter\csname the#3\endcsname~:~#7},
 #2,
 }
 % on list
 \NewTColorBox{tcb*}{sO{}r()D<>{box}d""D''{l}m}{%
 base,
-#6icon=\IfBooleanTF{#1}{#5}{#3},
 #4={#3}{\iconhart~\csname name#3\endcsname~\expandafter\csname the#3\endcsname~:~#7},
 step={#3},
+#6icon={\IfBooleanTF{#1}{#5}{#3}}{#7},
 add to list={#3}{section},
 list entry={\hspace*{-20pt}\protect\rcheck~
 		% \csname name#3\endcsname~\expandafter\csname the#3\endcsname~:~
@@ -2173,7 +2221,7 @@ list entry={\hspace*{-20pt}\protect\rcheck~
 	base,
 	colframe=#3,
 	sidebyside adapt=#2,
-	#6icon=\IfBooleanTF{#1}{#5}{#3},
+	#6icon={\IfBooleanTF{#1}{#5}{#3}}{#7},
 	#4={#3}{#7},
 ]{#8}{#9}
 }
@@ -2183,7 +2231,7 @@ list entry={\hspace*{-20pt}\protect\rcheck~
 	step=#3,
 	colframe=#3,
 	sidebyside adapt=#2,
-	#6icon=\IfBooleanTF{#1}{#5}{#3},
+	#6icon={\IfBooleanTF{#1}{#5}{#3}}{#7},
 	#4={#3}{\csname name#3\endcsname~\expandafter\csname the#3\endcsname~:~#7},
 ]{#8}{#9}
 }
