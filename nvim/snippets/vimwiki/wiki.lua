@@ -195,4 +195,62 @@ return {
       }
     )
   ),
+  -- event
+  s(
+    {
+      trig = "evt",
+      snippetType = "autosnippet",
+      dscr = "Événement",
+      condition = line_begin,
+    },
+    fmta(
+      [[
+    $Événement$ : $<>$
+    $Lieu$ : _*<>*_
+    $Horaires$ : ~~<>~~ - ~~<>~~
+    $Dates$ : ~~<>~~
+    $Invitæs$ : <>
+    $Prix$ : *<>*
+    <>
+    ]],
+      {
+        i(1),
+        i(2),
+        i(3),
+        i(4),
+        i(5),
+        i(6),
+        i(7),
+        i(0),
+      }
+    )
+  ),
+  -- trajet
+  s(
+    {
+      trig = "trj",
+      snippetType = "autosnippet",
+      dscr = "Événement",
+      condition = line_begin,
+    },
+    fmta(
+      [[
+    | ~~<>~~    | $Lieu$  | $Horaire$ | $V$ | $P$ |
+    | --------- | ------- | --------- | --- | --- |
+    | $Départ$  | _*<>*_  | ~~<>~~    | <>  | <>  |
+    | $Arrivée$ | _*<>*_  | ~~<>~~    | --- | --- |
+    <>
+    ]],
+      {
+        i(1),
+        i(2),
+        i(3),
+        i(4),
+        i(5),
+        i(6),
+        i(7),
+        i(0),
+      }
+    )
+  ),
 }

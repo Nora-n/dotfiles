@@ -295,6 +295,44 @@ pics/strange bar/.style={code={\draw[thick] (-#1,0) -- (#1,0);}}
 	\roundedSum%
 }
 
+% Extract x and y coordinate
+% https://tex.stackexchange.com/a/66129/284518
+%% https://tex.stackexchange.com/questions/86897/recover-scaling-factor-in-tikz
+\newcommand*\getscale[1]{%
+	\begingroup
+	\pgfgettransformentries{\scaleA}{\scaleB}{\scaleC}{\scaleD}{\whatevs}{\whatevs}%
+	\pgfmathsetmacro{#1}{sqrt(abs(\scaleA*\scaleD-\scaleB*\scaleC))}%
+	\expandafter
+	\endgroup
+	\expandafter\def\expandafter#1\expandafter{#1}%
+}
+
+\makeatletter
+% https://tex.stackexchange.com/questions/33703/extract-x-y-coordinate-of-an-arbitrary-point-in-tikz
+\newdimen\@XCoord
+\newdimen\@YCoord
+\newdimen\XCoord
+\newdimen\YCoord
+\newcommand*{\ExtractCoordinate}[1]{%
+	\getscale{\@scalefactor}%
+	\path [transform canvas] (#1); \pgfgetlastxy{\@XCoord}{\@YCoord};%
+	\pgfmathsetlength{\XCoord}{\@XCoord}%
+	\pgfmathsetlength{\YCoord}{\@YCoord}%
+}
+\makeatother
+% use with \ExtractCoordinate{$(D)$}, then \XCoord
+
+% Another solution:
+% https://tex.stackexchange.com/a/58590/284518
+\makeatletter
+\newcommand{\gettikzxy}[3]{%
+	\tikz@scan@one@point\pgfutil@firstofone#1\relax
+	\edef#2{\the\pgf@x}%
+	\edef#3{\the\pgf@y}%
+}
+\makeatother
+% use with \gettikzxy{(A)}{\ax}{\ay}
+
 % Hatching distance from https://tex.stackexchange.com/a/29367/1952
 \makeatletter
 \pgfdeclarepattern{

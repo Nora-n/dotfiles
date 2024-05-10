@@ -449,9 +449,9 @@
 			}%
 		}{%
 			\IfValueTF{#2}{%
-				\oldsection{\texorpdfstring{\ltm[#2]{\textcolor{Red}{/#1}}#4}{#4}}%
+				\oldsection[#4]{\texorpdfstring{\ltm[#2]{\textcolor{Red}{/#1}}#4}{#4}}%
 			}{%
-				\oldsection{\texorpdfstring{\ltm[\sspace]{\textcolor{Red}{/#1}}#4}{#4}}%
+				\oldsection[#4]{\texorpdfstring{\ltm[\sspace]{\textcolor{Red}{/#1}}#4}{#4}}%
 			}%
 		}%
 	}{\oldsection{#4}}
@@ -2027,6 +2027,9 @@ list entry={\hspace*{-20pt}\protect\rcheck~
 		#7},
 #2,
 }
+
+% To manually add list entry for shorter text
+\newcommand{\lte}{\hspace*{-20pt}\protect\rcheck~~}
 
 % Basic styles of boxes
 % thanks to https://tex.stackexchange.com/a/252907/284518 for 2 args

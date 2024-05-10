@@ -834,9 +834,10 @@ return {
     wordTrig = false,
     snippetType = "autosnippet",
     condition = tex_utils.in_mathzone,
-  }, {
-    t("\\delta "),
-  }),
+  }, fmta(
+    "\\delta<>",
+    { c(1, { fmta("{<>}", { d(1, get_visual) }), t("") }) }
+  )),
   s({
     trig = "@D",
     wordTrig = false,
@@ -844,7 +845,7 @@ return {
     condition = tex_utils.in_mathzone,
   }, fmta(
     "\\Delta<>",
-    { c(1, { t(""), fmta("{<>}", { d(1, get_visual) }) }) }
+    { c(1, { fmta("{<>}", { d(1, get_visual) }), t("") }) }
   )),
   -- sigma
   s({
@@ -1300,6 +1301,12 @@ return {
     dscr = "Expands 'par' into '\\pa{}'",
     condition = tex_utils.in_mathzone,
   }, fmta("\\pa{<>}", { d(1, get_visual) })),
+  -- ()
+  -- s({
+  --   trig = "(",
+  --   snippetType = "autosnippet",
+  --   wordTrig = false,
+  -- }, fmta("(<>)<>", { d(1, get_visual), i(0) })),
   -- pac
   s({
     trig = "pac",
