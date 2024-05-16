@@ -500,7 +500,9 @@ pics/strange bar/.style={code={\draw[thick] (-#1,0) -- (#1,0);}}
 						{\arrow{\pgfkeysvalueof{/tikz/flch arrow/type}[%
 									% length=\pgfkeysvalueof{/tikz/flch arrow/length},%
 									% width=\pgfkeysvalueof{/tikz/flch arrow/width},%
-									scale=\pgfkeysvalueof{/tikz/flch arrow/scale}%
+									scale=\pgfkeysvalueof{/tikz/flch arrow/scale},%
+									color=\pgfkeysvalueof{/tikz/flch arrow/color},%
+									% opacity=\pgfkeysvalueof{/tikz/flch arrow/opacity}%
 								]}}},
 			postaction={decorate}
 		},
@@ -511,6 +513,8 @@ pics/strange bar/.style={code={\draw[thick] (-#1,0) -- (#1,0);}}
 	% length/.initial=2.5mm,
 	% width/.initial=2mm,
 	scale/.initial=1,
+	color/.initial=,
+	% opacity/.initial=1,
 	type/.initial=Stealth,
 }
 %simple flèche
@@ -579,6 +583,14 @@ pics/strange bar/.style={code={\draw[thick] (-#1,0) -- (#1,0);}}
 					{\arrow[scale=2,
 							>=stealth]{<<}}}}]
 
+% node arrow
+\tikzset{ndarr/.style={
+			single arrow, anchor=center, draw, fill,
+			minimum width=2.5mm, minimum height=8mm,
+			single arrow head extend=1mm, rotate=#1,
+			ndarr/.default={0}
+		}
+}
 
 %oeil, le paramètre, indiqué entre crochet permettra de positionner
 %l'oeil avec un shift, rotate...

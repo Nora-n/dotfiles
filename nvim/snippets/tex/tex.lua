@@ -318,13 +318,27 @@ return {
     trig = "inx",
     snippetType = "autosnippet",
     dscr = "Expands 'inx' into LaTeX's intertext{} command.",
+    condition = tex_utils.in_mathzone,
   }, fmta("\\intertext{<>}", { d(1, get_visual) })),
   -- beforetext in math
   s({
     trig = "bfx",
     snippetType = "autosnippet",
-    dscr = "Expands 'btx' into beforetext{} command.",
+    dscr = "Expands 'bfx' into beforetext{} command.",
+    condition = tex_utils.in_mathzone,
   }, fmta("\\beforetext{<>}", { d(1, get_visual) })),
+  -- tag in equation
+  s({
+    trig = "tgg",
+    snippetType = "autosnippet",
+    dscr = "Expands 'tgg' into tag{} command.",
+    condition = tex_utils.in_mathzone,
+  }, {
+    c(1, {
+      fmta([[\tag{<>}]], { d(1, get_visual) }),
+      fmta([[\tag*{<>}]], { d(1, get_visual) }),
+    }),
+  }),
   -- studonly
   s(
     {
@@ -2480,6 +2494,22 @@ return {
       }),
       fmta("\\stm[-1]{<>}", {
         d(1, get_visual),
+      }),
+    }),
+  }),
+  s({
+    trig = "stc",
+    snippetType = "autosnippet",
+    dscr = "Expands 'stc' into '\\stc{<>}'",
+  }, {
+    c(1, {
+      fmta("\\stc{<>}{<>}", {
+        d(1, get_visual),
+        i(2, "above"),
+      }),
+      fmta("\\stc[-1]{<>}{<>}", {
+        d(1, get_visual),
+        i(2, "above"),
       }),
     }),
   }),

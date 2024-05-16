@@ -212,6 +212,12 @@
 		{un}{\stackunder[#1pt]{$#4$}{$\pt{#3}$}}
 }
 }
+\NewDocumentCommand{\stc}{O{2}D(){on}mm}{%
+	\IfEqCase{#2}{%
+		{on}{\stackon[#1pt]{$#3$}{$#4$}}
+			{un}{\stackunder[#1pt]{$#3$}{$#4$}}
+	}
+}
 
 % Auto fboxsep
 % Doesn't work
@@ -1984,6 +1990,7 @@ literate         = {á}{{\'a}}1
 \newcommand{\iconrigt}{\faIcon{angle-right}}
 \newcommand{\iconsomm}{\faIcon{book-open}}
 \newcommand{\iconchek}{\faIcon{check}}
+\newcommand{\iconyout}{\faIcon{youtube}}
 
 % My generic box name
 % based on the great answer https://tex.stackexchange.com/a/471615/284518
