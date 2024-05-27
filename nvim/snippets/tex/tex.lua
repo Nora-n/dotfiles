@@ -2511,6 +2511,11 @@ return {
         d(1, get_visual),
         i(2, "above"),
       }),
+      fmta('\\stc"\\<>"{<>}{<>}', {
+        i(1, "footnotesize"),
+        d(2, get_visual),
+        i(3, "above"),
+      }),
     }),
   }),
   -- simple point
@@ -2769,9 +2774,17 @@ return {
       dscr = "Expands 'pht' into phantom xul application",
       condition = line_begin,
     },
-    fmta("\\makebox[0pt][l]{$\\phantom{\\AN}\\xul{\\phantom{<>}}$}", {
-      d(1, get_visual),
-    })
+    fmta(
+      [[
+    \AN
+    \makebox[0pt][l]{$\xul{\phantom{<>}}$}
+    <>
+    ]],
+      {
+        d(1, get_visual),
+        rep(1),
+      }
+    )
   ),
   -- reglin
   s(
@@ -2913,11 +2926,11 @@ return {
     dscr = "Expands 'ovb' into '\\overbracket{<>}^{<>}'",
   }, {
     c(1, {
-      fmta("\\overbracket{<>}_{<>}", {
+      fmta("\\overbracket{<>}^{<>}", {
         d(1, get_visual),
         i(2),
       }),
-      fmta("\\xoverbracket{<>}_{<>}", {
+      fmta("\\xoverbracket{<>}^{<>}", {
         d(1, get_visual),
         i(2),
       }),
@@ -2945,11 +2958,11 @@ return {
     dscr = "Expands 'ovb' into '\\overbrace{<>}_{<>}'",
   }, {
     c(1, {
-      fmta("\\overbrace{<>}_{<>}", {
+      fmta("\\overbrace{<>}^{<>}", {
         d(1, get_visual),
         i(2),
       }),
-      fmta("\\xoverbrace{<>}_{<>}", {
+      fmta("\\xoverbrace{<>}^{<>}", {
         d(1, get_visual),
         i(2),
       }),
@@ -3474,7 +3487,7 @@ return {
       ),
       fmta(
         [[
-          \begin{tcb}*(expe)<<itc>>"<>"{<>}
+          \begin{tcb}(expe)<<itc>>"<>"{<>}
             <>
           \end{tcb}
           <>
@@ -3488,7 +3501,7 @@ return {
       ),
       fmta(
         [[
-          \begin{tcb}*(expe)<<itc>>"trans"{Transition}
+          \begin{tcb}(expe)<<itc>>"trans"{Transition}
             <>
           \end{tcb}
           <>

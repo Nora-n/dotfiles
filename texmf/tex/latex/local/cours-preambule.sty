@@ -212,11 +212,11 @@
 		{un}{\stackunder[#1pt]{$#4$}{$\pt{#3}$}}
 }
 }
-\NewDocumentCommand{\stc}{O{2}D(){on}mm}{%
-	\IfEqCase{#2}{%
-		{on}{\stackon[#1pt]{$#3$}{$#4$}}
-			{un}{\stackunder[#1pt]{$#3$}{$#4$}}
-	}
+\NewDocumentCommand{\stc}{O{2}D(){on}D""{}mm}{%
+\IfEqCase{#2}{%
+	{on}{\stackon[#1pt]{$#4$}{#3\text{#5}}}
+		{un}{\stackunder[#1pt]{$#4$}{#3\text{#5}}}
+}
 }
 
 % Auto fboxsep
@@ -1041,6 +1041,13 @@ literate         = {á}{{\'a}}1
 			{b}{% \bitem
 				\olditem\leavevmode\textbf{#5}
 			}%
+			{bl}{% bold and left
+				\IfValueTF{#2}{% if second optional value to \item : \item[l][opt]{mand}
+					\olditem\leavevmode\ltm[#2]{#4}\textbf{#5}%
+				}{% If no second optional value : \item[l]{mand}, do nothing with #2
+					\olditem\leavevmode\ltm{#4}\textbf{#5}%
+				}%
+			}
 			{s}{% \litem for difficulty stars
 				\IfValueTF{#2}{%
 					\olditem\leavevmode\ltm[#2]{\strs{#3}}%
@@ -1115,6 +1122,7 @@ literate         = {á}{{\'a}}1
 
 \newcommand{\centers}[1]{\leftcentersright{}{#1}{}}
 \newcommand{\leftcenters}[2]{\leftcentersright{#1}{#2}{}}
+\newcommand{\leftrights}[2]{\leftcentersright{#1}{}{#2}}
 \newcommand{\centersright}[2]{\leftcentersright{}{#1}{#2}}
 \newcommand{\leftencadreright}[3]{\leftcentersright{#1}{\fbox{#2}}{#3}}
 \newcommand{\encadre}[1]{\leftcentersright{}{\fbox{#1}}{}}
@@ -1994,11 +2002,13 @@ literate         = {á}{{\'a}}1
 
 % My generic box name
 % based on the great answer https://tex.stackexchange.com/a/471615/284518
+% TODO: Remove the first star parameter~: useless with IfValueTF{#5}
+
 % No counter
 \NewTColorBox{tcn}{sO{}r()D<>{box}d""D''{l}m}{%
 base,
 #4={#3}{#7},
-#6icon={\IfBooleanTF{#1}{#5}{#3}}{#7},
+#6icon={\IfValueTF{#5}{#5}{#3}}{#7},
 % #4={#3}{\csname name#3\endcsname~\expandafter\csname the#3\endcsname~:~#7},
 % step={#3},
 #2,
@@ -2019,7 +2029,7 @@ base,
 % #4={#3}{#7},
 #4={#3}{\csname name#3\endcsname~\expandafter\csname the#3\endcsname~:~#7},
 step={#3},
-#6icon={\IfBooleanTF{#1}{#5}{#3}}{\csname name#3\endcsname~\expandafter\csname the#3\endcsname~:~#7},
+#6icon={\IfValueTF{#5}{#5}{#3}}{\csname name#3\endcsname~\expandafter\csname the#3\endcsname~:~#7},
 #2,
 }
 % on list
@@ -2027,7 +2037,7 @@ step={#3},
 base,
 #4={#3}{\iconhart~\csname name#3\endcsname~\expandafter\csname the#3\endcsname~:~#7},
 step={#3},
-#6icon={\IfBooleanTF{#1}{#5}{#3}}{#7},
+#6icon={\IfValueTF{#5}{#5}{#3}}{#7},
 add to list={#3}{section},
 list entry={\hspace*{-20pt}\protect\rcheck~
 		% \csname name#3\endcsname~\expandafter\csname the#3\endcsname~:~

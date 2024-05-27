@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<FileZilla3 version="3.66.5" platform="*nix">
+<FileZilla3 version="3.67.0" platform="*nix">
 	<Settings>
 		<Setting name="Use Pasv mode">1</Setting>
 		<Setting name="Limit local ports">0</Setting>
@@ -127,12 +127,13 @@
 		<Setting name="Local filelist sortorder">0 0</Setting>
 		<Setting name="Queue column widths">1479 60 180 80 60 100</Setting>
 		<Setting name="Remote filelist colwidths">710 147 80 100 80 85</Setting>
-		<Setting name="Splitter positions (v2)">97 -323 500000000 234 238 500000000</Setting>
-		<Setting name="Greeting version">3.66.5</Setting>
-		<Setting name="Window position and size">0 1440 587 2560 1325 </Setting>
+		<Setting name="Remote filelist sortorder">0 1</Setting>
+		<Setting name="Greeting version">3.67.0</Setting>
+		<Setting name="Window position and size">0 251 667 974 797 </Setting>
+		<Setting name="Splitter positions (v2)">97 -305 500000000 100 100 500000000</Setting>
 		<Setting name="Tab data" sensitive="1">
 			<Tabs>
-				<Tab connected="1" selected="1">
+				<Tab connected="1">
 					<Host>51.158.150.93</Host>
 					<Port>2222</Port>
 					<Protocol>1</Protocol>
@@ -144,11 +145,25 @@
 					<BypassProxy>0</BypassProxy>
 					<Name>netflix</Name>
 					<Site>0/netflix</Site>
-					<RemotePath>1 0 4 home 6 public 9 Downloads 85 Avatar.The.Last.Airbender.S01.COMPLETE.1080p.NF.WEB-DL.DDP5.1.x264-LiTTLEBLUEMAN[TGx]</RemotePath>
+					<RemotePath>1 0 4 home 6 public 9 Downloads</RemotePath>
+					<LocalPath>/home/nora/Videos/</LocalPath>
+				</Tab>
+				<Tab selected="1">
+					<Host>51.158.150.93</Host>
+					<Port>2222</Port>
+					<Protocol>1</Protocol>
+					<Type>0</Type>
+					<User>guest</User>
+					<Pass encoding="base64">amVzdWlzZ3Vlc3Q=</Pass>
+					<Logontype>1</Logontype>
+					<EncodingType>Auto</EncodingType>
+					<BypassProxy>0</BypassProxy>
+					<Name>netflix</Name>
+					<Site>0/netflix</Site>
+					<RemotePath>1 0 4 home 6 public 9 Downloads</RemotePath>
 					<LocalPath>/home/nora/Videos/</LocalPath>
 				</Tab>
 			</Tabs>
 		</Setting>
-		<Setting name="Remote filelist sortorder">0 1</Setting>
 	</Settings>
 </FileZilla3>
