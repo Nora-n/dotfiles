@@ -20,6 +20,9 @@
 \usetikzlibrary{babel}
 \usetikzlibrary{optics}
 \usetikzlibrary{3d}
+\RequirePackage{tikz-3dplot}
+\RequirePackage{sankey}
+\usetikzlibrary{chains}
 
 \tikzset{
 	cross/.style={
@@ -616,6 +619,72 @@ pics/strange bar/.style={code={\draw[thick] (-#1,0) -- (#1,0);}}
 \newcommand{\ytick}[2]{
 	\draw[thick]
 	(#1)++(.1,0) --++ (-.2,0) node[left=-.5pt,scale=0.9] {#2};
+}
+
+% For sankey
+\sankeyset{%
+	new start style={variable arrow}{%
+			(\name.left) --++
+			(-\arrowvariabledist,0) --
+			([xshift=-\arrowvariabledist/6]\name.center) --
+			([xshift=-\arrowvariabledist]\name.right) --
+			(\name.right) -- cycle%
+		}{%
+			(\name.left) --++
+			(-\arrowvariabledist,0) --
+			([xshift=-\arrowvariabledist/6]\name.center) --
+			([xshift=-\arrowvariabledist]\name.right) --
+			(\name.right)%
+		},
+	new end style={variable arrow}{%
+			(\name.left) --
+			([yshift=1mm]\name.left) --
+			([xshift=\arrowvariabledist]\name.center) --
+			([yshift=-1mm]\name.right) --
+			(\name.right) -- cycle%
+		}{%
+			(\name.left) --
+			([yshift=1mm]\name.left) --
+			([xshift=\arrowvariabledist]\name.center) --
+			([yshift=-1mm]\name.right) --
+			(\name.right)
+		},
+}
+\sankeyset{%
+	new start style={auto variable arrow}{%
+			% \newcommand{\arrowvariabledist}{%
+			% 	0.3*\sankeygetnodeqty{\name}%
+			% }
+			(\name.left) --
+			([xshift=-\arrowper*\sankeygetnodeqty{\name}]\name.left) --
+			([xshift=-\arrowper*\sankeygetnodeqty{\name}/6]\name.center) --
+			([xshift=-\arrowper*\sankeygetnodeqty{\name}]\name.right) --
+			(\name.right) -- cycle%
+		}{%
+			(\name.left) --
+			([xshift=-\arrowper*\sankeygetnodeqty{\name}]\name.left) --
+			([xshift=-\arrowper*\sankeygetnodeqty{\name}/6]\name.center) --
+			([xshift=-\arrowper*\sankeygetnodeqty{\name}]\name.right) --
+			(\name.right)%
+		},
+	new end style={auto variable arrow}{%
+			(\name.left) --
+			([yshift=1mm]\name.left) --
+			([xshift=\arrowper*\sankeygetnodeqty{\name}]\name.center) --
+			([yshift=-1mm]\name.right) --
+			(\name.right) -- cycle%
+		}{%
+			(\name.left) --
+			([yshift=1mm]\name.left) --
+			([xshift=\arrowper*\sankeygetnodeqty{\name}]\name.center) --
+			([yshift=-1mm]\name.right) --
+			(\name.right)
+		},
+}
+\newcommand\centerlabel[2]{ % valname, label
+	\node[anchor=center, align=center]
+	at ($(#1-old.center)!0.5!(#1.center)$)
+	{#2};
 }
 
 %%% Fin du package

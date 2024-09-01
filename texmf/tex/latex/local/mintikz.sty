@@ -16,6 +16,10 @@
 \definecolor{limegreen}{rgb}{0.2, 0.8, 0.2}
 \definecolor{orange}{rgb}{1.0, 0.5, 0.0}
 \definecolor{firebrick}{rgb}{0.7, 0.13, 0.13}
+\definecolor{myblue}{HTML}{1053af}
+\definecolor{myred}{HTML}{d62626}
+\definecolor{myorange}{HTML}{f29f00}
+\definecolor{mygreen}{HTML}{2e8b73}
 
 \RequirePackage{siunitx}
 \sisetup{%
@@ -128,5 +132,135 @@
 }
 \newcommand{\pt}[1]{{\color{ForestGreen}\circled{#1}}}
 
+% Make toggle for teacher and student version of file
+\newtoggle{student}
+\togglefalse{student}
+\newtoggle{corrige}
+\togglefalse{corrige}
+\newcommand{\ifstudent}[1]{%
+	\iftoggle{student}{%
+		#1%
+	}{}
+}
+\newcommand{\ifprof}[1]{%
+	\iftoggle{student}{%
+	}{
+		#1%
+	}
+}
+\newcommand{\sswitch}[2]{%
+	\iftoggle{student}{%
+		#1%
+	}{%
+		#2%
+	}%
+}
+\newcommand{\ifcorrige}[1]{%
+	\iftoggle{corrige}{%
+		#1%
+	}{}
+}
+\newcommand{\ifenonce}[1]{%
+	\iftoggle{enonce}{%
+	}{
+		#1%
+	}
+}
+\newcommand{\cswitch}[2]{%
+	\iftoggle{corrige}{%
+		#1%
+	}{%
+		#2%
+	}%
+}
+% For tablette use
+% Setup color
+\newcommand{\mycol}{gray}
+\NewDocumentCommand{\psw}{O{\mycol}D(){white}m}{\textcolor{\sswitch{#2}{#1}}{#3}}
+% Automatic white ??
+\newcommand{\wsw}[1]{%
+	\textcolor{\sswitch{white!10}{black!100}}{%
+		#1%
+	}%
+}
+% Color choice
+% Obsolete : psw optional argument
+% \newcommand{\lsw}[2]{\textcolor{\sswitch{white!10}{#1!100}}{#2}}
+% Command for highlighting switch
+\RequirePackage{soul}
+\sethlcolor{lightgray}
+% \RequirePackage[soul]{lua-ul}
+% \RequirePackage{luacolor}
+% \newcommand{\hl}[1]{%
+%   \highLight{#1}
+% }
+% \LuaULSetHighLightColor{gray}
+\DeclareRobustCommand{\mhl}[1]{%
+	\ifmmode\text{\hl{$#1$}}\else\hl{#1}\fi
+}
+\newcommand{\hsw}[1]{%
+	\switch{\textcolor{white!10}{#1}}{\mhl{#1}}
+}
+% Allow for compilation of enon, solu_stud and solu_prof in one go?
+% https://tex.stackexchange.com/a/5265
+\RequirePackage{currfile}
+\RequirePackage{xstring}
+\newcommand\settype[1]{
+	\IfEqCase{#1}{
+		{enon}{
+				\immediate\write18{%
+					pdflatex --jobname="\currfilebase_enon"
+					"\gdef\string\conditionmacro{1}\string\input\space\jobname"
+				}%
+				\ifnum\conditionmacro=1 \togglefalse{corrige}\toggletrue{student}\fi
+			}
+			{solu}{
+				\immediate\write18{%
+					pdflatex --jobname="\currfilebase_solu"
+					"\gdef\string\conditionmacro{2}\string\input\space\jobname"
+				}%
+				\ifnum\conditionmacro=2 \toggletrue{corrige}\fi
+			}
+			{solu_prof}{
+				\immediate\write18{%
+					pdflatex --jobname="\currfilebase_solu-prof"
+					"\gdef\string\conditionmacro{3}\string\input\space\jobname"
+				}%
+				\ifnum\conditionmacro=3 \toggletrue{corrige}\togglefalse{student}\fi
+			}
+			{solu_stud}{
+				\immediate\write18{%
+					pdflatex --jobname="\currfilebase_solu-stud"
+					"\gdef\string\conditionmacro{4}\string\input\space\jobname"
+				}%
+				\ifnum\conditionmacro=4 \toggletrue{corrige}\toggletrue{student}\fi
+			}
+			{stud}{
+				\immediate\write18{%
+					pdflatex --jobname="\currfilebase_stud"
+					"\gdef\string\conditionmacro{5}\string\input\space\jobname"
+				}%
+				\ifnum\conditionmacro=5 \toggletrue{student}\fi
+			}
+			{prof}{
+				\immediate\write18{%
+					pdflatex --jobname="\currfilebase_prof"
+					"\gdef\string\conditionmacro{6}\string\input\space\jobname"
+				}%
+				\ifnum\conditionmacro=6 \togglefalse{student}\fi
+			}
+			{book}{
+				\immediate\write18{%
+					pdflatex --jobname="\currfilebase_book"
+					"\gdef\string\conditionmacro{7}\string\input\space\jobname"
+				}%
+				\ifnum\conditionmacro=7 \togglefalse{student}\toggletrue{corrige}\renewcommand{\mycol}{black}\fi
+			}
+	}[]
+}
+
+% subscript
+\let\sup\relax
+\newcommand*{\sup}[1]{^{\text{#1}}}   % exposant textuel en mode math
 %%% Fin du package
 \endinput

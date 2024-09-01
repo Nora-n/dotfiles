@@ -112,6 +112,10 @@
 \definecolor{cornflowerblue}{rgb}{0.3921, 0.5843, 0.9294}
 \definecolor{limegreen}{rgb}{0.2, 0.8, 0.2}
 \definecolor{firebrick}{rgb}{0.7, 0.13, 0.13}
+\definecolor{myblue}{HTML}{1053af}
+\definecolor{myred}{HTML}{d62626}
+\definecolor{myorange}{HTML}{f29f00}
+\definecolor{mygreen}{HTML}{2e8b73}
 
 % For \cancel and \bcancel functions
 \RequirePackage{cancel}
@@ -217,6 +221,12 @@
 	{on}{\stackon[#1pt]{$#4$}{#3\text{#5}}}
 		{un}{\stackunder[#1pt]{$#4$}{#3\text{#5}}}
 }
+}
+\NewDocumentCommand{\ste}{O{2}D(){on}mm}{%
+	\IfEqCase{#2}{%
+		{on}{\stackon[#1pt]{$#3$}{$#4$}}
+			{un}{\stackunder[#1pt]{$#3$}{$#4$}}
+	}
 }
 
 % Auto fboxsep
@@ -431,6 +441,7 @@
 	\normalsize}{0.5em}{}
 
 % Custom section and subsection
+% TODO: fix section* with IfBooleanTF #1 return oldsection ta KPT.
 \def\sspace{40}
 \let\oldsection\section
 \RenewDocumentCommand{\section}{ood""m}{%
@@ -444,7 +455,7 @@
 			% {1}{\def\ustr{\str}}%
 			% {2}{\def\ustr{\strr}}%
 			% {3}{\def\ustr{\strrr}}%
-		}%
+		}{}%
 	}{}%
 	\IfValueTF{#1}{%
 		\IfEq{#1}{s}{%
@@ -1009,50 +1020,51 @@ literate         = {á}{{\'a}}1
 }
 \ExplSyntaxOff
 % Here comes the big function
-\RenewDocumentCommand{\item}{ooD""{1}d()g}{% Redefine \item to
+\RenewDocumentCommand{\item}{ooD""{1}d()go}{% Redefine \item to
 \IfValueT{#4}{% if (<>) after \item
 	\renewcommand{\labelenumi}{{#4)}}
 	\renewcommand{\labelenumii}{{\makealph{#4} --}}
 	\renewcommand{\labelenumiii}{{\makeroman{#4}}.}
 }%
+\IfValueTF{#6}{\def\localitem{\olditem[#6]}}{\def\localitem{\olditem}}
 \IfValueTF{#1}{% If [<>] after \item
 	\IfEqCase{#1}{% Check the value
 		{l}{% \litem : generic left of item, optional left distance
 				\IfValueTF{#2}{% if second optional value to \item : \item[l][opt]{mand}
-					\olditem\leavevmode\ltm[#2]{#5}%
+					\localitem\leavevmode\ltm[#2]{#5}%
 				}{% If no second optional value : \item[l]{mand}, do nothing with #2
-					\olditem\leavevmode\ltm{#5}%
+					\localitem\leavevmode\ltm{#5}%
 				}%
 			}%
 			{n}{% \nitem : left item /nb in green for points
 				\IfValueTF{#2}{% if second optional value to \item : \item[l][opt]{mand}
-					\olditem\leavevmode\ltm[#2]{\textcolor{ForestGreen}{/#5}}%
+					\localitem\leavevmode\ltm[#2]{\textcolor{ForestGreen}{/#5}}%
 				}{% If no second optional value : \item[l]{mand}, do nothing with #2
-					\olditem\leavevmode\ltm{\textcolor{ForestGreen}{/#5}}%
+					\localitem\leavevmode\ltm{\textcolor{ForestGreen}{/#5}}%
 				}%
 			}%
 			{m}{% \mitem : remove vertical math space
 				\IfValueTF{#2}{%
-					\olditem\leavevmode\vspace*{-#2pt}\relax
+					\localitem\leavevmode\vspace*{-#2pt}\relax
 				}{%
-					\olditem\leavevmode\vspace*{\mspace pt}\relax
+					\localitem\leavevmode\vspace*{\mspace pt}\relax
 				}%
 			}%
 			{b}{% \bitem
-				\olditem\leavevmode\textbf{#5}
+				\localitem\leavevmode\textbf{#5}
 			}%
 			{bl}{% bold and left
 				\IfValueTF{#2}{% if second optional value to \item : \item[l][opt]{mand}
-					\olditem\leavevmode\ltm[#2]{#4}\textbf{#5}%
+					\localitem\leavevmode\ltm[#2]{#4}\textbf{#5}%
 				}{% If no second optional value : \item[l]{mand}, do nothing with #2
-					\olditem\leavevmode\ltm{#4}\textbf{#5}%
+					\localitem\leavevmode\ltm{#4}\textbf{#5}%
 				}%
 			}
 			{s}{% \litem for difficulty stars
 				\IfValueTF{#2}{%
-					\olditem\leavevmode\ltm[#2]{\strs{#3}}%
+					\localitem\leavevmode\ltm[#2]{\strs{#3}}%
 				}{%
-					\olditem\leavevmode\ltm{\strs{#3}}%
+					\localitem\leavevmode\ltm{\strs{#3}}%
 				}%
 			}%
 			{cl}{% \clitem for circled
@@ -1070,7 +1082,7 @@ literate         = {á}{{\'a}}1
 				}%
 			}%
 	}%
-}{\olditem}
+}{\localitem}
 }
 
 % Bolditemize
@@ -1099,6 +1111,8 @@ literate         = {á}{{\'a}}1
 % Footnotes outside tcboxes
 \BeforeBeginEnvironment{tcolorbox}{\savenotes}
 \AfterEndEnvironment{tcolorbox}{\spewnotes}
+\BeforeBeginEnvironment{tcn}{\savenotes}
+\AfterEndEnvironment{tcn}{\spewnotes}
 \BeforeBeginEnvironment{tcb}{\savenotes}
 \AfterEndEnvironment{tcb}{\spewnotes}
 \BeforeBeginEnvironment{tcb*}{\savenotes}
@@ -1188,7 +1202,7 @@ literate         = {á}{{\'a}}1
 % For tablette use
 % Setup color
 \newcommand{\mycol}{gray}
-\NewDocumentCommand{\psw}{O{\mycol}m}{\textcolor{\sswitch{white!10}{#1}}{#2}}
+\NewDocumentCommand{\psw}{O{\mycol}D(){white}m}{\textcolor{\sswitch{#2}{#1}}{#3}}
 % Automatic white ??
 \newcommand{\wsw}[1]{%
 	\textcolor{\sswitch{white!10}{black!100}}{%
@@ -1783,13 +1797,14 @@ literate         = {á}{{\'a}}1
 \colorlet{ror}{orange!90!black}
 \colorlet{exem}{lightgray!55!black}
 \colorlet{cexe}{lightgray!55!black}
-\colorlet{expe}{lightgray!55!black}
+\colorlet{expe}{darkgray!50!black}
+\colorlet{obsv}{darkgray!50!black}
 \colorlet{code}{lightgray!55!black}
 \colorlet{mate}{lightgray!55!black}
 \colorlet{odgr}{lightgray!50!black}
 \colorlet{appl}{gray!50!black}
 \colorlet{rema}{darkgray!50!black}
-\colorlet{black}{black}
+\colorlet{null}{black}
 % for backs in fill style
 \colorlet{loiback}{red!10}
 \colorlet{theoback}{red!10}
@@ -1810,13 +1825,14 @@ literate         = {á}{{\'a}}1
 \colorlet{rorback}{orange!10}
 \colorlet{exemback}{lightgray!10}
 \colorlet{cexeback}{lightgray!10}
-\colorlet{expeback}{lightgray!10}
+\colorlet{expeback}{darkgray!10}
+\colorlet{obsvback}{darkgray!10}
 \colorlet{codeback}{lightgray!10}
 \colorlet{mateback}{lightgray!10}
 \colorlet{odgrback}{lightgray!10}
 \colorlet{applback}{gray!10}
 \colorlet{remaback}{darkgray!10}
-\colorlet{blackback}{white}
+\colorlet{nullback}{white}
 % for TITLE backs in fill style
 \colorlet{loibacktitle}{red!30}
 \colorlet{theobacktitle}{red!30}
@@ -1838,12 +1854,13 @@ literate         = {á}{{\'a}}1
 \colorlet{exembacktitle}{lightgray!50}
 \colorlet{cexebacktitle}{lightgray!50}
 \colorlet{expebacktitle}{lightgray!50}
+\colorlet{obsvbacktitle}{lightgray!50}
 \colorlet{codebacktitle}{lightgray!50}
 \colorlet{matebacktitle}{lightgray!50}
 \colorlet{odgrbacktitle}{lightgray!50}
 \colorlet{applbacktitle}{gray!30}
 \colorlet{remabacktitle}{darkgray!30}
-\colorlet{blackbacktitle}{white}
+\colorlet{nullbacktitle}{white}
 % set names for counters
 \newcommand{\nameloi}{Loi}
 \newcommand{\nametheo}{Théorème}
@@ -1864,7 +1881,8 @@ literate         = {á}{{\'a}}1
 \newcommand{\nameror}{Important}
 \newcommand{\nameexem}{Exemple}
 \newcommand{\namecexe}{Contre-exemple}
-\newcommand{\nameexpe}{Manipulation}
+\newcommand{\nameexpe}{Expérience}
+\newcommand{\nameobsv}{Observation}
 \newcommand{\namecode}{Code}
 \newcommand{\namemate}{Matériel}
 \newcommand{\nameodgr}{Ordre de grandeur}
@@ -1911,6 +1929,8 @@ literate         = {á}{{\'a}}1
 \renewcommand{\thecexe}{\thechapter.\arabic{cexe}}
 \newcounter{expe}[chapter]
 \renewcommand{\theexpe}{\thechapter.\arabic{expe}}
+\newcounter{obsv}[chapter]
+\renewcommand{\theobsv}{\thechapter.\arabic{obsv}}
 \newcounter{code}[chapter]
 \renewcommand{\thecode}{\thechapter.\arabic{code}}
 \newcounter{mate}[chapter]
@@ -1931,6 +1951,11 @@ literate         = {á}{{\'a}}1
 					\node[anchor=center, scale=2]
 					at ([shift={(-0.7,-0.4)}]frame.north west)
 					{\csname icon#1\endcsname};
+					% \IfEqCase{#2}{%
+					% 	{lftt}{%
+					% 			\draw[line width=1pt, #1] ([xshift=4pt]frame.north west)--++(0:3mm);
+					% 		}%
+					% }%
 				}
 		}
 }
@@ -1987,6 +2012,7 @@ literate         = {á}{{\'a}}1
 \newcommand{\iconwip}{\faIcon{hard-hat}}
 \newcommand{\iconbomb}{\faIcon{bomb}}
 \newcommand{\iconchem}{\faIcon{eye-dropper}}
+\newcommand{\iconobsv}{\faIcon{eye}}
 \newcommand{\icontime}{\faIcon{stopwatch}}
 % \newcommand{\iconexpe}{\faIcon{fill}}
 \newcommand{\iconbulb}{\faIcon[regular]{lightbulb}}
@@ -2003,6 +2029,8 @@ literate         = {á}{{\'a}}1
 % My generic box name
 % based on the great answer https://tex.stackexchange.com/a/471615/284518
 % TODO: Remove the first star parameter~: useless with IfValueTF{#5}
+
+\newcommand{\chaplett}{C} % Lettre par défaut des Propriété C1.1 etc
 
 % No counter
 \NewTColorBox{tcn}{sO{}r()D<>{box}d""D''{l}m}{%
@@ -2027,7 +2055,7 @@ base,
 \NewTColorBox{tcb}{sO{}r()D<>{box}d""D''{l}m}{%
 base,
 % #4={#3}{#7},
-#4={#3}{\csname name#3\endcsname~\expandafter\csname the#3\endcsname~:~#7},
+#4={#3}{\csname name#3\endcsname~\chaplett\expandafter\csname the#3\endcsname~:~#7},
 step={#3},
 #6icon={\IfValueTF{#5}{#5}{#3}}{\csname name#3\endcsname~\expandafter\csname the#3\endcsname~:~#7},
 #2,
@@ -2035,7 +2063,7 @@ step={#3},
 % on list
 \NewTColorBox{tcb*}{sO{}r()D<>{box}d""D''{l}m}{%
 base,
-#4={#3}{\iconhart~\csname name#3\endcsname~\expandafter\csname the#3\endcsname~:~#7},
+#4={#3}{\iconhart~\csname name#3\endcsname~\chaplett\expandafter\csname the#3\endcsname~:~#7},
 step={#3},
 #6icon={\IfValueTF{#5}{#5}{#3}}{#7},
 add to list={#3}{section},
@@ -2101,8 +2129,9 @@ list entry={\hspace*{-20pt}\protect\rcheck~
 			boxrule=0pt, frame hidden, interior hidden,
 			borderline west={1pt}{0pt}{#1}, coltitle=#1,
 			fonttitle=\bfseries, top=10pt,
-			attach boxed title to top left={yshift={-9pt}, xshift=4pt},
-			boxed title style={enhanced, frame hidden, colback=white},
+			attach boxed title to top left={yshift={-9pt}, xshift=10pt},
+			% boxed title style={enhanced, frame hidden, colback=white},
+			boxed title style={enhanced, colframe=#1, colback=#1back, sharp corners},
 			title={#2},
 		}
 }
@@ -2210,7 +2239,7 @@ list entry={\hspace*{-20pt}\protect\rcheck~
 		}
 }
 % For side inside box
-\NewTColorBox{isd}{O{}D(){black}}{%
+\NewTColorBox{isd}{O{}D(){null}}{%
 	side={#2},
 	#1,
 }

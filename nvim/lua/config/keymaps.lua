@@ -59,6 +59,23 @@ vim.keymap.set(
   { noremap = true, desc = "Spell english" }
 )
 
+-- Filetypes
+vim.keymap.set(
+  "n",
+  "<F2>",
+  "<Cmd>set filetype=markdown<CR>",
+  { desc = "ft md" }
+)
+
+vim.keymap.set("n", "<F1>", "<Cmd>set filetype=tex<CR>", { desc = "ft tex" })
+
+vim.keymap.set(
+  "n",
+  "<S-F1>",
+  "<Cmd>set filetype=python<CR>",
+  { desc = "ft md" }
+)
+
 -- Tabular
 vim.keymap.set(
   "n",
@@ -173,6 +190,14 @@ vim.keymap.set(
 -- smap <silent><expr> kj luasnip#jumpable(-1) ? '<Plug>luasnip-jump-prev' : 'kj'
 -- ]])
 
+-- format latex
+vim.keymap.set(
+  "n",
+  "Q",
+  "<Plug>latexfmt_format",
+  { noremap = true, desc = "Format LaTeX" }
+)
+
 -- reload snippets
 vim.keymap.set(
   "n",
@@ -220,13 +245,6 @@ vim.keymap.set(
   "<Leader>Sbb",
   "<Cmd>%s!\\vbegin\\zs\\{(t|b)(loi|theo|prop|demo|coro|inte|impl|impo|rapp|defi|nota|ror|exem|odgr|rema)\\}(\\[.*\\]|)!{tcb}\\3(\\2)<CR><Cmd>%s!\\vend\\zs\\{(r|t|b)(loi|theo|prop|demo|coro|inte|impl|impo|rapp|defi|nota|ror|exem|odgr|rema)\\}(\\[.*\\]|)!{tcb}<CR>",
   { desc = "Change new boxes" }
-)
-
-vim.keymap.set(
-  "n",
-  "<F2>",
-  "<Cmd>set filetype=markdown<CR>",
-  { desc = "ft md" }
 )
 
 -- %s!\vbegin\zs{(NC|)(loi|theo|prop|demo|coro|inte|impl|impo|rapp|defi|nota|ror|exem|odgr|rema)}([.*])!{tcb}\3(\2)

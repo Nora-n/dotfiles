@@ -349,10 +349,44 @@ return {
     },
     fmta(
       [[
-      \ifstudent{
+      \ifstudent{%
         <>
-      }
+      }%
       <>
+      ]],
+      {
+        d(1, get_visual),
+        i(0),
+      }
+    )
+  ),
+  s(
+    {
+      trig = "Ifs",
+      wordTrig = true,
+      snippetType = "autosnippet",
+      dscr = "Expands 'ifs' into '\\ifstudent{<>}'",
+    },
+    fmta(
+      [[
+      \ifstudent{<>}<>
+      ]],
+      {
+        d(1, get_visual),
+        i(0),
+      }
+    )
+  ),
+  s(
+    {
+      trig = "Ifp",
+      wordTrig = true,
+      snippetType = "autosnippet",
+      dscr = "Expands 'ifp' into '\\ifprof{<>}'",
+    },
+    fmta(
+      [[
+      \ifprof{<>}<>
       ]],
       {
         d(1, get_visual),
@@ -369,9 +403,9 @@ return {
     },
     fmta(
       [[
-      \ifprof{
+      \ifprof{%
         <>
-      }
+      }%
       <>
       ]],
       {

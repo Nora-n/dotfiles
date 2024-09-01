@@ -87,35 +87,35 @@ augroup end
 ]])
 
 -- Map Q to custom format command
-vim.cmd([[
-" Reformat lines (getting the spacing correct) {{{
-fun! TeX_fmt()
-    if (getline(".") != "")
-    let save_cursor = getpos(".")
-        let op_wrapscan = &wrapscan
-        set nowrapscan
-        let par_begin = '^\(%D\)\=\s*\($\|\\begin\|\\end\|\\\[\|\\\]\|\\\(sub\)*section\>\|\\item\>\|\\bitem\>\|\\clitem\>\|\\sqlitem\>\|\\nitem\>\|\\litem\>\|\\NC\>\|\\blank\>\|\\noindent\>\|\\smallbreak\>\|\\bigbreak\>\|\\label\>\|\\hfill\>\|\\tcblower\>\|\\tcbsubtitle\|\\cswitch\>\)'
-        let par_end   = '^\(%D\)\=\s*\($\|\\begin\|\\end\|\\\]\|\\\[\|\\place\|\\\(sub\)*section\>\|\\item\>\|\\bitem\>\|\\clitem\>\|\\sqlitem\>\|\\nitem\>\|\\litem\>\|\\NC\>\|\\blank\>\|\\smallbreak\>\|\\bigbreak\>\|\\label\>\|\\hfill\>\|\\tcblower\>\|\\tcbsubtitle\|\\cswitch\>\)'
-    try
-      exe '?'.par_begin.'?+'
-    catch /E384/
-      1
-    endtry
-        norm V
-    try
-      exe '/'.par_end.'/-'
-    catch /E385/
-      $
-    endtry
-    norm gq
-        let &wrapscan = op_wrapscan
-    call setpos('.', save_cursor)
-    endif
-endfun
-
-nmap Q :call TeX_fmt()<CR>
-" }}}
-]])
+-- vim.cmd([[
+-- " Reformat lines (getting the spacing correct) {{{
+-- fun! TeX_fmt()
+--     if (getline(".") != "")
+--     let save_cursor = getpos(".")
+--         let op_wrapscan = &wrapscan
+--         set nowrapscan
+--         let par_begin = '^\(%D\)\=\s*\($\|\\begin\|\\end\|\\\[\|\\\]\|\\\(sub\)*section\>\|\\item\>\|\\bitem\>\|\\clitem\>\|\\sqlitem\>\|\\nitem\>\|\\litem\>\|\\NC\>\|\\blank\>\|\\noindent\>\|\\smallbreak\>\|\\bigbreak\>\|\\label\>\|\\hfill\>\|\\tcblower\>\|\\tcbsubtitle\|\\cswitch\>\)'
+--         let par_end   = '^\(%D\)\=\s*\($\|\\begin\|\\end\|\\\]\|\\\[\|\\place\|\\\(sub\)*section\>\|\\item\>\|\\bitem\>\|\\clitem\>\|\\sqlitem\>\|\\nitem\>\|\\litem\>\|\\NC\>\|\\blank\>\|\\smallbreak\>\|\\bigbreak\>\|\\label\>\|\\hfill\>\|\\tcblower\>\|\\tcbsubtitle\|\\cswitch\>\)'
+--     try
+--       exe '?'.par_begin.'?+'
+--     catch /E384/
+--       1
+--     endtry
+--         norm V
+--     try
+--       exe '/'.par_end.'/-'
+--     catch /E385/
+--       $
+--     endtry
+--     norm gq
+--         let &wrapscan = op_wrapscan
+--     call setpos('.', save_cursor)
+--     endif
+-- endfun
+--
+-- nmap Q :call TeX_fmt()<CR>
+-- " }}}
+-- ]])
 
 -- for vimwiki
 vim.cmd([[
