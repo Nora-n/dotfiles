@@ -448,11 +448,11 @@ return {
     },
     fmta(
       [[
-      \sswitch{
+      \sswitch{%
         <>
-      }{
+      }{%
         <>
-      }
+      }%
       <>
       ]],
       {
@@ -489,11 +489,11 @@ return {
     },
     fmta(
       [[
-      \cswitch{
+      \cswitch{%
         <>
-      }{
+      }{%
         <>
-      }
+      }%
       <>
       ]],
       {
@@ -1286,7 +1286,7 @@ return {
     snippetType = "autosnippet",
     condition = tex_utils.in_mathzone,
   }, {
-    t("_{\\rm exp}"),
+    t("\\ind{exp}"),
   }),
   s({
     trig = "seq",
@@ -1294,7 +1294,7 @@ return {
     snippetType = "autosnippet",
     condition = tex_utils.in_mathzone,
   }, {
-    t("_{\\rm eq}"),
+    t("\\ind{eq}"),
   }),
   -- fraction
   s({
@@ -3982,7 +3982,9 @@ return {
       dscr = "Include graphics",
     },
     fmta(
-      [[\includegraphics[<>=<>]{<>}]],
+      [[
+      \includegraphics[<>=<>]{<>}
+      ]],
       { c(1, { t("width"), t("scale"), t("height") }), i(2), i(3) }
     )
   ),

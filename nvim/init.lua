@@ -117,6 +117,17 @@ augroup end
 -- " }}}
 -- ]])
 
+-- Modify latexfmt
+vim.cmd([[
+let g:latexfmt_no_join_any = [ '\(\\)\@1<!%',
+\ '\begin', '\end', '\section', '\subsection', '\subsubsection',
+\ '\document', '\(\\)\@1<!\[', '\]', 
+\ '\left', '\right', '\beforetext', '\Lra',
+\ '\bigbreak', '\noindent', '\smallbreak', '\tcblower',
+\ '\sswitch', '}{', '}']
+let g:latexfmt_no_join_prev = [ '\item', '\task', '\label' ]
+]])
+
 -- for vimwiki
 vim.cmd([[
 :autocmd FileType vimwiki map <leader>d :VimwikiMakeDiaryNote

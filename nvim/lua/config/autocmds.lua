@@ -22,11 +22,11 @@ vim.api.nvim_create_autocmd("FileType", {
 
 -- firenvim FileTypes
 vim.api.nvim_create_autocmd({ "BufEnter" }, {
-  pattern = "localhost_lab*.txt",
+  pattern = "localhost_*.txt",
   command = "set filetype=python",
 })
 vim.api.nvim_create_autocmd({ "BufEnter" }, {
-  pattern = "localhost_lab*.txt",
+  pattern = "localhost_*.txt",
   command = [[:%s!\v^(\s*\r?\n){2,}!\r]],
 })
 vim.api.nvim_create_autocmd({ "BufEnter" }, {

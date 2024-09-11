@@ -79,7 +79,7 @@
 \fancyhead[RO]{\thepage}               % Top right even: page
 \fancyfoot[L]{Lycée \textsc{Pothier}}
 \fancyfoot[C]{\textbf{\thepage/\pageref*{LastPage}}}
-\fancyfoot[R]{MPSI3 -- 2023/2024}
+\fancyfoot[R]{MPSI3 -- 2024/2025}
 %\fancyfoot{}                           % Empty footer
 \renewcommand{\footrulewidth}{1pt}
 % Space before ruler
@@ -91,7 +91,7 @@
 	\fancyhf{}%
 	\fancyfoot[L]{Lycée \textsc{Pothier}}
 	\fancyfoot[C]{\textbf{\thepage/\pageref*{LastPage}}}
-	\fancyfoot[R]{MPSI3 -- 2023/2024}
+	\fancyfoot[R]{MPSI3 -- 2024/2025}
 	\renewcommand{\footrulewidth}{1pt}% Line at the footer visible
 }
 
@@ -1825,7 +1825,7 @@ literate         = {á}{{\'a}}1
 \colorlet{rorback}{orange!10}
 \colorlet{exemback}{lightgray!10}
 \colorlet{cexeback}{lightgray!10}
-\colorlet{expeback}{darkgray!10}
+\colorlet{expeback}{lightgray!5}
 \colorlet{obsvback}{darkgray!10}
 \colorlet{codeback}{lightgray!10}
 \colorlet{mateback}{lightgray!10}
@@ -2068,13 +2068,13 @@ step={#3},
 #6icon={\IfValueTF{#5}{#5}{#3}}{#7},
 add to list={#3}{section},
 list entry={\hspace*{-20pt}\protect\rcheck~
-		% \csname name#3\endcsname~\expandafter\csname the#3\endcsname~:~
-		#7},
+		% \csname name#3\endcsname~\expandafter
+    \chaplett\csname the#3\endcsname~: #7},
 #2,
 }
 
 % To manually add list entry for shorter text
-\newcommand{\lte}{\hspace*{-20pt}\protect\rcheck~~}
+\newcommand{\lte}{\hspace*{-20pt}\protect\rcheck~~\chaplett}
 
 % Basic styles of boxes
 % thanks to https://tex.stackexchange.com/a/252907/284518 for 2 args
@@ -2236,6 +2236,13 @@ list entry={\hspace*{-20pt}\protect\rcheck~
 	bld/.style={
 			fontupper=\bfseries,
 			fontlower=\bfseries
+		}
+}
+% no sep left right
+\tcbset{
+	nsp/.style={
+			boxsep=0pt,
+			left=0pt, right=0pt, bottom=0pt
 		}
 }
 % For side inside box
