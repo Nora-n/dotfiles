@@ -1051,7 +1051,7 @@ literate         = {á}{{\'a}}1
 				}%
 			}%
 			{b}{% \bitem
-				\localitem\leavevmode\textbf{#5}
+				\localitem\leavevmode\textbf{#5}%
 			}%
 			{bl}{% bold and left
 				\IfValueTF{#2}{% if second optional value to \item : \item[l][opt]{mand}
@@ -2069,7 +2069,7 @@ step={#3},
 add to list={#3}{section},
 list entry={\hspace*{-20pt}\protect\rcheck~
 		% \csname name#3\endcsname~\expandafter
-    \chaplett\csname the#3\endcsname~: #7},
+		\chaplett\csname the#3\endcsname~: #7},
 #2,
 }
 
@@ -2164,7 +2164,7 @@ list entry={\hspace*{-20pt}\protect\rcheck~
 			borderline east={1pt}{0pt}{#1}, coltitle=#1,
 			fonttitle=\bfseries, top=10pt,
 			attach boxed title to top left={yshift={-9pt}, xshift=4pt},
-			boxed title style={enhanced, frame hidden, colback=white},
+			boxed title style={enhanced, colframe=#1, colback=#1back, sharp corners},
 			title={#2},
 		}
 }

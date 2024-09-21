@@ -221,6 +221,21 @@ end)
 -- open vimwiki
 vim.keymap.set("n", "<Leader>ww", "<Plug>VimwikiIndex", { desc = "Open index" })
 
+-- DiffviewFileHistory
+-- vim.keymap.del("n", "<Leader>d")
+vim.keymap.set(
+  "n",
+  "<Leader>df",
+  "<Cmd>DiffviewFileHistory %<CR>",
+  { desc = "Diffview current file" }
+)
+vim.keymap.set(
+  "n",
+  "<Leader>dF",
+  "<Cmd>DiffviewFileHistory <CR>",
+  { desc = "Diffview current repo" }
+)
+
 -- switch boxes to new
 vim.keymap.set(
   "n",
