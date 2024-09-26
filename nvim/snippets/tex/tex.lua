@@ -1460,7 +1460,7 @@ return {
     }),
   }),
   s({
-    trig = "acos",
+    trig = "arcc",
     wordTrig = false,
     snippetType = "autosnippet",
     dscr = "Expands 'acos' into '\\acos{<>}'",
@@ -1484,7 +1484,7 @@ return {
     }),
   }),
   s({
-    trig = "asin",
+    trig = "arcs",
     wordTrig = false,
     snippetType = "autosnippet",
     dscr = "Expands 'asin' into '\\asin{<>}'",
@@ -1508,7 +1508,7 @@ return {
     }),
   }),
   s({
-    trig = "atan",
+    trig = "arct",
     wordTrig = false,
     snippetType = "autosnippet",
     dscr = "Expands 'atan' into '\\atan{<>}'",
@@ -2554,7 +2554,15 @@ return {
   }),
   -- simple point
   s({
+    trig = "prt",
+    snippetType = "autosnippet",
+    dscr = "Expands 'prt' into '\\protect{<>}'",
+  }, {
+    t("\\protect"),
+  }),
+  s({
     trig = "ptt",
+    wordTrig = false,
     snippetType = "autosnippet",
     dscr = "Expands 'ptt' into '\\pt{<>}'",
   }, fmta("\\pt{<>}", { i(1, "1") })),
@@ -3989,17 +3997,25 @@ return {
     )
   ),
   s({
-    trig = "([=%d])lwd",
-    regTrig = true,
+    trig = "lwd",
     wordTrig = false,
     snippetType = "autosnippet",
     dscr = "Linewidth",
   }, {
-    f(function(_, snip)
-      return snip.captures[1]
-    end),
     t("\\linewidth"),
   }),
+  -- s({
+  --   trig = "([=%d])lwd",
+  --   regTrig = true,
+  --   wordTrig = false,
+  --   snippetType = "autosnippet",
+  --   dscr = "Linewidth",
+  -- }, {
+  --   f(function(_, snip)
+  --     return snip.captures[1]
+  --   end),
+  --   t("\\linewidth"),
+  -- }),
   -- fig
   s(
     {
