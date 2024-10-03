@@ -503,6 +503,18 @@ return {
       }
     )
   ),
+  s(
+    {
+      trig = "Csw",
+      snippetType = "autosnippet",
+      dscr = "Expands 'Csw' into '\\cswitch{<>}{<>}'",
+    },
+    fmta([[\cswitch{<>}{<>}<>]], {
+      d(1, get_visual),
+      i(2, "énoncé"),
+      i(0),
+    })
+  ),
   -- highlight switch white
   -- s(
   --   {
