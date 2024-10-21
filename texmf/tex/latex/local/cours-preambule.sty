@@ -607,6 +607,15 @@
 		\node[shape=circle, draw, inner sep=1pt, minimum size=3ex] (char) {#1};
 	}\kern-3pt
 }
+% C switch for circling something, to use in English tests
+\newcommand{\crls}[1]{%
+	\cswitch{%
+		\circled{#1}%
+	}{%
+		#1%
+	}%
+}%
+
 % rounded for checkbox
 \newcommand*\rcheck{%
 	\tikz[baseline=(char.base)]{%
@@ -687,6 +696,7 @@
 \newcommand*{\sup}[1]{^{\text{#1}}}   % exposant textuel en mode math
 
 % nombre d'oxydation
+\let\oldno\no % Store \no in \oldno
 \let\no\relax
 \NewDocumentCommand{\no}{g}{%
 	\IfValueTF{#1}{%
@@ -1156,8 +1166,12 @@ literate         = {á}{{\'a}}1
 	}{}%
 }
 
-% ??
+% Make better \sim limits
 \newcommand{\Sim}{\ensuremath{\mathop{\sim}\limits}}
+
+% For bigger boxrule in fbox
+\edef\oldfboxrule{\the\fboxrule}
+\newcommand{\fatbox}[1]{\setlength{\fboxrule}{1pt}\fbox{#1}\setlength{\fboxrule}{\oldfboxrule}}
 
 % Make toggle for teacher and student version of file
 \newtoggle{student}
@@ -2302,10 +2316,6 @@ list entry={\hspace*{-20pt}\protect\rcheck~
 	#4={#3}{\csname name#3\endcsname~\expandafter\csname the#3\endcsname~:~#7},
 ]{#8}{#9}
 }
-
-% For bigger boxrule in fbox
-\edef\oldfboxrule{\the\fboxrule}
-\newcommand{\fatbox}[1]{\setlength{\fboxrule}{1pt}\fbox{#1}\setlength{\fboxrule}{\oldfboxrule}}
 
 % Journal abbreviations
 \newcommand*\aap{A\&A}

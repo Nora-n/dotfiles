@@ -299,19 +299,19 @@ return {
   s({
     trig = "xtt",
     snippetType = "autosnippet",
-    dscr = "Expands 'tt' into '\texttt{}'",
+    dscr = "Expands 'xtt' into '\texttt{}'",
   }, fmta("\\texttt{<>}", { d(1, get_visual) })),
   -- textsc
   s({
     trig = "xsc",
     snippetType = "autosnippet",
-    dscr = "Expands 'sc' into '\textsc{}'",
+    dscr = "Expands 'xsc' into '\textsc{}'",
   }, fmta("\\textsc{<>}", { d(1, get_visual) })),
   -- textsc
   s({
     trig = "xbf",
     snippetType = "autosnippet",
-    dscr = "Expands 'bf' into '\textbf{}'",
+    dscr = "Expands 'xbf' into '\textbf{}'",
   }, fmta("\\textbf{<>}", { d(1, get_visual) })),
   -- intertext in math
   s({
@@ -512,6 +512,17 @@ return {
     fmta([[\cswitch{<>}{<>}<>]], {
       d(1, get_visual),
       i(2, "énoncé"),
+      i(0),
+    })
+  ),
+  s(
+    {
+      trig = "crls",
+      snippetType = "autosnippet",
+      dscr = "Expands 'crls' into '\\crls{<>}'",
+    },
+    fmta([[\crls{<>}<>]], {
+      d(1, get_visual),
       i(0),
     })
   ),
@@ -1757,6 +1768,23 @@ return {
       i(2),
     })
   ),
+  -- qty
+  s({
+    trig = "qty",
+    snippetType = "autosnippet",
+    dscr = "Expands 'qty' into '\\qty'",
+    condition = tex_utils.in_mathzone,
+  }, {
+    c(1, {
+      fmta("\\qty(<>)", { d(1, get_visual) }),
+      fmta("\\qty{<>}", { d(1, get_visual) }),
+    }),
+  }),
+  --
+  -- fmta("\\qty{<>}", {
+  --   d(1, get_visual),
+  -- })
+  -- ),
   -- mqty
   s(
     {
@@ -2752,7 +2780,7 @@ return {
       dscr = "Expands 'car' into '\\CArrow{<>}'",
       condition = tex_utils.in_mathzone,
     },
-    fmta("\\CArrow{<>}", {
+    fmta("\\CArrow{$<>$}", {
       d(1, get_visual),
     })
   ),
