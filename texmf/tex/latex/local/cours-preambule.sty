@@ -117,6 +117,15 @@
 \definecolor{myorange}{HTML}{f29f00}
 \definecolor{mygreen}{HTML}{2e8b73}
 
+% shortcut for colors
+% \newcommand{\wht}[1]{\textcolor{white}{#1}}
+\newcommand{\blk}[1]{\textcolor{black}{#1}}
+\newcommand{\red}[1]{\textcolor{firebrick}{#1}}
+\newcommand{\blu}[1]{\textcolor{brandeisblue}{#1}}
+\newcommand{\gre}[1]{\textcolor{LimeGreen}{#1}}
+\newcommand{\fgr}[1]{\textcolor{ForestGreen}{#1}}
+\newcommand{\ora}[1]{\textcolor{orange}{#1}}
+
 % For \cancel and \bcancel functions
 \RequirePackage{cancel}
 \newcommand{\dcancel}[1]{
@@ -204,24 +213,28 @@
 \def\ptcol{ForestGreen}
 \newcommand{\pt}[1]{{\color{\cswitch{\ptcol}{white!10}}\circled{#1}}}
 % Stack
+% Pour \pt au-dessus de texte
 \NewDocumentCommand{\stk}{O{2}D(){on}D""{1}m}{%
 \IfEqCase{#2}{%
 	{on}{\stackon[#1pt]{\rm #4}{$\mathclap{\pt{#3}}$}}
 		{un}{\stackunder[#1pt]{\rm #4}{$\mathclap{\pt{#3}}$}}
 }
 }
+% Pour \pt au-dessus de math
 \NewDocumentCommand{\stm}{O{2}D(){on}D""{1}m}{%
 \IfEqCase{#2}{%
 	{on}{\stackon[#1pt]{$#4$}{$\pt{#3}$}}
 		{un}{\stackunder[#1pt]{$#4$}{$\pt{#3}$}}
 }
 }
+% Pour texte au-dessus de math, avec paramètre pour un "\footnotesize"
 \NewDocumentCommand{\stc}{O{2}D(){on}D""{}mm}{%
 \IfEqCase{#2}{%
 	{on}{\stackon[#1pt]{$#4$}{#3\text{#5}}}
 		{un}{\stackunder[#1pt]{$#4$}{#3\text{#5}}}
 }
 }
+% Pour math au-dessus de math
 \NewDocumentCommand{\ste}{O{2}D(){on}mm}{%
 	\IfEqCase{#2}{%
 		{on}{\stackon[#1pt]{$#3$}{$#4$}}
@@ -331,8 +344,8 @@
 % Figures next to text
 \RequirePackage{wrapfig}
 % Caption right of figure
-\RequirePackage[rightcaption]{sidecap}
-\sidecaptionvpos{figure}{t}
+% \RequirePackage[rightcaption]{sidecap}
+% \sidecaptionvpos{figure}{t}
 % Better sidecap with floatrow and
 % \floatsetup[figure]{capposition=beside, capbesideposition={top,right}}
 \RequirePackage{floatrow}
@@ -669,6 +682,8 @@
 
 % Math symbols
 \RequirePackage{amsmath, amssymb} % , amsthm}
+\RequirePackage{stmaryrd} % for \sslash giving nice // character
+\RequirePackage{centernot} % Better than \not
 \DeclareMathOperator{\acosh}{argch}
 \DeclareMathOperator{\asinh}{argsh}
 \let\cosh\relax
@@ -1103,7 +1118,7 @@ literate         = {á}{{\'a}}1
 % 	\bolditemize \let\olditem\item \def\item[##1]{\olditem \textbf{##1}}}
 
 % \newcommand{\ed}[2]{#1\endnote{\textcolor{black}{#1} : #2}}
-\newcommand{\obar}[1]{\mkern 1.5mu\overline{\mkern-1.5mu#1\mkern-1.5mu}\mkern 1.5mu}
+\renewcommand{\obar}[1]{\mkern 1.5mu\overline{\mkern-1.5mu#1\mkern-1.5mu}\mkern 1.5mu}
 \newcommand{\obarr}[1]{\mkern 1.5mu\overline{\mkern-1.5mu\rm #1\mkern-1.5mu}\mkern 1.5mu}
 \newcommand{\vvr}[1]{\vv{\rm #1}}
 
@@ -1114,6 +1129,17 @@ literate         = {á}{{\'a}}1
 % Environnements de mises en valeur
 \RequirePackage[many]{tcolorbox}
 \tcbuselibrary{skins, raster, xparse}
+% To simulate another \tcblower hdashedline
+\makeatletter
+\newcommand{\tcbdash}[1][gray]{%
+  \begin{tikzpicture}
+  \path[use as bounding box] (0,0) -- (\linewidth,0);
+  \draw[color=#1,dashed,dash phase=2pt]
+        (0-\kvtcb@leftlower-\kvtcb@boxsep,0)--
+        (\linewidth+\kvtcb@rightlower+\kvtcb@boxsep,0);
+  \end{tikzpicture}%
+  }
+\makeatother
 
 % Useful tools
 \RequirePackage{etoolbox}
@@ -2050,6 +2076,8 @@ literate         = {á}{{\'a}}1
 % TODO: Remove the first star parameter~: useless with IfValueTF{#5}
 
 \newcommand{\chaplett}{C} % Lettre par défaut des Propriété C1.1 etc
+\renewcommand{\thefigure}{\chaplett\thechapter.\arabic{figure}}
+\renewcommand{\thetable}{\chaplett\thechapter.\arabic{table}}
 
 % No counter
 \NewTColorBox{tcn}{sO{}r()D<>{box}d""D''{l}m}{%

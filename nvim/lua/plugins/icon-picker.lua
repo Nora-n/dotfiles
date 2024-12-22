@@ -1,3 +1,6 @@
+-- return {
+--   { "ziontee113/icon-picker.nvim", enabled = false },
+-- }
 return {
   "ziontee113/icon-picker.nvim",
   config = function()

@@ -1,4 +1,4 @@
-\NeedsTeXFormat{LaTeX2e}
+% \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{custikz}
 
 % Utilisation de tikz
@@ -607,6 +607,7 @@ pics/strange bar/.style={code={\draw[thick] (-#1,0) -- (#1,0);}}
 }
 
 % For thermo
+\definecolor{BlueViolet}{HTML}{8a2be2}
 \colorlet{adia}{BlueViolet!70!black} % Adiabatique : purple
 \colorlet{isoT}{green!60!black} % Isotherme : green
 \colorlet{isoP}{red!80!black} % IsoP : red
@@ -686,6 +687,35 @@ pics/strange bar/.style={code={\draw[thick] (-#1,0) -- (#1,0);}}
 	at ($(#1-old.center)!0.5!(#1.center)$)
 	{#2};
 }
+
+% VERRERIE LABO
+% \RequirePackage[crop=off]{auto-pst-pdf}
+\RequirePackage{pst-labo}
+\newpsstyle{Eau}{linestyle=none, fillstyle=solid, fillcolor=blue!20!white}
+\newpsstyle{VinaigreDil}{linestyle=none, fillstyle=solid,
+	fillcolor=magenta!20!blue!20!white}
+\RequirePackage{pst-dosage}
+\def\Vbmax{19}
+\renewcommand\graphpaper{%
+	\psgrid[
+		griddots=10,
+		subgriddiv=0,
+		% subgriddots=1,
+		gridlabels=0pt](\Vbmax,14)%
+	% \psgrid[
+	% 	gridwidth=1\pslinewidth,
+	% 	subgrid=false,
+	% 	% subgridwidth=0.2\pslinewidth,
+	% 	gridlabels=0pt](16,14)%
+	\psset{arrowscale=1.5,arrowinset=0.2}%
+	\uput[l](0,14){pH}%
+	\psaxes{->}(\Vbmax,14)%
+}
+\newpsstyle{points}{showpoints, plotpoints=20,
+	linestyle=none, linewidth=5\pslinewidth,
+	dotstyle=+}
+\newpsstyle{phblack}{linecolor=black,linewidth=1.5\pslinewidth}
+\newpsstyle{tgred}{linecolor=red, linewidth=1\pslinewidth}
 
 %%% Fin du package
 \endinput

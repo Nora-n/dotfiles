@@ -73,7 +73,7 @@ vim.keymap.set(
   "n",
   "<S-F1>",
   "<Cmd>set filetype=python<CR>",
-  { desc = "ft md" }
+  { desc = "ft py" }
 )
 
 -- Tabular

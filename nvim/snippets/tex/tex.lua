@@ -717,7 +717,7 @@ return {
     {
       trig = "ctr",
       snippetType = "autosnippet",
-      dscr = "Expands 'rgc' into '\\centersright{<>}{<>}'",
+      dscr = "Expands 'ctr' into '\\centersright{<>}{<>}'",
       condition = line_begin,
     },
     fmta(
@@ -732,6 +732,26 @@ return {
       {
         d(1, get_visual),
         i(2),
+        i(0),
+      }
+    )
+  ),
+  s(
+    {
+      trig = "cts",
+      snippetType = "autosnippet",
+      dscr = "Expands 'cts' into '\\centers{<>}{<>}'",
+      condition = line_begin,
+    },
+    fmta(
+      [[
+      \centers{%
+        <>
+      }%
+      <>
+      ]],
+      {
+        d(1, get_visual),
         i(0),
       }
     )
@@ -757,23 +777,23 @@ return {
       }
     )
   ),
-  -- power minus one
-  s(
-    {
-      trig = "([^\\])mma",
-      regTrig = true,
-      wordTrig = false,
-      snippetType = "autosnippet",
-      dscr = "Power -1",
-      condition = tex_utils.in_mathzone,
-    },
-    fmta([[<>^{-<>}]], {
-      f(function(_, snip)
-        return snip.captures[1]
-      end),
-      i(1, "1"),
-    })
-  ),
+  -- -- power minus one
+  -- s(
+  --   {
+  --     trig = "([^\\])mma",
+  --     regTrig = true,
+  --     wordTrig = false,
+  --     snippetType = "autosnippet",
+  --     dscr = "Power -1",
+  --     condition = tex_utils.in_mathzone,
+  --   },
+  --   fmta([[<>^{-<>}]], {
+  --     f(function(_, snip)
+  --       return snip.captures[1]
+  --     end),
+  --     i(1, "1"),
+  --   })
+  -- ),
   -- mathrm
   s({
     trig = "trm",
@@ -942,6 +962,15 @@ return {
     condition = tex_utils.in_mathzone,
   }, {
     t("\\Phi"),
+  }),
+  -- infinity
+  s({
+    trig = "@8",
+    -- wordTrig = false,
+    snippetType = "autosnippet",
+    condition = tex_utils.in_mathzone,
+  }, {
+    t("\\infty"),
   }),
   -- parenthesis
   -- s({
@@ -1687,6 +1716,34 @@ return {
     fmta("\\sum<>", {
       c(1, {
         t(" "),
+        fmta([[_{<>}]], {
+          i(1, "i"),
+        }),
+        fmta([[_{<>}^{<>}]], {
+          i(1, "lower"),
+          i(2, "upper"),
+        }),
+        fmta([[_{<>}^{<>}]], {
+          i(1, "n=1"),
+          i(2, "+\\infty"),
+        }),
+      }),
+    })
+  ),
+  -- prod
+  s(
+    {
+      trig = "prod",
+      snippetType = "autosnippet",
+      dscr = "Expands 'prod' into '\\prod'",
+      condition = tex_utils.in_mathzone,
+    },
+    fmta("\\prod<>", {
+      c(1, {
+        t(" "),
+        fmta([[_{<>}]], {
+          i(1, "i"),
+        }),
         fmta([[_{<>}^{<>}]], {
           i(1, "lower"),
           i(2, "upper"),
@@ -2013,6 +2070,13 @@ return {
     dscr = "Expands 'sol' into '_{\\rm (sol)}'",
     condition = tex_utils.in_mathzone,
   }, fmta("_{\\sol}<>", { i(0) })),
+  s({
+    trig = "eql",
+    snippetType = "autosnippet",
+    wordTrig = false,
+    dscr = "Expands 'eql' into '\\eql'",
+    condition = tex_utils.in_mathzone,
+  }, fmta("\\eql<>", { i(0) })),
   -- tabav
   s(
     {
@@ -2847,6 +2911,23 @@ return {
       }
     )
   ),
+  -- makebox for long tags
+  s(
+    {
+      trig = "mkb",
+      wordTrig = false,
+      snippetType = "autosnippet",
+      dscr = "Expands 'mkb' into makebox of 0pt for no space",
+    },
+    fmta(
+      [[
+    \makebox[0pt][r]{<>}
+    ]],
+      {
+        d(1, get_visual),
+      }
+    )
+  ),
   -- phantom xul
   s(
     {
@@ -3008,7 +3089,7 @@ return {
     dscr = "Expands 'ovb' into '\\overbracket{<>}^{<>}'",
   }, {
     c(1, {
-      fmta("\\overbracket{<>}^{<>}", {
+      fmta("\\overbracket[1pt]{<>}^{<>}", {
         d(1, get_visual),
         i(2),
       }),

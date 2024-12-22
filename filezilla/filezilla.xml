@@ -130,7 +130,7 @@
 		<Setting name="Remote filelist sortorder">0 1</Setting>
 		<Setting name="Splitter positions (v2)">73 -305 500000000 100 100 500000000</Setting>
 		<Setting name="Greeting version">3.67.1</Setting>
-		<Setting name="Window position and size">0 1440 587 2560 1325 </Setting>
+		<Setting name="Window position and size">0 0 27 1920 965 </Setting>
 		<Setting name="Tab data" sensitive="1">
 			<Tabs>
 				<Tab connected="1" selected="1">
@@ -146,7 +146,7 @@
 					<Name>netflix</Name>
 					<Site>0/netflix</Site>
 					<RemotePath>1 0 4 home 6 public 9 Downloads</RemotePath>
-					<LocalPath>/home/nora/Videos/</LocalPath>
+					<LocalPath>/run/media/nora/Séries/Doctor Who/Doctor Who Serie 2/Doctor Who 2021 -  Season 13/</LocalPath>
 				</Tab>
 			</Tabs>
 		</Setting>

@@ -4,8 +4,9 @@
 \RequirePackage{fix-cm}
 \RequirePackage{amssymb}
 
-\RequirePackage[svgnames, dvipsnames, table]{xcolor}
 % Définition des couleurs
+\PassOptionsToPackage{svgnames, dvipsnames, table}{xcolor}
+\RequirePackage{xcolor}
 \definecolor{dgreen}{rgb}{.1,.6,.1}
 \definecolor{brandeisblue}{rgb}{0.0, 0.44, 1.0}
 \definecolor{capri}{rgb}{0.0, 0.75, 1.0}
@@ -20,6 +21,7 @@
 \definecolor{myred}{HTML}{d62626}
 \definecolor{myorange}{HTML}{f29f00}
 \definecolor{mygreen}{HTML}{2e8b73}
+\definecolor{BlueViolet}{HTML}{8a2be2}
 
 \RequirePackage{siunitx}
 \sisetup{%
@@ -60,6 +62,11 @@
 % TiKz
 \RequirePackage{custikz}
 
+\RequirePackage{mathtools}
+% mathoperators
+\let\arg\relax
+\DeclarePairedDelimiterXPP\arg[1]{\operatorname{arg}}{(}{)}{}{#1}
+
 % Pour les plots
 \RequirePackage{pgfplots, pgfplotstable}
 \pgfplotsset{compat=newest}
@@ -69,34 +76,6 @@
 \RequirePackage{physics}
 % For chemistry
 \RequirePackage[version=4]{mhchem}
-% VERRERIE LABO
-% \RequirePackage[crop=off]{auto-pst-pdf}
-\RequirePackage{pst-labo}
-\newpsstyle{Eau}{linestyle=none, fillstyle=solid, fillcolor=blue!20!white}
-\newpsstyle{VinaigreDil}{linestyle=none, fillstyle=solid,
-	fillcolor=magenta!20!blue!20!white}
-\RequirePackage{pst-dosage}
-\def\Vbmax{19}
-\renewcommand\graphpaper{%
-	\psgrid[
-		griddots=10,
-		subgriddiv=0,
-		% subgriddots=1,
-		gridlabels=0pt](\Vbmax,14)%
-	% \psgrid[
-	% 	gridwidth=1\pslinewidth,
-	% 	subgrid=false,
-	% 	% subgridwidth=0.2\pslinewidth,
-	% 	gridlabels=0pt](16,14)%
-	\psset{arrowscale=1.5,arrowinset=0.2}%
-	\uput[l](0,14){pH}%
-	\psaxes{->}(\Vbmax,14)%
-}
-\newpsstyle{points}{showpoints, plotpoints=20,
-	linestyle=none, linewidth=5\pslinewidth,
-	dotstyle=+}
-\newpsstyle{phblack}{linecolor=black,linewidth=1.5\pslinewidth}
-\newpsstyle{tgred}{linecolor=red, linewidth=1\pslinewidth}
 
 % Useful tools
 \RequirePackage{etoolbox} %ifthen
