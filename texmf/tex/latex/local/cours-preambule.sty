@@ -116,6 +116,7 @@
 \definecolor{myred}{HTML}{d62626}
 \definecolor{myorange}{HTML}{f29f00}
 \definecolor{mygreen}{HTML}{2e8b73}
+\definecolor{mypurple}{HTML}{733bb3}
 
 % shortcut for colors
 % \newcommand{\wht}[1]{\textcolor{white}{#1}}
@@ -693,7 +694,9 @@
 \let\arg\relax
 \DeclarePairedDelimiterXPP\arg[1]{\operatorname{arg}}{(}{)}{}{#1}
 \let\norm\relax
-\DeclarePairedDelimiter{\norm}{\lVert}{\rVert}
+\newcommand\norm[1]{\stretchleftright{\Vert}
+  {\ensurestackMath{\addstackgap[.5pt]{#1}}}{\Vert}}
+% \DeclarePairedDelimiter{\norm}{\lVert}{\rVert}
 % \DeclareMathOperator{\arg}{arg}
 % To manually put \blacksquare flushedright of align* environnement
 % https://tex.stackexchange.com/a/144984/284518
@@ -1988,6 +1991,34 @@ literate         = {á}{{\'a}}1
 \renewcommand{\therema}{\thechapter.\arabic{rema}}
 \newcounter{null}[chapter]
 \renewcommand{\thenull}{\thechapter.\arabic{null}}
+% Set name for list of counters
+\newcommand{\plurloi}{Lois}
+\newcommand{\plurtheo}{Théorèmes}
+\newcommand{\plurques}{Questions}
+\newcommand{\plurprop}{Propriétés}
+\newcommand{\plurrslt}{Résultats}
+\newcommand{\plurdemo}{Démonstrations}
+\newcommand{\plurprev}{Preuves}
+\newcommand{\plurcoro}{Corollaires}
+\newcommand{\plurinte}{Interprétations}
+\newcommand{\plurimpl}{Implications}
+\newcommand{\plurimpo}{Erreurs communes}
+\newcommand{\plurtool}{Outils}
+\newcommand{\plurrapp}{Rappels}
+\newcommand{\plurdefi}{Définitions}
+\newcommand{\plurdata}{Données}
+\newcommand{\plurnota}{Notations}
+\newcommand{\plurror}{Points importants}
+\newcommand{\plurexem}{Exemples}
+\newcommand{\plurcexe}{Contre-exemples}
+\newcommand{\plurexpe}{Expériences}
+\newcommand{\plurobsv}{Observations}
+\newcommand{\plurcode}{Codes}
+\newcommand{\plurmate}{Matériel}
+\newcommand{\plurodgr}{Ordres de grandeur}
+\newcommand{\plurappl}{Applications}
+\newcommand{\plurrema}{Remarques}
+
 % For icons
 \usepackage{fontawesome5}
 \tcbset{
@@ -2343,6 +2374,21 @@ list entry={\hspace*{-20pt}\protect\rcheck~
 	#6icon={\IfBooleanTF{#1}{#5}{#3}}{#7},
 	#4={#3}{\csname name#3\endcsname~\expandafter\csname the#3\endcsname~:~#7},
 ]{#8}{#9}
+}
+
+% For essentiel box
+\NewDocumentCommand{\tce}{O{4.8pt}m}{%
+  \IfEq{#2}{ror}{%
+    \begin{tcn}[nsp](#2)<ctc>"hart"'t'{\csname plur#2\endcsname}
+      \vspace{-25pt}
+      \tcblistof[\subsubsection*]{#2}{\hspace*{#1}}
+    \end{tcn}
+  }{%
+    \begin{tcn}[nsp](#2)<ctc>'t'{\csname plur#2\endcsname}
+      \vspace{-25pt}
+      \tcblistof[\subsubsection*]{#2}{\hspace*{#1}}
+    \end{tcn}
+  }
 }
 
 % Journal abbreviations

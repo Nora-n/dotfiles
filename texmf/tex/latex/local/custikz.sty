@@ -24,11 +24,39 @@
 \RequirePackage{sankey}
 \usetikzlibrary{chains}
 
+% For… a cross?
 \tikzset{
 	cross/.style={
 			cross out, draw=black, fill=none, minimum
 			size=2*(#1-\pgflinewidth), inner sep=0pt, outer sep=0pt},
-	cross/.default={2pt}}
+	cross/.default={2pt}
+}
+
+% vector in and out of plane
+% https://tex.stackexchange.com/a/439068/284518
+\tikzset{
+	circ/.style={
+			circle,
+			draw,
+			thick,
+			minimum size=5mm,
+			inner sep=0
+		},
+	odot/.style={
+			circ,
+			path picture={\fill circle[radius=#1pt];},
+			scale=.5,
+		},
+	odot/.default={3},
+	otimes/.style={
+			circ,
+			path picture={
+					\draw (path picture bounding box.45) -- (path picture bounding box.225);
+					\draw (path picture bounding box.135) -- (path picture bounding box.315);
+				},
+			scale=.5,
+		}
+}
 
 % Allows a loop parameter like {draw,fill=white} to be passed with
 % \node[expend style=\loopparam]
@@ -493,8 +521,25 @@ pics/strange bar/.style={code={\draw[thick] (-#1,0) -- (#1,0);}}
 			postaction=decorate,
 			decoration={
 					markings,
-					mark={at position #1 with \node[#2]{#3};}}}}
+					mark={at position #1 with \node[#2]{#3};}
+				}
+		}
+}
+% Any coord
+% https://tex.stackexchange.com/a/43968/284518
+\tikzset{
+	mymark/.style args={#1(#2)}{
+			postaction={
+					decorate,
+					decoration={
+							markings,
+							mark=at position #1 with \coordinate (#2);
+						}
+				}
+		}
+}
 
+% general fleche
 \tikzset{%
 	flch/.style={%
 			/utils/exec=\tikzset{flch arrow/.cd,#1},

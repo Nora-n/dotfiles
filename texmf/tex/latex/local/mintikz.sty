@@ -21,6 +21,7 @@
 \definecolor{myred}{HTML}{d62626}
 \definecolor{myorange}{HTML}{f29f00}
 \definecolor{mygreen}{HTML}{2e8b73}
+\definecolor{mypurple}{HTML}{733bb3}
 \definecolor{BlueViolet}{HTML}{8a2be2}
 
 \RequirePackage{siunitx}
@@ -59,23 +60,33 @@
 \RequirePackage{esvect}
 
 \RequirePackage{stackengine}
+\RequirePackage{scalerel}
 % TiKz
 \RequirePackage{custikz}
-
-\RequirePackage{mathtools}
-% mathoperators
-\let\arg\relax
-\DeclarePairedDelimiterXPP\arg[1]{\operatorname{arg}}{(}{)}{}{#1}
-
-% Pour les plots
-\RequirePackage{pgfplots, pgfplotstable}
-\pgfplotsset{compat=newest}
-\usepgfplotslibrary{statistics}
 
 % For some shorthand
 \RequirePackage{physics}
 % For chemistry
 \RequirePackage[version=4]{mhchem}
+
+\RequirePackage{mathtools}
+% mathoperators
+\let\arg\relax
+\DeclarePairedDelimiterXPP\arg[1]{\operatorname{arg}}{(}{)}{}{#1}
+\let\norm\relax
+% \DeclarePairedDelimiter{\norm}{\lVert}{\rVert}
+\newcommand\norm[1]{%
+	\stretchleftright{\Vert}{%
+		\ensurestackMath{\addstackgap[.5pt]{#1}}
+	}{%
+		\Vert
+	}%
+}
+
+% Pour les plots
+\RequirePackage{pgfplots, pgfplotstable}
+\pgfplotsset{compat=newest}
+\usepgfplotslibrary{statistics}
 
 % Useful tools
 \RequirePackage{etoolbox} %ifthen
