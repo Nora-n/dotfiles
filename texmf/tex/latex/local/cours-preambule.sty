@@ -2377,17 +2377,24 @@ list entry={\hspace*{-20pt}\protect\rcheck~
 }
 
 % For essentiel box
-\NewDocumentCommand{\tce}{O{4.8pt}m}{%
-  \IfEq{#2}{ror}{%
-    \begin{tcn}[nsp](#2)<ctc>"hart"'t'{\csname plur#2\endcsname}
+\NewDocumentCommand{\tce}{O{4.8pt}d""m}{%
+  \IfValueTF{#2}{%
+    \begin{tcn}[nsp](#3)<ctc>'t'{#2}
       \vspace{-25pt}
-      \tcblistof[\subsubsection*]{#2}{\hspace*{#1}}
+      \tcblistof[\subsubsection*]{#3}{\hspace*{#1}}
     \end{tcn}
   }{%
-    \begin{tcn}[nsp](#2)<ctc>'t'{\csname plur#2\endcsname}
+  \IfEq{#3}{ror}{%
+    \begin{tcn}[nsp](#3)<ctc>"hart"'t'{\csname plur#3\endcsname}
       \vspace{-25pt}
-      \tcblistof[\subsubsection*]{#2}{\hspace*{#1}}
+      \tcblistof[\subsubsection*]{#3}{\hspace*{#1}}
     \end{tcn}
+  }{%
+    \begin{tcn}[nsp](#3)<ctc>'t'{\csname plur#3\endcsname}
+      \vspace{-25pt}
+      \tcblistof[\subsubsection*]{#3}{\hspace*{#1}}
+    \end{tcn}
+  }
   }
 }
 
