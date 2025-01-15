@@ -538,6 +538,14 @@ pics/strange bar/.style={code={\draw[thick] (-#1,0) -- (#1,0);}}
 				}
 		}
 }
+% Same but different
+\tikzset{
+	mycoord/.style 2 args={
+			decoration={
+					markings,mark=at position #1 with \coordinate(#2);
+				}
+		}
+}
 
 % general fleche
 \tikzset{%
@@ -565,6 +573,15 @@ pics/strange bar/.style={code={\draw[thick] (-#1,0) -- (#1,0);}}
 	% opacity/.initial=1,
 	type/.initial=Stealth,
 }
+
+\tikzset{
+	arrowmark/.style 2 args={
+			decoration={
+					markings,mark=at position #1 with \arrow{#2}
+				}
+		}
+}
+
 %simple flèche
 \tikzstyle simplef=[postaction={decorate,
 		decoration={markings,

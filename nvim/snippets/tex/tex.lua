@@ -2570,7 +2570,7 @@ return {
   ),
   s(
     {
-      trig = "ddt",
+      trig = "dtt",
       snippetType = "autosnippet",
       dscr = "Expands 'dtt' into '\\ddot{<>}'",
       condition = tex_utils.in_mathzone,
@@ -2595,7 +2595,7 @@ return {
   ),
   s(
     {
-      trig = "([aprltvxyz])(ddt)",
+      trig = "([aprltvxyz])(dtt)",
       regTrig = true,
       snippetType = "autosnippet",
       dscr = "Expands 'xdtt' into '\\xpp'",
