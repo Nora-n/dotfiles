@@ -121,11 +121,13 @@
 % shortcut for colors
 % \newcommand{\wht}[1]{\textcolor{white}{#1}}
 \newcommand{\blk}[1]{\textcolor{black}{#1}}
-\newcommand{\red}[1]{\textcolor{firebrick}{#1}}
+\newcommand{\orc}[1]{\textcolor{orchid}{#1}}
+\newcommand{\cbl}[1]{\textcolor{cornflowerblue}{#1}}
 \newcommand{\blu}[1]{\textcolor{brandeisblue}{#1}}
-\newcommand{\gre}[1]{\textcolor{LimeGreen}{#1}}
+\newcommand{\gre}[1]{\textcolor{limegreen}{#1}}
 \newcommand{\fgr}[1]{\textcolor{ForestGreen}{#1}}
 \newcommand{\ora}[1]{\textcolor{orange}{#1}}
+\newcommand{\red}[1]{\textcolor{firebrick}{#1}}
 
 % For \cancel and \bcancel functions
 \RequirePackage{cancel}
@@ -996,7 +998,8 @@ literate         = {á}{{\'a}}1
 %\setlist{nosep} % Interligne nul
 \setlist{itemsep=3pt} % Interligne nul
 \setlist[enumerate,1]{leftmargin=10pt, label=\arabic*)}
-\setlist[enumerate,2]{leftmargin=20pt, label=\alph* --}
+\setlist[enumerate,2]{leftmargin=20pt, label=\alph* --,
+  ref={\theenumi\,\alph* --}}
 \setlist[enumerate,3]{leftmargin=20pt, label=\roman*.}
 % \setlist[itemize,1]{leftmargin=10pt}
 % \setlist[itemize,2]{leftmargin=20pt}
@@ -1305,14 +1308,6 @@ literate         = {á}{{\'a}}1
 	\endgroup%
 }
 
-% Make QR like BPEP
-\newlist{blocQR}{enumerate}{3}
-\setlist[blocQR]{resume}
-\setlist[blocQR,1]{leftmargin=10pt, label=\arabic*)}
-\setlist[blocQR,2]{leftmargin=20pt, label=\alph* --}
-\setlist[blocQR,3]{leftmargin=10pt, label=\roman*.}
-\newcommand{\resetQ}{\restartlist{blocQR}}
-
 % Allow for compilation of enon, solu_stud and solu_prof in one go?
 % https://tex.stackexchange.com/a/5265
 \RequirePackage{currfile}
@@ -1370,70 +1365,77 @@ literate         = {á}{{\'a}}1
 	}[]
 }
 
-% Cannibalize the rest
-\newcommand{\eq}[2][equation*]{
-	\begin{#1}
-	#2
-	\end{#1}
-}
-% compteur d'exercices
-\newcounter{exoIndex}
-\setcounter{exoIndex}{0}
+% Make QR like BPEP
+\newlist{blocQR}{enumerate}{3}
+\setlist[blocQR]{resume}
+\setlist[blocQR,1]{leftmargin=10pt, label=\arabic*)}
+\setlist[blocQR,2]{leftmargin=20pt, label=\alph* --, ref={\theblocQRi\alph* --}}
+\setlist[blocQR,3]{leftmargin=10pt, label=\roman*.}
+\newcommand{\resetQ}{\restartlist{blocQR}}
 
-\newtoggle{corrigeEtendu}
-\toggletrue{corrigeEtendu}
-
-\newtoggle{bareme}
-\togglefalse{bareme}
-
-\newtoggle{enonce}
-\toggletrue{enonce}
-
-\newtoggle{sujet}
-\toggletrue{sujet}
-
-\newcommand{\sujetUniquement}[1]{
-	% apparait si sujet == vrai et corrigé == faux
-	\iftoggle{sujet}{
-		\iftoggle{corrige}{}{
-			#1
-		}
-	}{}
-}
-
-\newcommand{\siCorrige}[1]{
-	% apparait corrigé == vrai
-	\iftoggle{corrige}{
-		#1
-	}{}
-}
-\newcommand{\corrigeBonus}[1]{
-	\iftoggle{corrigeEtendu}{%
-		\textbf{Pour aller plus loin~:}
-		\smallbreak
-		#1
-	}{}
-}
-\newcommand{\enonce}[2][]{
-	\iftoggle{corrige}{
-		\iftoggle{student}{
-			%
-		}{
-			\showAccordingToVersion[#1]{
-				#2
+\NewDocumentCommand{\QR}{D<>{}o+m+m}{%
+	\iftoggle{bareme}{ % Force l'affichage du bareme quoiqu'il en soit
+		\begin{blocQR}#1
+			\iftoggle{student}{ % pour version student
+				\iftoggle{corrige}{ % version avec corrigé : affiche juste la correction
+					\item[n]{#2}#4%
+				}{ % énoncé uniquement
+					\item[n]{#2}#3%
+				}%
+			}{% pour version prof
+				\iftoggle{corrige}{% pour version avec corrigé : question ET réponse
+					\item[n]{#2}#3%
+					\begin{answ}%
+						#4%
+					\end{answ}%
+				}{ % énoncé uniquement
+					\item #3%
+				}
 			}
-		}
+		\end{blocQR}
 	}{
-		\showAccordingToVersion[#1]{
-			#2
+		\IfValueTF{#2}{ % Si [nb], ajoute un nombre de points
+			% \iftoggle{bareme}{ % si bareme == true, ajoute les points dans [nb]
+			\begin{blocQR}#1
+				\iftoggle{student}{ % pour version student
+					\iftoggle{corrige}{ % version avec corrigé : affiche juste la correction
+						\item[n]{#2}#4%
+					}{ % énoncé uniquement
+						\item #3%
+					}%
+				}{% pour version prof
+					\iftoggle{corrige}{% pour version avec corrigé : question ET réponse
+						\item[n]{#2}#3%
+						\begin{answ}%
+							#4%
+						\end{answ}%
+					}{ % énoncé uniquement
+						\item #3%
+					}
+				}
+			\end{blocQR}
+		}{ % Si pas de [nb], pas de points
+			\begin{blocQR}#1
+				\iftoggle{student}{% pour version student
+					\iftoggle{corrige}{% version avec corrigé : affiche juste la correction
+						\item #4%
+					}{ % énoncé uniquement
+						\item #3%
+					}%
+				}{%
+					\iftoggle{corrige}{% pour version avec corrigé : question ET réponse
+						\item #3%
+						\begin{answ}
+							#4
+						\end{answ}
+					}{ % énoncé uniquement
+						\item #3%
+					}%
+				}%
+			\end{blocQR}%
 		}
 	}
 }
-
-% niveau des exercices (utile en TD)
-\newcommand{\niveauUn}{($\star$)}
-\newcommand{\niveauDeux}{($\star \star$)}
-\newcommand{\niveauTrois}{($\star \star \star$)}
 
 \usetikzlibrary{shapes,
 	shapes.misc,
@@ -1569,76 +1571,71 @@ literate         = {á}{{\'a}}1
 	\fulltailline{\diamond}
 	\vspace*{-20pt}
 }
-% \newenvironment{answ}{
-%   \begin{tcb}[breakable](ror)<lft>{Réponse}
-% }{
-%   \end{tcb}
-% }
 
-\NewDocumentCommand{\QR}{D<>{}o+m+m}{%
-	\iftoggle{bareme}{ % Force l'affichage du bareme quoiqu'il en soit
-		\begin{blocQR}#1
-			\iftoggle{student}{ % pour version student
-				\iftoggle{corrige}{ % version avec corrigé : affiche juste la correction
-					\item[n]{#2}#4%
-				}{ % énoncé uniquement
-					\item[n]{#2}#3%
-				}%
-			}{% pour version prof
-				\iftoggle{corrige}{% pour version avec corrigé : question ET réponse
-					\item[n]{#2}#3%
-					\begin{answ}%
-						#4%
-					\end{answ}%
-				}{ % énoncé uniquement
-					\item #3%
-				}
+% Cannibalize the rest
+\newcommand{\eq}[2][equation*]{
+	\begin{#1}
+	#2
+	\end{#1}
+}
+% compteur d'exercices
+\newcounter{exoIndex}
+\setcounter{exoIndex}{0}
+
+\newtoggle{corrigeEtendu}
+\toggletrue{corrigeEtendu}
+
+\newtoggle{bareme}
+\togglefalse{bareme}
+
+\newtoggle{enonce}
+\toggletrue{enonce}
+
+\newtoggle{sujet}
+\toggletrue{sujet}
+
+\newcommand{\sujetUniquement}[1]{
+	% apparait si sujet == vrai et corrigé == faux
+	\iftoggle{sujet}{
+		\iftoggle{corrige}{}{
+			#1
+		}
+	}{}
+}
+
+\newcommand{\siCorrige}[1]{
+	% apparait corrigé == vrai
+	\iftoggle{corrige}{
+		#1
+	}{}
+}
+\newcommand{\corrigeBonus}[1]{
+	\iftoggle{corrigeEtendu}{%
+		\textbf{Pour aller plus loin~:}
+		\smallbreak
+		#1
+	}{}
+}
+\newcommand{\enonce}[2][]{
+	\iftoggle{corrige}{
+		\iftoggle{student}{
+			%
+		}{
+			\showAccordingToVersion[#1]{
+				#2
 			}
-		\end{blocQR}
+		}
 	}{
-		\IfValueTF{#2}{ % Si [nb], ajoute un nombre de points
-			% \iftoggle{bareme}{ % si bareme == true, ajoute les points dans [nb]
-			\begin{blocQR}#1
-				\iftoggle{student}{ % pour version student
-					\iftoggle{corrige}{ % version avec corrigé : affiche juste la correction
-						\item[n]{#2}#4%
-					}{ % énoncé uniquement
-						\item #3%
-					}%
-				}{% pour version prof
-					\iftoggle{corrige}{% pour version avec corrigé : question ET réponse
-						\item[n]{#2}#3%
-						\begin{answ}%
-							#4%
-						\end{answ}%
-					}{ % énoncé uniquement
-						\item #3%
-					}
-				}
-			\end{blocQR}
-		}{ % Si pas de [nb], pas de points
-			\begin{blocQR}#1
-				\iftoggle{student}{% pour version student
-					\iftoggle{corrige}{% version avec corrigé : affiche juste la correction
-						\item #4%
-					}{ % énoncé uniquement
-						\item #3%
-					}%
-				}{%
-					\iftoggle{corrige}{% pour version avec corrigé : question ET réponse
-						\item #3%
-						\begin{answ}
-							#4
-						\end{answ}
-					}{ % énoncé uniquement
-						\item #3%
-					}%
-				}%
-			\end{blocQR}%
+		\showAccordingToVersion[#1]{
+			#2
 		}
 	}
 }
 
+% niveau des exercices (utile en TD)
+\newcommand{\niveauUn}{($\star$)}
+\newcommand{\niveauDeux}{($\star \star$)}
+\newcommand{\niveauTrois}{($\star \star \star$)}
 % QR of actual BPEP
 \newcounter{qrIndex} % compteur pour les questions
 \newcounter{qrIndexSaved}
@@ -1781,7 +1778,8 @@ literate         = {á}{{\'a}}1
 
 \newcommand{\fig}[3][]{ % possibilité d'ajouter des arguments optionnels en plus
 	\begin{center}
-		\includegraphics[width=#2\linewidth, #1]{images/#3}
+		% \includegraphics[width=#2\linewidth, #1]{images/#3}
+		\includegraphics[width=#2\linewidth, #1]{figures/#3}
 	\end{center}
 }
 
@@ -1823,6 +1821,17 @@ literate         = {á}{{\'a}}1
 	\vspace{-4mm}
 	\captionof{figure}{#2}
 	\bigskip
+}
+
+\newcommand{\figWrapped}[2]{ % #1 : largeur du bloc de droite  ; #2 nom du fichier
+	\setlength{\intextsep}{-4pt}%
+	\setlength{\columnsep}{4pt}%
+	\begin{wrapfigure}{r}[20pt]{#1\linewidth}
+		\hfill
+		% \includegraphics[width=0.95\linewidth]{images/#2}
+		\includegraphics[width=0.95\linewidth]{figures/#2}
+		\vspace{-2mm}
+	\end{wrapfigure}
 }
 
 % Boxes types: colors

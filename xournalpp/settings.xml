@@ -6,7 +6,7 @@
   <property name="pressureMultiplier" value="1"/>
   <property name="zoomGesturesEnabled" value="true"/>
   <property name="selectedToolbar" value="Floating Toolbox (experimental) Copy"/>
-  <property name="lastSavePath" value="/home/nora/Documents/Enseignement/Prepa/2023/02_TD/03_chimie/C4-C5"/>
+  <property name="lastSavePath" value="/home/nora/Documents/Enseignement/Prepa/2024/03_TP/TP14"/>
   <property name="lastOpenPath" value="/home/nora/Documents/Enseignement/Prepa/2023/01_C/05_meca/M6"/>
   <property name="lastImagePath" value="/home/nora/Documents/Enseignement/Prepa/2023/01_C/03_chimie/C4/figures"/>
   <property name="edgePanSpeed" value="18"/>
@@ -14,8 +14,8 @@
   <property name="zoomStep" value="10"/>
   <property name="zoomStepScroll" value="2"/>
   <property name="displayDpi" value="111"/>
-  <property name="mainWndWidth" value="2560"/>
-  <property name="mainWndHeight" value="1413"/>
+  <property name="mainWndWidth" value="1418"/>
+  <property name="mainWndHeight" value="1250"/>
   <property name="maximized" value="false"/>
   <property name="showToolbar" value="true"/>
   <property name="showSidebar" value="false"/>
@@ -48,12 +48,13 @@
   <property name="eraserVisibility" value="always"/>
   <!--The icon theme, allowed values are "iconsColor", "iconsLucide"-->
   <property name="iconTheme" value="iconsColor"/>
+  <!--Dark/light mode, allowed values are "useSystem", "forceLight", "forceDark"-->
+  <property name="themeVariant" value="useSystem"/>
   <property name="highlightPosition" value="false"/>
   <property name="cursorHighlightColor" value="2164260608"/>
   <property name="cursorHighlightBorderColor" value="2147483903"/>
   <property name="cursorHighlightRadius" value="24"/>
   <property name="cursorHighlightBorderWidth" value="0"/>
-  <property name="darkTheme" value="true"/>
   <property name="useStockIcons" value="false"/>
   <property name="disableScrollbarFadeout" value="false"/>
   <property name="disableAudio" value="false"/>

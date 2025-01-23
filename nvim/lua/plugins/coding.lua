@@ -39,11 +39,11 @@ return {
         ["<A-z>"] = { "select_prev", "fallback" },
         ["<A-a>"] = { "select_next", "fallback" },
       },
-      completion = {
-        list = {
-          selection = "manual",
-        },
-      },
+      -- completion = {
+      --   list = {
+      --     selection = "manual",
+      --   },
+      -- },
     },
   },
   -- {
