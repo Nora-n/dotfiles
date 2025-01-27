@@ -25,6 +25,8 @@
 % Enlever l'espace après la virgule pour les nombres
 \RequirePackage{icomma}
 \frenchbsetup{StandardLists=true}
+% Other mathcal, more callygraphie
+\RequirePackage{calrsfs}
 
 % Allow more writes for files of tcbox
 \RequirePackage{morewrites}
@@ -1086,9 +1088,9 @@ literate         = {á}{{\'a}}1
 				\localitem\leavevmode\textbf{#5}%
 			}%
 			{bl}{% bold and left
-				\IfValueTF{#2}{% if second optional value to \item : \item[l][opt]{mand}
+				\IfValueTF{#2}{% if second optional value to : \item[bl][opt](left){mand}
 					\localitem\leavevmode\ltm[#2]{#4}\textbf{#5}%
-				}{% If no second optional value : \item[l]{mand}, do nothing with #2
+				}{% If no second optional value : \item[bl](left){mand}, do nothing with #2
 					\localitem\leavevmode\ltm{#4}\textbf{#5}%
 				}%
 			}

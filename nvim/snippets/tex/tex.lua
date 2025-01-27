@@ -594,7 +594,16 @@ return {
       <>
       ]],
         {
-          c(1, { t("red"), t("orange"), t("green"), t("blue") }),
+          c(1, {
+            t("orchid"),
+            t("cornflowerblue"),
+            t("limegreen"),
+            t("orange"),
+            t("firebrick"),
+            t("myblue"),
+            t("mygreen"),
+            t("myred"),
+          }),
           d(2, get_visual),
           i(0),
         }
@@ -620,7 +629,16 @@ return {
       \psw[<>]{<>}
       ]],
         {
-          c(1, { t("red"), t("orange"), t("green"), t("blue") }),
+          c(1, {
+            t("orchid"),
+            t("cornflowerblue"),
+            t("limegreen"),
+            t("orange"),
+            t("firebrick"),
+            t("myblue"),
+            t("mygreen"),
+            t("myred"),
+          }),
           d(2, get_visual),
         }
       ),
@@ -1010,7 +1028,7 @@ return {
   }),
   s(
     {
-      trig = "(q)([easodc])([tnvoucr])",
+      trig = "(q)([easodcrl])([tnvoucra])",
       regTrig = true,
       snippetType = "autosnippet",
       condition = tex_utils.in_mathzone,
@@ -1029,7 +1047,7 @@ return {
   ),
   s(
     {
-      trig = "(qq)([easodc])([tnvoucr])",
+      trig = "(qq)([easodcrl])([tnvoucra])",
       regTrig = true,
       snippetType = "autosnippet",
       condition = tex_utils.in_mathzone,
@@ -1861,6 +1879,12 @@ return {
     dscr = "Expands 'dd' into '\\dd{}'",
     condition = tex_utils.in_mathzone,
   }, fmta("\\dd{<>}", { d(1, get_visual) })),
+  s({
+    trig = "dt",
+    snippetType = "autosnippet",
+    dscr = "Expands 'dt' into '\\dt'",
+    condition = tex_utils.in_mathzone,
+  }, { t("\\dt") }),
   -- cancels
   s({
     trig = "cl",
@@ -2633,6 +2657,9 @@ return {
       fmta("\\stm[-1]{<>}", {
         d(1, get_visual),
       }),
+      fmta("\\stm(un){<>}", {
+        d(1, get_visual),
+      }),
     }),
   }),
   s({
@@ -2671,11 +2698,11 @@ return {
     dscr = "Expands 'ptt' into '\\pt{<>}'",
   }, fmta("\\pt{<>}", { i(1, "1") })),
   -- litem generic but mostly for point
-  -- s({
-  --   trig = "ltm",
-  --   snippetType = "autosnippet",
-  --   dscr = "Expands 'ltm' into '\\lit{<>}{<>}'",
-  -- }, fmta("\\ltm{<>}{<>}", { i(1, "20pt"), i(2) })),
+  s({
+    trig = "ltm",
+    snippetType = "autosnippet",
+    dscr = "Expands 'ltm' into '\\ltm[<>]{<>}'",
+  }, fmta("\\ltm[<>]{<>}", { i(1, "20"), i(2) })),
   -- align
   s({
     trig = "alg",
@@ -3070,10 +3097,10 @@ return {
   s({
     trig = "ubk",
     snippetType = "autosnippet",
-    dscr = "Expands 'udb' into '\\underbracket{<>}_{<>}'",
+    dscr = "Expands 'ubk' into '\\underbracket{<>}_{<>}'",
   }, {
     c(1, {
-      fmta("\\underbracket[1pt]{<>}_{<>}", {
+      fmta("\\ub{<>}{<>}", {
         d(1, get_visual),
         i(2),
       }),
@@ -3086,10 +3113,10 @@ return {
   s({
     trig = "obk",
     snippetType = "autosnippet",
-    dscr = "Expands 'ovb' into '\\overbracket{<>}^{<>}'",
+    dscr = "Expands 'obk' into '\\overbracket{<>}^{<>}'",
   }, {
     c(1, {
-      fmta("\\overbracket[1pt]{<>}^{<>}", {
+      fmta("\\ob{<>}{<>}", {
         d(1, get_visual),
         i(2),
       }),
