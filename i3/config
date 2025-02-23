@@ -93,12 +93,15 @@ bindsym $mod+q kill
 
 # start rofi
 bindsym $mod+d exec --no-startup-id ~/.config/rofi/launchers/type-3/launcher.sh
-bindsym $mod+Shift+d exec --no-startup-id rofi -show file-browser-extended -file-browser-dir ~/Documents/Enseignement/Prepa/2024/00_Adm/Notes/
+bindsym $mod+Shift+d exec --no-startup-id rofi -show filebrowser -file-browser-dir ~/Documents/Enseignement/Prepa/2024/00_Adm/Notes/
+# bindsym $mod+Shift+d exec --no-startup-id rofi -show file-browser-extended -file-browser-dir ~/Documents/Enseignement/Prepa/2024/00_Adm/Notes/
 bindsym $mod+Delete exec --no-startup-id ~/.config/rofi/powermenu/type-2/powermenu.sh
 
-# start gitkraken, exerciceexplorer
+# start gitkraken, exerciceexplorer, ranger, musescore
 bindsym $mod+b exec --no-startup-id gitkraken
 bindsym $mod+Shift+b exec --no-startup-id java -jar exerciceExplorer.jar
+bindsym $mod+n exec --no-startup-id kitty -e ranger
+bindsym $mod+m exec --no-startup-id mscore
 
 # change focus
 bindsym $mod+h focus left
@@ -134,8 +137,6 @@ bindsym $mod+w focus mode_toggle
 
 bindsym $mod+Shift+p move scratchpad
 bindsym $mod+p scratchpad show
-
-bindsym $mod+n exec --no-startup-id kitty -e ranger
 
 exec_always --no-startup-id kitti3 -p right -s 1.0 0.46
 # bindsym $mod+Shift+t exec kitti3 -n dropdown -s 1.0 0.46

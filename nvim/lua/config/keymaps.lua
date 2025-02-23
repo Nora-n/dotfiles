@@ -115,13 +115,13 @@ vim.keymap.set(
 )
 vim.keymap.set(
   "n",
-  "<leader>aa",
+  "<leader>aA",
   ":Tabularize /",
   { noremap = true, desc = "Tab enter" }
 )
 vim.keymap.set(
   "v",
-  "<leader>aa",
+  "<leader>aA",
   ":Tabularize /",
   { noremap = true, desc = "Tab enter" }
 )

@@ -1011,6 +1011,14 @@ return {
     trig = "pc",
     snippetType = "autosnippet",
   }, fmta("[<>]", { d(1, get_visual) })),
+  -- bullet
+  s({
+    trig = "blt",
+    snippetType = "autosnippet",
+    condition = tex_utils.in_mathzone,
+  }, {
+    t("\\bullet"),
+  }),
   -- in math text and spaces
   s({
     trig = "qud",
@@ -2619,7 +2627,7 @@ return {
   ),
   s(
     {
-      trig = "([aprltvxyz])(dtt)",
+      trig = "([aprltvxyz])(ddot)",
       regTrig = true,
       snippetType = "autosnippet",
       dscr = "Expands 'xdtt' into '\\xpp'",
@@ -4338,4 +4346,101 @@ return {
     dscr = "cmidrule",
     condition = line_begin,
   }, fmta("\\cmidrule(<>){<>}", { i(1, "lr"), i(2, "range") })),
+  -----------------------------------------------------------------------------
+  -- TikZ
+  -----------------------------------------------------------------------------
+  -- Basic
+  s({
+    trig = "drw",
+    snippetType = "autosnippet",
+    dscr = "draw",
+    condition = line_begin or tex_utils.in_tikz,
+  }, fmta("\\draw[<>] <>;", { i(1), i(2) })),
+  s(
+    {
+      trig = "nde",
+      snippetType = "autosnippet",
+      dscr = "node",
+      condition = line_begin or tex_utils.in_tikz,
+    },
+    fmta(
+      "\\node[<>]<> at (<>) {<>};",
+      { i(1), c(2, { t(""), fmta(" (<>)", { i(1) }) }), i(3), d(4, get_visual) }
+    )
+  ),
+  s(
+    {
+      trig = "Nde",
+      snippetType = "autosnippet",
+      dscr = "node inline",
+      condition = line_begin or tex_utils.in_tikz,
+    },
+    fmta(
+      "node[<>]<> {<>}",
+      { i(1), c(2, { t(""), fmta(" (<>)", { i(1) }) }), d(3, get_visual) }
+    )
+  ),
+  s(
+    {
+      trig = "crd",
+      snippetType = "autosnippet",
+      dscr = "coord",
+      condition = line_begin or tex_utils.in_tikz,
+    },
+    fmta(
+      "\\coordinate[<>] (<>) at (<>);",
+      { c(1, { t(""), fmta("[label={<>:<>}]", { i(1), i(2) }) }), i(2), i(3) }
+    )
+  ),
+  s(
+    {
+      trig = "Crd",
+      snippetType = "autosnippet",
+      dscr = "coord inline",
+      condition = line_begin or tex_utils.in_tikz,
+    },
+    fmta(
+      "coordinate[<>] (<>)",
+      { c(1, { t(""), fmta("[label={<>:<>}]", { i(1), i(2) }) }), i(2) }
+    )
+  ),
+  -- shorthand of words
+  s({
+    trig = "thk",
+    snippetType = "autosnippet",
+    condition = tex_utils.in_tikz,
+  }, {
+    c(1, { t("thick"), t("very thick"), t("ultra thick") }),
+  }),
+  s({
+    trig = "stl",
+    snippetType = "autosnippet",
+    condition = tex_utils.in_tikz,
+  }, {
+    c(1, { t("-stealth"), t("stealth-") }),
+  }),
+  s({
+    trig = "Stl",
+    snippetType = "autosnippet",
+    condition = tex_utils.in_tikz,
+  }, fmta("-{Stealth[scale=<>]}", { i(1) })),
+  -- Intelligent stuff
+  s(
+    {
+      trig = "prp",
+      snippetType = "autosnippet",
+      dscr = "perpendicular",
+      condition = line_begin or tex_utils.in_tikz,
+    },
+    fmta(
+      [[
+      \draw[<>]
+      (<>)
+      --
+      ($(<>)!<>!90:(<>)$);
+      <>
+      ]],
+      { i(1), i(2, "start"), rep(2), i(3, "length"), i(4, "end"), i(0) }
+    )
+  ),
 }
