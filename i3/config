@@ -99,7 +99,7 @@ bindsym $mod+Delete exec --no-startup-id ~/.config/rofi/powermenu/type-2/powerme
 
 # start gitkraken, exerciceexplorer, ranger, musescore
 bindsym $mod+b exec --no-startup-id gitkraken
-bindsym $mod+Shift+b exec --no-startup-id java -jar exerciceExplorer.jar
+bindsym $mod+Shift+b exec --no-startup-id java -jar ~/Documents/Enseignement/Prepa/BPEP/ExerciceExplorer/exerciceExplorer.jar
 bindsym $mod+n exec --no-startup-id kitty -e ranger
 bindsym $mod+m exec --no-startup-id mscore
 
@@ -237,7 +237,7 @@ assign [class="remarkable.exe"] $ws8
 assign [class="Xournalpp"] $ws9
 assign [class="tikzit"] $ws9
 
-for_window [title="htop"] move to workspace $ws1
+for_window [title="btop"] move to workspace $ws1
 for_window [class="kitty" title="ranger"] move to workspace $ws3
 for_window [class="pentablet"] floating enable
 for_window [class="GPT4ALL"] floating enable

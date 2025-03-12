@@ -294,7 +294,7 @@ return {
     trig = "xul",
     snippetType = "autosnippet",
     dscr = "Expands 'xul' into LaTeX's underline{} command.",
-  }, fmta("\\xul{<>}", { d(1, get_visual) })),
+  }, fmta("\\ul{<>}", { d(1, get_visual) })),
   -- texttt
   s({
     trig = "xtt",
@@ -647,17 +647,31 @@ return {
   -- choose color
   s(
     {
-      trig = "lsw",
+      trig = "ccl",
       wordTrig = false,
       snippetType = "autosnippet",
-      dscr = "Expands 'lsw' into '\\lsw{<>}{<>}'",
+      dscr = "Expands 'cc' into '\\blk{<>}'",
     },
     fmta(
       [[
-      \lsw{<>}{<>}<>
+      \<>{<>}<>
       ]],
       {
-        i(1, "orange"),
+        c(1, {
+          i(1, "blk"),
+          i(2, "orc"),
+          i(3, "cbl"),
+          i(4, "blu"),
+          i(5, "gre"),
+          i(6, "fgr"),
+          i(7, "ora"),
+          i(8, "red"),
+          i(9, "myp"),
+          i(10, "myb"),
+          i(11, "myg"),
+          i(12, "myo"),
+          i(13, "myr"),
+        }),
         d(2, get_visual),
         i(0),
       }
@@ -1395,7 +1409,7 @@ return {
     c(1, {
       fmta("\\left( <> \\right)", (d(1, get_visual))),
       fmta("\\left[ <> \\right]", (d(1, get_visual))),
-      fmta("\\left\\{ <> \\right\\}", (d(1, get_visual))),
+      fmta("\\left\\{ <> \\right.", (d(1, get_visual))),
     }),
   }),
   -- left fraction right
@@ -1869,17 +1883,17 @@ return {
   -- })
   -- ),
   -- mqty
-  s(
-    {
-      trig = "mqty",
-      snippetType = "autosnippet",
-      dscr = "Expands 'mqty' into '\\mqty'",
-      condition = tex_utils.in_mathzone,
-    },
-    fmta("\\mqty{<>}", {
-      d(1, get_visual),
-    })
-  ),
+  s({
+    trig = "mqty",
+    snippetType = "autosnippet",
+    dscr = "Expands 'mqty' into '\\mqty'",
+    condition = tex_utils.in_mathzone,
+  }, {
+    c(1, {
+      fmta("\\mqty(<>)", { d(1, get_visual) }),
+      fmta("\\mqty{<>}", { d(1, get_visual) }),
+    }),
+  }),
   -- differential
   s({
     trig = "dd",
@@ -1887,12 +1901,20 @@ return {
     dscr = "Expands 'dd' into '\\dd{}'",
     condition = tex_utils.in_mathzone,
   }, fmta("\\dd{<>}", { d(1, get_visual) })),
-  s({
-    trig = "dt",
-    snippetType = "autosnippet",
-    dscr = "Expands 'dt' into '\\dt'",
-    condition = tex_utils.in_mathzone,
-  }, { t("\\dt") }),
+  s(
+    {
+      trig = "(d)([trxyz])",
+      regTrig = true,
+      snippetType = "autosnippet",
+      dscr = "Expands 'dx' into '\\dx'",
+      condition = tex_utils.in_mathzone,
+    },
+    fmta([[\d<>]], {
+      f(function(_, snip)
+        return snip.captures[2]
+      end),
+    })
+  ),
   -- cancels
   s({
     trig = "cl",
@@ -2058,6 +2080,18 @@ return {
     snippetType = "autosnippet",
     dscr = "Expands 'chg' into '\\charge'",
   }, fmta("\\charge{<>}{<>}", { i(1), d(2, get_visual) })),
+  s(
+    {
+      trig = "chb",
+      snippetType = "autosnippet",
+      dscr = "Expands 'chb' into '\\chemabove'",
+    },
+    fmta("\\chemabove{<>}{\\hspace{<>}<>}", {
+      d(1, get_visual),
+      i(2, "0.5cm"),
+      c(3, { i(1, "\\ominus"), i(2, "\\oplus") }),
+    })
+  ),
   s({
     trig = "nno",
     snippetType = "autosnippet",
@@ -2109,6 +2143,20 @@ return {
     dscr = "Expands 'eql' into '\\eql'",
     condition = tex_utils.in_mathzone,
   }, fmta("\\eql<>", { i(0) })),
+  s({
+    trig = "pH",
+    snippetType = "autosnippet",
+    wordTrig = false,
+    dscr = "Expands 'pH' into '\\pH'",
+    condition = tex_utils.in_mathzone,
+  }, { t("\\pH") }),
+  s({
+    trig = "pK",
+    snippetType = "autosnippet",
+    wordTrig = false,
+    dscr = "Expands 'pK' into '\\pK[]'",
+    condition = tex_utils.in_mathzone,
+  }, fmta("\\pk<>", { c(1, { t(""), fmta("[<>]", { i(1) }) }) })),
   -- tabav
   s(
     {
@@ -2562,7 +2610,7 @@ return {
     wordTrig = false,
     snippetType = "autosnippet",
     dscr = "Expands 'tkm' into '\\tikzmark{<>}'",
-  }, fmta("\\tikzmark{<>}", { i(1, "MARK") })),
+  }, fmta("\\tikzmark{<>}", { d(1, get_visual) })),
   -- tikz from tikzmark
   s(
     {
@@ -3096,7 +3144,7 @@ return {
       dscr = "Expands 'rbx' into '\\rotatebox[<>]{<>}{<>}'",
     },
     fmta("\\rotatebox[<>]{<>}{<>}", {
-      i(1, "origin=center"),
+      i(1, "origin=c"),
       i(2, "90"),
       d(3, get_visual),
     })
@@ -4388,7 +4436,7 @@ return {
       condition = line_begin or tex_utils.in_tikz,
     },
     fmta(
-      "\\coordinate[<>] (<>) at (<>);",
+      "\\coordinate<> (<>) at (<>);",
       { c(1, { t(""), fmta("[label={<>:<>}]", { i(1), i(2) }) }), i(2), i(3) }
     )
   ),
@@ -4400,7 +4448,7 @@ return {
       condition = line_begin or tex_utils.in_tikz,
     },
     fmta(
-      "coordinate[<>] (<>)",
+      "coordinate<> (<>)",
       { c(1, { t(""), fmta("[label={<>:<>}]", { i(1), i(2) }) }), i(2) }
     )
   ),

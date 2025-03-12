@@ -19,12 +19,12 @@
 \definecolor{limegreen}{rgb}{0.2, 0.8, 0.2}
 \definecolor{orange}{rgb}{1.0, 0.5, 0.0}
 \definecolor{firebrick}{rgb}{0.7, 0.13, 0.13}
-\definecolor{myblue}{HTML}{1053af}
-\definecolor{myred}{HTML}{d62626}
-\definecolor{myorange}{HTML}{f29f00}
-\definecolor{mygreen}{HTML}{2e8b73}
-\definecolor{mypurple}{HTML}{733bb3}
 \definecolor{BlueViolet}{HTML}{8a2be2}
+\definecolor{mypurple}{HTML}{733bb3}
+\definecolor{myblue}{HTML}{1053af}
+\definecolor{mygreen}{HTML}{2e8b73}
+\definecolor{myorange}{HTML}{f29f00}
+\definecolor{myred}{HTML}{d62626}
 
 \RequirePackage{siunitx}[=v2]
 \sisetup{%
@@ -110,11 +110,22 @@
 \newcommand{\myRoman}[1]{\text{\nbRoman{#1}}}
 
 % shortcut for colors
-\renewcommand{\wht}[1]{\textcolor{white}{#1}}
-\renewcommand{\red}[1]{\textcolor{firebrick}{#1}}
+% \newcommand{\wht}[1]{\textcolor{white}{#1}}
+\newcommand{\blk}[1]{\textcolor{black}{#1}}
+\newcommand{\orc}[1]{\textcolor{orchid}{#1}}
+\newcommand{\cbl}[1]{\textcolor{cornflowerblue}{#1}}
 \newcommand{\blu}[1]{\textcolor{brandeisblue}{#1}}
-\newcommand{\gre}[1]{\textcolor{LimeGreen}{#1}}
+\newcommand{\gre}[1]{\textcolor{limegreen}{#1}}
+\newcommand{\fgr}[1]{\textcolor{ForestGreen}{#1}}
 \newcommand{\ora}[1]{\textcolor{orange}{#1}}
+\renewcommand{\red}[1]{\textcolor{firebrick}{#1}}
+\newcommand{\myp}[1]{\textcolor{mypurple}{#1}}
+\newcommand{\myb}[1]{\textcolor{myblue}{#1}}
+\newcommand{\myg}[1]{\textcolor{mygreen}{#1}}
+\newcommand{\myo}[1]{\textcolor{myorange}{#1}}
+\newcommand{\myr}[1]{\textcolor{myred}{#1}}
+
+\newcommand{\pH}{\mathrm{pH}}
 
 % Points in figures
 \newcommand*\circled[1]{%
@@ -175,24 +186,7 @@
 		#1%
 	}%
 }
-% Color choice
-% Obsolete : psw optional argument
-% \newcommand{\lsw}[2]{\textcolor{\sswitch{white!10}{#1!100}}{#2}}
-% Command for highlighting switch
-\RequirePackage{soul}
-\sethlcolor{lightgray}
-% \RequirePackage[soul]{lua-ul}
-% \RequirePackage{luacolor}
-% \newcommand{\hl}[1]{%
-%   \highLight{#1}
-% }
-% \LuaULSetHighLightColor{gray}
-\DeclareRobustCommand{\mhl}[1]{%
-	\ifmmode\text{\hl{$#1$}}\else\hl{#1}\fi
-}
-\newcommand{\hsw}[1]{%
-	\switch{\textcolor{white!10}{#1}}{\mhl{#1}}
-}
+
 % Allow for compilation of enon, solu_stud and solu_prof in one go?
 % https://tex.stackexchange.com/a/5265
 \RequirePackage{currfile}
@@ -250,6 +244,10 @@
 			}
 	}[]
 }
+
+% For bigger boxrule in fbox
+\edef\oldfboxrule{\the\fboxrule}
+\newcommand{\fatbox}[1]{\setlength{\fboxrule}{1pt}\fbox{#1}\setlength{\fboxrule}{\oldfboxrule}}
 
 % subscript
 \let\sup\relax

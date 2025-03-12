@@ -39,6 +39,7 @@
 \def\Aring{\mathring{\mathrm{A}}}
 \def\Ar{\mathrm{A}}
 \def\Br{\mathrm{B}}
+\def\Cr{\mathrm{C}}
 \def\Mr{\mathrm{M}}
 \def\Or{\mathrm{O}}
 \def\Gr{\mathrm{G}}
@@ -58,6 +59,10 @@
 \def\a{\alpha}
 \def\dt{\dd t}
 \def\Dt{\D t}
+\def\dx{\dd x}
+\def\dy{\dd y}
+\def\dz{\dd z}
+\def\dr{\dd r}
 \def\ap{\dot{a}}
 \def\app{\ddot{a}}
 \def\bb{\beta}
@@ -103,6 +108,7 @@
 \let\oldbf=\bf
 \def\bf{\vv{b}}
 \def\cf{\vv{c}}
+\def\cf{\vv{d}}
 \def\If{\vv{i}}
 \def\gf{\vv{g}}
 % \def\uf{\vv{u}}
@@ -177,6 +183,11 @@
 \newcommand{\uf}{\vv{u_{\f}}}
 \newcommand{\uk}{\vv{u_{k}}}
 
+\newcommand{\vvr}[1]{\vv{\rm #1}}
+
+\newcommand{\prob}[2]{\mathcal{P}\left(#1 \mid #2\right)}
+\newcommand{\moy}[1]{\left\langle #1 \right\rangle}
+
 \def\yf{\vv{y}}
 \def\wf{\vv{\w}}
 \def\muf{\vv{\mu}}
@@ -197,6 +208,8 @@
 \def\Ef{\vv{E}}
 \def\Af{\vv{A}}
 \def\OM{\vvr{OM}}
+\def\OH{\vvr{OH}}
+\def\HM{\vvr{HM}}
 \def\OG{\vvr{OG}}
 \def\Bf{\vv{B}}
 \def\Hf{\vv{H}}
@@ -299,7 +312,7 @@
 \newcommand{\ub}[2]{\underbracket[1pt]{#1}_{#2}}
 \newcommand{\ob}[2]{\overbracket[1pt]{#1}^{#2}}
 
-\def\mt{(M,t)}
+\def\mt{(\Mr,t)}
 \def\rt{(r,t)}
 \def\xt{(x,t)}
 \def\xy{(x,y)}
@@ -312,6 +325,7 @@
 \def\xyzt{(x,y,z,t)}
 
 % For complexes
+\newcommand{\ul}[1]{\underline{#1}}
 \newcommand{\xul}[1]{\underline{#1}}
 
 % arrows

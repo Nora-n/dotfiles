@@ -114,11 +114,11 @@
 \definecolor{cornflowerblue}{rgb}{0.3921, 0.5843, 0.9294}
 \definecolor{limegreen}{rgb}{0.2, 0.8, 0.2}
 \definecolor{firebrick}{rgb}{0.7, 0.13, 0.13}
-\definecolor{myblue}{HTML}{1053af}
-\definecolor{myred}{HTML}{d62626}
-\definecolor{myorange}{HTML}{f29f00}
-\definecolor{mygreen}{HTML}{2e8b73}
 \definecolor{mypurple}{HTML}{733bb3}
+\definecolor{myblue}{HTML}{1053af}
+\definecolor{mygreen}{HTML}{2e8b73}
+\definecolor{myorange}{HTML}{f29f00}
+\definecolor{myred}{HTML}{d62626}
 
 % shortcut for colors
 % \newcommand{\wht}[1]{\textcolor{white}{#1}}
@@ -130,6 +130,11 @@
 \newcommand{\fgr}[1]{\textcolor{ForestGreen}{#1}}
 \newcommand{\ora}[1]{\textcolor{orange}{#1}}
 \newcommand{\red}[1]{\textcolor{firebrick}{#1}}
+\newcommand{\myp}[1]{\textcolor{mypurple}{#1}}
+\newcommand{\myb}[1]{\textcolor{myblue}{#1}}
+\newcommand{\myg}[1]{\textcolor{mygreen}{#1}}
+\newcommand{\myo}[1]{\textcolor{myorange}{#1}}
+\newcommand{\myr}[1]{\textcolor{myred}{#1}}
 
 % For \cancel and \bcancel functions
 \RequirePackage{cancel}
@@ -212,8 +217,10 @@
 % https://tex.stackexchange.com/a/119998/284518
 \newcommand{\xunderbrace}[2][\vphantom{\dfrac{A}{A}}]{\underbrace{#1#2}}
 \newcommand{\xunderbracket}[2][\vphantom{\dfrac{A}{A}}]{\underbracket[1pt]{#1#2}}
+\newcommand{\xub}[2][\vphantom{\dfrac{A}{A}}]{\underbracket[1pt]{#1#2}}
 \newcommand{\xoverbrace}[2][\vphantom{\dfrac{A}{A}}]{\overbrace{#1#2}}
 \newcommand{\xoverbracket}[2][\vphantom{\dfrac{A}{A}}]{\overbracket[1pt]{#1#2}}
+\newcommand{\xob}[2][\vphantom{\dfrac{A}{A}}]{\overbracket[1pt]{#1#2}}
 % To print bareme in interro
 \def\ptcol{ForestGreen}
 \newcommand{\pt}[1]{{\color{\cswitch{\ptcol}{white!10}}\circled{#1}}}
@@ -474,19 +481,19 @@
 			% {2}{\def\ustr{\strr}}%
 			% {3}{\def\ustr{\strrr}}%
 		}{}%
-	}{}%
+  }{\renewcommand{\thesection}{\Roman{section}}}%
 	\IfValueTF{#1}{%
 		\IfEq{#1}{s}{%
 			\IfValueTF{#2}{%
-				\oldsection[#4]{\texorpdfstring{\ltm[#2]{\ustr}#4}{#4}}%
+				\oldsection[#4]{\texorpdfstring{\ltm[#2]{\ustr}~#4}{#4}}%
 			}{%
-				\oldsection[#4]{\texorpdfstring{\ltm[\sspace]{\ustr}#4}{#4}}%
+				\oldsection[#4]{\texorpdfstring{\ltm[\sspace]{\ustr}~#4}{#4}}%
 			}%
 		}{%
 			\IfValueTF{#2}{%
-				\oldsection[#4]{\texorpdfstring{\ltm[#2]{\textcolor{Red}{/#1}}#4}{#4}}%
+				\oldsection[#4]{\texorpdfstring{\ltm[#2]{\textcolor{Red}{/#1}}~#4}{#4}}%
 			}{%
-				\oldsection[#4]{\texorpdfstring{\ltm[\sspace]{\textcolor{Red}{/#1}}#4}{#4}}%
+				\oldsection[#4]{\texorpdfstring{\ltm[\sspace]{\textcolor{Red}{/#1}}~#4}{#4}}%
 			}%
 		}%
 	}{\oldsection{#4}}
@@ -556,14 +563,13 @@
 	hyperfigures=false]{hyperref}
 % star version of eqref for no hyperlink
 % https://tex.stackexchange.com/a/126774
-% fails without a star… weird
-% \let\oldeqref\eqref
-% \makeatletter
-% \RenewDocumentCommand\eqref{sm}{%
-% 	\IfBooleanTF{#1}%
-% 	{\textup{(\ref*{#2})}}% If a star is seen
-% 	{\oldeqref{#2}}%                 If no star is seen
-% }
+\makeatletter
+\def\eqref{\@ifstar\@eqref\@@eqref}
+\def\@eqref#1{\textup{\tagform@{\ref*{#1}}}}
+\def\@@eqref#1{\textup{\tagform@{\ref{#1}}}}
+\makeatother 
+
+% Break \url?
 \makeatother
 \def\UrlBreaks{\do\/\do-}
 % Add an upward arrow next to backref,
@@ -700,6 +706,9 @@
 \let\norm\relax
 \newcommand\norm[1]{\stretchleftright{\Vert}
   {\ensurestackMath{\addstackgap[.5pt]{#1}}}{\Vert}}
+\let\abs\relax
+\newcommand\abs[1]{\stretchleftright{\vert}
+  {\ensurestackMath{\addstackgap[.5pt]{#1}}}{\vert}}
 % \DeclarePairedDelimiter{\norm}{\lVert}{\rVert}
 % \DeclareMathOperator{\arg}{arg}
 % To manually put \blacksquare flushedright of align* environnement
@@ -821,6 +830,8 @@
 \newcolumntype{M}{>{\centering\arraybackslash}m}
 % For \vline in tabav. Thanks Bruno PAGANI.
 \newcolumntype{d}{@{}c@{}}
+% For thicker vline, https://tex.stackexchange.com/a/156820/284518
+\newcolumntype{t}{!{\vrule width 1pt}}
 % Vertically center last Y column?
 % \renewcommand\tabularxcolumn[1]{>{\vspace{\fill}}m{#1}<{\vspace{\fill}}}
 \renewcommand*{\tabularxcolumn}[1]{m{#1}}
@@ -1041,6 +1052,7 @@ literate         = {á}{{\'a}}1
 \def\mspace{-25}
 \NewDocumentCommand{\ltm}{O{\lspace}m}{%
 	\llap{#2\hspace{#1pt}}%
+  \!\!%
 }
 % make alpha a number
 \ExplSyntaxOn
@@ -1053,14 +1065,23 @@ literate         = {á}{{\'a}}1
 	\int_to_roman:n { #1 }
 }
 \ExplSyntaxOff
+
+\newcounter{tempi}
+\newcounter{tempii}
+\newcounter{tempiii}
+
 % Here comes the big function
-\RenewDocumentCommand{\item}{ooD""{1}d()go}{% Redefine \item to
-\IfValueT{#4}{% if (<>) after \item
-	\renewcommand{\labelenumi}{{#4)}}
-	\renewcommand{\labelenumii}{{\makealph{#4} --}}
-	\renewcommand{\labelenumiii}{{\makeroman{#4}}.}
+\RenewDocumentCommand{\item}{ooD""{1}d()god''}{% Redefine \item to
+\IfValueT{#7}{% if '<>' after \item
+\setcounter{tempi}{\value{enumi}}%
+\setcounter{tempii}{\value{enumii}}%
+\setcounter{tempiii}{\value{enumiii}}%
+\setcounter{enumi}{#7-1}%
+\setcounter{enumii}{#7-1}%
+\setcounter{enumiii}{#7-1}%
 }%
-\IfValueTF{#6}{\def\localitem{\olditem[#6]}}{\def\localitem{\olditem}}
+\IfValueTF{#6}{\def\localitem{\olditem[#6]}}{\def\localitem{\olditem}}%
+% \def\localitem{\olditem}
 \IfValueTF{#1}{% If [<>] after \item
 	\IfEqCase{#1}{% Check the value
 		{l}{% \litem : generic left of item, optional left distance
@@ -1089,9 +1110,9 @@ literate         = {á}{{\'a}}1
 			}%
 			{bl}{% bold and left
 				\IfValueTF{#2}{% if second optional value to : \item[bl][opt](left){mand}
-					\localitem\leavevmode\ltm[#2]{#4}\textbf{#5}%
+					\localitem\leavevmode\ltm[#2]{#4}~\textbf{#5}%
 				}{% If no second optional value : \item[bl](left){mand}, do nothing with #2
-					\localitem\leavevmode\ltm{#4}\textbf{#5}%
+					\localitem\leavevmode\ltm{#4}~\textbf{#5}%
 				}%
 			}
 			{s}{% \litem for difficulty stars
@@ -1102,21 +1123,26 @@ literate         = {á}{{\'a}}1
 				}%
 			}%
 			{cl}{% \clitem for circled
-				\IfValueTF{#4}{%
-					\fitem{\icircled}[#4]%
+				\IfValueTF{#6}{%
+					\fitem{\icircled}[#6]%
 				}{%
 					\fitem{\icircled}%
 				}%
 			}%
 			{sq}{% \sqitem for fbox
-				\IfValueTF{#4}{%
-					\fitem{\fbox}[#4]%
+				\IfValueTF{#6}{%
+					\fitem{\fbox}[#6]%
 				}{%
 					\fitem{\fbox}%
 				}%
 			}%
 	}%
 }{\localitem}
+\IfValueT{#7}{% if '<>' after \item
+\setcounter{enumi}{\value{tempi}}%
+\setcounter{enumii}{\value{tempii}}%
+\setcounter{enumiii}{\value{tempiii}}%
+}%
 }
 
 % Bolditemize
@@ -1128,11 +1154,7 @@ literate         = {á}{{\'a}}1
 % \newcommand{\ed}[2]{#1\endnote{\textcolor{black}{#1} : #2}}
 \renewcommand{\obar}[1]{\mkern 1.5mu\overline{\mkern-1.5mu#1\mkern-1.5mu}\mkern 1.5mu}
 \newcommand{\obarr}[1]{\mkern 1.5mu\overline{\mkern-1.5mu\rm #1\mkern-1.5mu}\mkern 1.5mu}
-\newcommand{\vvr}[1]{\vv{\rm #1}}
-
 \newcommand{\opto}[2]{\xrightarrow[#2]{#1}}
-\newcommand{\prob}[2]{\mathcal{P}\left(#1 \mid #2\right)}
-\newcommand{\moy}[1]{\left\langle #1 \right\rangle}
 
 % Environnements de mises en valeur
 \RequirePackage[many]{tcolorbox}
@@ -1257,24 +1279,6 @@ literate         = {á}{{\'a}}1
 	\textcolor{\sswitch{white!10}{black!100}}{%
 		#1%
 	}%
-}
-% Color choice
-% Obsolete : psw optional argument
-% \newcommand{\lsw}[2]{\textcolor{\sswitch{white!10}{#1!100}}{#2}}
-% Command for highlighting switch
-\RequirePackage{soul}
-\sethlcolor{lightgray}
-% \RequirePackage[soul]{lua-ul}
-% \RequirePackage{luacolor}
-% \newcommand{\hl}[1]{%
-%   \highLight{#1}
-% }
-% \LuaULSetHighLightColor{gray}
-\DeclareRobustCommand{\mhl}[1]{%
-	\ifmmode\text{\hl{$#1$}}\else\hl{#1}\fi
-}
-\newcommand{\hsw}[1]{%
-	\switch{\textcolor{white!10}{#1}}{\mhl{#1}}
 }
 
 % To make `hide` command
@@ -2112,16 +2116,19 @@ literate         = {á}{{\'a}}1
 \newcommand{\iconsomm}{\faIcon{book-open}}
 \newcommand{\iconchek}{\faIcon{check}}
 \newcommand{\iconyout}{\faIcon{youtube}}
+\newcommand{\iconskul}{\faIcon{skull-crossbones}}
 
-% My generic box name
-% based on the great answer https://tex.stackexchange.com/a/471615/284518
-% TODO: Remove the first star parameter~: useless with IfValueTF{#5}
-
-\newcommand{\chaplett}{C} % Lettre par défaut des Propriété C1.1 etc
+% Lettre par défaut des Propriété C1.1 etc
+\newcommand{\chaplett}{C} 
+\renewcommand{\theequation}{\chaplett\thechapter.\arabic{equation}}
 \renewcommand{\thefigure}{\chaplett\thechapter.\arabic{figure}}
 \renewcommand{\thetable}{\chaplett\thechapter.\arabic{table}}
 
 % No counter
+% My generic box name
+% based on the great answer https://tex.stackexchange.com/a/471615/284518
+% TODO: Remove the first star parameter~: useless with IfValueTF{#5}
+
 \NewTColorBox{tcn}{sO{}r()D<>{box}d""D''{l}m}{%
 base,
 #4={#3}{#7},
