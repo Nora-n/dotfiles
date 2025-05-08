@@ -242,6 +242,8 @@ for_window [class="kitty" title="ranger"] move to workspace $ws3
 for_window [class="pentablet"] floating enable
 for_window [class="GPT4ALL"] floating enable
 for_window [class="tikzit"] floating enable
+for_window [class="Blueman-manager"] floating enable
+for_window [class="TelegramDesktop"] floating enable
 
 # reload the configuration file
 bindsym $mod+Shift+c reload

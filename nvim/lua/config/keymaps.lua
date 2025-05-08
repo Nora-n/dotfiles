@@ -171,7 +171,7 @@ vim.keymap.set(
 -- )
 vim.keymap.set(
   "n",
-  "<C-S-p>",
+  "<C-p>",
   "<cmd>!python3 %<CR>",
   { noremap = true, desc = "Float Python" }
 )

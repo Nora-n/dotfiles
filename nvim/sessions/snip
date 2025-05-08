@@ -13,19 +13,19 @@ if &shortmess =~ 'A'
 else
   set shortmess=aoO
 endif
-badd +1412 ~/.config/nvim/snippets/tex/tex.lua
-badd +2105 ~/.config/texmf/tex/latex/local/cours-preambule.sty
+badd +1404 ~/.config/nvim/snippets/tex/tex.lua
+badd +625 ~/.config/texmf/tex/latex/local/cours-preambule.sty
 badd +312 ~/.config/texmf/tex/latex/local/custikz.sty
 badd +982 ~/.config/nvim/snippets/tex/tex.snippets
 badd +120 ~/.config/texmf/tex/latex/local/locdef.sty
 badd +25 ~/.config/texmf/tex/latex/local/mintikz.sty
 badd +25 ~/.config/nvim/snippets/vimwiki/wiki.lua
 badd +570 ~/Documents/Enseignement/Prepa/BPEP/fichiers_utiles/raccourcis_communs.sty
-badd +1 ~/Documents/Enseignement/Prepa/BPEP/fichiers_utiles/preambule.sty
+badd +479 ~/Documents/Enseignement/Prepa/BPEP/fichiers_utiles/preambule.sty
 argglobal
 %argdel
 $argadd ~/.config/nvim/snippets/tex/tex.lua
-edit ~/.config/nvim/snippets/tex/tex.lua
+edit ~/.config/texmf/tex/latex/local/cours-preambule.sty
 let s:save_splitbelow = &splitbelow
 let s:save_splitright = &splitright
 set splitbelow splitright
@@ -46,495 +46,21 @@ exe 'vert 1resize ' . ((&columns * 94 + 94) / 189)
 exe 'vert 2resize ' . ((&columns * 94 + 94) / 189)
 tcd ~/Documents/Enseignement/Prepa/BPEP
 argglobal
-balt ~/.config/texmf/tex/latex/local/cours-preambule.sty
-setlocal fdm=expr
-setlocal fde=v:lua.require'lazyvim.util'.ui.foldexpr()
-setlocal fmr={{{,}}}
-setlocal fdi=#
-setlocal fdl=99
-setlocal fml=1
-setlocal fdn=20
-setlocal fen
-57
-normal! zo
-648
-normal! zo
-655
-normal! zo
-659
-normal! zo
-792
-normal! zo
-1037
-normal! zo
-1274
-normal! zo
-1283
-normal! zo
-1319
-normal! zo
-1328
-normal! zo
-1403
-normal! zo
-1408
-normal! zo
-1477
-normal! zo
-1485
-normal! zo
-1542
-normal! zo
-1548
-normal! zo
-1560
-normal! zo
-1572
-normal! zo
-1584
-normal! zo
-1596
-normal! zo
-1608
-normal! zo
-1620
-normal! zo
-1856
-normal! zo
-1869
-normal! zo
-1874
-normal! zo
-1886
-normal! zo
-1891
-normal! zo
-1904
-normal! zo
-1912
-normal! zo
-1963
-normal! zo
-2030
-normal! zo
-2036
-normal! zo
-2037
-normal! zo
-2046
-normal! zo
-2055
-normal! zo
-2083
-normal! zo
-2099
-normal! zo
-2147
-normal! zo
-2154
-normal! zo
-2251
-normal! zo
-2258
-normal! zo
-2350
-normal! zo
-2357
-normal! zo
-2471
-normal! zo
-2475
-normal! zo
-2476
-normal! zo
-2489
-normal! zo
-2500
-normal! zo
-2529
-normal! zo
-2540
-normal! zo
-2552
-normal! zo
-2559
-normal! zo
-2573
-normal! zo
-2582
-normal! zo
-2601
-normal! zo
-2607
-normal! zo
-2626
-normal! zo
-2637
-normal! zo
-2648
-normal! zo
-2656
-normal! zo
-2662
-normal! zo
-2670
-normal! zo
-2677
-normal! zo
-2694
-normal! zo
-2695
-normal! zo
-2711
-normal! zo
-2712
-normal! zo
-2729
-normal! zo
-2749
-normal! zo
-2755
-normal! zo
-2756
-normal! zo
-2757
-normal! zo
-2769
-normal! zo
-2783
-normal! zo
-2790
-normal! zo
-2797
-normal! zo
-2811
-normal! zo
-2816
-normal! zo
-2817
-normal! zo
-2818
-normal! zo
-2825
-normal! zo
-2838
-normal! zo
-2845
-normal! zo
-2860
-normal! zo
-2868
-normal! zo
-2875
-normal! zo
-2894
-normal! zo
-2895
-normal! zo
-2899
-normal! zo
-2909
-normal! zo
-2921
-normal! zo
-2929
-normal! zo
-2949
-normal! zo
-2957
-normal! zo
-2984
-normal! zo
-2991
-normal! zo
-3001
-normal! zo
-3009
-normal! zo
-3022
-normal! zo
-3030
-normal! zo
-3075
-normal! zo
-3080
-normal! zo
-3081
-normal! zo
-3091
-normal! zo
-3096
-normal! zo
-3097
-normal! zo
-3106
-normal! zo
-3116
-normal! zo
-3126
-normal! zo
-3139
-normal! zo
-3143
-normal! zo
-3144
-normal! zo
-3159
-normal! zo
-3160
-normal! zo
-3175
-normal! zo
-3176
-normal! zo
-3191
-normal! zo
-3192
-normal! zo
-3204
-normal! zo
-3210
-normal! zo
-3222
-normal! zo
-3229
-normal! zo
-3240
-normal! zo
-3247
-normal! zo
-3274
-normal! zo
-3289
-normal! zo
-3296
-normal! zo
-3301
-normal! zo
-3315
-normal! zo
-3321
-normal! zo
-3325
-normal! zo
-3339
-normal! zo
-3345
-normal! zo
-3356
-normal! zo
-3363
-normal! zo
-3374
-normal! zo
-3381
-normal! zo
-3393
-normal! zo
-3400
-normal! zo
-3411
-normal! zo
-3418
-normal! zo
-3429
-normal! zo
-3436
-normal! zo
-3447
-normal! zo
-3454
-normal! zo
-3465
-normal! zo
-3472
-normal! zo
-3485
-normal! zo
-3492
-normal! zo
-3509
-normal! zo
-3516
-normal! zo
-3531
-normal! zo
-3536
-normal! zo
-3537
-normal! zo
-3538
-normal! zo
-3552
-normal! zo
-3567
-normal! zo
-3587
-normal! zo
-3592
-normal! zo
-3593
-normal! zo
-3594
-normal! zo
-3608
-normal! zo
-3623
-normal! zo
-3643
-normal! zo
-3648
-normal! zo
-3649
-normal! zo
-3650
-normal! zo
-3664
-normal! zo
-3679
-normal! zo
-3699
-normal! zo
-3704
-normal! zo
-3705
-normal! zo
-3706
-normal! zo
-3720
-normal! zo
-3734
-normal! zo
-3749
-normal! zo
-3765
-normal! zo
-3770
-normal! zo
-3771
-normal! zo
-3772
-normal! zo
-3787
-normal! zo
-3807
-normal! zo
-3814
-normal! zo
-3834
-normal! zo
-3841
-normal! zo
-3861
-normal! zo
-3872
-normal! zo
-3879
-normal! zo
-3893
-normal! zo
-3911
-normal! zo
-3918
-normal! zo
-3944
-normal! zo
-3962
-normal! zo
-3967
-normal! zo
-3978
-normal! zo
-3983
-normal! zo
-3991
-normal! zo
-3998
-normal! zo
-4005
-normal! zo
-4006
-normal! zo
-4028
-normal! zo
-4035
-normal! zo
-4042
-normal! zo
-4043
-normal! zo
-4059
-normal! zo
-4066
-normal! zo
-4073
-normal! zo
-4093
-normal! zo
-4100
-normal! zo
-4117
-normal! zo
-4124
-normal! zo
-4139
-normal! zo
-4144
-normal! zo
-4145
-normal! zo
-4146
-normal! zo
-4158
-normal! zo
-4176
-normal! zo
-4210
-normal! zo
-4217
-normal! zo
-4241
-normal! zo
-4248
-normal! zo
-4274
-normal! zo
-4279
-normal! zo
-4280
-normal! zo
-4290
-normal! zo
-4302
-normal! zo
-4308
-normal! zo
-4318
-normal! zo
-4319
-normal! zo
-4333
-normal! zo
-4340
-normal! zo
-4393
-normal! zo
-4405
-normal! zo
-4417
-normal! zo
-4429
-normal! zo
-4442
-normal! zo
-4462
-normal! zo
-let s:l = 1412 - ((30 * winheight(0) + 23) / 46)
+balt ~/.config/nvim/snippets/tex/tex.lua
+setlocal foldmethod=expr
+setlocal foldexpr=v:lua.require'lazyvim.util'.ui.foldexpr()
+setlocal foldmarker={{{,}}}
+setlocal foldignore=#
+setlocal foldlevel=99
+setlocal foldminlines=1
+setlocal foldnestmax=20
+setlocal foldenable
+let s:l = 625 - ((21 * winheight(0) + 23) / 46)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 1412
-normal! 033|
+keepjumps 625
+normal! 0
 wincmd w
 argglobal
 if bufexists(fnamemodify("~/Documents/Enseignement/Prepa/BPEP/fichiers_utiles/preambule.sty", ":p")) | buffer ~/Documents/Enseignement/Prepa/BPEP/fichiers_utiles/preambule.sty | else | edit ~/Documents/Enseignement/Prepa/BPEP/fichiers_utiles/preambule.sty | endif
@@ -542,22 +68,21 @@ if &buftype ==# 'terminal'
   silent file ~/Documents/Enseignement/Prepa/BPEP/fichiers_utiles/preambule.sty
 endif
 balt ~/Documents/Enseignement/Prepa/BPEP/fichiers_utiles/raccourcis_communs.sty
-setlocal fdm=expr
-setlocal fde=v:lua.require'lazyvim.util'.ui.foldexpr()
-setlocal fmr={{{,}}}
-setlocal fdi=#
-setlocal fdl=99
-setlocal fml=1
-setlocal fdn=20
-setlocal fen
-let s:l = 1 - ((0 * winheight(0) + 23) / 46)
+setlocal foldmethod=expr
+setlocal foldexpr=v:lua.require'lazyvim.util'.ui.foldexpr()
+setlocal foldmarker={{{,}}}
+setlocal foldignore=#
+setlocal foldlevel=99
+setlocal foldminlines=1
+setlocal foldnestmax=20
+setlocal foldenable
+let s:l = 462 - ((12 * winheight(0) + 23) / 46)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 1
-normal! 0
+keepjumps 462
+normal! 013|
 wincmd w
-2wincmd w
 exe 'vert 1resize ' . ((&columns * 94 + 94) / 189)
 exe 'vert 2resize ' . ((&columns * 94 + 94) / 189)
 tabnext 1

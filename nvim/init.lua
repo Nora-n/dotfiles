@@ -173,7 +173,7 @@ function! PythonTexCompile()
     execute "! pythontex " . bufname("%") 
     call vimtex#compiler#compile_ss()
 endfunction
-nnoremap <C-p> :call PythonTexCompile() <CR>
+nnoremap <C-S-p> :call PythonTexCompile() <CR>
 ]])
 
 -- Firenvim bigger window

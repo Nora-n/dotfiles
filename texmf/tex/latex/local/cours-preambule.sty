@@ -246,11 +246,11 @@
 		{un}{\stackunder[#1pt]{$#4$}{#3\text{#5}}}
 }
 }
-% Pour math au-dessus de math
-\NewDocumentCommand{\ste}{O{2}D(){on}mm}{%
+% Pour math au-dessus de math, avec paramètre pour un "\footnotesize"
+\NewDocumentCommand{\ste}{O{2}D(){on}D""{}mm}{%
 	\IfEqCase{#2}{%
-		{on}{\stackon[#1pt]{$#3$}{$#4$}}
-			{un}{\stackunder[#1pt]{$#3$}{$#4$}}
+		{on}{\stackon[#1pt]{$#4$}{#3$#5$}}
+			{un}{\stackunder[#1pt]{$#4$}{#3$#5$}}
 	}
 }
 
@@ -315,9 +315,6 @@
 
 % set \PREPA
 \getenv[\PREPA]{PREPA}
-
-\newcommand{\dodd}{\PREPA/2022/}
-\newcommand{\dodt}{\PREPA/2023/}
 
 % Figures
 \RequirePackage{graphicx}%[pdftex]{graphicx}
@@ -458,7 +455,7 @@
 		left=4pt, right=4pt, top=4pt, bottom=2pt,
 		sharp corners=northwest]{\thesubsection}}{0.5em}{}
 
-\titleformat{\subsubsection}{\normalsize}{\hspace{2cm}
+\titleformat{\subsubsection}{\normalsize\bfseries}{\hspace{2cm}
 	\tcbox[colback=white, colframe=darkgray,
 		coltext=black, on line, boxsep=0pt,
 		left=4pt, right=4pt, top=4pt, bottom=2pt,
@@ -485,15 +482,15 @@
 	\IfValueTF{#1}{%
 		\IfEq{#1}{s}{%
 			\IfValueTF{#2}{%
-				\oldsection[#4]{\texorpdfstring{\ltm[#2]{\ustr}~#4}{#4}}%
+				\oldsection[#4]{\texorpdfstring{\ltm[#2]{\ustr}#4}{#4}}%
 			}{%
-				\oldsection[#4]{\texorpdfstring{\ltm[\sspace]{\ustr}~#4}{#4}}%
+				\oldsection[#4]{\texorpdfstring{\ltm[\sspace]{\ustr}#4}{#4}}%
 			}%
 		}{%
 			\IfValueTF{#2}{%
-				\oldsection[#4]{\texorpdfstring{\ltm[#2]{\textcolor{Red}{/#1}}~#4}{#4}}%
+				\oldsection[#4]{\texorpdfstring{\ltm[#2]{\textcolor{Red}{/#1}}#4}{#4}}%
 			}{%
-				\oldsection[#4]{\texorpdfstring{\ltm[\sspace]{\textcolor{Red}{/#1}}~#4}{#4}}%
+				\oldsection[#4]{\texorpdfstring{\ltm[\sspace]{\textcolor{Red}{/#1}}#4}{#4}}%
 			}%
 		}%
 	}{\oldsection{#4}}
@@ -1052,8 +1049,8 @@ literate         = {á}{{\'a}}1
 \def\mspace{-25}
 \NewDocumentCommand{\ltm}{O{\lspace}m}{%
 	\llap{#2\hspace{#1pt}}%
-  \!\!%
 }
+  % \!\!%
 % make alpha a number
 \ExplSyntaxOn
 \DeclareExpandableDocumentCommand \makealph { m }
@@ -1086,9 +1083,9 @@ literate         = {á}{{\'a}}1
 	\IfEqCase{#1}{% Check the value
 		{l}{% \litem : generic left of item, optional left distance
 				\IfValueTF{#2}{% if second optional value to \item : \item[l][opt]{mand}
-					\localitem\leavevmode\ltm[#2]{#5}%
+					\localitem\leavevmode\ltm[#2]{#4}%
 				}{% If no second optional value : \item[l]{mand}, do nothing with #2
-					\localitem\leavevmode\ltm{#5}%
+					\localitem\leavevmode\ltm{#4}%
 				}%
 			}%
 			{n}{% \nitem : left item /nb in green for points
@@ -1110,9 +1107,9 @@ literate         = {á}{{\'a}}1
 			}%
 			{bl}{% bold and left
 				\IfValueTF{#2}{% if second optional value to : \item[bl][opt](left){mand}
-					\localitem\leavevmode\ltm[#2]{#4}~\textbf{#5}%
+					\localitem\leavevmode\ltm[#2]{#4}\textbf{#5}%
 				}{% If no second optional value : \item[bl](left){mand}, do nothing with #2
-					\localitem\leavevmode\ltm{#4}~\textbf{#5}%
+					\localitem\leavevmode\ltm{#4}\textbf{#5}%
 				}%
 			}
 			{s}{% \litem for difficulty stars
@@ -2115,6 +2112,7 @@ literate         = {á}{{\'a}}1
 \newcommand{\iconrigt}{\faIcon{angle-right}}
 \newcommand{\iconsomm}{\faIcon{book-open}}
 \newcommand{\iconchek}{\faIcon{check}}
+\newcommand{\iconfals}{\faIcon{times}}
 \newcommand{\iconyout}{\faIcon{youtube}}
 \newcommand{\iconskul}{\faIcon{skull-crossbones}}
 

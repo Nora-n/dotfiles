@@ -595,14 +595,16 @@ return {
       ]],
         {
           c(1, {
+            t("mypurple"),
+            t("myblue"),
+            t("mygreen"),
+            t("myorange"),
+            t("myred"),
             t("orchid"),
             t("cornflowerblue"),
             t("limegreen"),
             t("orange"),
             t("firebrick"),
-            t("myblue"),
-            t("mygreen"),
-            t("myred"),
           }),
           d(2, get_visual),
           i(0),
@@ -630,14 +632,16 @@ return {
       ]],
         {
           c(1, {
+            t("mypurple"),
+            t("myblue"),
+            t("mygreen"),
+            t("myorange"),
+            t("myred"),
             t("orchid"),
             t("cornflowerblue"),
             t("limegreen"),
             t("orange"),
             t("firebrick"),
-            t("myblue"),
-            t("mygreen"),
-            t("myred"),
           }),
           d(2, get_visual),
         }
@@ -2971,17 +2975,17 @@ return {
     fmta(
       [[
       \qav
-      \left\{
+      \left\{%
       \begin{array}{rcl}
         <> & = & <>
         \\
         <> & = & <>
       \end{array}
-      \right.\\
-      \AN
-      \xul{
+      \right.
+      \\\AN
+      \ul{%
       <>
-      }
+      }%
       <>
       ]],
       {
@@ -3011,19 +3015,19 @@ return {
       }
     )
   ),
-  -- phantom xul
+  -- phantom ul
   s(
     {
       trig = "pht",
       wordTrig = false,
       snippetType = "autosnippet",
-      dscr = "Expands 'pht' into phantom xul application",
+      dscr = "Expands 'pht' into phantom ul application",
       condition = line_begin,
     },
     fmta(
       [[
     \AN
-    \makebox[0pt][l]{$\xul{\phantom{<>}}$}
+    \makebox[0pt][l]{$\ul{\phantom{<>}}$}
     <>
     ]],
       {
