@@ -135,6 +135,14 @@
 }
 \newcommand{\pt}[1]{{\color{ForestGreen}\circled{#1}}}
 
+% Pour \pt au-dessus de math
+\NewDocumentCommand{\stm}{O{2}D(){on}D""{1}m}{%
+\IfEqCase{#2}{%
+	{on}{\stackon[#1pt]{$#4$}{$\pt{#3}$}}
+		{un}{\stackunder[#1pt]{$#4$}{$\pt{#3}$}}
+}
+}
+
 % Make toggle for teacher and student version of file
 \newtoggle{student}
 \togglefalse{student}

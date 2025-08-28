@@ -7,7 +7,7 @@
   <property name="zoomGesturesEnabled" value="true"/>
   <property name="selectedToolbar" value="Floating Toolbox (experimental) Copy"/>
   <property name="lastSavePath" value="/home/nora/Documents/Enseignement/Prepa/2024/02_TD/03_transmat/TM7"/>
-  <property name="lastOpenPath" value="/home/nora/Documents/Enseignement/Prepa/figures_generales"/>
+  <property name="lastOpenPath" value="/home/nora/Documents/Enseignement/Prepa/2024/07_DS/DS10/P1/figures"/>
   <property name="lastImagePath" value="/home/nora/Documents/Enseignement/Prepa/2023/01_C/03_chimie/C4/figures"/>
   <property name="edgePanSpeed" value="18"/>
   <property name="edgePanMaxMult" value="5"/>
@@ -18,8 +18,8 @@
   <property name="mainWndHeight" value="1250"/>
   <property name="maximized" value="true"/>
   <property name="showToolbar" value="true"/>
-  <property name="showSidebar" value="false"/>
-  <property name="sidebarWidth" value="50"/>
+  <property name="showSidebar" value="true"/>
+  <property name="sidebarWidth" value="130"/>
   <property name="sidebarNumberingStyle" value="0"/>
   <property name="sidebarOnRight" value="false"/>
   <property name="scrollbarOnLeft" value="false"/>

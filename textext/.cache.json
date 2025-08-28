@@ -1,0 +1,10 @@
+{
+  "requirements_checker": {
+    "inkscape_executable": "/usr/bin/inkscape",
+    "available_tex_to_pdf_converters": {
+      "pdflatex": "/usr/local/texlive/2023/bin/x86_64-linux/pdflatex"
+    },
+    "available_pdf_to_svg_converters": {}
+  },
+  "previous_exit_code": 0
+}

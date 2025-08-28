@@ -901,6 +901,14 @@ return {
     t("\\Gamma"),
   }),
   s({
+    trig = "@k",
+    wordTrig = false,
+    snippetType = "autosnippet",
+    condition = tex_utils.in_mathzone,
+  }, {
+    t("\\kappa"),
+  }),
+  s({
     trig = "@l",
     wordTrig = false,
     snippetType = "autosnippet",
@@ -4060,6 +4068,7 @@ return {
       {
         c(1, {
           t(""),
+          t("[label=\\Alph*)]"),
           fmta("[label=\\protect\\fbox{<>}]", { i(1, "\\Alph*") }),
           fmta(
             "[label=\\protect\\fbox{<>}, label-width=<>]",
@@ -4401,6 +4410,32 @@ return {
   -----------------------------------------------------------------------------
   -- TikZ
   -----------------------------------------------------------------------------
+  ---Start figure
+  s(
+    {
+      trig = "mkt",
+      snippetType = "autosnippet",
+      dscr = "Start full tikzpicture",
+      condition = line_begin,
+    },
+    fmta(
+      [[
+      \documentclass{standalone}
+      \usepackage{mintikz}
+
+      % set viewing angle
+      \tdplotsetmaincoords{<>}{<>} % rot x rot z
+      % x = 0 gives top view
+
+      \begin{document}
+      \begin{tikzpicture}[tdplot_main_coords]
+      <>
+      \end{tikzpicture}
+      \end{document}
+    ]],
+      { i(1, "0"), i(2, "0"), i(3) }
+    )
+  ),
   -- Basic
   s({
     trig = "drw",

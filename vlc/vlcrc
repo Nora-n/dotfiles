@@ -2727,7 +2727,7 @@
 skins2-last=/usr/share/vlc/skins2/Arc-Dark.vlt
 
 # Config of last used skin (string)
-skins2-config=["Player" "Main" 200 200 1282 781 1]["Playlist" "plwindow" 0 0 250 400 0]["fullscreenController" "fswindow" 742 966 435 82 0]
+skins2-config=["Player" "Main" 200 200 1920 1200 1]["Playlist" "plwindow" 0 0 250 400 0]["fullscreenController" "fswindow" 742 966 435 82 0]
 
 # Enable transparency effects (boolean)
 #skins2-transparency=0

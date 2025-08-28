@@ -213,14 +213,6 @@
 % Pour \Aboxed dans un environnement align
 \RequirePackage{mathtools}
 \newtagform{black}{\color{black}(}{)}
-% Overbrace and brackets same height with phantom of big fraction
-% https://tex.stackexchange.com/a/119998/284518
-\newcommand{\xunderbrace}[2][\vphantom{\dfrac{A}{A}}]{\underbrace{#1#2}}
-\newcommand{\xunderbracket}[2][\vphantom{\dfrac{A}{A}}]{\underbracket[1pt]{#1#2}}
-\newcommand{\xub}[2][\vphantom{\dfrac{A}{A}}]{\underbracket[1pt]{#1#2}}
-\newcommand{\xoverbrace}[2][\vphantom{\dfrac{A}{A}}]{\overbrace{#1#2}}
-\newcommand{\xoverbracket}[2][\vphantom{\dfrac{A}{A}}]{\overbracket[1pt]{#1#2}}
-\newcommand{\xob}[2][\vphantom{\dfrac{A}{A}}]{\overbracket[1pt]{#1#2}}
 % To print bareme in interro
 \def\ptcol{ForestGreen}
 \newcommand{\pt}[1]{{\color{\cswitch{\ptcol}{white!10}}\circled{#1}}}
@@ -269,23 +261,23 @@
 \RequirePackage{chngcntr}
 
 % Pour \endnote
-\RequirePackage{endnotes}
-%% make it prettier
-\renewcommand*{\notesname}{\hspace{-1.1cm} Notes}
-\makeatletter
-\renewcommand*{\enoteheading}{%
-	\section*{\notesname}%
-	\markboth{\notesname}{\notesname}}
-\makeatother
-\renewcommand{\enotesize}{\normalsize}
-\renewcommand{\makeenmark}{\textcolor{magenta}{\hbox{$^{\theenmark}$}}}
-\renewcommand\enoteformat{%
-	\raggedright
-	\leftskip=1.8em
-	\makebox[0pt][r]{\textcolor{magenta}{\theenmark}~\rule{0pt}{\dimexpr\ht\strutbox+\baselineskip}}%
-}
+% \RequirePackage{endnotes}
+% %% make it prettier
+% \renewcommand*{\notesname}{\hspace{-1.1cm} Notes}
+% \makeatletter
+% \renewcommand*{\enoteheading}{%
+% 	\section*{\notesname}%
+% 	\markboth{\notesname}{\notesname}}
+% \makeatother
+% \renewcommand{\enotesize}{\normalsize}
+% \renewcommand{\makeenmark}{\textcolor{magenta}{\hbox{$^{\theenmark}$}}}
+% \renewcommand\enoteformat{%
+% 	\raggedright
+% 	\leftskip=1.8em
+% 	\makebox[0pt][r]{\textcolor{magenta}{\theenmark}~\rule{0pt}{\dimexpr\ht\strutbox+\baselineskip}}%
+% }
 % Make it clickable?
-\RequirePackage{hyperendnotes}
+% \RequirePackage{hyperendnotes}
 % Toggle switch in order to turn on/off back-links in the
 % endnote-section:
 % \enotelinkstrue
@@ -1135,7 +1127,7 @@ literate         = {á}{{\'a}}1
 			}%
 	}%
 }{\localitem}
-\IfValueT{#7}{% if '<>' after \item
+\IfValueT{#7}{% if "''" after \item
 \setcounter{enumi}{\value{tempi}}%
 \setcounter{enumii}{\value{tempii}}%
 \setcounter{enumiii}{\value{tempiii}}%
@@ -1371,7 +1363,7 @@ literate         = {á}{{\'a}}1
 % Make QR like BPEP
 \newlist{blocQR}{enumerate}{3}
 \setlist[blocQR]{resume}
-\setlist[blocQR,1]{leftmargin=10pt, label=\arabic*)}
+\setlist[blocQR,1]{leftmargin=10pt, label=\sqenumi}
 \setlist[blocQR,2]{leftmargin=20pt, label=\alph* --, ref={\theblocQRi\alph* --}}
 \setlist[blocQR,3]{leftmargin=10pt, label=\roman*.}
 \newcommand{\resetQ}{\restartlist{blocQR}}
@@ -1763,9 +1755,9 @@ literate         = {á}{{\'a}}1
 {\global\setbox\hints=\vbox{\unvbox\hints\strut  E\theexoIndex~Q{\the\numexpr\value{qrIndex}-1} :    #1 \strut}}
 
 
-\AtVeryEndDocument{
-	\label{page:last}
-}
+% \AtVeryEndDocument{
+% 	\label{page:last}
+% }
 
 %%%%%%%%%%%%%%%%%
 %%%% Figures %%%%
@@ -2396,18 +2388,18 @@ list entry={\hspace*{-20pt}\protect\rcheck~
 \NewDocumentCommand{\tce}{O{4.8pt}d""m}{%
   \IfValueTF{#2}{%
     \begin{tcn}[nsp](#3)<ctc>'t'{#2}
-      \vspace{-25pt}
+      \vspace{-20pt}
       \tcblistof[\subsubsection*]{#3}{\hspace*{#1}}
     \end{tcn}
   }{%
   \IfEq{#3}{ror}{%
     \begin{tcn}[nsp](#3)<ctc>"hart"'t'{\csname plur#3\endcsname}
-      \vspace{-25pt}
+      \vspace{-20pt}
       \tcblistof[\subsubsection*]{#3}{\hspace*{#1}}
     \end{tcn}
   }{%
     \begin{tcn}[nsp](#3)<ctc>'t'{\csname plur#3\endcsname}
-      \vspace{-25pt}
+      \vspace{-20pt}
       \tcblistof[\subsubsection*]{#3}{\hspace*{#1}}
     \end{tcn}
   }

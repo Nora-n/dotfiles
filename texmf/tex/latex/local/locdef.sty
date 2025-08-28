@@ -36,7 +36,9 @@
 \def\jW{\jj\W}
 \def\jWt{\jj\Wt}
 \def\jlw{\jj L\w}
+\def\jlW{\jj L\W}
 \def\jcw{\jj C\w}
+\def\jcW{\jj C\W}
 \def\jrcw{\jj RC\w}
 \def\jrlw{\jj RL\w}
 \def\Aring{\mathring{\mathrm{A}}}
@@ -315,6 +317,15 @@
 
 \newcommand{\ub}[2]{\underbracket[1pt]{#1}_{#2}}
 \newcommand{\ob}[2]{\overbracket[1pt]{#1}^{#2}}
+
+% Overbrace and brackets same height with phantom of big fraction
+% https://tex.stackexchange.com/a/119998/284518
+\newcommand{\xunderbrace}[2]{\underbrace{\vphantom{\dfrac{A}{A}}#1}_{#2}}
+\newcommand{\xunderbracket}[2]{\underbracket[1pt]{\vphantom{\dfrac{A}{A}}#1}_{#2}}
+\newcommand{\xub}[2]{\underbracket[1pt]{\vphantom{\dfrac{A}{A}}#1}_{#2}}
+\newcommand{\xoverbrace}[2]{\overbrace{\vphantom{\dfrac{A}{A}}#1}^{#2}}
+\newcommand{\xoverbracket}[2]{\overbracket[1pt]{\vphantom{\dfrac{A}{A}}#1}^{#2}}
+\newcommand{\xob}[2]{\overbracket[1pt]{\vphantom{\dfrac{A}{A}}#1}^{#2}}
 
 \def\mt{(\Mr,t)}
 \def\rt{(r,t)}
