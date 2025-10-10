@@ -67,8 +67,6 @@
 \RequirePackage[Export]{adjustbox}
 % For frames in multiple lines
 \RequirePackage{framed}
-% For better vectors : \vv
-\RequirePackage{esvect}
 
 \RequirePackage{lastpage}
 %%% En-tête et pied de page
@@ -81,7 +79,7 @@
 \fancyhead[RO]{\thepage}               % Top right even: page
 \fancyfoot[L]{Lycée \textsc{Pothier}}
 \fancyfoot[C]{\textbf{\thepage/\pageref*{LastPage}}}
-\fancyfoot[R]{MPSI3 -- 2024/2025}
+\fancyfoot[R]{MPSI3 -- 2025/2026}
 %\fancyfoot{}                           % Empty footer
 \renewcommand{\footrulewidth}{1pt}
 % Space before ruler
@@ -93,7 +91,7 @@
 	\fancyhf{}%
 	\fancyfoot[L]{Lycée \textsc{Pothier}}
 	\fancyfoot[C]{\textbf{\thepage/\pageref*{LastPage}}}
-	\fancyfoot[R]{MPSI3 -- 2024/2025}
+	\fancyfoot[R]{MPSI3 -- 2025/2026}
 	\renewcommand{\footrulewidth}{1pt}% Line at the footer visible
 }
 
@@ -106,7 +104,7 @@
 % \RequirePackage{float}
 
 % Colors
-\RequirePackage[svgnames, dvipsnames, table]{xcolor}
+\RequirePackage[svgnames, table]{xcolor}
 \definecolor{urlcolor}{rgb}{0,0,1}
 \definecolor{dgreen}{rgb}{.1,.6,.1}
 \definecolor{orchid}{RGB}{218, 112, 214}
@@ -141,6 +139,8 @@
 \newcommand{\dcancel}[1]{
 	\cancel{\bcancel{#1}}
 }
+% For better vectors : \vv
+\RequirePackage{esvect}
 % Lots of useful shorthands
 \let\mdiv\div % save ./. symbol before divergence
 \RequirePackage{physics}
@@ -310,7 +310,7 @@
 
 % Figures
 \RequirePackage{graphicx}%[pdftex]{graphicx}
-\graphicspath{{./figures/}}
+\graphicspath{{./figures/}{../figures/}}
 \RequirePackage{svg}
 \RequirePackage[noframe]{draftfigure}
 % watermark on prof figs
@@ -687,17 +687,19 @@
 \DeclareMathOperator{\acosh}{argch}
 \DeclareMathOperator{\asinh}{argsh}
 \let\cosh\relax
-\DeclareMathOperator{\cosh}{ch}
+\DeclarePairedDelimiterXPP\cosh[1]{\operatorname{ch}}{(}{)}{}{#1}
 \let\sinh\relax
-\DeclareMathOperator{\sinh}{sh}
+\DeclarePairedDelimiterXPP\sinh[1]{\operatorname{sh}}{(}{)}{}{#1}
 \let\arg\relax
 \DeclarePairedDelimiterXPP\arg[1]{\operatorname{arg}}{(}{)}{}{#1}
+\let\dim\relax
+\DeclarePairedDelimiterXPP\dim[1]{\operatorname{dim}}{(}{)}{}{#1}
 \let\norm\relax
 \newcommand\norm[1]{\stretchleftright{\Vert}
   {\ensurestackMath{\addstackgap[.5pt]{#1}}}{\Vert}}
 \let\abs\relax
 \newcommand\abs[1]{\stretchleftright{\vert}
-  {\ensurestackMath{\addstackgap[.5pt]{#1}}}{\vert}}
+  {\ensurestackMath{\addstackgap[.5pt]{\DS#1}}}{\vert}}
 % \DeclarePairedDelimiter{\norm}{\lVert}{\rVert}
 % \DeclareMathOperator{\arg}{arg}
 % To manually put \blacksquare flushedright of align* environnement
@@ -1008,8 +1010,9 @@ literate         = {á}{{\'a}}1
 \newcommand{\bdmd}{$\scaleto{\diamond}{7pt}$}
 \setlist[itemize,1]{label=\bdmd, leftmargin=10pt}
 \newcommand{\btrg}{$\scaleto{\triangleright}{7pt}$}
-\setlist[itemize,2]{label=\btrg, leftmargin=20pt}
-\setlist[itemize,3]{label=$\bullet$, leftmargin=20pt}
+\setlist[itemize,2]{label=\btrg, leftmargin=10pt}
+\newcommand{\bcrc}{$\scaleto{\circ}{7pt}$}
+\setlist[itemize,3]{label=$\bcrc$, leftmargin=10pt}
 
 % Setup special items
 \newif\iffitem
@@ -1763,6 +1766,12 @@ literate         = {á}{{\'a}}1
 %%%% Figures %%%%
 %%%%%%%%%%%%%%%%%
 
+% For Gilles CASTEL's way of including figures
+\newcommand{\incfig}[2][1]{%
+    \def\svgwidth{#1\columnwidth}
+    \import{./figures/}{#2.pdf_tex}
+}
+
 % utile pour les figures qui ne doivent pas être redimensionnées
 \newcommand{\figRaw}[2][]{ % possibilité d'ajouter des arguments optionnels dans includeGraphics en plus
 	\begin{center}
@@ -2193,6 +2202,13 @@ list entry={\hspace*{-20pt}\protect\rcheck~
 			title={#2},
 		}
 }
+% Simple box no title
+\tcbset{
+	boxnt/.style 2 args={
+			boxrule=0pt, frame hidden, interior hidden,
+			borderline={1pt}{0pt}{#1}, 
+		}
+}
 % center
 \tcbset{
 	ctc/.style 2 args={
@@ -2339,6 +2355,7 @@ list entry={\hspace*{-20pt}\protect\rcheck~
 }
 % For side inside box
 \NewTColorBox{isd}{O{}D(){null}}{%
+  interior hidden,
 	side={#2},
 	#1,
 }

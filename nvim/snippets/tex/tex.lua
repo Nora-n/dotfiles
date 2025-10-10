@@ -39,6 +39,9 @@ end
 tex_utils.in_tikz = function() -- TikZ picture environment detection
   return tex_utils.in_env("tikzpicture")
 end
+tex_utils.in_ctikz = function() -- CircuiTikZ picture environment detection
+  return tex_utils.in_env("circuitikz")
+end
 
 -- This is the `get_visual` function I've been talking about.
 -- ----------------------------------------------------------------------------
@@ -339,6 +342,44 @@ return {
       fmta([[\tag*{<>}]], { d(1, get_visual) }),
     }),
   }),
+  -- corronly
+  s(
+    {
+      trig = "ifc",
+      wordTrig = true,
+      snippetType = "autosnippet",
+      dscr = "Expands 'ifc' into '\\ifcorrige{<>}'",
+    },
+    fmta(
+      [[
+      \ifcorrige{%
+        <>
+      }%
+      <>
+      ]],
+      {
+        d(1, get_visual),
+        i(0),
+      }
+    )
+  ),
+  s(
+    {
+      trig = "Ifc",
+      wordTrig = true,
+      snippetType = "autosnippet",
+      dscr = "Expands 'Ifc' into '\\ifcorrige{<>}'",
+    },
+    fmta(
+      [[
+      \ifcorrige{<>}<>
+      ]],
+      {
+        d(1, get_visual),
+        i(0),
+      }
+    )
+  ),
   -- studonly
   s(
     {
@@ -1428,22 +1469,13 @@ return {
   s({
     trig = "lf",
     snippetType = "autosnippet",
-    dscr = "Expands 'lf' into '\\left( \frac{}{} \right)'",
+    dscr = "Expands 'lf' into '\\pa{\frac{}{}}'",
     condition = tex_utils.in_mathzone,
   }, {
     c(1, {
-      fmta(
-        "\\left( \\frac{<>}{<>}<> \\right)",
-        { d(1, get_visual), i(2), i(3) }
-      ),
-      fmta(
-        "\\left[ \\frac{<>}{<>}<> \\right]",
-        { d(1, get_visual), i(2), i(3) }
-      ),
-      fmta(
-        "\\left\\{ \\frac{<>}{<>}<> \\right\\}",
-        { d(1, get_visual), i(2), i(3) }
-      ),
+      fmta("\\pa{\\frac{<>}{<>}<>}", { d(1, get_visual), i(2), i(3) }),
+      fmta("\\pac{\\frac{<>}{<>}<>}", { d(1, get_visual), i(2), i(3) }),
+      fmta("\\paa{\\frac{<>}{<>}<>}", { d(1, get_visual), i(2), i(3) }),
     }),
   }),
   -- par
@@ -1522,6 +1554,13 @@ return {
     dscr = "Expands 'jw' into '\\jw'",
     condition = tex_utils.in_mathzone,
   }, { t("\\jw") }),
+  s({
+    trig = "jW",
+    wordTrig = false,
+    snippetType = "autosnippet",
+    dscr = "Expands 'jW' into '\\jW'",
+    condition = tex_utils.in_mathzone,
+  }, { t("\\jW") }),
   s({
     trig = "jcw",
     wordTrig = false,
@@ -1822,17 +1861,26 @@ return {
   -- straight derive
   s(
     {
+      trig = "dV",
+      snippetType = "autosnippet",
+      dscr = "Expands 'dv' into '\\dv{}'",
+      condition = tex_utils.in_mathzone,
+    },
+    fmta("\\dv{<>}<>", {
+      d(1, get_visual),
+      i(0),
+    })
+  ),
+  s(
+    {
       trig = "dv",
       snippetType = "autosnippet",
       dscr = "Expands 'dv' into '\\dv'",
       condition = tex_utils.in_mathzone,
     },
-    fmta("\\dv{<>}<>", {
+    fmta("\\dv{<>}{<>}", {
       d(1, get_visual),
-      c(2, {
-        fmta("{<>}", { i(1) }),
-        t(""),
-      }),
+      i(2),
     })
   ),
   s(
@@ -3023,6 +3071,19 @@ return {
       }
     )
   ),
+  -- mathlap for no space
+  s({
+    trig = "mtl",
+    wordTrig = false,
+    snippetType = "autosnippet",
+    condition = tex_utils.in_mathzone,
+  }, {
+    c(1, {
+      fmta("\\mathllap{<>}", { d(1, get_visual) }),
+      fmta("\\mathclap{<>}", { d(1, get_visual) }),
+      fmta("\\mathrlap{<>}", { d(1, get_visual) }),
+    }),
+  }),
   -- phantom ul
   s(
     {
@@ -3121,6 +3182,39 @@ return {
     condition = tex_utils.in_mathzone,
   }, {
     c(1, {
+      fmta(
+        [[
+      \boxed{%
+        <>
+      }%
+      <>
+      ]],
+        {
+          d(1, get_visual),
+          i(0),
+        }
+      ),
+      fmta(
+        [[
+      \Aboxed{%
+        <>
+      }%
+      <>
+      ]],
+        {
+          d(1, get_visual),
+          i(0),
+        }
+      ),
+    }),
+  }),
+  s({
+    trig = "Bx",
+    snippetType = "autosnippet",
+    dscr = "Expands 'bx' into '\\boxed{<>}'",
+    condition = tex_utils.in_mathzone,
+  }, {
+    c(1, {
       fmta("\\boxed{<>}", {
         d(1, get_visual),
       }),
@@ -3172,7 +3266,7 @@ return {
         d(1, get_visual),
         i(2),
       }),
-      fmta("\\xunderbracket{<>}_{<>}", {
+      fmta("\\xub{<>}_{<>}", {
         d(1, get_visual),
         i(2),
       }),
@@ -3188,7 +3282,7 @@ return {
         d(1, get_visual),
         i(2),
       }),
-      fmta("\\xoverbracket{<>}^{<>}", {
+      fmta("\\xob{<>}^{<>}", {
         d(1, get_visual),
         i(2),
       }),
@@ -4413,7 +4507,7 @@ return {
   ---Start figure
   s(
     {
-      trig = "mkt",
+      trig = "mktz",
       snippetType = "autosnippet",
       dscr = "Start full tikzpicture",
       condition = line_begin,
@@ -4437,6 +4531,12 @@ return {
     )
   ),
   -- Basic
+  s({
+    trig = "pt",
+    snippetType = "autosnippet",
+    dscr = "Point",
+    condition = line_begin or tex_utils.in_tikz,
+  }, fmta("(<>,<>)", { i(1), i(2) })),
   s({
     trig = "drw",
     snippetType = "autosnippet",
@@ -4528,6 +4628,268 @@ return {
       <>
       ]],
       { i(1), i(2, "start"), rep(2), i(3, "length"), i(4, "end"), i(0) }
+    )
+  ),
+  s(
+    {
+      trig = "shift",
+      snippetType = "autosnippet",
+      condition = tex_utils.in_tikz,
+    },
+    fmta(
+      "([shift={(<>,<>)}]<>.<>)<>",
+      { i(1, "x"), i(2, "y"), i(3, "N"), i(4, "center"), i(0) }
+    )
+  ),
+  -- Circuitikz
+  -- Start figure
+  s(
+    {
+      trig = "mktc",
+      snippetType = "autosnippet",
+      dscr = "Start full circuitikz",
+      condition = line_begin,
+    },
+    fmta(
+      [[
+      \documentclass{standalone}
+      \usepackage{mintikz}
+
+      \begin{document}
+      \begin{circuitikz}[line width=.7pt]
+        \draw
+        (0,0)
+        <>
+      \end{circuitikz}
+      \end{document}
+    ]],
+      { i(1) }
+    )
+  ),
+  -- Dipoles usuels
+  s(
+    {
+      trig = "Vv",
+      snippetType = "autosnippet",
+      condition = tex_utils.in_ctikz,
+    },
+    fmta(
+      "to[V, name=<>, V<>={$<>$},<> !vi]<>",
+      { i(1, "V"), i(2, "^>"), i(3, "E_0"), i(4), i(0) }
+    )
+  ),
+  s(
+    {
+      trig = "Sv",
+      snippetType = "autosnippet",
+      condition = tex_utils.in_ctikz,
+    },
+    fmta(
+      "to[sV, name=<>, v<>={$<>$},<> !vi]<>",
+      { i(1, "V"), i(2, "^>"), i(3, "E_0"), i(4), i(0) }
+    )
+  ),
+  s(
+    {
+      trig = "Ii",
+      snippetType = "autosnippet",
+      condition = tex_utils.in_ctikz,
+    },
+    fmta(
+      "to[I, name=<>, I<>={$<>$},<> !vi]<>",
+      { i(1, "I"), i(2, "^>"), i(3, "I_0"), i(4), i(0) }
+    )
+  ),
+  s({
+    trig = "Rr",
+    snippetType = "autosnippet",
+    condition = tex_utils.in_ctikz,
+  }, fmta("to[R, name=<>,<> !vi]<>", { i(1, "R"), i(2), i(0) })),
+  s({
+    trig = "Rlab",
+    snippetType = "autosnippet",
+    condition = tex_utils.in_ctikz,
+  }, fmta("\\node at (<>.center) {$<>$};<>", { i(1), i(2), i(0) })),
+  s(
+    {
+      trig = "Cc",
+      snippetType = "autosnippet",
+      condition = tex_utils.in_ctikz,
+    },
+    fmta(
+      "to[C, l<>={$<>$}, name=<>,<> !vi]<>",
+      { i(1, "^"), i(2, "C"), i(3, "C"), i(4), i(0) }
+    )
+  ),
+  s(
+    {
+      trig = "Ll",
+      snippetType = "autosnippet",
+      condition = tex_utils.in_ctikz,
+    },
+    fmta(
+      "to[L, l<>={$<>$}, name=<>,<> !vi]<>",
+      { i(1, "^"), i(2, "L"), i(3, "L"), i(4), i(0) }
+    )
+  ),
+  -- fil
+  s({
+    trig = "shrt",
+    snippetType = "autosnippet",
+    condition = tex_utils.in_ctikz,
+  }, fmta("to[short, name=<>,<> !vi]<>", { i(1, "S"), i(2), i(0) })),
+  -- switch
+  s(
+    {
+      trig = "cst",
+      snippetType = "autosnippet",
+      condition = tex_utils.in_ctikz,
+    },
+    fmta(
+      "to[<>, l<>={$<>$}, name=<>,<> !vi]<>",
+      { i(1, "cosw"), i(2, "^"), i(3, "K"), i(4, "K"), i(5), i(0) }
+    )
+  ),
+  -- inside dipole
+  s({
+    trig = "vv",
+    snippetType = "autosnippet",
+    condition = tex_utils.in_ctikz,
+  }, fmta("v<>={$<>$}<>", { i(1, "^>"), i(2, "u"), i(0) })),
+  s({
+    trig = "ii",
+    snippetType = "autosnippet",
+    condition = tex_utils.in_ctikz,
+  }, fmta("i<>={$<>$}<>", { i(1, "^>"), i(2, "i"), i(0) })),
+  -- draw arrows
+  s({
+    trig = "varr",
+    snippetType = "autosnippet",
+    condition = tex_utils.in_ctikz,
+  }, fmta("\\varronly{<>}<>", { i(1, "V"), i(0) })),
+  s({
+    trig = "iarr",
+    snippetType = "autosnippet",
+    condition = tex_utils.in_ctikz,
+  }, fmta("\\iarronly{<>}<>", { i(1, "I"), i(0) })),
+  s({
+    trig = "cdst",
+    snippetType = "autosnippet",
+    condition = tex_utils.in_ctikz,
+  }, fmta("\\ctikzset{current/distance=<>}<>", { i(1, ".8"), i(0) })),
+  -- place bullet
+  s({
+    trig = "blt",
+    snippetType = "autosnippet",
+    condition = tex_utils.in_ctikz or line_begin,
+  }, {
+    t("node {$\\bullet$}"),
+  }),
+  -- equiv
+  s(
+    {
+      trig = "equiv",
+      snippetType = "autosnippet",
+      condition = tex_utils.in_ctikz,
+    },
+    fmta(
+      [[
+    \node[right=<>em] (<>) at (<>) {$\equiv$};
+    \draw[shift={($(<>)+(<>,<>)$)}]
+    <>
+    ;
+    ]],
+      { i(1, "1"), i(2, "E"), i(3), rep(2), i(5, "2em"), i(6, "0"), i(0) }
+    )
+  ),
+  -- Draw measure point Y
+  s(
+    {
+      trig = "Yy",
+      snippetType = "autosnippet",
+      condition = tex_utils.in_ctikz,
+    },
+    fmta(
+      [[
+	% oscillo
+	\draw[-stealth]
+	(<>) --++
+	(<>.25,<>.25)
+	node[<>] {$<>$}
+  <>
+	;
+    ]],
+      {
+        i(1, "Y1"),
+        i(2, "+"),
+        i(3, "+"),
+        i(4, "above right"),
+        i(5, "Y_1"),
+        i(0),
+      }
+    )
+  ),
+  -- shift
+  s(
+    {
+      trig = "shift",
+      snippetType = "autosnippet",
+      condition = tex_utils.in_ctikz,
+    },
+    fmta(
+      "([shift={(<>,<>)}]<>.<>)<>",
+      { i(1, "x"), i(2, "y"), i(3, "N"), i(4, "center"), i(0) }
+    )
+  ),
+  -- LdM
+  s(
+    {
+      trig = "Ldmd",
+      snippetType = "autosnippet",
+      condition = tex_utils.in_ctikz,
+    },
+    fmta(
+      [[
+    \node[<>] (LM<>) at (<>,<>) {<>};
+    \circledarrow{<>}{(LM<>)}{<>}
+    <>
+    ]],
+      {
+        i(1, "mypurple"),
+        i(2, "1"),
+        i(3),
+        i(4),
+        rep(2),
+        rep(1),
+        rep(2),
+        i(5),
+        i(0),
+      }
+    )
+  ),
+  s(
+    {
+      trig = "Ldmh",
+      snippetType = "autosnippet",
+      condition = tex_utils.in_ctikz,
+    },
+    fmta(
+      [[
+    \node[<>] (LM<>) at (<>,<>) {<>};
+    \circledarrowcw{<>}{(LM<>)}{<>}
+    <>
+    ]],
+      {
+        i(1, "mypurple"),
+        i(2, "1"),
+        i(3),
+        i(4),
+        rep(2),
+        rep(1),
+        rep(2),
+        i(5, ".3"),
+        i(0),
+      }
     )
   ),
 }

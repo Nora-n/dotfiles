@@ -27,7 +27,6 @@
 \def\Sr{\mathrm{S}}
 \def\Ter{\mathrm{T}}
 \def\exr{\mathrm{e}}
-\def\dim{\mathrm{dim}\,}
 \def\Ir{\mathrm{i}}
 \def\jj{\mathrm{j}}
 \def\jw{\jj\w}
@@ -342,6 +341,13 @@
 % For complexes
 \newcommand{\ul}[1]{\underline{#1}}
 \newcommand{\xul}[1]{\underline{#1}}
+
+% change ul thickness
+% https://tex.stackexchange.com/a/443445/284518
+\newcommand\dul[3][-1pt]{{%
+			\sbox0{#3}%
+			\ooalign{\copy0\cr\rule[\dimexpr#1-#2\relax]{\wd0}{#2}}}%
+}
 
 % arrows
 \def\ra{\rightarrow}

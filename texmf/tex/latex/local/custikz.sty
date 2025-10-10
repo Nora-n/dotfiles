@@ -16,10 +16,11 @@
 \RequirePackage[european, straightvoltages, cuteinductors]{circuitikz}
 \ctikzset{bipoles/thickness=1}
 \ctikzset{grounds/thickness=1}
-\ctikzset{bipoles/cuteswitch/thickness=0.5}
+\ctikzset{bipoles/cuteswitch/thickness=0.3}
 \usetikzlibrary{babel}
 \usetikzlibrary{optics}
 \usetikzlibrary{3d}
+\usetikzlibrary{fit}
 \makeatletter
 \tikzoption{canvas is plane}[]{\@setOxy#1}
 \def\@setOxy O(#1,#2,#3)x(#4,#5,#6)y(#7,#8,#9)%
@@ -588,6 +589,15 @@ pics/strange bar/.style={code={\draw[thick] (-#1,0) -- (#1,0);}}
 	arrowmark/.style 2 args={
 			decoration={
 					markings,mark=at position #1 with \arrow{#2}
+				}
+		}
+}
+
+\tikzset{
+	arrowmarkstlh/.style 2 args={
+			postaction={decorate},
+			decoration={
+					markings,mark=at position #1 with {\arrow[scale=1.5,>=stealth]{#2}}
 				}
 		}
 }

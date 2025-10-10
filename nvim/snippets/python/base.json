@@ -1,4 +1,25 @@
 {
+  "preamb": {
+    "prefix": "preamb",
+    "body": [
+      "import numpy as np",
+      "import matplotlib as mpl",
+      "import matplotlib.ticker as tck",
+      "import matplotlib.pyplot as plt",
+      "",
+      "plt.rcParams.update(",
+      "    {",
+      "        'text.usetex': True,",
+      "        'font.family': 'EB Garamond',",
+      "        'axes.labelsize': 'x-large',",
+      "        'xtick.labelsize': 'x-large',",
+      "        'ytick.labelsize': 'x-large',",
+      "    }",
+      ")",
+      "plt.rcParams['figure.facecolor'] = 'w'"
+    ],
+    "description": "Code snippet for a preamble with matplotlib and numpy"
+  },
   "#!/usr/bin/env python": {
     "prefix": "env",
     "body": "#!/usr/bin/env python\n$0",

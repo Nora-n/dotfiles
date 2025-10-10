@@ -1,7 +1,7 @@
 {
   "pdflatex-executable": "/usr/local/texlive/2023/bin/x86_64-linux/pdflatex",
   "preamble": "/home/nora/.config/inkscape/extensions/textext/default_packages.tex",
-  "scale": 1.0,
+  "scale": 0.4,
   "previous_tex_command": "pdflatex",
   "gui": {
     "confirm_close": true

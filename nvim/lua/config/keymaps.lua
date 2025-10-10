@@ -115,6 +115,18 @@ vim.keymap.set(
 )
 vim.keymap.set(
   "n",
+  "<leader>a#",
+  "<cmd>Tabularize /#<cr>",
+  { noremap = true, desc = "Tab #" }
+)
+vim.keymap.set(
+  "v",
+  "<leader>a#",
+  "<cmd>Tabularize /#<cr>",
+  { noremap = true, desc = "Tab #" }
+)
+vim.keymap.set(
+  "n",
   "<leader>aA",
   ":Tabularize /",
   { noremap = true, desc = "Tab enter" }
@@ -262,5 +274,11 @@ vim.keymap.set(
   { desc = "Change new boxes" }
 )
 
--- %s!\vbegin\zs{(NC|)(loi|theo|prop|demo|coro|inte|impl|impo|rapp|defi|nota|ror|exem|odgr|rema)}([.*])!{tcb}\3(\2)
--- %s!\vend\zs{(NC|)(loi|theo|prop|demo|coro|inte|impl|impo|rapp|defi|nota|ror|exem|odgr|rema)}!{tcb}
+-- create figure with inkscape-figures
+
+vim.cmd([[
+inoremap <C-f> <Esc>: silent exec '.!inkscape-figures create "'.getline('.').'" "'.b:vimtex.root.'/figures/"'<CR><CR>:w<CR>
+]])
+vim.cmd([[
+nnoremap <C-f> : silent exec '!inkscape-figures edit "'.b:vimtex.root.'/figures/" > /dev/null 2>&1 &'<CR><CR>:redraw!<CR>
+  ]])
