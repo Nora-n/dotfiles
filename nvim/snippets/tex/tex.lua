@@ -37,7 +37,7 @@ tex_utils.in_itemize = function() -- itemize environment detection
   return tex_utils.in_env("itemize")
 end
 tex_utils.in_tikz = function() -- TikZ picture environment detection
-  return tex_utils.in_env("tikzpicture")
+  return (tex_utils.in_env("tikzpicture") or tex_utils.in_env("circuitikz"))
 end
 tex_utils.in_ctikz = function() -- CircuiTikZ picture environment detection
   return tex_utils.in_env("circuitikz")
@@ -161,6 +161,24 @@ return {
     ]],
       {
         i(1, "-15"),
+        i(0),
+      }
+    )
+  ),
+  -- vfill
+  s(
+    {
+      trig = "vfl",
+      snippetType = "autosnippet",
+      dscr = "vfill",
+      condition = line_begin,
+    },
+    fmta(
+      [[
+      \vspace{\fill}
+      <>
+    ]],
+      {
         i(0),
       }
     )
@@ -298,6 +316,14 @@ return {
     snippetType = "autosnippet",
     dscr = "Expands 'xul' into LaTeX's underline{} command.",
   }, fmta("\\ul{<>}", { d(1, get_visual) })),
+  s(
+    {
+      trig = "dul",
+      snippetType = "autosnippet",
+      dscr = "Expands 'dul' into LaTeX's \\dul{} command.",
+    },
+    fmta("\\dul[-<>pt]{<>}{<>}", { i(1, "2"), i(2, ".7pt"), d(3, get_visual) })
+  ),
   -- texttt
   s({
     trig = "xtt",
@@ -1014,15 +1040,21 @@ return {
     "\\delta<>",
     { c(1, { fmta("{<>}", { d(1, get_visual) }), t("") }) }
   )),
-  s({
-    trig = "@D",
-    wordTrig = false,
-    snippetType = "autosnippet",
-    condition = tex_utils.in_mathzone,
-  }, fmta(
-    "\\Delta<>",
-    { c(1, { fmta("{<>}", { d(1, get_visual) }), t("") }) }
-  )),
+  s(
+    {
+      trig = "@D",
+      wordTrig = false,
+      snippetType = "autosnippet",
+      condition = tex_utils.in_mathzone,
+    },
+    fmta("\\Delta<>", {
+      c(1, {
+        fmta("{<>}", { d(1, get_visual) }),
+        fmta("(<>)", { d(1, get_visual) }),
+        t(""),
+      }),
+    })
+  ),
   -- sigma
   s({
     trig = "@s",
@@ -1441,6 +1473,14 @@ return {
   }, {
     t("\\ind{eq}"),
   }),
+  s({
+    trig = "spa",
+    wordTrig = false,
+    snippetType = "autosnippet",
+    condition = tex_utils.in_mathzone,
+  }, {
+    t("\\ind{para}"),
+  }),
   -- fraction
   s({
     trig = "ff",
@@ -1506,12 +1546,20 @@ return {
     condition = tex_utils.in_mathzone,
   }, fmta("\\paa{<>}", { d(1, get_visual) })),
   -- ln, log, exp & co
-  s({
-    trig = "ln",
-    snippetType = "autosnippet",
-    dscr = "Expands 'ln' into '\\ln'",
-    condition = tex_utils.in_mathzone,
-  }, fmta("\\ln <>", { d(1, get_visual) })),
+  s(
+    {
+      trig = "ln",
+      snippetType = "autosnippet",
+      dscr = "Expands 'ln' into '\\ln'",
+      condition = tex_utils.in_mathzone,
+    },
+    fmta("\\ln<>", {
+      c(1, {
+        fmta("<>", { d(1, get_visual) }),
+        fmta("(<>)", { d(1, get_visual) }),
+      }),
+    })
+  ),
   s({
     trig = "lg",
     snippetType = "autosnippet",
@@ -1977,6 +2025,12 @@ return {
   ),
   -- cancels
   s({
+    trig = "hcl",
+    snippetType = "autosnippet",
+    dscr = "Expands 'hcl' into '\\hcancel{}'",
+    -- condition = tex_utils.in_mathzone,
+  }, fmta("\\hcancel{<>}", { d(1, get_visual) })),
+  s({
     trig = "cl",
     snippetType = "autosnippet",
     dscr = "Expands 'cl' into '\\cancel{}'",
@@ -2399,7 +2453,7 @@ return {
         rep(10),
         rep(10),
         rep(10),
-        i(30, "\\equ"),
+        i(30, "\\eql"),
         -- c(30, { t("\\equ"), t("\\max") }),
         rep(11),
         rep(2),
@@ -2672,30 +2726,53 @@ return {
     dscr = "Expands 'tkm' into '\\tikzmark{<>}'",
   }, fmta("\\tikzmark{<>}", { d(1, get_visual) })),
   -- tikz from tikzmark
-  s(
-    {
-      trig = "Tkm",
-      snippetType = "autosnippet",
-      dscr = "Expands 'Tkm' into '\\tikz[remember picture, overlay]'",
-    },
-    fmta(
-      [[
+  s({
+    trig = "Tkm",
+    snippetType = "autosnippet",
+    dscr = "Expands 'Tkm' into '\\tikz[remember picture, overlay]'",
+  }, {
+    c(1, {
+      fmta(
+        [[
       \tikz[remember picture, overlay]
       \draw[-stealth, transform canvas={<>}]
         (pic cs:<>) to <> ([shift={<>}]pic cs:<>)
         ;
       <>
       ]],
-      {
-        i(1, "yshift=6pt"),
-        i(2, "IN"),
-        c(3, { t(""), t("[out=90, in=90]") }),
-        i(4, "(-6pt,6pt)"),
-        i(5, "OUT"),
-        i(0),
-      }
-    )
-  ),
+        {
+          i(1, "yshift=6pt"),
+          i(2, "IN"),
+          c(3, { t(""), t("[out=90, in=90]") }),
+          i(4, "(-6pt,6pt)"),
+          i(5, "OUT"),
+          i(0),
+        }
+      ),
+      fmta(
+        [[
+      \tikz[remember picture, overlay]
+      \draw[-stealth, thick, <>]
+        (pic cs:<>) --++ (0,<>pt) -|
+        node[pos=<>, scale=<>, <>] {<>}
+        (pic cs:<>)
+        ;
+      <>
+      ]],
+        {
+          i(1, "myblue"),
+          i(2, "IN"),
+          i(3, "9"),
+          i(4, ".25"),
+          i(5, ".8"),
+          i(6, "below"),
+          i(7),
+          i(8, "OUT"),
+          i(0),
+        }
+      ),
+    }),
+  }),
   -- dots
   s(
     {
@@ -2992,16 +3069,16 @@ return {
     })
   ),
   -- array
-  s(
-    {
-      trig = "arr",
-      wordTrig = false,
-      snippetType = "autosnippet",
-      dscr = "Expands 'arr' into array env",
-      condition = line_begin,
-    },
-    fmta(
-      [[
+  s({
+    trig = "arr",
+    wordTrig = false,
+    snippetType = "autosnippet",
+    dscr = "Expands 'arr' into array env",
+    condition = line_begin,
+  }, {
+    c(1, {
+      fmta(
+        [[
       \begin{array}{<>}
         <> & <>
         \\
@@ -3009,16 +3086,30 @@ return {
       \end{array}
       <>
       ]],
-      {
-        i(1, "ll"),
-        i(2),
-        i(3),
-        i(4),
-        i(5),
-        i(0),
-      }
-    )
-  ),
+        {
+          i(1, "ll"),
+          i(2),
+          i(3),
+          i(4),
+          i(5),
+          i(0),
+        }
+      ),
+      fmta(
+        [[
+      \begin{array}{<>}
+        <>
+      \end{array}
+      <>
+      ]],
+        {
+          i(1, "ll"),
+          d(2, get_visual),
+          i(0),
+        }
+      ),
+    }),
+  }),
   -- appnum
   s(
     {
@@ -3221,6 +3312,10 @@ return {
       fmta("\\Aboxed{<>}", {
         d(1, get_visual),
       }),
+      fmta("\\cboxed{<>}{<>}", {
+        i(1, "mygreen"),
+        d(2, get_visual),
+      }),
     }),
   }),
   s(
@@ -3266,7 +3361,7 @@ return {
         d(1, get_visual),
         i(2),
       }),
-      fmta("\\xub{<>}_{<>}", {
+      fmta("\\xub{<>}{<>}", {
         d(1, get_visual),
         i(2),
       }),
@@ -3282,7 +3377,7 @@ return {
         d(1, get_visual),
         i(2),
       }),
-      fmta("\\xob{<>}^{<>}", {
+      fmta("\\xob{<>}{<>}", {
         d(1, get_visual),
         i(2),
       }),
@@ -4535,7 +4630,7 @@ return {
     trig = "pt",
     snippetType = "autosnippet",
     dscr = "Point",
-    condition = line_begin or tex_utils.in_tikz,
+    condition = tex_utils.in_tikz,
   }, fmta("(<>,<>)", { i(1), i(2) })),
   s({
     trig = "drw",
@@ -4548,7 +4643,7 @@ return {
       trig = "nde",
       snippetType = "autosnippet",
       dscr = "node",
-      condition = line_begin or tex_utils.in_tikz,
+      condition = line_begin and tex_utils.in_tikz,
     },
     fmta(
       "\\node[<>]<> at (<>) {<>};",
@@ -4560,7 +4655,7 @@ return {
       trig = "Nde",
       snippetType = "autosnippet",
       dscr = "node inline",
-      condition = line_begin or tex_utils.in_tikz,
+      condition = tex_utils.in_tikz,
     },
     fmta(
       "node[<>]<> {<>}",
@@ -4572,7 +4667,7 @@ return {
       trig = "crd",
       snippetType = "autosnippet",
       dscr = "coord",
-      condition = line_begin or tex_utils.in_tikz,
+      condition = line_begin and tex_utils.in_tikz,
     },
     fmta(
       "\\coordinate<> (<>) at (<>);",
@@ -4584,7 +4679,7 @@ return {
       trig = "Crd",
       snippetType = "autosnippet",
       dscr = "coord inline",
-      condition = line_begin or tex_utils.in_tikz,
+      condition = tex_utils.in_tikz or tex_utils.in_ctikz,
     },
     fmta(
       "coordinate<> (<>)",
@@ -4617,7 +4712,7 @@ return {
       trig = "prp",
       snippetType = "autosnippet",
       dscr = "perpendicular",
-      condition = line_begin or tex_utils.in_tikz,
+      condition = line_begin and tex_utils.in_tikz,
     },
     fmta(
       [[
@@ -4639,6 +4734,17 @@ return {
     fmta(
       "([shift={(<>,<>)}]<>.<>)<>",
       { i(1, "x"), i(2, "y"), i(3, "N"), i(4, "center"), i(0) }
+    )
+  ),
+  s(
+    {
+      trig = "ints",
+      snippetType = "autosnippet",
+      condition = tex_utils.in_tikz,
+    },
+    fmta(
+      "\\path[name intersections={of=<> and <>, name=<>}];",
+      { i(1, "P1"), i(2, "P2"), i(3, "N") }
     )
   ),
   -- Circuitikz
@@ -4706,7 +4812,7 @@ return {
     condition = tex_utils.in_ctikz,
   }, fmta("to[R, name=<>,<> !vi]<>", { i(1, "R"), i(2), i(0) })),
   s({
-    trig = "Rlab",
+    trig = "rlab",
     snippetType = "autosnippet",
     condition = tex_utils.in_ctikz,
   }, fmta("\\node at (<>.center) {$<>$};<>", { i(1), i(2), i(0) })),
@@ -4738,6 +4844,12 @@ return {
     snippetType = "autosnippet",
     condition = tex_utils.in_ctikz,
   }, fmta("to[short, name=<>,<> !vi]<>", { i(1, "S"), i(2), i(0) })),
+  -- open
+  s({
+    trig = "open",
+    snippetType = "autosnippet",
+    condition = tex_utils.in_ctikz,
+  }, fmta("to[open, name=<>,<> !vi]<>", { i(1, "U"), i(2), i(0) })),
   -- switch
   s(
     {
@@ -4841,10 +4953,27 @@ return {
       { i(1, "x"), i(2, "y"), i(3, "N"), i(4, "center"), i(0) }
     )
   ),
+  -- foreach
+  s(
+    {
+      trig = "feach",
+      snippetType = "autosnippet",
+      condition = tex_utils.in_ctikz,
+    },
+    fmta(
+      [[
+	\foreach {<>} in {<>}{%
+  <>
+  }%
+  <>
+    ]],
+      { i(1, "\\n"), i(2, "1"), i(3), i(0) }
+    )
+  ),
   -- LdM
   s(
     {
-      trig = "Ldmd",
+      trig = "ldmd",
       snippetType = "autosnippet",
       condition = tex_utils.in_ctikz,
     },
@@ -4869,7 +4998,7 @@ return {
   ),
   s(
     {
-      trig = "Ldmh",
+      trig = "ldmh",
       snippetType = "autosnippet",
       condition = tex_utils.in_ctikz,
     },

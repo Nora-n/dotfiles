@@ -139,6 +139,21 @@
 \newcommand{\dcancel}[1]{
 	\cancel{\bcancel{#1}}
 }
+
+\DeclareDocumentCommand{\hcancel}{O{0pt}O{0pt}O{0pt}O{0pt}m}{%
+    \tikz[baseline=(tocancel.base)]{
+        \node[inner sep=0pt,outer sep=0pt] (tocancel) {#5};
+        \draw[thick]
+        ($(tocancel.south west)+(#1,#2)$)
+        --
+        ($(tocancel.north east)+(#3,#4)$)
+        %
+        ($(tocancel.north west)+(#3,#4)$)
+        --
+        ($(tocancel.south east)+(#1,#2)$)
+        ;
+    }%
+}%
 % For better vectors : \vv
 \RequirePackage{esvect}
 % Lots of useful shorthands
@@ -700,6 +715,7 @@
 \let\abs\relax
 \newcommand\abs[1]{\stretchleftright{\vert}
   {\ensurestackMath{\addstackgap[.5pt]{\DS#1}}}{\vert}}
+\newcommand\absr[1]{\abs{\mathrm{#1}}}
 % \DeclarePairedDelimiter{\norm}{\lVert}{\rVert}
 % \DeclareMathOperator{\arg}{arg}
 % To manually put \blacksquare flushedright of align* environnement
@@ -864,14 +880,14 @@
 \NewCommandCopy\mycdot\cdot
 \sisetup{%
 	detect-all,
-	free-standing-units,           % create standalone commands
-	locale=FR,                     % language
+	free-standing-units,    % create standalone commands
+	locale=FR,              % language
 	inter-unit-product=
-	\ensuremath{{\mycdot}},  % character between units
-	separate-uncertainty,          % x ± dx
-	retain-explicit-plus,          % p.ex. +45°
-	range-units=brackets,          % (0 to 40) m
-	range-phrase=~;~,               % 0~;~40 m
+	\ensuremath{{\mycdot}}, % character between units
+	separate-uncertainty,   % x ± dx
+	retain-explicit-plus,   % p.ex. +45°
+	range-units=brackets,   % (0 to 40) m
+	range-phrase=~;~,       % 0~;~40 m
 	% range-phrase=\textup{--},    % 0--40 m
 	% open-bracket= [,
 	% close-bracket= ],
@@ -1782,8 +1798,8 @@ literate         = {á}{{\'a}}1
 
 \newcommand{\fig}[3][]{ % possibilité d'ajouter des arguments optionnels en plus
 	\begin{center}
-		% \includegraphics[width=#2\linewidth, #1]{images/#3}
-		\includegraphics[width=#2\linewidth, #1]{figures/#3}
+		\includegraphics[width=#2\linewidth, #1]{images/#3}
+		% \includegraphics[width=#2\linewidth, #1]{figures/#3}
 	\end{center}
 }
 
@@ -1791,8 +1807,8 @@ literate         = {á}{{\'a}}1
 
 \newcommand{\figCap}[4][]{
 	\begin{center}
-		% \includegraphics[width=#2\linewidth, #1]{images/#3}
-		\includegraphics[width=#2\linewidth, #1]{figures/#3}
+		\includegraphics[width=#2\linewidth, #1]{images/#3}
+		% \includegraphics[width=#2\linewidth, #1]{figures/#3}
 	\end{center}
 	\vspace{-4mm}
 	\captionof{figure}{#4}
@@ -1801,8 +1817,8 @@ literate         = {á}{{\'a}}1
 
 \newcommand{\figCapRaw}[3][]{
 	\begin{center}
-		% \includegraphics[#1]{images/#2}
-		\includegraphics[#1]{figures/#2}
+		\includegraphics[#1]{images/#2}
+		% \includegraphics[#1]{figures/#2}
 	\end{center}
 	\vspace{-4mm}
 	\captionof{figure}{#3}
@@ -2116,6 +2132,8 @@ literate         = {á}{{\'a}}1
 \newcommand{\iconfals}{\faIcon{times}}
 \newcommand{\iconyout}{\faIcon{youtube}}
 \newcommand{\iconskul}{\faIcon{skull-crossbones}}
+\newcommand{\icongoal}{\faIcon{crosshairs}}
+\newcommand{\iconglob}{\faIcon{globe}}
 
 % Lettre par défaut des Propriété C1.1 etc
 \newcommand{\chaplett}{C} 
@@ -2159,7 +2177,7 @@ list entry={\hspace*{-20pt}\protect\rcheck~
 		% \csname name#3\endcsname~\expandafter
 		\chaplett\csname the#3\endcsname~: #7},
 #2,
-#2,
+% #2,
 }
 % with numbers, on list but with heart
 \NewTColorBox{tcb*}{sO{}r()D<>{box}d""D''{l}m}{%
@@ -2204,7 +2222,7 @@ list entry={\hspace*{-20pt}\protect\rcheck~
 }
 % Simple box no title
 \tcbset{
-	boxnt/.style 2 args={
+	bxnt/.style 2 args={
 			boxrule=0pt, frame hidden, interior hidden,
 			borderline={1pt}{0pt}{#1}, 
 		}
@@ -2303,6 +2321,18 @@ list entry={\hspace*{-20pt}\protect\rcheck~
 			boxrule=0pt, frame hidden, interior hidden,
 		}
 }
+\tcbset{
+	mygrd/.style={%
+      underlay={%
+        \begin{tcbclipinterior}
+          % \shade[inner color=red!50!yellow,outer color=yellow!10!white]
+          % (interior.north west) circle (2cm);
+          \draw[help lines,step=5mm,color=#1!80,shift={(interior.north west)}]
+          (interior.south west) grid (interior.north east);
+      \end{tcbclipinterior}
+      },
+	}
+}
 % Old box style
 \tcbset{
 	fil/.style 2 args={
@@ -2353,6 +2383,20 @@ list entry={\hspace*{-20pt}\protect\rcheck~
 			left=0pt, right=0pt, bottom=0pt
 		}
 }
+% For helplines inside box
+\tcbset{
+	grid/.style={%
+    underlay boxed title={%
+      \begin{tcbclipinterior}
+          \ifstudent{%
+            \draw[help lines,step=5mm,gray,shift={(interior.north west)}]
+            (interior.south west) grid (interior.north east);
+          }%
+      \end{tcbclipinterior}
+    }%
+	}
+}
+
 % For side inside box
 \NewTColorBox{isd}{O{}D(){null}}{%
   interior hidden,

@@ -133,6 +133,11 @@
 		\node[shape=circle, draw, inner sep=1pt] (char) {#1};
 	}%
 }
+\newcommand*\icircled[1]{%
+	\tikz[baseline=(char.base)]{%
+		\node[shape=circle, draw, inner sep=1pt, minimum size=3ex] (char) {#1};
+	}\kern-3pt
+}
 \newcommand{\pt}[1]{{\color{ForestGreen}\circled{#1}}}
 
 % Pour \pt au-dessus de math

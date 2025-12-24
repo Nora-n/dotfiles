@@ -10,7 +10,7 @@ OffsetMode=THUNAR_SBR_OFFSET_MODE_LEFT
 
 [ThunarSbrReplaceRenamer]
 CaseSensitive=FALSE
-Replacement=00
-Pattern=14
-Regexp=FALSE
+Replacement=
+Pattern=\\d\\d_
+Regexp=TRUE
 

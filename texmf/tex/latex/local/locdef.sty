@@ -208,6 +208,7 @@
 \def\jf{\vv{j}}
 \def\jm{\vv{j_m}}
 \def\Ff{\vv{F}}
+\def\Ffr{\vv{F_r}}
 \def\Fff{\vv{F_f}}
 \def\Ef{\vv{E}}
 \def\Af{\vv{A}}
@@ -279,6 +280,7 @@
 \newcommand{\qcr}{\qMath{car}}
 \newcommand{\qcar}{\qMath{car}}
 \newcommand{\qra}{\quad \Ra \quad}
+\newcommand{\qraa}{\quad &\Ra \quad}
 \newcommand{\qlra}{\quad \Lra \quad}
 
 \newcommand{\qqMath}[1]{\qquad\text{ #1 }\qquad}
@@ -344,9 +346,31 @@
 
 % change ul thickness
 % https://tex.stackexchange.com/a/443445/284518
-\newcommand\dul[3][-1pt]{{%
+\newcommand\dul[3][-2pt]{%
+	{%
 			\sbox0{#3}%
-			\ooalign{\copy0\cr\rule[\dimexpr#1-#2\relax]{\wd0}{#2}}}%
+			\ooalign{\copy0\cr\textcolor{mygreen}{\rule[\dimexpr#1-#2\relax]{\wd0}{#2}}}%
+		}
+}
+% change boxed color
+% https://tex.stackexchange.com/a/326380/284518
+% Syntax: \colorboxed[<color model>]{<color specification>}{<math formula>}
+\newcommand*{\cboxed}{}
+\def\cboxed#1#{%
+\colorboxedAux{#1}%
+}
+\newcommand*{\colorboxedAux}[3]{%
+	% #1: optional argument for color model
+	% #2: color specification
+	% #3: formula
+	\begingroup
+	\colorlet{cb@saved}{.}%
+	\color#1{#2}%
+	\fatbox{%
+		\color{cb@saved}%
+		$#3$%
+	}%
+	\endgroup
 }
 
 % arrows

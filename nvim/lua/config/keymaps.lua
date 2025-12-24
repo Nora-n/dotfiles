@@ -6,6 +6,7 @@
 -- vim.keymap.del("n", "<leader>l")
 -- vim.keymap.set("n", "<leader>lL", "<cmd>Lazy<cr>", { desc = "Lazy" })
 
+local Util = require("lazyvim.util")
 -- open init.lua
 vim.keymap.set(
   "n",
@@ -181,12 +182,24 @@ vim.keymap.set(
 --   -- "<cmd>sp <CR> <cmd>term python % <CR>",
 --   { noremap = true, desc = "Launch Python" }
 -- )
+
 vim.keymap.set(
   "n",
   "<C-p>",
   "<cmd>!python3 %<CR>",
   { noremap = true, desc = "Float Python" }
 )
+
+-- vim.api.nvim_create_user_command("FloatingTerm", function()
+--   Util.terminal.open()
+-- end, {})
+
+-- vim.keymap.set(
+--   "n",
+--   "<leader>rp",
+--   \[\[:set autochdir<CR>:w<CR>:FloatingTerm <CR> python4 <C-\\><C-n>"#pi<CR> \]\],
+--   { silent = true, desc = "Run \[P\]ython File" }
+-- )
 
 -- snippets
 -- vim.keymap.del({ "i", "s" }, "<tab>")
