@@ -24,7 +24,7 @@
   <property name="last-details-view-column-widths" type="string" value="50,50,132,123,50,92,50,50,483,50,50,76,50,276"/>
   <property name="last-side-pane" type="string" value="THUNAR_SIDEPANE_TYPE_SHORTCUTS"/>
   <property name="last-image-preview-visible" type="bool" value="true"/>
-  <property name="last-splitview-separator-position" type="int" value="186"/>
+  <property name="last-splitview-separator-position" type="int" value="556"/>
   <property name="misc-image-preview-mode" type="string" value="THUNAR_IMAGE_PREVIEW_MODE_EMBEDDED"/>
   <property name="last-show-hidden" type="bool" value="false"/>
   <property name="misc-middle-click-in-tab" type="bool" value="true"/>
