@@ -61,3 +61,4 @@ rofi/wallust/colors-rofi.rasi
 rofi/.current_wallpaper
 waybar/wallust/colors-waybar.css
 cava/config
+hypr/monitors.conf
