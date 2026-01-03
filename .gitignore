@@ -53,3 +53,11 @@ texmf/tlpkg
 texmf/web2c
 baloofileinformationrc
 dolphinrc
+hypr/wallpaper_effects/.wallpaper_current
+hypr/wallust/wallust-hyprland.conf
+kitty/kitty-themes/01-Wallust.conf
+quickshell/qml_color.json
+rofi/wallust/colors-rofi.rasi
+rofi/.current_wallpaper
+waybar/wallust/colors-waybar.css
+cava/config
