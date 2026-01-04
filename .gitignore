@@ -62,3 +62,5 @@ rofi/.current_wallpaper
 waybar/wallust/colors-waybar.css
 cava/config
 hypr/workspaces.conf
+Thunar/accels.scm
+xfce4/xfconf/xfce-perchannel-xml/thunar.xml
