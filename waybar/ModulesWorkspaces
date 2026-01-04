@@ -200,7 +200,7 @@
 		"class<org.wezfurlong.wezterm>": " ",
 		"class<Warp|warp|dev.warp.Warp|warp-terminal>": "󰰭 ",
 
-		"class<[Tt]hunderbird|[Tt]hunderbird-esr>": " ",
+		"class<org.mozilla.[Tt]hunderbird|[Tt]hunderbird-esr>": " ",
 		"class<eu.betterbird.Betterbird>": " ",
 		"title<.*gmail.*>": "󰊫 ",
 
@@ -219,6 +219,12 @@
 		"title<.*qwen.*>": "󰚩 ",
 		"class<subl>": "󰅳 ",
 		"class<slack>": " ",
+
+    "class<org.pwmt.zathura>": "",
+    "title<ranger-term>": "",
+    "title<btop>": "",
+    "class<remarkable.exe>": "",
+    "class<View-MainWindow>": "",
 
 		"class<mpv>": " ",
 		"class<celluloid|Zoom>": " ",
