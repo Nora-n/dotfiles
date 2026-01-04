@@ -225,6 +225,7 @@
     "title<btop>": "",
     "class<remarkable.exe>": "",
     "class<View-MainWindow>": "",
+		"title<.*tex.*>": "",
 
 		"class<mpv>": " ",
 		"class<celluloid|Zoom>": " ",
