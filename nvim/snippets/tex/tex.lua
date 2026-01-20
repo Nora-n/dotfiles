@@ -1955,6 +1955,12 @@ return {
     condition = tex_utils.in_mathzone,
   }, fmta("\\pdv{<>}{<>}", { i(1), i(2) })),
   s({
+    trig = "spdv",
+    snippetType = "autosnippet",
+    dscr = "Expands 'spdv' into '\\spdv'",
+    condition = tex_utils.in_mathzone,
+  }, fmta("\\spdv{<>}", { i(1) })),
+  s({
     trig = "pdb",
     snippetType = "autosnippet",
     dscr = "Expands 'pdv' into '\\pdv'",
@@ -4745,6 +4751,56 @@ return {
     fmta(
       "\\path[name intersections={of=<> and <>, name=<>}];",
       { i(1, "P1"), i(2, "P2"), i(3, "N") }
+    )
+  ),
+  s(
+    {
+      trig = "pic",
+      snippetType = "autosnippet",
+      condition = tex_utils.in_tikz,
+    },
+    fmta(
+      [[
+      % Draw angles
+      \pic[draw, thick, -stealth, color=<>,
+      angle radius=<>, angle eccentricity=<>, 
+      "$<>$"]
+      {angle=<>--<>--<>}
+      ;
+      ]],
+      {
+        i(1, "1cm"),
+        i(2, "1.2"),
+        i(3, "mygreen"),
+        i(4, "\\alpha"),
+        i(5, "X"),
+        i(6, "O"),
+        i(7, "Y"),
+      }
+    )
+  ),
+  s(
+    {
+      trig = "rpic",
+      snippetType = "autosnippet",
+      condition = tex_utils.in_tikz,
+    },
+    fmta(
+      [[
+      % Draw right angle
+      \pic[draw, thick, color=<>,
+      angle radius=<>, angle eccentricity=<>]
+      {right angle=<>--<>--<>}
+      ;
+      ]],
+      {
+        i(1, ".2cm"),
+        i(2, "1.3"),
+        i(3, "black"),
+        i(4, "X"),
+        i(5, "O"),
+        i(6, "Y"),
+      }
     )
   ),
   -- Circuitikz
