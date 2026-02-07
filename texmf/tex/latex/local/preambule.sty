@@ -1,0 +1,1909 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% Packages essentiels %%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%% pas de usepackage apres un begindocument
+% fichier à splitter en 3 parties
+% - un pour les imports (avec des commentaires !) 
+% - un pur la cosmetique (+setup de certains packages)
+% - un pour les macros liées à la syntaxe bpep  -> meilleur intégration des différents versions
+
+\RequirePackage[utf8x]{inputenc}
+\RequirePackage[T1]{fontenc}
+\RequirePackage[french, english]{babel}
+% Enlever l'espace après la virgule pour les nombres
+\RequirePackage{icomma}
+\frenchbsetup{StandardLists=true}
+
+%% ajout pour les dérivées \diff[n]{a}{b} \diffp[n]{a}{b} et \diffp*{a}{b}{c}
+\RequirePackage{esdiff}
+\RequirePackage{scalerel}
+\RequirePackage{physics}
+\undef{\div}
+\newcommand{\gd}{\vv{\rm grad}\,}
+\def\div{\rm div\,}
+\def\rot{\vv{\rm rot}\,}
+\def\nab{\nabla}
+\def\nabf{\vv{\nab}}
+\def\vgrad{\left(\vf\cdot\grad\right)}
+\newcommand{\vnabf}{\mqty(\pdv{x}\\\pdv{y}\\\pdv{z})}
+\newcommand{\Vnabf}{\mqty(\DS\pdv{x}\\[1em]\DS\pdv{y}\\[1em]\DS\pdv{z})}
+\NewDocumentCommand{\lap}{g}{
+	\IfNoValueTF{#1}{
+		\left(\pdv[2]{x} + \pdv[2]{y} + \pdv[2]{z}\right)
+	}{
+		\pdv[2]{#1}{x} + \pdv[2]{#1}{y} + \pdv[2]{#1}{z}
+	}
+}
+
+% meilleur gestion des vecteurs \vv{a} \\vv*{a}{indice}
+% à renomer \vec avec un renewcommand
+\RequirePackage{esvect}
+\RequirePackage{graphicx}
+\graphicspath{{./figures/}{../figures/}}
+\RequirePackage[verbose=silent]{microtype}
+
+\RequirePackage{twoopt} % permet de mettre 2 options facultatives pour le barème
+
+% il faudra faire le ménage et ajouter un package (minted ?)
+\RequirePackage{etoolbox}  % pour le toggle
+\RequirePackage{mathtools} %  contient amsmath
+\RequirePackage{amssymb} % , amsthm}
+\RequirePackage{stmaryrd} % for \sslash giving nice // character
+
+\RequirePackage{stackengine}
+\NewDocumentCommand{\stc}{O{2}D(){on}D""{}mm}{%
+\IfEqCase{#2}{%
+	{on}{\stackon[#1pt]{$#4$}{#3\text{#5}}}
+		{un}{\stackunder[#1pt]{$#4$}{#3\text{#5}}}
+}
+}
+% Allow for compilation of enon, solu_stud and solu_prof in one go?
+% https://tex.stackexchange.com/a/5265
+\RequirePackage{currfile}
+\newcommand\settype[1]{
+	\IfEqCase{#1}{
+		{enon}{
+				\immediate\write18{%
+					pdflatex --jobname="\currfilebase_enon"
+					"\gdef\string\conditionmacro{1}\string\input\space\jobname"
+				}%
+				\ifnum\conditionmacro=1 \togglefalse{corrige}\toggletrue{student}\fi
+			}
+			{solu}{
+				\immediate\write18{%
+					pdflatex --jobname="\currfilebase_solu"
+					"\gdef\string\conditionmacro{2}\string\input\space\jobname"
+				}%
+				\ifnum\conditionmacro=2 \toggletrue{corrige}\fi
+			}
+			{solu_prof}{
+				\immediate\write18{%
+					pdflatex --jobname="\currfilebase_solu-prof"
+					"\gdef\string\conditionmacro{3}\string\input\space\jobname"
+				}%
+				\ifnum\conditionmacro=3 \toggletrue{corrige}\togglefalse{student}\fi
+			}
+			{solu_stud}{
+				\immediate\write18{%
+					pdflatex --jobname="\currfilebase_solu-stud"
+					"\gdef\string\conditionmacro{4}\string\input\space\jobname"
+				}%
+				\ifnum\conditionmacro=4 \toggletrue{corrige}\toggletrue{student}\fi
+			}
+			{stud}{
+				\immediate\write18{%
+					pdflatex --jobname="\currfilebase_stud"
+					"\gdef\string\conditionmacro{5}\string\input\space\jobname"
+				}%
+				\ifnum\conditionmacro=5 \toggletrue{student}\fi
+			}
+			{prof}{
+				\immediate\write18{%
+					pdflatex --jobname="\currfilebase_prof"
+					"\gdef\string\conditionmacro{6}\string\input\space\jobname"
+				}%
+				\ifnum\conditionmacro=6 \togglefalse{student}\fi
+			}
+			{book}{
+				\immediate\write18{%
+					pdflatex --jobname="\currfilebase_book"
+					"\gdef\string\conditionmacro{7}\string\input\space\jobname"
+				}%
+				\ifnum\conditionmacro=7 \togglefalse{student}\toggletrue{corrige}\renewcommand{\mycol}{black}\fi
+			}
+	}[]
+}
+
+% \DeclareMathOperator{\asin}{arcsin}
+% \DeclareMathOperator{\acos}{arccos}
+% \DeclareMathOperator{\atan}{arctan}
+\DeclareMathOperator{\acosh}{argch}
+\DeclareMathOperator{\asinh}{argsh}
+\let\cosh\relax
+\DeclareMathOperator{\cosh}{ch}
+\let\sinh\relax
+\DeclareMathOperator{\sinh}{sh}
+% \let\arg\relax
+% \DeclarePairedDelimiterXPP\arg[1]{\operatorname{arg}}{(}{)}{}{#1}
+\let\norm\relax
+\DeclarePairedDelimiter{\norm}{\lVert}{\rVert}
+% To manually put \blacksquare flushedright of align* environnement
+% https://tex.stackexchange.com/a/144984/284518
+\newcommand{\qed}{\tag*{$\blacksquare$}}
+\newcommand{\qef}{\tag*{$\square$}}
+\newcommand{\hqed}{\hfill{$\blacksquare$}}
+\newcommand{\hqef}{\hfill{$\square$}}
+% left text in align !!
+% https://tex.stackexchange.com/a/61369/284518
+\makeatletter
+\newif\if@gather@prefix
+\preto\place@tag@gather{% 
+	\if@gather@prefix\iftagsleft@
+			\kern-\gdisplaywidth@
+			\rlap{\gather@prefix}% 
+			\kern\gdisplaywidth@
+		\fi\fi
+}
+\appto\place@tag@gather{% 
+	\if@gather@prefix\iftagsleft@\else
+			\kern-\displaywidth
+			\rlap{\gather@prefix}% 
+			\kern\displaywidth
+		\fi\fi
+	\global\@gather@prefixfalse
+}
+\preto\place@tag{% 
+	\if@gather@prefix\iftagsleft@
+			\kern-\gdisplaywidth@
+			\rlap{\gather@prefix}% 
+			\kern\displaywidth@
+		\fi\fi
+}
+\appto\place@tag{% 
+	\if@gather@prefix\iftagsleft@\else
+			\kern-\displaywidth
+			\rlap{\gather@prefix}% 
+			\kern\displaywidth
+		\fi\fi
+	\global\@gather@prefixfalse
+}
+\def\math@cr@@@align{%
+	\ifst@rred\nonumber\fi
+	\if@eqnsw \global\tag@true \fi
+	\global\advance\row@\@ne
+	\add@amps\maxfields@
+	\omit
+	\kern-\alignsep@
+	\if@gather@prefix\tag@true\fi
+	\iftag@
+		\setboxz@h{\@lign\strut@{\make@display@tag}}%
+		\place@tag
+	\fi
+	\ifst@rred\else\global\@eqnswtrue\fi
+	\global\lineht@\z@
+	\cr
+}
+\newcommand*{\beforetext}[1]{% 
+	\ifmeasuring@\else
+		\gdef\gather@prefix{#1}% 
+		\global\@gather@prefixtrue
+	\fi
+}
+\makeatother
+
+\usepackage{fp} % utile pour fpeval
+\RequirePackage{wrapfig}
+
+\RequirePackage[svgnames, table]{xcolor}
+\definecolor{urlcolor}{rgb}{0,0,1}
+\definecolor{dgreen}{rgb}{.1,.6,.1}
+\definecolor{brandeisblue}{rgb}{0.0, 0.44, 1.0}
+\definecolor{cornflowerblue}{rgb}{0.3921, 0.5843, 0.9294}
+\definecolor{limegreen}{rgb}{0.2, 0.8, 0.2}
+\definecolor{firebrick}{rgb}{0.7, 0.13, 0.13}
+
+\RequirePackage{witharrows}
+\WithArrowsOptions{displaystyle, tikz={font={\small}}}
+% style for calc
+\WithArrowsNewStyle{calc}{
+	tikz-code={
+			\draw[rounded corners, every node/.style={circle,
+						draw,
+						auto=false,
+						inner sep=1pt,
+						fill=gray!50,
+						font=\tiny}
+			]
+			let \p1 = (##1),
+			\p2 = (##2)
+			in \ifdim \x1 > \x2
+				(\p1) -- node {##3} (\x1,\y2) -- (\p2)
+			\else
+				(\p1) -- (\x2,\y1) -- node {##3} (\p2)
+			\fi ;
+		}
+}
+% calc arrow
+\newcommand{\CArrow}{
+	\Arrow[
+		tikz={
+				every node/.style={
+						circle,
+						draw,
+						auto=false,
+						fill=white,
+						inner sep=1pt,
+						font=\tiny
+					}
+			}
+	]
+}
+
+\RequirePackage{fancyhdr}
+\RequirePackage[hmargin=1.5cm, vmargin=1.5cm]{geometry}
+\RequirePackage{amsfonts}
+\RequirePackage{esint} % various fancy integral symbols
+\RequirePackage{standalone} % Figures au format .tex (TikZ, Inkscape)
+% Other tables
+\RequirePackage{tabularx}
+\newcolumntype{Y}{>{\centering\arraybackslash}X}
+\newcolumntype{M}{>{\centering\arraybackslash}m}
+% For \vline in tabav. Thanks Bruno PAGANI.
+\newcolumntype{d}{@{}c@{}}
+\renewcommand\tabularxcolumn[1]{m{#1}}
+\RequirePackage{booktabs}
+% Style
+\RequirePackage{fancyhdr}
+\RequirePackage{lastpage}
+\pagestyle{fancy}
+\renewcommand{\headrulewidth}{1pt}
+\fancyhead[RE]{\nouppercase\leftmark}  % Top (head) right (R) even (E): chapter
+\fancyhead[LE]{\thepage}               % Top left even: page
+\fancyhead[LO]{\nouppercase\rightmark} % Top (head) left (L) odd (O): chapter
+\fancyhead[RO]{\thepage}               % Top right even: page
+\fancyfoot[L]{Lycée \textsc{Pothier}}
+\fancyfoot[C]{\textbf{\thepage/\pageref*{LastPage}}}
+\fancyfoot[R]{2025/2026}
+%\fancyfoot{}                           % Empty footer
+\renewcommand{\footrulewidth}{1pt}
+% Space before ruler
+%\setlength{\headheight}{28pt}
+
+% Redefine the plain page style for chapter pages
+\fancypagestyle{plain}{%
+	\renewcommand{\headrulewidth}{0pt}  % Line at the header invisible
+	\fancyhf{}%
+	\fancyfoot[L]{Lycée \textsc{Pothier}}
+	\fancyfoot[C]{\textbf{\thepage/\pageref*{LastPage}}}
+	\fancyfoot[R]{2025/2026}
+	\renewcommand{\footrulewidth}{1pt}% Line at the footer visible
+}
+
+% For frames in multiple lines
+\RequirePackage{framed}
+% Nice chapter
+\RequirePackage{titlesec}
+% Put numbers in Roman
+% \renewcommand{\thechapter}{\Roman{chapter}}
+% For TOC with chapter numbers right-aligned, fixing the spilling of VII on text
+\RequirePackage[rightlabels]{titletoc}
+% Make chapter with frame
+
+\renewcommand{\thesection}{\Roman{section}}
+\renewcommand{\thesubsection}{\Alph{subsection}}
+\renewcommand{\thesubsubsection}{\Roman{section}.\Alph{subsection}.\arabic{subsubsection}}
+
+\makeatletter
+\titleformat{\chapter}[frame]
+{\normalfont\setlength{\fboxrule}{1pt}}
+{\filright\enspace \@chapapp~\thechapter\enspace}
+{8pt}{\LARGE\bfseries\filcenter}
+\titlespacing*{\chapter}
+{0pt}{0pt}{20pt}
+\makeatother
+
+\titleformat{\section}{\Large\bfseries}{
+	\begin{tikzpicture}[scale=0.55, overlay]
+		\draw[line width=1pt, color=darkgray, xshift=1em, yshift=0.6em]
+		(1,-0.4) -- (1,0.8) --(0.8,1) -- (-0.8,1) -- (-1,0.8) -- (-1,-0.8) --
+		(-0.8,-1) -- (31,-1);
+		\node[xshift=0.6em, yshift=0.35em] at (0,0)
+		{\rmfamily\textcolor{darkgray}{\thesection}};
+	\end{tikzpicture}}{0.4em}{\hspace{1.4em}}
+
+\titleformat{\subsection}{\large\bfseries}{\hspace{1cm}
+	\tcbox[colback=darkgray, colframe=darkgray,
+		coltext=lightgray, on line, boxsep=0pt,
+		left=4pt, right=4pt, top=4pt,bottom=4pt,
+		sharp corners=northwest]{\thesubsection}}{0.5em}{}
+
+\titleformat{\subsubsection}{\normalsize}{\hspace{2cm}
+	\tcbox[colback=white, colframe=darkgray,
+		coltext=black, on line, boxsep=0pt,
+		left=4pt, right=4pt, top=4pt,bottom=4pt,
+		sharp corners=northwest]{\normalsize\thesubsubsection}
+	\normalsize}{0.5em}{}
+
+% Custom section and subsection
+% TODO: fix section* with IfBooleanTF #1 return oldsection ta KPT.
+\def\sspace{40}
+\let\oldsection\section
+\RenewDocumentCommand{\section}{ood""m}{%
+	\IfValueTF{#3}{%
+		\IfEqCase{#3}{%
+			{E}{\renewcommand{\thesection}{{\bfseries E\arabic{section}}}}
+				{P}{\renewcommand{\thesection}{{\bfseries P\arabic{section}}}}
+				{1}{\def\ustr{$\scaleto{\str}{15pt}$}}%
+				{2}{\def\ustr{$\scaleto{\strr}{15pt}$}}%
+				{3}{\def\ustr{$\scaleto{\strrr}{15pt}$}}%
+			% {1}{\def\ustr{\str}}%
+			% {2}{\def\ustr{\strr}}%
+			% {3}{\def\ustr{\strrr}}%
+		}{}%
+	}{}%
+	\IfValueTF{#1}{%
+		\IfEq{#1}{s}{%
+			\IfValueTF{#2}{%
+				\oldsection[#4]{\texorpdfstring{\ltm[#2]{\ustr}#4}{#4}}%
+			}{%
+				\oldsection[#4]{\texorpdfstring{\ltm[\sspace]{\ustr}#4}{#4}}%
+			}%
+		}{%
+			\IfValueTF{#2}{%
+				\oldsection[#4]{\texorpdfstring{\ltm[#2]{\textcolor{Red}{/#1}}#4}{#4}}%
+			}{%
+				\oldsection[#4]{\texorpdfstring{\ltm[\sspace]{\textcolor{Red}{/#1}}#4}{#4}}%
+			}%
+		}%
+	}{\oldsection{#4}}
+}
+
+\let\oldsubsection\subsection
+\RenewDocumentCommand{\subsection}{d()m}{%
+	\IfValueT{#1}{%
+		\renewcommand{\thesubsection}{{\bfseries #1}}%
+	}
+	\oldsubsection{#2}
+}
+
+% for stars
+\usetikzlibrary{shapes,
+	shapes.misc,
+	shapes.geometric}
+
+\DeclareRobustCommand\str{%
+	\begin{tikzpicture}[scale=.8,
+			baseline={([yshift=-.8ex]current bounding box.center)}]
+		\def\xoff{3.5pt}
+		\def\sscale{.55}
+		\node [star,
+			star point height=2.2pt,
+			minimum size=7.92pt,
+			inner sep=0,
+			draw, fill, scale=\sscale] (sa)
+		at (90:\xoff) {};
+		\node [star,
+			star point height=2.2pt,
+			minimum size=7.92pt,
+			inner sep=0,
+			draw, scale=\sscale] (sb)
+		at (210:\xoff) {};
+		\node [star,
+			star point height=2.2pt,
+			minimum size=7.92pt,
+			inner sep=0,
+			draw, scale=\sscale] (sc)
+		at (-30:\xoff) {};
+		% \node[circle,
+		% 	inner sep=4.5pt,
+		% 	draw, thick] (c) {};
+	\end{tikzpicture}
+}
+\DeclareRobustCommand\strr{%
+	\begin{tikzpicture}[scale=.8,
+			baseline={([yshift=-.8ex]current bounding box.center)}]
+		\def\xoff{3.5pt}
+		\def\sscale{.55}
+		\node [star,
+			star point height=2.2pt,
+			minimum size=7.92pt,
+			inner sep=0,
+			draw, fill, scale=\sscale] (sa)
+		at (90:\xoff) {};
+		\node [star,
+			star point height=2.2pt,
+			minimum size=7.92pt,
+			inner sep=0,
+			draw, fill, scale=\sscale] (sb)
+		at (210:\xoff) {};
+		\node [star,
+			star point height=2.2pt,
+			minimum size=7.92pt,
+			inner sep=0,
+			draw, scale=\sscale] (sc)
+		at (-30:\xoff) {};
+		% \node[circle,
+		% 	inner sep=4.5pt,
+		% 	draw, thick] (c) {};
+	\end{tikzpicture}
+}
+\DeclareRobustCommand\strrr{%
+	\begin{tikzpicture}[scale=.8,
+			baseline={([yshift=-.8ex]current bounding box.center)}]
+		\def\xoff{3.5pt}
+		\def\sscale{.55}
+		\node [star,
+			star point height=2.2pt,
+			minimum size=7.92pt,
+			inner sep=0,
+			draw, fill, scale=\sscale] (sa)
+		at (90:\xoff) {};
+		\node [star,
+			star point height=2.2pt,
+			minimum size=7.92pt,
+			inner sep=0,
+			draw, fill, scale=\sscale] (sb)
+		at (210:\xoff) {};
+		\node [star,
+			star point height=2.2pt,
+			minimum size=7.92pt,
+			inner sep=0,
+			draw, fill, scale=\sscale] (sc)
+		at (-30:\xoff) {};
+		% \node[circle,
+		% 	inner sep=4.5pt,
+		% 	draw, thick] (c) {};
+	\end{tikzpicture}
+}
+\NewDocumentCommand{\strs}{m}{%
+	\IfEqCase{#1}{%
+		{1}{\str}%
+			{2}{\strr}%
+			{3}{\strrr}%
+	}%
+}%
+
+% % put left of something
+% \def\lspace{20} % default left space
+% \NewDocumentCommand{\ltm}{O{\lspace}m}{%
+% 	\llap{#2\hspace{#1pt}}%
+% }
+
+\RequirePackage{float}
+\RequirePackage{subfigure}
+\RequirePackage{atveryend}
+
+\RequirePackage{placeins}
+\RequirePackage{enumitem}
+% \newcommand\bitem[1]{\item{\bfseries #1}}
+% \newcommand{\sqenumi}{\protect\fbox{\arabic*}}
+% \newcommand{\clenumi}{\protect\icircled{\arabic*}}
+\RequirePackage{caption} %  pour les captions sans environnement figure
+\RequirePackage{import}
+\RequirePackage{textcomp}
+\RequirePackage{cancel}
+\RequirePackage{siunitx}[=v2]
+\NewCommandCopy\mycdot\cdot
+\sisetup{%
+	detect-all,
+	free-standing-units,       % create standalone commands
+	locale=FR,
+	inter-unit-product=
+		{\ensuremath{\mycdot}},    % character between units
+	separate-uncertainty,      % x ± dx
+	retain-explicit-plus,      % p.ex. +45°
+	angle-symbol-over-decimal, % p.ex. 0.''11
+	range-units=brackets,      % (0 to 40) m
+	open-bracket= [,
+			close-bracket= ],
+	range-phrase=~;~,          % 0~;~40 m
+}
+\def\Lsun{L\ensuremath{_{\odot}}}
+\def\Rsun{R\ensuremath{_{\odot}}}
+\def\Tsun{T\ensuremath{_{\odot}}}
+\def\Msun{M\ensuremath{_{\odot}}}
+\def\Rearth{R\ensuremath{_{\oplus}}}
+\def\Mearth{M\ensuremath{_{\oplus}}}
+\def\Tearth{T\ensuremath{_{\oplus}}}
+\DeclareSIUnit\pc{pc}           % parsec
+\DeclareSIUnit\as{as}           % arcsec
+\DeclareSIUnit\mag{mag}         % mag
+\DeclareSIUnit{\angstrom}{\textup{\AA}}
+\DeclareSIUnit{\EUR}{\text{\euro}}
+
+\RequirePackage{xstring}
+\RequirePackage{ifthen}
+\RequirePackage[version=4]{mhchem} %Pour faire des équations chimiques
+\RequirePackage{chemfig}
+
+% Better file and folder management
+\RequirePackage[v1]{subfiles}
+%Pour faire des figures tikz
+\RequirePackage{tikz}
+\usetikzlibrary{math}
+\usetikzlibrary{shapes}
+\usetikzlibrary{decorations.markings,
+	decorations.pathmorphing,
+	decorations.pathreplacing}
+\usetikzlibrary{trees, positioning, arrows, tikzmark, calc, mindmap}
+\RequirePackage[european, straightvoltages, cuteinductors]{circuitikz}
+\RequirePackage{pgfplots}
+
+% Circled numbers
+% https://tex.stackexchange.com/a/7045
+\newcommand*\circled[1]{%
+	\tikz[baseline=(char.base)]{%
+		\node[shape=circle, draw, inner sep=1pt] (char) {#1};
+	}%
+}
+\newcommand*\icircled[1]{%
+	\tikz[baseline=(char.base)]{%
+		\node[shape=circle, draw, inner sep=1pt, minimum size=3ex] (char) {#1};
+	}\kern-3pt
+}
+
+% Pour empheq, qui pourrait remplacer à la fois équations et align
+\RequirePackage{empheq}
+
+%Pour les codes python
+\RequirePackage{listings}
+\definecolor{monviolet}{rgb}{0.5,0,0.5}
+\lstset{
+	language=Python,
+	backgroundcolor=\color{white},
+	keywordstyle=\color{blue},
+	commentstyle=\color{monviolet},
+	frame=trBL,
+	%showspaces=false
+	showstringspaces=false
+}
+\newcommand{\opto}[2]{\ensuremath\underset{#2}{\overset{#1}{\longrightarrow}}}
+\renewcommand{\obar}[1]{\mkern 1.5mu\overline{\mkern-1.5mu#1\mkern-1.5mu}\mkern 1.5mu}
+\newcommand{\obarr}[1]{\mkern 1.5mu\overline{\mkern-1.5mu\rm #1\mkern-1.5mu}\mkern 1.5mu}
+
+\let\SavedIndent\indent
+\protected\def\indent{%
+	\begingroup
+	\parindent=\the\parindent
+	\SavedIndent
+	\endgroup
+}
+\setlength{\parindent}{0pt}
+
+% New commands for pretty formatting
+\newlength{\leftlength}
+\newlength{\rightlength}
+
+\newcommand{\leftcentersright}[3]{
+	\medskip
+	\settowidth{\leftlength}{#1}
+	\settowidth{\rightlength}{#3}
+	\noindent#1\hskip-\leftlength
+	\hfill{#2}\hfill
+	\mbox{}\hskip-\rightlength#3
+	\medskip
+}
+
+\newcommand{\centers}[1]{\leftcentersright{}{#1}{}}
+\newcommand{\leftcenters}[2]{\leftcentersright{#1}{#2}{}}
+\newcommand{\centersright}[2]{\leftcentersright{}{#1}{#2}}
+\newcommand{\leftencadreright}[3]{\leftcentersright{#1}{\fbox{#2}}{#3}}
+\newcommand{\encadre}[1]{\leftcentersright{}{\fbox{#1}}{}}
+\newcommand{\leftencadre}[2]{\leftcentersright{#1}{\fbox{#2}}{}}
+\newcommand{\encadreright}[2]{\leftcentersright{}{\fbox{#1}}{#2}}
+
+% For bigger boxrule in fbox
+\edef\oldfboxrule{\the\fboxrule}
+\newcommand{\fatbox}[1]{\setlength{\fboxrule}{1pt}\fbox{#1}\setlength{\fboxrule}{\oldfboxrule}}
+
+\RequirePackage{xparse}
+% Read linux paths
+\ExplSyntaxOn
+\NewDocumentCommand{\getenv}{om}
+{
+	\sys_get_shell:nnN { kpsewhich ~ --var-value ~ #2 }
+	{ \cctab_select:N \c_str_cctab } \l_tmpa_tl
+	\tl_trim_spaces:N \l_tmpa_tl
+	\IfNoValueTF { #1 }
+	{ \tl_use:N \l_tmpa_tl }
+	{ \tl_set_eq:NN #1 \l_tmpa_tl }
+}
+\ExplSyntaxOff
+
+% set \PREPA
+\getenv[\PREPA]{PREPA}
+
+\RequirePackage[many]{tcolorbox}
+\tcbuselibrary{skins, raster}
+
+% Boxes types: colors
+\colorlet{loi}{red!60!black}
+\colorlet{theo}{red!70!black}
+\colorlet{ques}{red!80!black}
+\colorlet{prop}{red!80!black}
+\colorlet{rslt}{red!80!black}
+\colorlet{demo}{blue!80!black}
+\colorlet{prev}{blue!70!black}
+\colorlet{coro}{VioletRed!60!black}
+\colorlet{inte}{RoyalBlue!50!black}
+\colorlet{impl}{DodgerBlue!50!black}
+\colorlet{impo}{BlueViolet!70!black}
+\colorlet{tool}{BlueViolet!80!black}
+\colorlet{rapp}{BlueViolet!60!black}
+\colorlet{defi}{green!60!black}
+\colorlet{data}{green!60!black}
+\colorlet{nota}{green!50!black}
+\colorlet{ror}{orange!90!black}
+\colorlet{exem}{lightgray!55!black}
+\colorlet{cexe}{lightgray!55!black}
+\colorlet{expe}{darkgray!50!black}
+\colorlet{obsv}{darkgray!50!black}
+\colorlet{code}{lightgray!55!black}
+\colorlet{mate}{lightgray!55!black}
+\colorlet{odgr}{lightgray!50!black}
+\colorlet{appl}{gray!50!black}
+\colorlet{rema}{darkgray!50!black}
+\colorlet{null}{black}
+% for backs in fill style
+\colorlet{loiback}{red!10}
+\colorlet{theoback}{red!10}
+\colorlet{quesback}{red!10}
+\colorlet{rsltback}{red!10}
+\colorlet{propback}{red!10}
+\colorlet{demoback}{blue!10}
+\colorlet{prevback}{blue!10}
+\colorlet{coroback}{VioletRed!10}
+\colorlet{inteback}{RoyalBlue!10}
+\colorlet{implback}{DodgerBlue!10}
+\colorlet{impoback}{BlueViolet!10}
+\colorlet{toolback}{BlueViolet!10}
+\colorlet{rappback}{BlueViolet!10}
+\colorlet{defiback}{green!10}
+\colorlet{databack}{green!10}
+\colorlet{notaback}{green!10}
+\colorlet{rorback}{orange!10}
+\colorlet{exemback}{lightgray!10}
+\colorlet{cexeback}{lightgray!10}
+\colorlet{expeback}{lightgray!5}
+\colorlet{obsvback}{darkgray!10}
+\colorlet{codeback}{lightgray!10}
+\colorlet{mateback}{lightgray!10}
+\colorlet{odgrback}{lightgray!10}
+\colorlet{applback}{gray!10}
+\colorlet{remaback}{darkgray!10}
+\colorlet{nullback}{white}
+% for TITLE backs in fill style
+\colorlet{loibacktitle}{red!30}
+\colorlet{theobacktitle}{red!30}
+\colorlet{quesbacktitle}{red!30}
+\colorlet{rsltbacktitle}{red!30}
+\colorlet{propbacktitle}{red!30}
+\colorlet{demobacktitle}{blue!30}
+\colorlet{prevbacktitle}{blue!30}
+\colorlet{corobacktitle}{VioletRed!30}
+\colorlet{intebacktitle}{RoyalBlue!30}
+\colorlet{implbacktitle}{DodgerBlue!30}
+\colorlet{impobacktitle}{BlueViolet!30}
+\colorlet{toolbacktitle}{BlueViolet!30}
+\colorlet{rappbacktitle}{BlueViolet!30}
+\colorlet{defibacktitle}{green!10}
+\colorlet{databacktitle}{green!10}
+\colorlet{notabacktitle}{green!10}
+\colorlet{rorbacktitle}{orange!30}
+\colorlet{exembacktitle}{lightgray!50}
+\colorlet{cexebacktitle}{lightgray!50}
+\colorlet{expebacktitle}{lightgray!50}
+\colorlet{obsvbacktitle}{lightgray!50}
+\colorlet{codebacktitle}{lightgray!50}
+\colorlet{matebacktitle}{lightgray!50}
+\colorlet{odgrbacktitle}{lightgray!50}
+\colorlet{applbacktitle}{gray!30}
+\colorlet{remabacktitle}{darkgray!30}
+\colorlet{nullbacktitle}{white}
+% set names for counters
+\newcommand{\nameloi}{Loi}
+\newcommand{\nametheo}{Théorème}
+\newcommand{\nameques}{Question}
+\newcommand{\nameprop}{Propriété}
+\newcommand{\namerslt}{Résultat}
+\newcommand{\namedemo}{Démonstration}
+\newcommand{\nameprev}{Preuve}
+\newcommand{\namecoro}{Corollaire}
+\newcommand{\nameinte}{Interprétation}
+\newcommand{\nameimpl}{Implication}
+\newcommand{\nameimpo}{Attention}
+\newcommand{\nametool}{Outils}
+\newcommand{\namerapp}{Rappel}
+\newcommand{\namedefi}{Définition}
+\newcommand{\namedata}{Données}
+\newcommand{\namenota}{Notation}
+\newcommand{\nameror}{Important}
+\newcommand{\nameexem}{Exemple}
+\newcommand{\namecexe}{Contre-exemple}
+\newcommand{\nameexpe}{Expérience}
+\newcommand{\nameobsv}{Observation}
+\newcommand{\namecode}{Code}
+\newcommand{\namemate}{Matériel}
+\newcommand{\nameodgr}{Ordre de grandeur}
+\newcommand{\nameappl}{Application}
+\newcommand{\namerema}{Remarque}
+% set counters
+\newcounter{loi}[chapter]
+\renewcommand{\theloi}{\thechapter.\arabic{loi}}
+\newcounter{theo}[chapter]
+\renewcommand{\thetheo}{\thechapter.\arabic{theo}}
+\newcounter{ques}[chapter]
+\renewcommand{\theques}{\thechapter.\arabic{ques}}
+\newcounter{prop}[chapter]
+\renewcommand{\theprop}{\thechapter.\arabic{prop}}
+\newcounter{rslt}[chapter]
+\renewcommand{\therslt}{\thechapter.\arabic{rslt}}
+\newcounter{demo}[chapter]
+\renewcommand{\thedemo}{\thechapter.\arabic{demo}}
+\newcounter{prev}[chapter]
+\renewcommand{\theprev}{\thechapter.\arabic{prev}}
+\newcounter{coro}[chapter]
+\renewcommand{\thecoro}{\thechapter.\arabic{coro}}
+\newcounter{inte}[chapter]
+\renewcommand{\theinte}{\thechapter.\arabic{inte}}
+\newcounter{impl}[chapter]
+\renewcommand{\theimpl}{\thechapter.\arabic{impl}}
+\newcounter{impo}[chapter]
+\renewcommand{\theimpo}{\thechapter.\arabic{impo}}
+\newcounter{tool}[chapter]
+\renewcommand{\thetool}{\thechapter.\arabic{tool}}
+\newcounter{rapp}[chapter]
+\renewcommand{\therapp}{\thechapter.\arabic{rapp}}
+\newcounter{defi}[chapter]
+\renewcommand{\thedefi}{\thechapter.\arabic{defi}}
+\newcounter{data}[chapter]
+\renewcommand{\thedata}{\thechapter.\arabic{data}}
+\newcounter{nota}[chapter]
+\renewcommand{\thenota}{\thechapter.\arabic{nota}}
+\newcounter{ror}[chapter]
+\renewcommand{\theror}{\thechapter.\arabic{ror}}
+\newcounter{exem}[chapter]
+\renewcommand{\theexem}{\thechapter.\arabic{exem}}
+\newcounter{cexe}[chapter]
+\renewcommand{\thecexe}{\thechapter.\arabic{cexe}}
+\newcounter{expe}[chapter]
+\renewcommand{\theexpe}{\thechapter.\arabic{expe}}
+\newcounter{obsv}[chapter]
+\renewcommand{\theobsv}{\thechapter.\arabic{obsv}}
+\newcounter{code}[chapter]
+\renewcommand{\thecode}{\thechapter.\arabic{code}}
+\newcounter{mate}[chapter]
+\renewcommand{\themate}{\thechapter.\arabic{mate}}
+\newcounter{odgr}[chapter]
+\renewcommand{\theodgr}{\thechapter.\arabic{odgr}}
+\newcounter{appl}[chapter]
+\renewcommand{\theappl}{\thechapter.\arabic{appl}}
+\newcounter{rema}[chapter]
+\renewcommand{\therema}{\thechapter.\arabic{rema}}
+\newcounter{null}[chapter]
+\renewcommand{\thenull}{\thechapter.\arabic{null}}
+% Set name for list of counters
+\newcommand{\plurloi}{Lois}
+\newcommand{\plurtheo}{Théorèmes}
+\newcommand{\plurques}{Questions}
+\newcommand{\plurprop}{Propriétés}
+\newcommand{\plurrslt}{Résultats}
+\newcommand{\plurdemo}{Démonstrations}
+\newcommand{\plurprev}{Preuves}
+\newcommand{\plurcoro}{Corollaires}
+\newcommand{\plurinte}{Interprétations}
+\newcommand{\plurimpl}{Implications}
+\newcommand{\plurimpo}{Erreurs communes}
+\newcommand{\plurtool}{Outils}
+\newcommand{\plurrapp}{Rappels}
+\newcommand{\plurdefi}{Définitions}
+\newcommand{\plurdata}{Données}
+\newcommand{\plurnota}{Notations}
+\newcommand{\plurror}{Points importants}
+\newcommand{\plurexem}{Exemples}
+\newcommand{\plurcexe}{Contre-exemples}
+\newcommand{\plurexpe}{Expériences}
+\newcommand{\plurobsv}{Observations}
+\newcommand{\plurcode}{Codes}
+\newcommand{\plurmate}{Matériel}
+\newcommand{\plurodgr}{Ordres de grandeur}
+\newcommand{\plurappl}{Applications}
+\newcommand{\plurrema}{Remarques}
+
+% For icons
+\usepackage{fontawesome5}
+\tcbset{
+	licon/.style 2 args={
+			overlay unbroken and first={
+					\node[anchor=center, scale=2]
+					at ([shift={(-0.7,-0.4)}]frame.north west)
+					{\csname icon#1\endcsname};
+					% \IfEqCase{#2}{%
+					% 	{lftt}{%
+					% 			\draw[line width=1pt, #1] ([xshift=4pt]frame.north west)--++(0:3mm);
+					% 		}%
+					% }%
+				}
+		}
+}
+\tcbset{
+	ricon/.style 2 args={
+			overlay unbroken and first={
+					\node[anchor=center, scale=2]
+					at ([shift={(+0.7,-0.4)}]frame.north east)
+					{\csname icon#1\endcsname};
+				}
+		}
+}
+\tcbset{
+	ticon/.style 2 args={
+			title={\csname icon#1\endcsname~#2},
+		}
+}
+\newcommand{\iconloi}{\faIcon{drafting-compass}}
+\newcommand{\icontheo}{\faIcon{drafting-compass}}
+\newcommand{\iconques}{\faIcon{question}}
+\newcommand{\iconprop}{\faIcon{drafting-compass}}
+\newcommand{\iconrslt}{\faIcon{check}}
+\newcommand{\icondemo}{\faIcon{list-ul}}
+\newcommand{\iconprev}{\faIcon{list-ul}}
+\newcommand{\iconcoro}{\faIcon{code-branch}}
+\newcommand{\iconinte}{\faIcon[regular]{lightbulb}}
+% \newcommand{\iconinte}{\faIcon{angle-right}}
+\newcommand{\iconimpl}{\faIcon{angle-double-right}}
+\newcommand{\iconlimp}{\faIcon{angle-double-left}}
+\newcommand{\iconimpo}{\faIcon{exclamation-triangle}}
+\newcommand{\icontool}{\faIcon{wrench}}
+\newcommand{\iconrapp}{\faIcon[regular]{bookmark}}
+\newcommand{\icondefi}{\faIcon{book}}
+\newcommand{\icondata}{\faIcon{database}}
+\newcommand{\iconnota}{\faIcon{pencil-alt}}
+\newcommand{\iconror}{\includegraphics[scale=.15]{\PREPA/figures_generales/heart.jpg}}
+\newcommand{\iconhart}{\faIcon{heart}}
+\newcommand{\icontrans}{
+	\includegraphics[angle=-90, origin=c, height=0.5cm]{\PREPA/figures_generales/pr.jpg}
+}
+\newcommand{\iconexem}{\faIcon{external-link-alt}}
+\newcommand{\iconcexe}{\faIcon{external-link-alt}}
+\newcommand{\iconodgr}{\faIcon{calculator}}
+\newcommand{\iconappl}{\faIcon{edit}}
+\newcommand{\iconrema}{\faIcon[regular]{hand-point-right}}
+\newcommand{\iconlrem}{\faIcon[regular]{hand-point-left}}
+%
+\newcommand{\icondown}{\faIcon[regular]{hand-point-down}}
+\newcommand{\iconknow}{\faIcon{brain}}
+\newcommand{\iconhow}{\faIcon{pencil-ruler}}
+\newcommand{\iconmate}{\faIcon{flask}}
+\newcommand{\iconexpe}{\faIcon{cogs}}
+\newcommand{\iconcode}{\faIcon{python}}
+\newcommand{\iconwip}{\faIcon{hard-hat}}
+\newcommand{\iconbomb}{\faIcon{bomb}}
+\newcommand{\iconchem}{\faIcon{eye-dropper}}
+\newcommand{\iconobsv}{\faIcon{eye}}
+\newcommand{\icontime}{\faIcon{stopwatch}}
+% \newcommand{\iconexpe}{\faIcon{fill}}
+\newcommand{\iconbulb}{\faIcon[regular]{lightbulb}}
+\newcommand{\iconinfo}{\faIcon{info-circle}}
+\newcommand{\iconkeyb}{\faIcon{keyboard}}
+\newcommand{\iconwron}{\faIcon{times-circle}}
+\newcommand{\icondivi}{\faIcon{divide}}
+\newcommand{\iconleft}{\faIcon{angle-left}}
+\newcommand{\iconrigt}{\faIcon{angle-right}}
+\newcommand{\iconsomm}{\faIcon{book-open}}
+\newcommand{\iconchek}{\faIcon{check}}
+\newcommand{\iconfals}{\faIcon{times}}
+\newcommand{\iconyout}{\faIcon{youtube}}
+\newcommand{\iconskul}{\faIcon{skull-crossbones}}
+\newcommand{\icongoal}{\faIcon{crosshairs}}
+
+% Lettre par défaut des Propriété C1.1 etc
+\newcommand{\chaplett}{C}
+\renewcommand{\theequation}{\chaplett\thechapter.\arabic{equation}}
+\renewcommand{\thefigure}{\chaplett\thechapter.\arabic{figure}}
+\renewcommand{\thetable}{\chaplett\thechapter.\arabic{table}}
+
+% No counter
+% My generic box name
+% based on the great answer https://tex.stackexchange.com/a/471615/284518
+% TODO: Remove the first star parameter~: useless with IfValueTF{#5}
+
+\NewTColorBox{tcn}{sO{}r()D<>{box}d""D''{l}m}{%
+base,
+#4={#3}{#7},
+#6icon={\IfValueTF{#5}{#5}{#3}}{#7},
+% #4={#3}{\csname name#3\endcsname~\expandafter\csname the#3\endcsname~:~#7},
+% step={#3},
+#2,
+}
+% No counter, icon in title not left
+% Use tcn with 't' style
+% \NewTColorBox{tci}{sO{}r()D<>{box}d""D''{t}m}{%
+% base,
+% #4={#3}{#7},
+% #6icon={\IfBooleanTF{#1}{#5}{#3}}{#7},
+% % #4={#3}{\csname name#3\endcsname~\expandafter\csname the#3\endcsname~:~#7},
+% % step={#3},
+% #2,
+% }
+% with numbers and on list
+\NewTColorBox{tcb}{sO{}r()D<>{box}d""D''{l}m}{%
+base,
+% #4={#3}{#7},
+#4={#3}{\csname name#3\endcsname~\chaplett\expandafter\csname the#3\endcsname~:~#7},
+step={#3},
+% #6icon={\IfValueTF{#5}{#5}{#3}}{\csname name#3\endcsname~\expandafter\csname the#3\endcsname~:~#7},
+#6icon={\IfValueTF{#5}{#5}{#3}}{#7},
+add to list={#3}{section},
+list entry={\hspace*{-20pt}\protect\rcheck~
+		% \csname name#3\endcsname~\expandafter
+		\chaplett\csname the#3\endcsname~: #7},
+#2,
+% #2,
+}
+% with numbers, on list but with heart
+\NewTColorBox{tcb*}{sO{}r()D<>{box}d""D''{l}m}{%
+base,
+#4={#3}{\iconhart~\csname name#3\endcsname~\chaplett\expandafter\csname the#3\endcsname~:~#7},
+step={#3},
+#6icon={\IfValueTF{#5}{#5}{#3}}{#7},
+add to list={#3}{section},
+list entry={\hspace*{-20pt}\protect\rcheck~
+		% \csname name#3\endcsname~\expandafter
+		\chaplett\csname the#3\endcsname~: #7},
+#2,
+}
+
+% To manually add list entry for shorter text
+\newcommand{\lte}{\hspace*{-20pt}\protect\rcheck~~\chaplett}
+
+% Basic styles of boxes
+% thanks to https://tex.stackexchange.com/a/252907/284518 for 2 args
+\tcbset{
+	base/.style={
+			enhanced, sharp corners=uphill, valign=center,
+			subtitle style={
+					enhanced,
+					frame hidden,
+					interior hidden,
+					halign=center,
+				}
+		}
+}
+% Simple box
+\tcbset{
+	box/.style 2 args={
+			boxrule=0pt, frame hidden, interior hidden,
+			borderline={1pt}{0pt}{#1}, coltitle=#1,
+			fonttitle=\bfseries, top=10pt,
+			attach boxed title to top left={yshift={-9pt}, xshift=10pt},
+			% boxed title style={enhanced, frame hidden, colback=white},
+			boxed title style={enhanced, colframe=#1, colback=#1back, sharp corners},
+			title={#2},
+		}
+}
+% Simple box no title
+\tcbset{
+	bxnt/.style 2 args={
+			boxrule=0pt, frame hidden, interior hidden,
+			borderline={1pt}{0pt}{#1},
+		}
+}
+% center
+\tcbset{
+	ctc/.style 2 args={
+			boxrule=0pt, frame hidden, interior hidden,
+			borderline north={1pt}{0pt}{#1}, coltitle=#1,
+			fonttitle=\bfseries, top=10pt,
+			attach boxed title to top center={yshift=-2mm},
+			boxed title style={enhanced, colframe=#1, colback=#1back, sharp corners},
+			title={#2},
+		}
+}
+% center and bottom
+\tcbset{
+	ctb/.style 2 args={
+			boxrule=0pt, frame hidden, interior hidden,
+			borderline north={1pt}{0pt}{#1}, borderline south={1pt}{0pt}{#1}, coltitle=#1,
+			fonttitle=\bfseries, top=10pt,
+			attach boxed title to top center={yshift=-2mm},
+			boxed title style={enhanced, colframe=#1, colback=#1back, sharp corners},
+			title={#2},
+		}
+}
+% Only left, title and icon
+\tcbset{
+	lftt/.style 2 args={
+			boxrule=0pt, frame hidden, interior hidden,
+			borderline west={1pt}{0pt}{#1}, coltitle=#1,
+			fonttitle=\bfseries, top=10pt,
+			attach boxed title to top left={yshift={-9pt}, xshift=10pt},
+			% boxed title style={enhanced, frame hidden, colback=white},
+			boxed title style={enhanced, colframe=#1, colback=#1back, sharp corners},
+			title={#2},
+		}
+}
+% Only left, title first
+\tcbset{
+	lft/.style 2 args={
+			boxrule=0pt, frame hidden, interior hidden,
+			borderline west={1pt}{0pt}{#1},
+			overlay unbroken and first={%
+					\node[rotate=90,
+						minimum width=1cm,
+						anchor=south,
+						font=\bfseries,
+						color=#1]
+					at (frame.west) {#2};
+				}
+		}
+}
+% Only left, only icon
+\tcbset{
+	lfnt/.style 2 args={
+			boxrule=0pt, frame hidden, interior hidden,
+			borderline west={1pt}{0pt}{#1},
+		}
+}
+% Only right, title and icon
+\tcbset{
+	rgtt/.style 2 args={
+			boxrule=0pt, frame hidden, interior hidden,
+			borderline east={1pt}{0pt}{#1}, coltitle=#1,
+			fonttitle=\bfseries, top=10pt,
+			attach boxed title to top left={yshift={-9pt}, xshift=4pt},
+			boxed title style={enhanced, colframe=#1, colback=#1back, sharp corners},
+			title={#2},
+		}
+}
+% Only right
+\tcbset{
+	rgt/.style 2 args={
+			boxrule=0pt, frame hidden, interior hidden,
+			borderline east={1pt}{0pt}{#1},
+			overlay unbroken and first ={%
+					\node[rotate=90,
+						minimum width=1cm,
+						anchor=south,
+						font=\bfseries,
+						color=#1]
+					at ([shift={(16pt,0)}]frame.east) {#2};
+				}
+		}
+}
+\tcbset{
+	rgnt/.style 2 args={
+			boxrule=0pt, frame hidden, interior hidden,
+			borderline east={1pt}{0pt}{#1},
+		}
+}
+% Empty
+\tcbset{
+	non/.style 2 args={
+			boxrule=0pt, frame hidden, interior hidden,
+		}
+}
+% Old box style
+\tcbset{
+	fil/.style 2 args={
+			fonttitle=\bfseries,
+			colback=#1back,
+			colframe=#1,
+			title={#2},
+		}
+}
+% Instruction
+\tcbset{
+	itc/.style 2 args={
+			fonttitle=\bfseries,
+			attach boxed title to top center={yshift=-2mm},
+			coltitle=black,
+			boxed title style={
+					colback=#1backtitle,
+				},
+			colback=#1back,
+			colframe={#1},
+			title={#2},
+		}
+}
+% Flip 180
+\tcbset{
+	aide/.style={
+			tikz={rotate=180, transform shape}
+		}
+}
+% Center all
+\tcbset{
+	cnt/.style={
+			halign=center,
+			halign lower=center
+		}
+}
+% Bold all
+\tcbset{
+	bld/.style={
+			fontupper=\bfseries,
+			fontlower=\bfseries
+		}
+}
+% no sep left right
+\tcbset{
+	nsp/.style={
+			boxsep=0pt,
+			left=0pt, right=0pt, bottom=0pt
+		}
+}
+% For helplines inside box
+\tcbset{
+	grid/.style={%
+			underlay boxed title={%
+					\begin{tcbclipinterior}
+						\ifstudent{%
+							\draw[help lines,step=5mm,gray,shift={(interior.north west)}]
+							(interior.south west) grid (interior.north east);
+						}%
+					\end{tcbclipinterior}
+				}%
+		}
+}
+
+% For side inside box
+\NewTColorBox{isd}{O{}D(){null}}{%
+	interior hidden,
+	side={#2},
+	#1,
+}
+
+\tcbset{
+	side/.style={
+			arc=0pt, boxsep=0mm,
+			notitle, oversize, nobeforeafter,
+			enhanced, frame hidden,
+			colframe=#1, colback=#1back,
+			sidebyside, sidebyside align=center, valign=center,
+			subtitle style={
+					enhanced,
+					frame hidden,
+					interior hidden,
+					halign=center,
+					fontupper={\color{#1}},
+					fonttitle=\bfseries,
+					colframe=#1, colback=#1back,
+					% coltitle=#1, colbacktitle=#1back,
+				},
+		}
+}
+
+% For side adapt box
+\NewDocumentCommand{\sde}{sO{}r()D<>{box}d""D''{l}mmm}{%
+\tcbsidebyside[
+	base,
+	colframe=#3,
+	sidebyside adapt=#2,
+	#6icon={\IfBooleanTF{#1}{#5}{#3}}{#7},
+	#4={#3}{#7},
+]{#8}{#9}
+}
+\NewDocumentCommand{\sds}{sO{}r()D<>{box}d""D''{l}mmm}{%
+\tcbsidebyside[
+	base,
+	step=#3,
+	colframe=#3,
+	sidebyside adapt=#2,
+	#6icon={\IfBooleanTF{#1}{#5}{#3}}{#7},
+	#4={#3}{\csname name#3\endcsname~\expandafter\csname the#3\endcsname~:~#7},
+]{#8}{#9}
+}
+
+% For essentiel box
+\NewDocumentCommand{\tce}{O{4.8pt}d""m}{%
+	\IfValueTF{#2}{%
+		\begin{tcn}[nsp](#3)<ctc>'t'{#2}
+			\vspace{-20pt}
+			\tcblistof[\subsubsection*]{#3}{\hspace*{#1}}
+		\end{tcn}
+	}{%
+		\IfEq{#3}{ror}{%
+			\begin{tcn}[nsp](#3)<ctc>"hart"'t'{\csname plur#3\endcsname}
+				\vspace{-20pt}
+				\tcblistof[\subsubsection*]{#3}{\hspace*{#1}}
+			\end{tcn}
+		}{%
+			\begin{tcn}[nsp](#3)<ctc>'t'{\csname plur#3\endcsname}
+				\vspace{-20pt}
+				\tcblistof[\subsubsection*]{#3}{\hspace*{#1}}
+			\end{tcn}
+		}
+	}
+}
+
+% si un package est particulier à un exercice, il peut être déclaré localement dans son préambule.
+% il sera automatiquement importé dans le fichier tex final à l'aide du logiciel d'édition ou bien devra être importé à la main si vous n'utilisez pas le logiciel.
+% Il est donc préférable d'éviter trop de packages particulier pour les exercices.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%   variables utiles   %%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% compteur d'exercices
+\newcounter{exoIndex}
+\setcounter{exoIndex}{0}
+
+% compteur pour les questions
+% resume ne fonctionne pas lorsqu'un enumerate se trouve dans un environnement (par exemple minipage)
+\newcounter{qrIndex} % compteur pour les questions
+\newcounter{qrIndexSaved}
+\newcommand{\save}{\setcounter{qrIndexSaved}{\theqrIndex}}
+\newcommand{\retrieve}{\setcounter{qrIndex}{\theqrIndexSaved}}
+
+% corrigé bonus (activé par défaut)
+\newtoggle{corrigeEtendu} % permet de n'afficher qu'une partie (l'essentiel) du corrigé
+\toggletrue{corrigeEtendu}
+
+% affichage du corrigé
+\newtoggle{corrige}   % affichage du corrigé si vrai
+\togglefalse{corrige}
+
+% affichage du corrigé
+\newtoggle{bareme}   % affichage du corrigé avec barème
+\togglefalse{bareme}
+
+% affichage de la commande enonce
+\newtoggle{enonce}   % affichage de l'énoncé en dehors de l'environnement \QR si vrai
+\toggletrue{enonce}
+
+% affichage du sujet
+\newtoggle{sujet}   % affichage du sujet (énoncé des questions) si vrai
+\toggletrue{sujet}
+
+% choix de la version (original par defaut)
+\newcommand{\version}{original} % la valeur par defaut ; permet de gerer plusieurs version d'un même fichier tex
+
+% gestion des astuces
+\newtoggle{astuces}
+\togglefalse{astuces} % astuces cachées par défaut
+\newtoggle{astucesPresentes}
+\togglefalse{astucesPresentes} % vrai dès que le fichier contient au moins une astuce
+
+% Make toggle for teacher and student version of file
+\newtoggle{student}
+\togglefalse{student}
+\newcommand{\ifstudent}[1]{
+	\iftoggle{student}{%
+		#1%
+	}{}
+}
+\newcommand{\ifprof}[1]{
+	\iftoggle{student}{%
+	}{
+		#1%
+	}
+}
+\newcommand{\sswitch}[2]{
+	\iftoggle{student}{%
+		#1%
+	}{%
+		#2%
+	}%
+}
+\newcommand{\ifcorrige}[1]{
+	\iftoggle{corrige}{%
+		#1%
+	}{}
+}
+\newcommand{\ifenonce}[1]{
+	\iftoggle{enonce}{%
+	}{
+		#1%
+	}
+}
+\newcommand{\cswitch}[2]{
+	\iftoggle{corrige}{%
+		#1%
+	}{%
+		#2%
+	}%
+}
+%%%%%%%%%%%%%%%%%
+%%%% Astuces %%%%
+%%%%%%%%%%%%%%%%%
+
+\newsavebox{\hints}
+\setbox\hints=\vbox{}
+
+%\newcommand{\hint}[1]{\hintFF{\rotatebox{180}{#1}}}
+\newcommand{\astuce}[1]{
+
+	\iftoggle{astuces}{
+		\global\toggletrue{astucesPresentes}
+		\hintFF{#1}
+	}{
+	}
+}
+
+\AtEndDocument{
+	\iftoggle{astucesPresentes}{
+		\mbox{} \par \textbf{Astuces : } \\
+		\unvbox\hints
+	}{}
+}
+
+\newcommand{\hintFF}[1]% #1 = paragraph
+{\global\setbox\hints=\vbox{\unvbox\hints\strut  E\theexoIndex~Q{\the\numexpr\value{qrIndex}-1} :    #1 \strut}}
+
+
+\AtVeryEndDocument{
+	\label{page:last}
+}
+
+%%%%%%%%%%%%%%%%%
+%%%% Figures %%%%
+%%%%%%%%%%%%%%%%%
+
+% utile pour les figures qui ne doivent pas être redimensionnées
+\newcommand{\figRaw}[2][]{ % possibilité d'ajouter des arguments optionnels dans includeGraphics en plus
+	\begin{center}
+		\includegraphics[#1]{images/#2}
+	\end{center}
+}
+
+
+\newcommand{\fig}[3][]{ % possibilité d'ajouter des arguments optionnels en plus
+	\begin{center}
+		\includegraphics[width=#2\linewidth, #1]{images/#3}
+	\end{center}
+}
+
+% figure avec caption
+
+\newcommand{\figCap}[4][]{
+	\begin{center}
+		\includegraphics[width=#2\linewidth, #1]{images/#3}
+	\end{center}
+	\vspace{-4mm}
+	\captionof{figure}{#4}
+	\bigskip
+}
+
+\newcommand{\figCapRaw}[3][]{
+	\begin{center}
+		\includegraphics[#1]{images/#2}
+	\end{center}
+	\vspace{-4mm}
+	\captionof{figure}{#3}
+	\bigskip
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% double colonne %%%%
+%%%%%%%%%%%%%%%%%%%%%%%%
+
+%importation de figures avec extension pdf_tex
+
+%figure simple sans caption sans modification de la taille
+% l'argument est le nom_du_fichier.pdf_tex  
+%ne pas oublier l'extension pdf_tex
+\newcommand{\figsvg}[1]{
+	\begin{center}
+		\subimport{images/}{#1}
+	\end{center}
+}
+
+% figure avec caption
+
+\newcommand{\figsvgCap}[2]{
+	\begin{center}
+		\subimport{images/}{#1}
+	\end{center}
+	\vspace{-4mm}
+	\captionof{figure}{#2}
+	\bigskip
+}
+
+%%%%%%%%%%%%%%%%%
+%%%% Figures %%%%
+%%%%%%%%%%%%%%%%%
+
+% deprecated -> à ne plus utiliser !
+\newenvironment{tcols}[4]{
+	\begin{minipage}[t]{#1 \linewidth}
+		\vspace{0cm}
+		#3
+	\end{minipage}%
+	\hfill
+	\begin{minipage}[t]{ #2 \linewidth}
+		\vspace{0cm}
+		#4
+	\end{minipage}
+}
+
+
+
+% picins semble plus adapté pour des figures (car retire les zones blanches si j'ai bien compris !)
+
+\newcommand{\figWrapped}[2]{ % #1 : largeur du bloc de droite  ; #2 nom du fichier
+	\setlength{\intextsep}{-4pt}%
+	\setlength{\columnsep}{4pt}%
+	\begin{wrapfigure}{r}[20pt]{#1\linewidth}
+		\hfill
+		\includegraphics[width=0.95\linewidth]{images/#2}
+		\vspace{-2mm}
+	\end{wrapfigure}
+}
+
+\newcommand{\figCapWrapped}[3]{ % #1 : largeur du bloc de droite  ; #2 nom du fichier
+	\begin{wrapfigure}{r}[20pt]{#1\linewidth}
+		\hfill
+		\figCap{0.85}{#2}{#3}
+		\vspace{-6mm}
+	\end{wrapfigure}
+}
+
+
+
+
+% titre exercice
+\newcommand{\titreExercice}[1]{
+	\stepcounter{exoIndex}
+	\section{#1}
+}
+
+
+
+
+\newcommand{\eq}[2][equation*]{
+	\begin{#1}
+	#2
+	\end{#1}
+}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% fonction dépendant de l'état corrigé ou sujet :  %%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\BeforeBeginEnvironment{document}{
+	%\long\def\local{Q -1 : }
+	% cette macro permet d'afficher un element que s'il est résent dans la version choisie par l'utilisateur
+	\newcommand{\showAccordingToVersion}[2][]{
+		\exploregroups
+		\ifthenelse{\equal{#1}{}}{
+			% sans argument opt, la question est toujours affichée
+			#2
+		}{
+			% si argument opt, on traite au cas par cas
+			\IfSubStr{#1 }{\version}{
+				% si la liste des tags de version contient la valeur de \version			
+				#2
+			}{
+				% sinon, on affiche rien !			
+			}
+		}
+	}
+
+
+
+
+
+	% titre partie
+	\newcommand{\partie}[2][]{
+		\showAccordingToVersion[#1]{
+			\subsection{#2}
+		}
+	}
+
+	% titre sous partie
+	\newcommand{\sousPartie}[2][]{
+		\showAccordingToVersion[#1]{
+			\subsubsection{#2}
+		}
+	}
+
+	% Texte de l'énoncé en dehors d'une question 
+	\newcommand{\enonce}[2][]{
+		\iftoggle{enonce}{
+			\showAccordingToVersion[#1]{
+				#2
+			}
+		}{}
+	}
+
+	% For centered and hrule before and after text
+	\newcommand*\headline[1]{%
+		\par\noindent\raisebox{.8ex}{%
+			\makebox[1\linewidth]{%
+				\hrulefill%
+				\hspace{1ex}%
+				\raisebox{-.8ex}{\Large\bfseries#1}
+				\hspace{.15ex}%
+				\hrulefill%
+			}
+		}
+	}
+	\newcommand*\tailline[1]{%
+		\par\noindent\raisebox{.8ex}{%
+			\makebox[1\linewidth]{%
+				\hrulefill%
+				\hspace{1ex}%
+				\raisebox{-1.25ex}{$\scaleto{#1}{10pt}$}
+				\hspace{.15ex}%
+				\hrulefill%
+			}
+		}
+	}
+	\newenvironment{answ}{
+		\headline{\small Réponse}
+	}
+	{
+		\tailline{\diamond}
+	}
+
+	% bloc de questions (pas d'imbrication pour le moment). L'argument optionnel sera affiché en préambule de la liste de questions	
+
+	\newcommand{\resetQ}{\setcounter{qrIndex}{1}}
+	\newenvironment{blocQR}[1][]{
+		\save
+		\begin{enumerate}[start=\theqrIndexSaved]
+			\resetQ
+			\item
+			      }{
+		\end{enumerate}
+		\retrieve
+		\stepcounter{qrIndex}
+	}
+
+	% ajout d'une question
+	\newcommandtwoopt{\QR}[4][][]{ % cette fonction gère l'affichage suivant la version. La modifier est considéré comme dangereux.
+		\showAccordingToVersion[#1]{
+			\begin{enumerate}[start=\theqrIndex]
+				\stepcounter{qrIndex}
+				\item %\qrIndex
+				      \iftoggle{sujet}{
+					      \addQq{#3}
+				      }{}
+				      \iftoggle{corrige}{
+					      \addQr{#4}
+				      }{}
+				      \iftoggle{bareme}{
+					      \addQb{#2}{#4}
+				      }{}
+			\end{enumerate}
+		}
+	}
+
+	% Définition des puces des listes
+	%\setlist{nosep} % Interligne nul
+	\setlist{itemsep=3pt} % Interligne nul
+	\setlist[enumerate,1]{leftmargin=10pt, label=\arabic*)}
+	\setlist[enumerate,2]{leftmargin=20pt, label=\alph* --,
+		ref={\theenumi\,\alph* --}}
+	\setlist[enumerate,3]{leftmargin=20pt, label=\roman*.}
+	% \setlist[itemize,1]{leftmargin=10pt}
+	% \setlist[itemize,2]{leftmargin=20pt}
+	\newcommand{\bdmd}{$\scaleto{\diamond}{7pt}$}
+	\setlist[itemize,1]{label=\bdmd, leftmargin=10pt}
+	\newcommand{\btrg}{$\scaleto{\triangleright}{7pt}$}
+	\setlist[itemize,2]{label=\btrg, leftmargin=10pt}
+	\newcommand{\bcrc}{$\scaleto{\circ}{7pt}$}
+	\setlist[itemize,3]{label=$\bcrc$, leftmargin=10pt}
+
+	% Setup special items
+	\newif\iffitem
+		\newcommand{\setupmodenumerate}{%
+		\global\fitemfalse
+		\let\origmakelabel\makelabel
+		\def\fitem##1{\global\fitemtrue\def\toapply{##1}\olditem}%
+		\def\makelabel##1{%
+	\origmakelabel{%
+		\iffitem{%
+			\renewcommand{\labelenumi}{\arabic{enumi}}%
+			\renewcommand{\labelenumii}{\alph{enumii}}%
+			\renewcommand{\labelenumiii}{\roman{enumiii}}%
+			\toapply{##1}%
+		}%
+	\else##1\fi}%
+\global\fitemfalse
+}%
+}
+\setlist[enumerate]{before=\setupmodenumerate}
+% Auto number in squares
+\newcommand{\sqenumi}{\protect\fbox{\arabic*}}
+% Auto number in circles
+\newcommand{\clenumi}{\protect\icircled{\arabic*}}
+\newcommand{\clalphi}{\protect\icircled{\Alph*}}
+% New item
+\let\olditem\item % Store \item in \olditem
+\def\lspace{20} % default left space
+\def\mspace{-25}
+\NewDocumentCommand{\ltm}{O{\lspace}m}{%
+	\llap{#2\hspace{#1pt}}%
+}
+% \!\!%
+% make alpha a number
+\ExplSyntaxOn
+\DeclareExpandableDocumentCommand \makealph { m }
+{
+	\int_to_alph:n { #1 }
+}
+\DeclareExpandableDocumentCommand \makeroman { m }
+{
+	\int_to_roman:n { #1 }
+}
+\ExplSyntaxOff
+
+\newcounter{tempi}
+\newcounter{tempii}
+\newcounter{tempiii}
+
+% Here comes the big function
+\RenewDocumentCommand{\item}{ooD""{1}d()god''}{% Redefine \item to
+\IfValueT{#7}{% if '<>' after \item
+	\setcounter{tempi}{\value{enumi}}%
+	\setcounter{tempii}{\value{enumii}}%
+	\setcounter{tempiii}{\value{enumiii}}%
+	\setcounter{enumi}{#7-1}%
+	\setcounter{enumii}{#7-1}%
+	\setcounter{enumiii}{#7-1}%
+}%
+\IfValueTF{#6}{\def\localitem{\olditem[#6]}}{\def\localitem{\olditem}}%
+% \def\localitem{\olditem}
+\IfValueTF{#1}{% If [<>] after \item
+	\IfEqCase{#1}{% Check the value
+		{l}{% \litem : generic left of item, optional left distance
+				\IfValueTF{#2}{% if second optional value to \item : \item[l][opt]{mand}
+					\localitem\leavevmode\ltm[#2]{#4}%
+				}{% If no second optional value : \item[l]{mand}, do nothing with #2
+					\localitem\leavevmode\ltm{#4}%
+				}%
+			}%
+			{n}{% \nitem : left item /nb in green for points
+				\IfValueTF{#2}{% if second optional value to \item : \item[l][opt]{mand}
+					\localitem\leavevmode\ltm[#2]{\textcolor{ForestGreen}{/#5}}%
+				}{% If no second optional value : \item[l]{mand}, do nothing with #2
+					\localitem\leavevmode\ltm{\textcolor{ForestGreen}{/#5}}%
+				}%
+			}%
+			{m}{% \mitem : remove vertical math space
+				\IfValueTF{#2}{%
+					\localitem\leavevmode\vspace*{-#2pt}\relax
+				}{%
+					\localitem\leavevmode\vspace*{\mspace pt}\relax
+				}%
+			}%
+			{b}{% \bitem
+				\localitem\leavevmode\textbf{#5}%
+			}%
+			{bl}{% bold and left
+				\IfValueTF{#2}{% if second optional value to : \item[bl][opt](left){mand}
+					\localitem\leavevmode\ltm[#2]{#4}\textbf{#5}%
+				}{% If no second optional value : \item[bl](left){mand}, do nothing with #2
+					\localitem\leavevmode\ltm{#4}\textbf{#5}%
+				}%
+			}
+			{s}{% \litem for difficulty stars
+				\IfValueTF{#2}{%
+					\localitem\leavevmode\ltm[#2]{\strs{#3}}%
+				}{%
+					\localitem\leavevmode\ltm{\strs{#3}}%
+				}%
+			}%
+			{cl}{% \clitem for circled
+				\IfValueTF{#6}{%
+					\fitem{\icircled}[#6]%
+				}{%
+					\fitem{\icircled}%
+				}%
+			}%
+			{sq}{% \sqitem for fbox
+				\IfValueTF{#6}{%
+					\fitem{\fbox}[#6]%
+				}{%
+					\fitem{\fbox}%
+				}%
+			}%
+	}%
+}{\localitem}
+\IfValueT{#7}{% if "''" after \item
+	\setcounter{enumi}{\value{tempi}}%
+	\setcounter{enumii}{\value{tempii}}%
+	\setcounter{enumiii}{\value{tempiii}}%
+}%
+}
+
+% Make QR like BPEP
+
+% \newlist{blocQR}{enumerate}{2}
+% \setlist[blocQR,1]{leftmargin=10pt, resume, label=\arabic*)}
+% \setlist[blocQR,2]{leftmargin=20pt, resume, label=\alph* --}
+% \newcommand{\resetQ}{\restartlist{blocQR}}
+
+% \NewDocumentCommand{\QR}{o+m+m}{%
+% 	\iftoggle{bareme}{ % Force l'affichage du bareme quoiqu'il en soit
+% 		\begin{blocQR}
+% 			\iftoggle{student}{ % pour version student
+% 				\iftoggle{corrige}{ % version avec corrigé : affiche juste la correction
+% 					\nitem{#1}#3%
+% 				}{ % version sans corrigé
+% 					\nitem{#1}#2%
+% 				}%
+% 			}{% pour version prof
+% 				\iftoggle{corrige}{% pour version avec corrigé : question ET réponse
+% 					\nitem{#1}#2%
+% 					\begin{answ}%
+% 						#3%
+% 					\end{answ}%
+% 				}{ % version sans corrigé : que la question.
+% 					\item #2%
+% 				}
+% 			}
+% 		\end{blocQR}
+% 	}{
+% 		\IfValueTF{#1}{ % Si [nb], ajoute un nombre de points
+% 			% \iftoggle{bareme}{ % si bareme == true, ajoute les points dans [nb]
+% 			\begin{blocQR}
+% 				\iftoggle{student}{ % pour version student
+% 					\iftoggle{corrige}{ % version avec corrigé : affiche juste la correction
+% 						\nitem{#1}#3%
+% 					}{ % version sans corrigé
+% 						\item #2%
+% 					}%
+% 				}{% pour version prof
+% 					\iftoggle{corrige}{% pour version avec corrigé : question ET réponse
+% 						\nitem{#1}#2%
+% 						\begin{answ}%
+% 							#3%
+% 						\end{answ}%
+% 					}{ % version sans corrigé : que la question.
+% 						\item #2%
+% 					}
+% 				}
+% 			\end{blocQR}
+% 		}{ % Si bareme == false, pas de points
+% 			\begin{blocQR}
+% 				\iftoggle{student}{% pour version student
+% 					\iftoggle{corrige}{% version avec corrigé : affiche juste la correction
+% 						\item #3%
+% 					}{
+% 						\item #2%
+% 					}%
+% 				}{%
+% 					\iftoggle{corrige}{% pour version avec corrigé : question ET réponse
+% 						\item #2%
+% 						\begin{answ}
+% 							#3
+% 						\end{answ}
+% 					}{ % version sans corrigé : que la question.
+% 						\item #2%
+% 					}%
+% 				}%
+% 			\end{blocQR}%
+% 		}
+% 	}
+% }
+
+
+\newcommand{\addQq}[1]{ % la question à afficher en mode corrigé : peut être modifié
+	\iftoggle{corrige}{
+		#1 % affichage de la question en mode corrigé
+	}{
+		#1 % affichage hors mode corrigé
+	}
+}
+
+
+\newcommand{\addQr}[1]{ % la réponse à afficher en mode corrigé : peut être modifié
+	\mbox{}\\	\textbf{Réponse : } \mbox{} \\
+	#1
+	% \begin{center}
+	% 		\rule[1ex]{.5\linewidth}{.5pt} % ajout d'un trait horizontal à la fin de la réponse
+	% \end{center} 
+	%     \mbox{} 
+	% 	\vspace{-6mm}
+	% \mbox{} \par 
+}
+
+\newcommand{\addQb}[2]{
+	\noindent
+	\begin{minipage}{0.9\linewidth}
+		#2
+	\end{minipage}\hfill\vrule\hfill
+	\begin{minipage}{0.08\linewidth}
+		\centering
+		#1 pt(s)
+	\end{minipage}
+	\hrule
+}
+
+%%% commande utile pour ajouter une ou plusieurs parties facultatives au corrigé d'une quesition
+\newcommand{\corrigeBonus}[1]{
+	\iftoggle{corrigeEtendu}{
+		\mbox{} \\ \textbf{Pour aller plus loin : } \mbox{} \\
+		#1
+	}{
+
+	}
+}
+
+%deprecated
+\newcommand{\switch}[2]{
+	\iftoggle{corrige}{
+		#2
+	}{
+		#1
+	}
+	% \iftoggle{bareme}{ 	 % je commente car cet ajout casse l'utilisation de la commande switch. Il faut mieux le coder !
+	%		#2
+	%}{
+	%	#1
+	%}
+}
+
+\newcommand{\sujetUniquement}[1]{
+	% apparait	si sujet == vrai et corrigé == faux
+	\iftoggle{sujet}{
+		\iftoggle{corrige}{}{
+			#1
+		}
+	}{}
+}
+
+\newcommand{\siCorrige}[1]{
+	% apparait corrigé == vrai
+	\iftoggle{corrige}{
+		#1
+	}{}
+}
+
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\newcommand{\moyenne}[1]{\left\langle #1\right\rangle}
+\let\oldvec\vec
+\renewcommand{\vec}{\vv}
+\newcommand{\vect}{\vec}
+
+
+% textes usuels en mode math
+
+\newcommand{\pH}{\mathrm{pH}}
+\newcommand{\p}{\mathrm{p}}
+
+% \newcommand{\dd}{\mathrm{d}} % d droit pour éléments infinitésimaux
+
+% raccourcis très pratiques
+
+
+\newcommand{\fracp}[2]{\pa{\frac{#1}{#2}}}
+
+
+% niveau des exercices (utile en TD)
+\newcommand{\niveauUn}{($\star$)}
+\newcommand{\niveauDeux}{($\star \star$)}
+\newcommand{\niveauTrois}{($\star \star \star$)}
+
+
+\RequirePackage{locdef}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%% Oppérateur vectoriels à ecrire par Bruno  %%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%
+\newcommand{\vectoriel}{\wedge}
+\newcommand{\scalaire}{\cdot}
+
+%trigo
+%\newcommand{\ct}[0]{\cos(\theta)}
+%\newcommand{\st}[0]{\sin(\theta)}
+%\newcommand{\wo}[0]{\omega_0}
+
+% Mise en forme : 
+\newcommand{\remarque}[1]{\small \it #1}
+\newcommand{\attention}[1]{\small \bf #1}

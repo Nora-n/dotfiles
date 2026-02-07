@@ -2165,7 +2165,7 @@ return {
   }),
   s(
     {
-      trig = "([^\\^q])([eu])([xyzrtdf]) ",
+      trig = "([^\\^q])([eu])([xyzrtdfNT]) ",
       regTrig = true,
       wordTrig = false,
       snippetType = "autosnippet",
@@ -2617,6 +2617,10 @@ return {
         i(2, "upper"),
         i(3, "unit"),
       }),
+      fmta("\\SI[parse-numbers=false]{<>}{<>}", {
+        d(1, get_visual),
+        i(2, "unit"),
+      }),
     }),
   }),
   -- units
@@ -2882,6 +2886,27 @@ return {
       }),
     }),
   }),
+  s({
+    trig = "ste",
+    snippetType = "autosnippet",
+    dscr = "Expands 'stc' into '\\ste{<>}'",
+  }, {
+    c(1, {
+      fmta("\\ste{<>}{<>}", {
+        d(1, get_visual),
+        i(2, "above"),
+      }),
+      fmta("\\ste[-1]{<>}{<>}", {
+        d(1, get_visual),
+        i(2, "above"),
+      }),
+      fmta('\\ste"\\<>"{<>}{<>}', {
+        i(1, "footnotesize"),
+        d(2, get_visual),
+        i(3, "above"),
+      }),
+    }),
+  }),
   -- simple point
   s({
     trig = "prt",
@@ -2890,6 +2915,11 @@ return {
   }, {
     t("\\protect"),
   }),
+  s({
+    trig = "prT",
+    snippetType = "autosnippet",
+    dscr = "Expands 'ptT' into '\\protect\\pt{<>}'",
+  }, fmta("\\protect\\pt{<>}", { i(1, "1") })),
   s({
     trig = "ptt",
     wordTrig = false,
@@ -3083,6 +3113,24 @@ return {
     condition = line_begin,
   }, {
     c(1, {
+      fmta(
+        [[
+      \begin{array}{<>}
+        <> &= <>
+        \\
+        <> &= <>
+      \end{array}
+      <>
+      ]],
+        {
+          i(1, "ll"),
+          i(2),
+          i(3),
+          i(4),
+          i(5),
+          i(0),
+        }
+      ),
       fmta(
         [[
       \begin{array}{<>}
@@ -3462,7 +3510,7 @@ return {
     {
       trig = "pyd",
       snippetType = "autosnippet",
-      dscr = "Expands 'pyd' into pycode environment",
+      dscr = "Executes and typsets",
       condition = line_begin,
     },
     fmta(
@@ -3480,13 +3528,18 @@ return {
   s({
     trig = "pyy",
     snippetType = "autosnippet",
-    dscr = "Expands 'py' into '\\py{}'",
+    dscr = "Shows string representation of argument",
   }, fmta("\\py{<>}", { d(1, get_visual) })),
   s({
     trig = "pyc",
     snippetType = "autosnippet",
-    dscr = "Expands 'pyc' into '\\pyc{}'",
+    dscr = "executes",
   }, fmta("\\pyc{<>}", { d(1, get_visual) })),
+  s({
+    trig = "pyv",
+    snippetType = "autosnippet",
+    dscr = "verbatim",
+  }, fmta("\\pyv{<>}", { d(1, get_visual) })),
   s({
     trig = "pyn",
     snippetType = "autosnippet",
