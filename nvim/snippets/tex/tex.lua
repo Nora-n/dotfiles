@@ -3199,6 +3199,36 @@ return {
       }
     )
   ),
+  s(
+    {
+      trig = "apN",
+      wordTrig = false,
+      snippetType = "autosnippet",
+      dscr = "Expands 'apn' into numerical application",
+      condition = line_begin,
+    },
+    fmta(
+      [[
+      \qav
+      \left\{%
+      \begin{array}{rcl}
+        <> & = & <>
+        \\
+        <> & = & <>
+      \end{array}
+      \right.
+      \\\beforetext{A.N.~}
+      <>
+      ]],
+      {
+        i(1, "var1"),
+        i(2, "val1"),
+        i(3, "var2"),
+        i(4, "val2"),
+        i(0),
+      }
+    )
+  ),
   -- makebox for long tags
   s(
     {
@@ -4279,11 +4309,8 @@ return {
       {
         c(1, {
           t(""),
-          fmta("[label=$\\<>$]", { i(1, "diamond") }),
-          fmta(
-            "[label=$\\<>$, leftmargin=<>pt]",
-            { i(1, "diamond"), i(2, "10") }
-          ),
+          fmta("[label=$\\<>$]", { i(1, "sqenumi") }),
+          fmta("[label=$\\<>$]", { i(1, "clenumi") }),
           fmta("[<>]", { i(1) }),
         }),
         c(2, {
