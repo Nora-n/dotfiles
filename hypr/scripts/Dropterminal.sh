@@ -13,6 +13,8 @@
 DEBUG=false
 SPECIAL_WS="special:scratchpad"
 ADDR_FILE="/tmp/dropdown_terminal_addr"
+IDENTIFIER="${2:-$(echo "$1" | awk '{print $1}')}"
+ADDR_FILE="/tmp/dropdown_terminal_addr_$IDENTIFIER"
 
 # Dropdown size and position configuration (percentages)
 WIDTH_PERCENT=65  # Width as percentage of screen width
@@ -31,6 +33,8 @@ if [ "$1" = "-d" ]; then
 fi
 
 TERMINAL_CMD="$1"
+IDENTIFIER="${2:-$(echo "$TERMINAL_CMD" | awk '{print $1}')}"
+ADDR_FILE="/tmp/dropdown_terminal_addr_$IDENTIFIER"
 
 # Debug echo function
 debug_echo() {
