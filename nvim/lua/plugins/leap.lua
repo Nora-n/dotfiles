@@ -1,4 +1,4 @@
 -- disable ggandors
 return {
-  { "ggandor/leap.nvim", enabled = false },
+  { "andyg/leap.nvim", enabled = false },
 }

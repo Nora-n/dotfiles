@@ -12,7 +12,9 @@
 
 DEBUG=false
 SPECIAL_WS="special:scratchpad"
-ADDR_FILE="${2:-/tmp/dropdown_terminal_addr}"
+# Accept custom address file as $2, fallback to identifier-based default
+IDENTIFIER="${2:-$(echo "$1" | awk '{print $1}')}"
+ADDR_FILE="${3:-/tmp/dropdown_terminal_addr_$IDENTIFIER}"
 
 # Dropdown size and position configuration (percentages)
 WIDTH_PERCENT=65  # Width as percentage of screen width
@@ -31,6 +33,8 @@ if [ "$1" = "-d" ]; then
 fi
 
 TERMINAL_CMD="$1"
+IDENTIFIER="${2:-$(echo "$TERMINAL_CMD" | awk '{print $1}')}"
+ADDR_FILE="${3:-/tmp/dropdown_terminal_addr_$IDENTIFIER}"
 
 # Debug echo function
 debug_echo() {
