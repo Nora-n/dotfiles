@@ -229,6 +229,7 @@
 % Pour \Aboxed dans un environnement align
 \RequirePackage{mathtools}
 \newtagform{black}{\color{black}(}{)}
+
 % To print bareme in interro
 \def\ptcol{ForestGreen}
 \newcommand{\pt}[1]{{\color{\cswitch{\ptcol}{white!10}}\circled{#1}}}
@@ -537,10 +538,14 @@
 % silence warnings
 \usepackage{silence}
 \WarningFilter{minitoc(hints)}{W0099}
+\WarningFilter{minitoc(hints)}{W0078}
+\WarningFilter{minitoc(hints)}{W0068}
 \WarningFilter{minitoc(hints)}{W0040}
 \WarningFilter{minitoc(hints)}{W0030}
-\WarningFilter{minitoc(hints)}{W0023}
 \WarningFilter{minitoc(hints)}{W0028}
+\WarningFilter{minitoc(hints)}{W0024}
+\WarningFilter{minitoc(hints)}{W0023}
+
 % Pour glossaire
 % \RequirePackage{glossaries-extra}
 
@@ -560,6 +565,8 @@
 	% linkcolor=brandeisblue, % color of internal links
 	citecolor=magenta,      % color of links to bibliography
 	urlcolor=urlcolor,      % color of external links
+	% urlbordercolor=urlcolor,% color of underline
+	%  pdfborderstyle={/S/U/W 1}, % https://tex.stackexchange.com/a/700192/284518
 	pdfencoding=auto,       % http://tex.stackexchange.com/questions/119079
 	psdextra=true,          % for '$' in title
 	pdfstartview=FitV,      % open fitting view as default
@@ -656,6 +663,7 @@
 % For spectra
 \RequirePackage{pgf-spectra}
 
+% for better typography
 \RequirePackage{microtype}
 
 % Pour des flèches entre les lignes d'un align!!
@@ -947,69 +955,68 @@
 % Include code, but there might be a better package
 % Try \RequirePackage{pythonhighlight}
 % https://github.com/olivierverdier/python-latex-highlighting
-\RequirePackage{listingsutf8}
-\RequirePackage{fix-cm}
-\lstset{inputencoding=utf8/latin1}
-\definecolor{fond}{gray}{0.95}
-\lstnewenvironment{python}{
-\lstset{language     = python,
-% basicstyle       = \ttfamily,
-keywordstyle     = \bfseries\ttfamily\color{green!40!black},
-commentstyle     = \itshape\color{purple!40!black},
-identifierstyle  = \color{black},
-stringstyle      = \color{black},
-backgroundcolor  = \color{fond},
-numbers          = none,
-frame            = leftline,
-framerule        = 3pt,
-rulecolor        = \color{gray},
-showstringspaces = false
-extendedchars    = true,
-literate         = {á}{{\'a}}1
-{à}{{\`a}}1
-{À}{{\`A}}1
-{ã}{{\~a}}1
-{é}{{\'e}}1
-{É}{{\'E}}1
-{è}{{\`e}}1
-{ê}{{\^e}}1
-{ç}{{\c{c}}}1
-,
-}}{}
+% \RequirePackage{listingsutf8}
+% \RequirePackage{fix-cm}
+% \lstset{inputencoding=utf8/latin1}
+% \definecolor{fond}{gray}{0.95}
+% \lstnewenvironment{python}{
+% \lstset{language     = python,
+% % basicstyle       = \ttfamily,
+% keywordstyle     = \bfseries\ttfamily\color{green!40!black},
+% commentstyle     = \itshape\color{purple!40!black},
+% identifierstyle  = \color{black},
+% stringstyle      = \color{black},
+% backgroundcolor  = \color{fond},
+% numbers          = none,
+% frame            = leftline,
+% framerule        = 3pt,
+% rulecolor        = \color{gray},
+% showstringspaces = false
+% extendedchars    = true,
+% literate         = {á}{{\'a}}1
+% {à}{{\`a}}1
+% {À}{{\`A}}1
+% {ã}{{\~a}}1
+% {é}{{\'e}}1
+% {É}{{\'E}}1
+% {è}{{\`e}}1
+% {ê}{{\^e}}1
+% {ç}{{\c{c}}}1
+% ,
+% }}{}
 
 % For 80 columns automatically
 % https://tex.stackexchange.com/a/142409
-\newlength{\eightytt}
-\newcommand{\testthewidth}{%
-	\fontsize{\dimen0}{0}\selectfont
-	\sbox0{x\global\dimen1=0.6em}%
-	\ifdim 80\dimen1>\textwidth
-		\advance\dimen0 by -.1pt
-		\expandafter\testthewidth
-	\else
-		\global\eightytt\dimen0
-	\fi
-}
-\AtBeginDocument{%
-	\dimen0=\csname f@size\endcsname pt
-	\begingroup
-	\ttfamily
-	\testthewidth
-	\endgroup
-	\lstset{
-		basicstyle=\fontsize{\eightytt}{1.2\eightytt}\ttfamily
-	}%
-}
+% \newlength{\eightytt}
+% \newcommand{\testthewidth}{%
+% 	\fontsize{\dimen0}{0}\selectfont
+% 	\sbox0{x\global\dimen1=0.6em}%
+% 	\ifdim 80\dimen1>\textwidth
+% 		\advance\dimen0 by -.1pt
+% 		\expandafter\testthewidth
+% 	\else
+% 		\global\eightytt\dimen0
+% 	\fi
+% }
+% \AtBeginDocument{%
+% 	\dimen0=\csname f@size\endcsname pt
+% 	\begingroup
+% 	\ttfamily
+% 	\testthewidth
+% 	\endgroup
+% 	\lstset{
+% 		basicstyle=\fontsize{\eightytt}{1.2\eightytt}\ttfamily
+% 	}%
+% }
 
 % Include verbatim in text
 \RequirePackage{fancyvrb}
 % To customize it see for instance https://tex.stackexchange.com/a/85218
 
 % Better python, and verbatim python inside an environment?
-% Later…
 \RequirePackage{pythontex}
-% Note quite. Verbatim box
-\RequirePackage{verbatimbox}
+% % Note quite. Verbatim box
+% \RequirePackage{verbatimbox}
 
 % Profondeur des sections dans la table of contents
 \setcounter{tocdepth}{3}
@@ -1292,37 +1299,37 @@ literate         = {á}{{\'a}}1
 
 % To make `hide` command
 % https://tex.stackexchange.com/a/135485/284518
-\RequirePackage{varwidth}
-\newcommand\hide[1]{\phantom{\varwidth{\linewidth}#1\endvarwidth}}
-% \toggletrue{student} will hide the command
-\newcommand{\hdsw}[1]{
-	\iftoggle{student}{
-		#1
-	}{
-		\hide{#1}
-	}
-}
+% \RequirePackage{varwidth}
+% \newcommand\hide[1]{\phantom{\varwidth{\linewidth}#1\endvarwidth}}
+% % \toggletrue{student} will hide the command
+% \newcommand{\hdsw}[1]{
+% 	\iftoggle{student}{
+% 		#1
+% 	}{
+% 		\hide{#1}
+% 	}
+% }
 
-% Hide environment
-\RequirePackage{comment}
-\newif\ifHideSolutions
-% Make a solution environment
-\generalcomment{hide}{%
-	\begingroup
-	\ifHideSolutions%
-		% if \HideSolutionstrue is not called, then we remove the contents
-		\def\ProcessCutFile{}\fi%
-}{%
-	\ifHideSolutions%
-		% aand,now (also when it's not called), we make a box
-		% and then we \input the \CommentCutFile.
-		\setbox1=\vbox{\input{\CommentCutFile}}%
-		% Get the height from \ht1 and use \vskip to make appropriate space
-		\vskip\ht1
-	\fi
-	\endgroup%
-}
-
+% % Hide environment
+% \RequirePackage{comment}
+% \newif\ifHideSolutions
+% % Make a solution environment
+% \generalcomment{hide}{%
+% 	\begingroup
+% 	\ifHideSolutions%
+% 		% if \HideSolutionstrue is not called, then we remove the contents
+% 		\def\ProcessCutFile{}\fi%
+% }{%
+% 	\ifHideSolutions%
+% 		% aand,now (also when it's not called), we make a box
+% 		% and then we \input the \CommentCutFile.
+% 		\setbox1=\vbox{\input{\CommentCutFile}}%
+% 		% Get the height from \ht1 and use \vskip to make appropriate space
+% 		\vskip\ht1
+% 	\fi
+% 	\endgroup%
+% }
+%
 % Allow for compilation of enon, solu_stud and solu_prof in one go?
 % https://tex.stackexchange.com/a/5265
 \RequirePackage{currfile}
@@ -2469,66 +2476,66 @@ list entry={\hspace*{-20pt}\protect\rcheck~
 }
 
 % Journal abbreviations
-\newcommand*\aap{A\&A}
-\let\astap=\aap
-\newcommand*\aapr{A\&A~Rev.}
-\newcommand*\aaps{A\&AS}
-\newcommand*\actaa{Acta Astron.}
-\newcommand*\aj{AJ}
-\newcommand*\ao{Appl.~Opt.}
-\let\applopt\ao
-\newcommand*\apj{ApJ}
-\newcommand*\apjl{ApJ}
-\let\apjlett\apjl
-\newcommand*\apjs{ApJS}
-\let\apjsupp\apjs
-\newcommand*\aplett{Astrophys.~Lett.}
-\newcommand*\apspr{Astrophys.~Space~Phys.~Res.}
-\newcommand*\apss{Ap\&SS}
-\newcommand*\araa{ARA\&A}
-\newcommand*\azh{AZh}
-\newcommand*\baas{BAAS}
-\newcommand*\bac{Bull. astr. Inst. Czechosl.}
-\newcommand*\bain{Bull.~Astron.~Inst.~Netherlands}
-\newcommand*\caa{Chinese Astron. Astrophys.}
-\newcommand*\cjaa{Chinese J. Astron. Astrophys.}
-\newcommand*\fcp{Fund.~Cosmic~Phys.}
-\newcommand*\gca{Geochim.~Cosmochim.~Acta}
-\newcommand*\grl{Geophys.~Res.~Lett.}
-\newcommand*\iaucirc{IAU~Circ.}
-\newcommand*\icarus{Icarus}
-\newcommand*\jcap{J. Cosmology Astropart. Phys.}
-\newcommand*\jcp{J.~Chem.~Phys.}
-\newcommand*\jgr{J.~Geophys.~Res.}
-\newcommand*\jqsrt{J.~Quant.~Spectr.~Rad.~Transf.}
-\newcommand*\jrasc{JRASC}
-\newcommand*\memras{MmRAS}
-\newcommand*\memsai{Mem.~Soc.~Astron.~Italiana}
-\newcommand*\mnras{MNRAS}
-\newcommand*\na{New A}
-\newcommand*\nar{New A Rev.}
-\newcommand*\nat{Nature}
-\newcommand*\nphysa{Nucl.~Phys.~A}
-\newcommand*\pasa{PASA}
-\newcommand*\pasj{PASJ}
-\newcommand*\pasp{PASP}
-\newcommand*\physrep{Phys.~Rep.}
-\newcommand*\physscr{Phys.~Scr}
-\newcommand*\planss{Planet.~Space~Sci.}
-\newcommand*\pra{Phys.~Rev.~A}
-\newcommand*\prb{Phys.~Rev.~B}
-\newcommand*\prc{Phys.~Rev.~C}
-\newcommand*\prd{Phys.~Rev.~D}
-\newcommand*\pre{Phys.~Rev.~E}
-\newcommand*\prl{Phys.~Rev.~Lett.}
-\newcommand*\procspie{Proc.~SPIE}
-\newcommand*\qjras{QJRAS}
-\newcommand*\rmxaa{Rev. Mexicana Astron. Astrofis.}
-\newcommand*\skytel{S\&T}
-\newcommand*\solphys{Sol.~Phys.}
-\newcommand*\sovast{Soviet~Ast.}
-\newcommand*\ssr{Space~Sci.~Rev.}
-\newcommand*\zap{ZAp}
+% \newcommand*\aap{A\&A}
+% \let\astap=\aap
+% \newcommand*\aapr{A\&A~Rev.}
+% \newcommand*\aaps{A\&AS}
+% \newcommand*\actaa{Acta Astron.}
+% \newcommand*\aj{AJ}
+% \newcommand*\ao{Appl.~Opt.}
+% \let\applopt\ao
+% \newcommand*\apj{ApJ}
+% \newcommand*\apjl{ApJ}
+% \let\apjlett\apjl
+% \newcommand*\apjs{ApJS}
+% \let\apjsupp\apjs
+% \newcommand*\aplett{Astrophys.~Lett.}
+% \newcommand*\apspr{Astrophys.~Space~Phys.~Res.}
+% \newcommand*\apss{Ap\&SS}
+% \newcommand*\araa{ARA\&A}
+% \newcommand*\azh{AZh}
+% \newcommand*\baas{BAAS}
+% \newcommand*\bac{Bull. astr. Inst. Czechosl.}
+% \newcommand*\bain{Bull.~Astron.~Inst.~Netherlands}
+% \newcommand*\caa{Chinese Astron. Astrophys.}
+% \newcommand*\cjaa{Chinese J. Astron. Astrophys.}
+% \newcommand*\fcp{Fund.~Cosmic~Phys.}
+% \newcommand*\gca{Geochim.~Cosmochim.~Acta}
+% \newcommand*\grl{Geophys.~Res.~Lett.}
+% \newcommand*\iaucirc{IAU~Circ.}
+% \newcommand*\icarus{Icarus}
+% \newcommand*\jcap{J. Cosmology Astropart. Phys.}
+% \newcommand*\jcp{J.~Chem.~Phys.}
+% \newcommand*\jgr{J.~Geophys.~Res.}
+% \newcommand*\jqsrt{J.~Quant.~Spectr.~Rad.~Transf.}
+% \newcommand*\jrasc{JRASC}
+% \newcommand*\memras{MmRAS}
+% \newcommand*\memsai{Mem.~Soc.~Astron.~Italiana}
+% \newcommand*\mnras{MNRAS}
+% \newcommand*\na{New A}
+% \newcommand*\nar{New A Rev.}
+% \newcommand*\nat{Nature}
+% \newcommand*\nphysa{Nucl.~Phys.~A}
+% \newcommand*\pasa{PASA}
+% \newcommand*\pasj{PASJ}
+% \newcommand*\pasp{PASP}
+% \newcommand*\physrep{Phys.~Rep.}
+% \newcommand*\physscr{Phys.~Scr}
+% \newcommand*\planss{Planet.~Space~Sci.}
+% \newcommand*\pra{Phys.~Rev.~A}
+% \newcommand*\prb{Phys.~Rev.~B}
+% \newcommand*\prc{Phys.~Rev.~C}
+% \newcommand*\prd{Phys.~Rev.~D}
+% \newcommand*\pre{Phys.~Rev.~E}
+% \newcommand*\prl{Phys.~Rev.~Lett.}
+% \newcommand*\procspie{Proc.~SPIE}
+% \newcommand*\qjras{QJRAS}
+% \newcommand*\rmxaa{Rev. Mexicana Astron. Astrofis.}
+% \newcommand*\skytel{S\&T}
+% \newcommand*\solphys{Sol.~Phys.}
+% \newcommand*\sovast{Soviet~Ast.}
+% \newcommand*\ssr{Space~Sci.~Rev.}
+% \newcommand*\zap{ZAp}
 
 %%% Fin du package
 \endinput

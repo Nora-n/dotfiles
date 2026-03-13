@@ -3217,7 +3217,7 @@ return {
         <> & = & <>
       \end{array}
       \right.
-      \\\beforetext{A.N.~}
+      \\\beforetext{A.N.~:}
       <>
       ]],
       {
@@ -4090,6 +4090,22 @@ return {
       ),
       fmta(
         [[
+          \begin{isd}[<>]
+            <>
+            \tcblower
+            <>
+          \end{isd}
+          <>
+        ]],
+        {
+          d(1, get_visual),
+          i(2),
+          i(3),
+          i(0),
+        }
+      ),
+      fmta(
+        [[
           \begin{isd}[<>](<>)
             <>
             \tcblower
@@ -4343,7 +4359,7 @@ return {
       {
         c(1, {
           t(""),
-          t("[label=\\Alph*)]"),
+          fmta("[label=<>]", { i(1, "\\bdmd") }),
           fmta("[label=\\protect\\fbox{<>}]", { i(1, "\\Alph*") }),
           fmta(
             "[label=\\protect\\fbox{<>}, label-width=<>]",
